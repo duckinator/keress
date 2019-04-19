@@ -15,6 +15,9 @@ var dir = Vector3(0, 0, 0)
 const MAX_HEALTH = 100
 var health = -1
 
+var current_weapon = 0
+var changing_weapon
+
 var is_dead = false
 var waiting_for_respawn = false
 
@@ -111,6 +114,50 @@ func process_ui(delta):
 
 func process_respawn(delta):
 	pass
+
+func _input(event):
+	if is_dead:
+		if Input.is_key_pressed(KEY_SPACE):
+			waiting_for_respawn = true
+		return
+	
+	# Mouse movement.
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY * -1))
+		self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
+		# Set x/z to zero to avoid very strange camera stuff.
+		self.rotation_degrees.x = 0
+		self.rotation_degrees.z = 0
+		
+		var camera_rot = rotation_helper.rotation_degrees
+		# FIXME: -70,70 is pretty arbitrary. It's worth playing with.
+		camera_rot.x = clamp(camera_rot.x, -70, 70)
+		# Set y/z to zero to avoid very strange camera stuff.
+		camera_rot.y = 0
+		camera_rot.z = 0
+		rotation_helper.rotation_degrees = camera_rot
+
+	# Changing weapons.
+	var weapon_change_number = current_weapon
+	if Input.is_key_pressed(KEY_1):
+		weapon_change_number = 0
+	if Input.is_key_pressed(KEY_2):
+		weapon_change_number = 1
+	#if Input.is_key_pressed(KEY_3):
+	#	weapon_change_number = 2
+	#if Input.is_key_pressed(KEY_4):
+	#	weapon_change_number = 3
+
+	if Input.is_action_just_pressed("shift_weapon_positive"):
+		weapon_change_number += 1
+	if Input.is_action_just_pressed("shift_weapon_negative"):
+		weapon_change_number -=1
+	
+	#weapon_change_number = clamp(weapon_change_number, 0, weapons.size() - 1)
+	
+	#if changing_weapon == false:
+	#	if weapon_change_number != weapon_number:
+	#		pass # Change weapons
 
 func adjust_health(diff):
 	health = clamp(health + diff, 0, MAX_HEALTH)
