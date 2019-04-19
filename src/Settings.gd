@@ -2,9 +2,6 @@ extends Node
 
 const SETTINGS_FILE = "user://settings.json"
 
-#func _ready():
-#	pass
-
 func store(key, val):
 	var settings = _read_from_disk()
 	settings[key] = val
