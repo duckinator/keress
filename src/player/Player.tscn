@@ -1,13 +1,23 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://player/Player.gd" type="Script" id=1]
+[ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=2]
+
+[sub_resource type="CapsuleShape" id=3]
+
+radius = 1.0
+height = 1.0
+
+[sub_resource type="BoxShape" id=4]
+
+extents = Vector3( 0.691243, 0.405015, 0.693321 )
 
 [sub_resource type="DynamicFont" id=1]
 
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 1 )
+font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=2]
@@ -15,7 +25,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 1 )
+font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [node name="Player" type="KinematicBody" index="0"]
@@ -31,21 +41,27 @@ axis_lock_angular_x = false
 axis_lock_angular_y = false
 axis_lock_angular_z = false
 collision/safe_margin = 0.001
+script = ExtResource( 1 )
 
 [node name="CollisionShape_Body" type="CollisionShape" parent="." index="0"]
 
-shape = null
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1.5, 0 )
+shape = SubResource( 3 )
 disabled = false
+_sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape_Feet" type="CollisionShape" parent="." index="1"]
 
-shape = null
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+shape = SubResource( 4 )
 disabled = false
+_sections_unfolded = [ "Transform" ]
 
 [node name="Rotation_Helper" type="Spatial" parent="." index="2"]
 
 [node name="Camera" type="Camera" parent="Rotation_Helper" index="0"]
 
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -58,6 +74,7 @@ fov = 70.0
 size = 1.0
 near = 0.05
 far = 100.0
+_sections_unfolded = [ "Transform" ]
 
 [node name="Model" type="Spatial" parent="Rotation_Helper" index="1"]
 
