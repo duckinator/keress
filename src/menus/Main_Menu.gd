@@ -42,7 +42,7 @@ func game_continue():
 
 func game_new():
 	panel_select("none")
-	print("game new")
+	Globals.load_new_scene("res://levels/ProgrammaticLevel.tscn")
 
 # REQUIREMENT: There should be no panel named "none".
 func panel_select(selected):

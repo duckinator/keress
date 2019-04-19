@@ -20,3 +20,15 @@ func set_debug(debug_on):
 	elif debug_display:
 		debug_display.queue_free()
 		debug_display = null
+
+func load_new_scene(new_scene_path):
+	# Reset respawn points before loading a level.
+	#respawn_points = null
+
+	# Clear previously-used sounds.
+	#for sound in created_audio:
+	#	if sound:
+	#		sound.queue_free()
+	#created_audio.clear()
+	
+	get_tree().change_scene(new_scene_path)
