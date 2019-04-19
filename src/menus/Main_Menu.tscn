@@ -59,7 +59,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font" ]
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=8]
 
 size = 30
 use_mipmaps = false
@@ -75,7 +75,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=10]
 
 size = 30
 use_mipmaps = false
@@ -446,7 +446,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 8 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -500,7 +500,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 10 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
