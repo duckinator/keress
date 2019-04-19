@@ -13,6 +13,11 @@ config_version=3
 config/name="Keress"
 config/icon="res://icon.png"
 
+[autoload]
+
+Settings="*res://Settings.gd"
+Globals="*res://Globals.gd"
+
 [display]
 
 window/size/width=1280
