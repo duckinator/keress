@@ -6,6 +6,7 @@ var options_menu
 var panels = null
 
 func _ready():
+	Globals.in_game = false
 	$Panels/Start.visible = true
 	$Panels/Settings.visible = false
 
@@ -51,7 +52,7 @@ func panel_select(selected):
 
 # TODO: Add quit prompt.
 func quit():
-	get_tree().quit()
+	Globals.quit()
 
 func toggle_vsync():
 	Settings.store("vsync", $Panels/Settings/CheckButton_VSync.pressed)

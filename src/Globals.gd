@@ -1,16 +1,75 @@
 extends Node
 
-const MENU_SCENE = preload("res://menus/Main_Menu.tscn")
+const MAIN_MENU_PATH = "res://menus/Main_Menu.tscn"
 const DEBUG_SCENE = preload("res://menus/Debug_Display.tscn")
+const PAUSE_SCENE = preload("res://menus/Pause_Popup.tscn")
+var popup = null
+var closing_popup= false
+
 var canvas_layer
 var debug_display = null
 
+var reload_level = false
+var in_game = false
+
 func _ready():
+	randomize()
 	canvas_layer = CanvasLayer.new()
 	add_child(canvas_layer)
 
 func _process(delta):
-	pass
+	if not in_game:
+		close_popup()
+		return
+	
+	if closing_popup:
+		closing_popup = false
+		return
+
+	if not Input.is_action_just_pressed("ui_cancel"):
+		return
+	
+	if popup != null:
+		return
+
+	popup = PAUSE_SCENE.instance()
+
+	popup.get_node("Resume_Button").connect("pressed", self, "popup_resume")
+	popup.get_node("Reload_Button").connect("pressed", self, "popup_reload")
+	popup.get_node("Menu_Button").connect("pressed", self, "popup_menu")
+	popup.get_node("Quit_Button").connect("pressed", self, "popup_quit")
+	popup.connect("popup_hide", self, "popup_resume")
+
+	canvas_layer.add_child(popup)
+	popup.popup_centered()
+
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+	get_tree().paused = true
+	self.pause_mode = PAUSE_MODE_PROCESS
+
+func popup_resume():
+	close_popup()
+
+func popup_reload():
+	close_popup()
+	reload_level = true
+
+func popup_menu():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	close_popup()
+	load_new_scene(MAIN_MENU_PATH)
+
+func popup_quit():
+	quit()
+
+func close_popup():
+	get_tree().paused = false
+
+	if popup != null:
+		popup.queue_free()
+		popup = null
+		closing_popup = true
 
 func set_debug(debug_on):
 	if debug_on:
@@ -32,3 +91,6 @@ func load_new_scene(new_scene_path):
 	#created_audio.clear()
 	
 	get_tree().change_scene(new_scene_path)
+
+func quit():
+	get_tree().quit()

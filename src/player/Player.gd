@@ -77,8 +77,8 @@ func process_input(delta):
 
 	# If needed, capture the cursor.
 	# This applies both upon starting the game and when un-pausing.
-	#if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-	#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func process_movement(delta):
 	dir.y = 0

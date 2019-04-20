@@ -9,11 +9,11 @@ var current_level
 func _ready():
 	current_level = Settings.fetch("current_level", 1)
 	load_level(current_level)
+	Globals.in_game = true
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+func _process(delta):
+	if Globals.reload_level:
+		load_level(current_level)
 
 func _input(event):
 	if not Settings.fetch("debug", false):
