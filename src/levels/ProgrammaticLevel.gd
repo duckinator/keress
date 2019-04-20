@@ -16,19 +16,27 @@ func _ready():
 #	pass
 
 func _input(event):
-	if Settings.fetch("debug", false):
+	if not Settings.fetch("debug", false):
 		return
+	
+	if event is InputEventKey and event.pressed and event.scancode == KEY_F4:
+		print("DEBUG: Loading previous level: " + str(current_level - 1))
+		load_level_scene(current_level - 1)
 	
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F5:
 		print("DEBUG: Reloading level " + str(current_level))
 		load_level_scene(current_level)
+	
+	if event is InputEventKey and event.pressed and event.scancode == KEY_F6:
+		print("DEBUG: Loading next level: " + str(current_level + 1))
+		load_level_scene(current_level + 1)
 
 func next_level():
 	var next = current_level + 1
-	Settings.store("current_level", next)
 	load_level_scene(next)
 
 func load_level_scene(next):
+	Settings.store("current_level", next)
 	self.queue_free()
 	Globals.load_new_scene(LEVEL_SCENE)
 
