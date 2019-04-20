@@ -64,9 +64,10 @@ func load_level_data(level):
 
 func create_grid(translation, rotation):
 	var grid = $DummyGridMap.duplicate()
-	grid.translation.x = translation.x
-	grid.translation.y = translation.y
-	grid.translation.z = translation.z
+	grid.global_translate(translation)
+	#grid.global_rotate(rotation, 1)
+	print("translation=" + str(translation))
+	print("rotation=" + str(rotation))
 	grid.rotation_degrees.x = rotation.x
 	grid.rotation_degrees.y = rotation.y
 	grid.rotation_degrees.z = rotation.z
@@ -98,11 +99,12 @@ func grid(data):
 	
 	var grid = create_grid(trans, rot)
 	
-	for idx in range(3, len(lines) - 1):
-		var x = idx - 3
+	for idx in range(2, len(lines) - 1):
+		var x = idx - 2
 		var line = lines[idx]
 		for z in range(0, len(line) - 1):
-			grid.set_cell_item(x, 0, z, int(line[z]))
+			if line[z] != '-':
+				grid.set_cell_item(x, 0, z, int(line[z]))
 	return grid
 
 func build_grids(data):
@@ -112,7 +114,7 @@ func build_grids(data):
 	var lines = strip_all(data.split("\n"))
 	var start = lines[0]
 	lines.remove(0)
-	var gs = lines.join("\n").split("\n\n")
+	var gs = ("\n" + lines.join("\n")).split("\nt ")
 	var result = []
 	
 	if start.begins_with("start "):
@@ -122,7 +124,7 @@ func build_grids(data):
 		return null
 
 	for g in gs:
-		result.append(grid(g))
+		result.append(grid("t " + g))
 	return [start_trans, result]
 
 func str2vec3(s, sep=" "):

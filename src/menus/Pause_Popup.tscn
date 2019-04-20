@@ -42,7 +42,7 @@ use_filter = false
 font_data = ExtResource( 1 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Pause_Popup" type="WindowDialog" index="0"]
+[node name="Pause_Popup" type="WindowDialog"]
 
 anchor_left = 0.5
 anchor_top = 0.5
