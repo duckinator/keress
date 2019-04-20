@@ -15,9 +15,21 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
+func _input(event):
+	if Settings.fetch("debug", false):
+		return
+	
+	if event is InputEventKey and event.pressed and event.scancode == KEY_F5:
+		print("DEBUG: Reloading level " + str(current_level))
+		load_level_scene(current_level)
+
 func next_level():
+	var next = current_level + 1
+	Settings.store("current_level", next)
+	load_level_scene(next)
+
+func load_level_scene(next):
 	self.queue_free()
-	Settings.store("current_level", current_level + 1)
 	Globals.load_new_scene(LEVEL_SCENE)
 
 func load_level(level):
