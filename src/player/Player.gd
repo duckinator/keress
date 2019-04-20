@@ -123,19 +123,7 @@ func _input(event):
 	
 	# Mouse movement.
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY * -1))
-		self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
-		# Set x/z to zero to avoid very strange camera stuff.
-		self.rotation_degrees.x = 0
-		self.rotation_degrees.z = 0
-		
-		var camera_rot = rotation_helper.rotation_degrees
-		# FIXME: -70,70 is pretty arbitrary. It's worth playing with.
-		camera_rot.x = clamp(camera_rot.x, -70, 70)
-		# Set y/z to zero to avoid very strange camera stuff.
-		camera_rot.y = 0
-		camera_rot.z = 0
-		rotation_helper.rotation_degrees = camera_rot
+		safe_rotate(event.relative)
 
 	# Changing weapons.
 	var weapon_change_number = current_weapon
@@ -167,3 +155,19 @@ func update_hud():
 	$HUD/Panel_Left/Label_Health.text = str(health)
 	$HUD/Panel_Left/Health_Bar.value = health
 	# TODO: Handle weapon/ammo.
+
+
+func safe_rotate(vec):
+	rotation_helper.rotate_x(deg2rad(vec.y * MOUSE_SENSITIVITY * -1))
+	self.rotate_y(deg2rad(vec.x * MOUSE_SENSITIVITY * -1))
+	# Set x/z to zero to avoid very strange camera stuff.
+	self.rotation_degrees.x = 0
+	self.rotation_degrees.z = 0
+	
+	var camera_rot = rotation_helper.rotation_degrees
+	# FIXME: -70,70 is pretty arbitrary. It's worth playing with.
+	camera_rot.x = clamp(camera_rot.x, -70, 70)
+	# Set y/z to zero to avoid very strange camera stuff.
+	camera_rot.y = 0
+	camera_rot.z = 0
+	rotation_helper.rotation_degrees = camera_rot

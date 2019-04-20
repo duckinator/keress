@@ -93,7 +93,7 @@ environment = SubResource( 1 )
 
 [node name="Player" parent="." index="1" instance=ExtResource( 2 )]
 
-_sections_unfolded = [ "Transform" ]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 3, 0 )
 
 [node name="Grids" type="Node" parent="." index="2"]
 
@@ -101,7 +101,7 @@ _sections_unfolded = [ "Transform" ]
 
 visible = false
 theme = ExtResource( 3 )
-cell_size = Vector3( 10, 2, 10 )
+cell_size = Vector3( 2, 2, 2 )
 cell_octant_size = 8
 cell_center_x = true
 cell_center_y = true
@@ -112,7 +112,7 @@ collision_mask = 1
 data = {
 "cells": PoolIntArray(  )
 }
-_sections_unfolded = [ "Cell", "Transform" ]
+_sections_unfolded = [ "Cell" ]
 __meta__ = {
 "_editor_clip_": 0
 }

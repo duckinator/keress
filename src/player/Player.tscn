@@ -3,16 +3,16 @@
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=2]
 
-[sub_resource type="CapsuleShape" id=3]
+[sub_resource type="CapsuleShape" id=1]
 
 radius = 1.0
-height = 1.0
+height = 2.0336
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=2]
 
 extents = Vector3( 0.691243, 0.405015, 0.693321 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=3]
 
 size = 40
 use_mipmaps = false
@@ -20,7 +20,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=4]
 
 size = 40
 use_mipmaps = false
@@ -28,8 +28,9 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Player" type="KinematicBody" index="0"]
+[node name="Player" type="KinematicBody"]
 
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
 input_ray_pickable = true
 input_capture_on_drag = false
 collision_layer = 1
@@ -42,18 +43,19 @@ axis_lock_angular_y = false
 axis_lock_angular_z = false
 collision/safe_margin = 0.001
 script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape_Body" type="CollisionShape" parent="." index="0"]
 
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1.5, 0 )
-shape = SubResource( 3 )
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, -1, 0 )
+shape = SubResource( 1 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape_Feet" type="CollisionShape" parent="." index="1"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-shape = SubResource( 4 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
+shape = SubResource( 2 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
@@ -61,7 +63,6 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Camera" type="Camera" parent="Rotation_Helper" index="0"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -247,7 +248,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "100"
 align = 2
 percent_visible = 1.0
@@ -297,7 +298,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "22"
 align = 2
 percent_visible = 1.0

@@ -59,13 +59,13 @@ _sections_unfolded = [ "Albedo" ]
 
 material = SubResource( 1 )
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
-size = Vector2( 10, 10 )
+size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
 
-[sub_resource type="ConvexPolygonShape" id=3]
+[sub_resource type="ConvexPolygonShape" id=6]
 
-points = PoolVector3Array( 5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, -5 )
+points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 
 [sub_resource type="SpatialMaterial" id=4]
 
@@ -124,13 +124,13 @@ _sections_unfolded = [ "Albedo" ]
 
 material = SubResource( 4 )
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
-size = Vector2( 10, 10 )
+size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
 
-[sub_resource type="ConvexPolygonShape" id=6]
+[sub_resource type="ConvexPolygonShape" id=7]
 
-points = PoolVector3Array( 5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, -5 )
+points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 
 [node name="LevelMeshLibrary" type="Spatial"]
 
@@ -163,7 +163,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Wall/StaticBody" index="0"]
 
-shape = SubResource( 3 )
+shape = SubResource( 6 )
 disabled = false
 
 [node name="Floor" type="MeshInstance" parent="." index="1"]
@@ -194,7 +194,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Floor/StaticBody" index="0"]
 
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 disabled = false
 
 
