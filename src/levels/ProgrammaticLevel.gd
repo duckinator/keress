@@ -86,23 +86,26 @@ func grid(data):
 		return null
 
 	trans = str2vec3(lines[0].split(" ", false, 1)[1])
+	lines.remove(0)
 	
-	if not lines[1].begins_with("r "):
+	if not lines[0].begins_with("r "):
 		print("ERROR: fill_grid() expected second line to start with 'r '.")
 		return null
 	
-	rot = str2vec3(lines[1].split(" ", false, 1)[1])
+	rot = str2vec3(lines[0].split(" ", false, 1)[1])
+	lines.remove(0)
 	
-	if not lines[2].begins_with("d "):
+	if not lines[0].begins_with("d "):
 		print("ERROR: fill_grid() expected third line to start with 'd '.")
 		return null
+	lines.remove(0)
 	
 	var grid = create_grid(trans, rot)
 	
-	for idx in range(2, len(lines) - 1):
-		var x = idx - 2
+	for idx in range(0, len(lines)):
+		var x = idx
 		var line = lines[idx]
-		for z in range(0, len(line) - 1):
+		for z in range(0, len(line)):
 			if line[z] != '-':
 				grid.set_cell_item(x, 0, z, int(line[z]))
 	return grid
