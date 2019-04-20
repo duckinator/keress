@@ -1,37 +1,46 @@
 extends Spatial
 
+const LEVEL_SCENE = "res://levels/ProgrammaticLevel.tscn"
+
 var mobs = []
 var grids
+var current_level
+
 func _ready():
-	var result = build_grids("""
-	start 4 0 2
-	
-	t 0 0 0
-	r 0 0 0
-	d Floor
-	0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-	0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-	0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-	0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-	0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-	""")
-	$Player.global_translate(result[0])
-	grids = result[1]
-
-	#var Ceil = new_grid(Vector3(0, 30, 0), Vector3(0, 180, 180))
-	#var Left = new_grid(Vector3(0, 0, -50), Vector3(90, 180, 180))
-	#var Right = new_grid(Vector3(0, 0, 50), Vector3(-90, 180, 180))
-	#var Start = new_grid(Vector3(-5, 0, 0), Vector3(-90, 180, 90))
-	#var End = new_grid(Vector3(400, 0, 0), Vector3(-90, -180, -90))
-
-	for grid in grids:
-		add_child(grid)
+	current_level = Settings.fetch("current_level", 1)
+	load_level(current_level)
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 #	pass
 
+func next_level():
+	self.queue_free()
+	Settings.store("current_level", current_level + 1)
+	Globals.load_new_scene(LEVEL_SCENE)
+
+func load_level(level):
+	var data = load_level_data(level)
+	if not data:
+		print("ERROR: load_level(): data is null")
+		return
+	var result = build_grids(data)
+	$Player.global_translate(result[0])
+	grids = result[1]
+
+	for grid in grids:
+		add_child(grid)
+
+func load_level_data(level):
+	var filename = "res://levels/level-" + str(level).pad_zeros(3) + ".lvl"
+	print("Loading " + filename)
+	var file = File.new()
+	if not file.file_exists(filename):
+		print("ERROR: load_level_data(): no such file: " + filename)
+		return null
+	file.open(filename, File.READ)
+	return file.get_as_text()
 
 func create_grid(translation, rotation):
 	var grid = $DummyGridMap.duplicate()
@@ -45,6 +54,7 @@ func create_grid(translation, rotation):
 	return grid
 
 func grid(data):
+	data = remove_comments(data)
 	var lines = strip_all(data.strip_edges().split("\n"))
 	var trans = null
 	var rot = null
@@ -66,7 +76,6 @@ func grid(data):
 		print("ERROR: fill_grid() expected third line to start with 'd '.")
 		return null
 	
-	print("trans=" + str(trans) + "\nrot =" + str(rot))
 	var grid = create_grid(trans, rot)
 	
 	for idx in range(3, len(lines) - 1):
@@ -77,16 +86,23 @@ func grid(data):
 	return grid
 
 func build_grids(data):
+	data = remove_comments(data)
 	var start_trans
 	
-	var gs = strip_all(strip_all(data.split("\n")).join("\n").split("\n\n"))
+	var lines = strip_all(data.split("\n"))
+	var start = lines[0]
+	lines.remove(0)
+	var gs = lines.join("\n").split("\n\n")
 	var result = []
+	
+	if start.begins_with("start "):
+		start_trans = str2vec3(start.split("start ")[1])
+	else:
+		print("ERROR: build_grids(): First line was not not a 'start' line")
+		return null
 
 	for g in gs:
-		if g.begins_with("start "):
-			start_trans = str2vec3(g.split("start ")[1])
-		else:
-			result.append(grid(g))
+		result.append(grid(g))
 	return [start_trans, result]
 
 func str2vec3(s, sep=" "):
@@ -101,3 +117,12 @@ func strip_all(strs):
 	for idx in range(0, len(strs) - 1):
 		strs[idx] = strs[idx].strip_edges()
 	return strs
+
+func remove_comments(data):
+	var lines = data.split("\n")
+	var result = ""
+	for line in lines:
+		var stripped_line = line.strip_edges()
+		if len(stripped_line) > 0 and stripped_line[0] != "#":
+			result += line + "\n"
+	return result
