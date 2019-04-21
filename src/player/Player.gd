@@ -40,10 +40,12 @@ func _ready():
 	
 	adjust_health(MAX_HEALTH)
 
+func get_last_velocity():
+	return vel
+
 func _physics_process(delta):
 	if not gravity:
-		var state = PhysicsServer.body_get_direct_state($DummyRigidBody.get_rid())
-		gravity = state.get_total_gravity()
+		gravity = Globals.get_total_gravity_for($DummyRigidBody)
 		$DummyRigidBody.visible = false
 	
 	if not is_dead:
@@ -113,9 +115,6 @@ func process_movement(delta):
 	vel = move_and_slide(vel, Vector3(0, 1, 0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 	process_fall_damage(old_vel, vel)
-
-func get_velocity():
-	return vel
 
 func process_changing_weapons(delta):
 	pass

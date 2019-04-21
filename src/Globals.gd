@@ -102,3 +102,7 @@ func spawn_scene(asset, pos):
 
 func quit():
 	get_tree().quit()
+
+func get_total_gravity_for(body):
+	var state = PhysicsServer.body_get_direct_state(body.get_rid())
+	return state.get_total_gravity()
