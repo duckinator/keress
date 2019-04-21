@@ -47,7 +47,11 @@ func load_level(level):
 		return
 	var result = build_grids(data)
 	$Player.global_translate(result[0])
-	grids = result[1]
+	var light = result[1]
+	grids = result[2]
+	
+	if light:
+		$WorldEnvironment.environment.ambient_light_energy = light
 
 	for grid in grids:
 		add_child(grid)
@@ -112,23 +116,34 @@ func grid(data):
 
 func build_grids(data):
 	data = remove_comments(data)
-	var start_trans
+	var start_trans = Vector3(0, 0, 0)
+	var light = null
 	
 	var lines = strip_all(data.split("\n"))
-	var start = lines[0]
-	lines.remove(0)
+	
+	var to_remove = []
+	for idx in range(0, len(lines)):
+		var line = lines[idx]
+		if not " " in line:
+			continue
+		var parts = line.split(" ", false, 1)
+		if parts[0] == "start":
+			start_trans = str2vec3(parts[1])
+			to_remove.append(line)
+		if parts[0] == "light":
+			light = float(parts[1])
+			to_remove.append(line)
+	
+	for line in to_remove:
+		var idx = Array(lines).find(line)
+		lines.remove(idx)
+	
 	var gs = ("\n" + lines.join("\n")).split("\nt ")
 	var result = []
-	
-	if start.begins_with("start "):
-		start_trans = str2vec3(start.split("start ")[1])
-	else:
-		print("ERROR: build_grids(): First line was not not a 'start' line")
-		return null
 
 	for g in gs:
 		result.append(grid("t " + g))
-	return [start_trans, result]
+	return [start_trans, light, result]
 
 func str2vec3(s, sep=" "):
 	var parts = s.strip_edges().split(sep)
