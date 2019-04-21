@@ -25,6 +25,7 @@ func _ready():
 	$Panels/Settings/CheckButton_Debug.pressed = Settings.fetch("debug", false)
 	
 	Globals.set_debug($Panels/Settings/CheckButton_Debug.pressed)
+	OS.window_fullscreen = $Panels/Settings/CheckButton_Fullscreen.pressed
 
 	#$Panels/Settings/HSlider_Joypad_Sensitivity = Globals.joypad_sensitivity
 	#$Panels/Settings/HSlider_Mouse_Sensitivity = Globals.mouse_sensitivity
@@ -58,7 +59,9 @@ func toggle_vsync():
 	Settings.store("vsync", $Panels/Settings/CheckButton_VSync.pressed)
 
 func toggle_fullscreen():
-	Settings.store("fullscreen", $Panels/Settings/CheckButton_Fullscreen.pressed)
+	var fullscreen = $Panels/Settings/CheckButton_Fullscreen.pressed
+	Settings.store("fullscreen", fullscreen)
+	OS.window_fullscreen = fullscreen
 
 func toggle_debug():
 	var debug = $Panels/Settings/CheckButton_Debug.pressed
