@@ -168,3 +168,9 @@ func remove_comments(data):
 		if len(stripped_line) > 0 and stripped_line[0] != "#":
 			result += line + "\n"
 	return result
+
+# FIXME: set_gravity() is broken.
+#func set_gravity(strength, vec):
+#	var space = get_world().get_space()
+#	PhysicsServer.area_set_param(space, PhysicsServer.AREA_PARAM_GRAVITY, strength)
+#	PhysicsServer.area_set_param(space, PhysicsServer.AREA_PARAM_GRAVITY_VECTOR, vec)

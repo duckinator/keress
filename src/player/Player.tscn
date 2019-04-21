@@ -3,12 +3,12 @@
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=2]
 
-[sub_resource type="CapsuleShape" id=5]
+[sub_resource type="CapsuleShape" id=1]
 
 radius = 1.0
 height = 2.0336
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=2]
 
 extents = Vector3( 0.691243, 0.405015, 0.693321 )
 
@@ -28,7 +28,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=5]
 
 render_priority = 0
 flags_transparent = false
@@ -79,16 +79,16 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[sub_resource type="CubeMesh" id=7]
+[sub_resource type="CubeMesh" id=6]
 
-material = SubResource( 9 )
+material = SubResource( 5 )
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector3( 2, 2, 2 )
 subdivide_width = 0
 subdivide_height = 0
 subdivide_depth = 0
 
-[sub_resource type="ConvexPolygonShape" id=8]
+[sub_resource type="ConvexPolygonShape" id=7]
 
 points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
 
@@ -112,14 +112,14 @@ _sections_unfolded = [ "Transform", "collision" ]
 [node name="CollisionShape_Body" type="CollisionShape" parent="." index="0"]
 
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, -1, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 1 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape_Feet" type="CollisionShape" parent="." index="1"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 2 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
@@ -437,13 +437,13 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 7 )
+mesh = SubResource( 6 )
 skeleton = NodePath("..")
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="DummyRigidBody" index="1"]
 
-shape = SubResource( 8 )
+shape = SubResource( 7 )
 disabled = false
 
 

@@ -41,8 +41,10 @@ func _ready():
 	adjust_health(MAX_HEALTH)
 
 func _physics_process(delta):
-	var state = PhysicsServer.body_get_direct_state($DummyRigidBody.get_rid())
-	gravity = state.get_total_gravity()
+	if not gravity:
+		var state = PhysicsServer.body_get_direct_state($DummyRigidBody.get_rid())
+		gravity = state.get_total_gravity()
+		$DummyRigidBody.visible = false
 	
 	if not is_dead:
 		process_input(delta)
