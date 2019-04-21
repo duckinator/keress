@@ -102,3 +102,12 @@ func spawn_scene(asset, pos):
 
 func quit():
 	get_tree().quit()
+
+func set_gravity(strength, vec):
+	var scene = get_tree().current_scene
+	var spatial = Spatial.new()
+	scene.add_child(spatial)
+	var world = spatial.get_world()
+	var space = world.get_space()
+	PhysicsServer.area_set_param(space, PhysicsServer.AREA_PARAM_GRAVITY_VECTOR, strength)
+	PhysicsServer.area_set_param(space, PhysicsServer.AREA_PARAM_GRAVITY_VECTOR, vec)
