@@ -92,5 +92,13 @@ func load_new_scene(new_scene_path):
 	
 	get_tree().change_scene(new_scene_path)
 
+func spawn_scene(asset, pos):
+	var scene = load("res://" + asset + ".tscn")
+	var scene_instance = scene.instance()
+	scene_instance.set_name(asset)
+	get_parent().call_deferred("add_child", scene_instance)
+	scene_instance.set_translation(pos)
+	return scene_instance
+
 func quit():
 	get_tree().quit()

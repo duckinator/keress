@@ -2,7 +2,9 @@ extends KinematicBody
 
 var fall_damage_enabled = true
 
-const GRAVITY = -100
+const MASS = 100
+
+var gravity
 const MAX_SPEED = 80
 const JUMP_SPEED = 50
 const ACCEL = 7
@@ -39,6 +41,11 @@ func _ready():
 	adjust_health(MAX_HEALTH)
 
 func _physics_process(delta):
+	if not gravity:
+		var state = PhysicsServer.body_get_direct_state($DummyRigidBody.get_rid())
+		gravity = state.get_total_gravity().y
+		print("PLAYER GRAVITY = " + str(gravity))
+	
 	if not is_dead:
 		process_input(delta)
 		process_movement(delta)
@@ -86,7 +93,7 @@ func process_movement(delta):
 	dir.y = 0
 	dir = dir.normalized()
 	
-	vel.y += delta * GRAVITY
+	vel.y += delta * gravity
 	
 	var hvel = vel
 	hvel.y = 0
@@ -107,6 +114,9 @@ func process_movement(delta):
 	vel = move_and_slide(vel, Vector3(0, 1, 0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 	process_fall_damage(old_vel, vel)
+
+func get_velocity():
+	return vel
 
 func process_changing_weapons(delta):
 	pass

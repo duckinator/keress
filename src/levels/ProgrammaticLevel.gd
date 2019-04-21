@@ -10,6 +10,8 @@ func _ready():
 	current_level = Settings.fetch("current_level", 1)
 	load_level(current_level)
 	Globals.in_game = true
+	
+	var enemy = Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10))
 
 func _process(delta):
 	if Globals.reload_level:
