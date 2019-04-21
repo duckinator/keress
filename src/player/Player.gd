@@ -64,7 +64,7 @@ func process_input(delta):
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
 	
 	# Jumping
-	if (is_on_floor() or is_on_wall()) and Input.is_action_just_pressed("movement_jump") :
+	if (is_on_floor() or is_on_wall()) and Input.is_action_just_pressed("movement_jump"):
 		vel.y = JUMP_SPEED
 
 	# Firing weapons
@@ -101,7 +101,7 @@ func process_movement(delta):
 	hvel = hvel.linear_interpolate(target, accel * delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
-	vel = move_and_slide(vel, Vector3(0, 1, 0), 0.05, 4, deg2rad(MAX_SLOPE_ANGLE))
+	vel = move_and_slide(vel, Vector3(0, 1, 0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 func process_changing_weapons(delta):
 	pass
