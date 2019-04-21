@@ -1,5 +1,7 @@
 extends KinematicBody
 
+var fall_damage_enabled = true
+
 const GRAVITY = -100
 const MAX_SPEED = 80
 const JUMP_SPEED = 50
@@ -13,7 +15,7 @@ var vel = Vector3(0, 0, 0)
 var dir = Vector3(0, 0, 0)
 
 const MAX_HEALTH = 100
-var health = -1
+var health = 0
 
 var current_weapon = 0
 var changing_weapon
@@ -101,7 +103,10 @@ func process_movement(delta):
 	hvel = hvel.linear_interpolate(target, accel * delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
+	var old_vel = vel
 	vel = move_and_slide(vel, Vector3(0, 1, 0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
+
+	process_fall_damage(old_vel, vel)
 
 func process_changing_weapons(delta):
 	pass
@@ -114,6 +119,15 @@ func process_ui(delta):
 
 func process_respawn(delta):
 	pass
+
+func process_fall_damage(old_vel, vel):
+	# If we're going down faster than we can jump up, take damage.
+	if fall_damage_enabled and old_vel.y < -JUMP_SPEED and vel.y >= -1:
+		var tmp = int(ceil(old_vel.y / 10))
+		tmp -= tmp % 5
+		if tmp <= -5:
+			print("Fall damage: " + str(tmp))
+			adjust_health(tmp)
 
 func _input(event):
 	if is_dead:
@@ -148,7 +162,7 @@ func _input(event):
 	#		pass # Change weapons
 
 func adjust_health(diff):
-	health = clamp(health + diff, 0, MAX_HEALTH)
+	health = floor(clamp(health + diff, 0, MAX_HEALTH))
 	update_hud()
 
 func update_hud():
