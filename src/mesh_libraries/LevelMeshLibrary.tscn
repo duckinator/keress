@@ -199,7 +199,7 @@ subdivide_depth = 0
 
 points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 
-[node name="LevelMeshLibrary" type="Spatial" index="0"]
+[node name="LevelMeshLibrary" type="Spatial"]
 
 [node name="Wall" type="MeshInstance" parent="." index="0"]
 

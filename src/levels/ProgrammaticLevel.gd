@@ -70,8 +70,8 @@ func create_grid(translation, rotation):
 	var grid = $DummyGridMap.duplicate()
 	grid.global_translate(translation)
 	#grid.global_rotate(rotation, 1)
-	print("translation=" + str(translation))
-	print("rotation=" + str(rotation))
+	#print("translation=" + str(translation))
+	#print("rotation=" + str(rotation))
 	grid.rotation_degrees.x = rotation.x
 	grid.rotation_degrees.y = rotation.y
 	grid.rotation_degrees.z = rotation.z
