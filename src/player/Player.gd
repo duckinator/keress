@@ -41,10 +41,8 @@ func _ready():
 	adjust_health(MAX_HEALTH)
 
 func _physics_process(delta):
-	if not gravity:
-		var state = PhysicsServer.body_get_direct_state($DummyRigidBody.get_rid())
-		gravity = state.get_total_gravity().y
-		print("PLAYER GRAVITY = " + str(gravity))
+	var state = PhysicsServer.body_get_direct_state($DummyRigidBody.get_rid())
+	gravity = state.get_total_gravity()
 	
 	if not is_dead:
 		process_input(delta)
@@ -90,10 +88,9 @@ func process_input(delta):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func process_movement(delta):
-	dir.y = 0
 	dir = dir.normalized()
 	
-	vel.y += delta * gravity
+	vel += Vector3(delta * gravity.x, delta * gravity.y, delta * gravity.z)
 	
 	var hvel = vel
 	hvel.y = 0
