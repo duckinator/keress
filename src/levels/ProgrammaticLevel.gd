@@ -11,7 +11,7 @@ func _ready():
 	load_level(current_level)
 	Globals.in_game = true
 	
-	var enemy = Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10))
+	mobs.append(Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10)))
 
 func _process(delta):
 	if Globals.reload_level:
@@ -37,9 +37,18 @@ func next_level():
 	var next = current_level + 1
 	load_level_scene(next)
 
+func unload_level():
+	for mob in mobs:
+		mob.queue_free()
+	for grid in grids:
+		# TODO: Figure out why we're getting a null grid at the start.
+		if grid != null:
+			grid.queue_free()
+	self.queue_free()
+
 func load_level_scene(next):
 	Settings.store("current_level", next)
-	self.queue_free()
+	unload_level()
 	Globals.load_new_scene(LEVEL_SCENE)
 
 func load_level(level):
