@@ -24,6 +24,8 @@ func _ready():
 	$Panels/Settings/CheckButton_Fullscreen.pressed = Settings.fetch("fullscreen", false)
 	$Panels/Settings/CheckButton_Debug.pressed = Settings.fetch("debug", false)
 
+	$Panels/Start/Button_Continue.disabled = not Settings.fetch("has_played")
+
 	load_settings()
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -36,10 +38,12 @@ func _ready():
 
 func game_continue():
 	panel_select("none")
-	print("game continue")
+	Globals.load_new_scene("res://levels/ProgrammaticLevel.tscn")
 
 func game_new():
 	panel_select("none")
+	Settings.store("has_played", true)
+	Settings.store("current_level", 1)
 	Globals.load_new_scene("res://levels/ProgrammaticLevel.tscn")
 
 # REQUIREMENT: There should be no panel named "none".

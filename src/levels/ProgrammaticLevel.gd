@@ -12,6 +12,8 @@ var next_grids = []
 var next_entry_line = null
 var next_entry_line_offset = null
 
+var second_or_later_level = false
+
 var current_level
 var next_level
 
@@ -24,10 +26,9 @@ func _ready():
 	current_grids = data["grids"]
 	$Player.global_translate(data["start"])
 	add_entry_door()
+	second_or_later_level = true
 	
 	Globals.in_game = true
-	
-	#current_mobs.append(Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10)))
 
 func _process(delta):
 	if Globals.reload_level:
@@ -135,11 +136,17 @@ func load_level(level, offset=null):
 	for door in doors_dict:
 		doors.append(add_door(door))
 	
+	var mobs = [
+		Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10))
+	]
+	for mob in mobs:
+		add_child(mob)
+	
 	return {
 		"doors": doors,
 		"grids": grids,
 		"light": light,
-		"mobs": [], # TODO: Actually spawn mobs.
+		"mobs": mobs,
 		"start": start,
 	}
 
@@ -225,11 +232,11 @@ func build_grids(data, offset):
 			light = float(parts[1])
 			to_remove.append(line)
 		if parts[0] == "door" or parts[0] == "entry":
-			if parts[0] == "entry" and offset != null:
-				# If offset is null, this is the first level, so this isn't
-				# handled elsewhere.
+			if parts[0] == "entry" and second_or_later_level:
+				# If this isn't the first level loaded, don't add an entry
+				# door, since it'll overlap with the last exit door.
 				continue
-			doors.append(parse_door(parts[1], offset))
+			doors.append(parse_door(parts[1], offset, parts[0] == "entry"))
 	
 	for line in to_remove:
 		var idx = Array(lines).find(line)
@@ -264,13 +271,17 @@ func remove_comments(data):
 			result += line + "\n"
 	return result
 
-func parse_door(line, offset):
+func parse_door(line, offset, entry_door=false):
 	# default values
 	var door = {
 		"exit": false,
 		"locked": false,
 		"rotation": 0,
+		"entry": entry_door,
 	}
+	
+	if entry_door:
+		door["locked"] = true
 	
 	var parts = strip_all(line.split(";"))
 	door["position"] = str2vec3(parts[0])
@@ -342,8 +353,7 @@ func add_entry_door():
 		return
 	print(next_entry_line)
 	print(next_entry_line_offset)
-	var door = add_door(parse_door(next_entry_line, next_entry_line_offset))
-	door.locked = true
+	var door = add_door(parse_door(next_entry_line, next_entry_line_offset, true))
 	current_doors.append(door)
 	add_child(door)
 
