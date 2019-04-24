@@ -2,17 +2,32 @@ extends Spatial
 
 const LEVEL_SCENE = "res://levels/ProgrammaticLevel.tscn"
 
-var doors = []
-var mobs = []
-var grids
+var current_doors = []
+var current_mobs = []
+var current_grids = []
+
+var next_doors = []
+var next_mobs = []
+var next_grids = []
+var next_entry_line = null
+var next_entry_line_offset = null
+
 var current_level
+var next_level
 
 func _ready():
 	current_level = Settings.fetch("current_level", 1)
-	load_level(current_level)
+	var data = load_level(current_level)
+	
+	current_doors = data["doors"]
+	current_mobs = data["mobs"]
+	current_grids = data["grids"]
+	$Player.global_translate(data["start"])
+	add_entry_door()
+	
 	Globals.in_game = true
 	
-	mobs.append(Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10)))
+	#current_mobs.append(Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10)))
 
 func _process(delta):
 	if Globals.reload_level:
@@ -21,24 +36,72 @@ func _process(delta):
 func _input(event):
 	if not Settings.fetch("debug", false):
 		return
-	
-	if event is InputEventKey and event.pressed and event.scancode == KEY_F4:
-		print("DEBUG: Loading previous level: " + str(current_level - 1))
-		load_level_scene(current_level - 1)
-	
-	if event is InputEventKey and event.pressed and event.scancode == KEY_F5:
-		print("DEBUG: Reloading level " + str(current_level))
-		load_level_scene(current_level)
-	
-	if event is InputEventKey and event.pressed and event.scancode == KEY_F6:
-		print("DEBUG: Loading next level: " + str(current_level + 1))
-		load_level_scene(current_level + 1)
 
-func next_level():
-	var next = current_level + 1
-	load_level_scene(next)
+func preload_next_level():
+	next_level = current_level + 1
+	var offset = null
+	var door_rotation = null
+	print(current_doors)
+	
+	var exit_door_pos = null
+	var next_level_data = load_level_data(next_level)
+	if next_level_data == null:
+		print("preload_next_level(): Level #" + str(next_level) + " does not exist.")
+		return
+	
+	var lines = next_level_data.split("\n")
+	for line in lines:
+		if not " " in line:
+			continue
+		var parts = strip_all(line.strip_edges().split(" ", false, 1))
+		if parts[0] != "entry":
+			continue
+		next_entry_line = line.split(" ", false, 1)[1]
+		
+		var parts2 = strip_all(parts[1].split(";"))
+		offset = str2vec3(parts2[0])
+		
+		parts2.remove(0)
+		for part in parts2:
+			if not "=" in part:
+				continue
+			var parts3 = part.split("=", false, 1)
+			if parts3[0] == "rotation":
+				door_rotation = parts3[1]
+	
+	if offset == null:
+		print("ERROR: offset == null for level #" + str(next_level))
+		return
+	
+	if door_rotation == null:
+		door_rotation = Vector3(0, 0, 0)
+	
+	for door in current_doors:
+		if door.is_exit:
+			offset.x = door.translation.x - offset.x
+			offset.y = door.translation.y - offset.y
+			offset.z = door.translation.z + 2
+	next_entry_line_offset = offset
+	load_level(next_level, offset)
 
-func unload_level():
+func switch_to_next_level():
+	Settings.store("current_level", next_level)
+	var prev_mobs = current_mobs
+	var prev_grids = current_grids
+	var prev_doors = current_doors
+	
+	current_mobs = next_mobs
+	current_grids = next_grids
+	current_doors = next_doors
+	current_level = next_level
+	next_mobs = []
+	next_grids = []
+	next_doors = []
+	next_level = null
+	unload_level(prev_mobs, prev_grids, prev_doors)
+	add_entry_door()
+
+func unload_level(mobs, grids, doors):
 	for mob in mobs:
 		mob.queue_free()
 	for grid in grids:
@@ -47,23 +110,21 @@ func unload_level():
 			grid.queue_free()
 	for door in doors:
 		door.queue_free()
-	self.queue_free()
 
-func load_level_scene(next):
-	Settings.store("current_level", next)
-	unload_level()
-	Globals.load_new_scene(LEVEL_SCENE)
-
-func load_level(level):
+func load_level(level, offset=null):
+	if offset == null:
+		offset = Vector3(0, 0, 0)
+	
 	var data = load_level_data(level)
 	if not data:
 		print("ERROR: load_level(): data is null")
 		return
-	var result = build_grids(data)
-	grids = result[0]
-	$Player.global_translate(result[1])
+	var result = build_grids(data, offset)
+	var grids = result[0]
+	var start = result[1]
 	var light = result[2]
-	var doors_ = result[3]
+	var doors_dict = result[3]
+	var doors = []
 	
 	if light:
 		$WorldEnvironment.environment.ambient_light_energy = light
@@ -71,8 +132,16 @@ func load_level(level):
 	for grid in grids:
 		add_child(grid)
 	
-	for door in doors_:
-		add_door(door)
+	for door in doors_dict:
+		doors.append(add_door(door))
+	
+	return {
+		"doors": doors,
+		"grids": grids,
+		"light": light,
+		"mobs": [], # TODO: Actually spawn mobs.
+		"start": start,
+	}
 
 func load_level_data(level):
 	var filename = "res://levels/level-" + str(level).pad_zeros(3) + ".lvl"
@@ -96,7 +165,7 @@ func create_grid(translation, rotation):
 	grid.visible = true
 	return grid
 
-func grid(data):
+func grid(data, offset):
 	data = remove_comments(data)
 	var lines = strip_all(data.strip_edges().split("\n"))
 	var trans = null
@@ -108,6 +177,7 @@ func grid(data):
 		return null
 
 	trans = str2vec3(lines[0].split(" ", false, 1)[1])
+	trans = apply_offset(trans, offset)
 	lines.remove(0)
 	
 	if not lines[0].begins_with("r "):
@@ -132,13 +202,13 @@ func grid(data):
 				grid.set_cell_item(x, 0, z, int(line[z]))
 	return grid
 
-func build_grids(data):
+func build_grids(data, offset):
 	data = remove_comments(data)
 	var start_trans = Vector3(0, 0, 0)
 	var light = null
 	var exit = null
 	var exit_rotation = 0
-	var doors_ = []
+	var doors = []
 	
 	var lines = strip_all(data.split("\n"))
 	
@@ -149,13 +219,17 @@ func build_grids(data):
 			continue
 		var parts = line.split(" ", false, 1)
 		if parts[0] == "start":
-			start_trans = str2vec3(parts[1])
+			start_trans = apply_offset(str2vec3(parts[1]), offset)
 			to_remove.append(line)
 		if parts[0] == "light":
 			light = float(parts[1])
 			to_remove.append(line)
-		if parts[0] == "door":
-			doors_.append(parse_door(parts[1]))
+		if parts[0] == "door" or parts[0] == "entry":
+			if parts[0] == "entry" and offset != null:
+				# If offset is null, this is the first level, so this isn't
+				# handled elsewhere.
+				continue
+			doors.append(parse_door(parts[1], offset))
 	
 	for line in to_remove:
 		var idx = Array(lines).find(line)
@@ -165,8 +239,8 @@ func build_grids(data):
 	var result = []
 
 	for g in gs:
-		result.append(grid("t " + g))
-	return [result, start_trans, light, doors_]
+		result.append(grid("t " + g, offset))
+	return [result, start_trans, light, doors]
 
 func str2vec3(s, sep=" "):
 	var parts = s.strip_edges().split(sep)
@@ -190,7 +264,7 @@ func remove_comments(data):
 			result += line + "\n"
 	return result
 
-func parse_door(line):
+func parse_door(line, offset):
 	# default values
 	var door = {
 		"exit": false,
@@ -206,7 +280,6 @@ func parse_door(line):
 		var key_val = strip_all(part.split("=", false, 1))
 		var key = key_val[0]
 		var val = key_val[1]
-		print(val)
 		if key in ["rotation"]:
 			val = float(val)
 		elif val == "true":
@@ -214,6 +287,8 @@ func parse_door(line):
 		elif val == "false":
 			val = false
 		door[key] = val
+	
+	door["position"] = apply_offset(door["position"], offset)
 	
 	return door
 
@@ -228,31 +303,49 @@ func can_open_door(door):
 	if door.locked:
 		return false
 	
-	# If it's not a level exit, always let them go through.
-	if not door.level_exit:
+	# If it's not an exit, always let them go through.
+	if not door.is_exit:
 		return true
 	
 	# If it is a level exit, make sure there's no remaining mobs.
-	return len(mobs) == 0
+	return len(current_mobs) == 0
+
+func through_door(door):
+	if door.is_exit:
+		switch_to_next_level()
 
 func opening_door(door):
 	print("Door opened: " + str(door))
+	preload_next_level()
 
 func closing_door(door):
 	print("Door closed: " + str(door))
 
 func mob_died(mob):
-	if not mob in mobs:
+	if not mob in current_mobs:
 		print("WARNING: Got message about " + str(mob) + ", which we aren't tracking")
 		return
 	
-	mobs.remove(mobs.find(mob))
+	current_mobs.remove(current_mobs.find(mob))
 	mob.cleanup()
 
 func add_door(door):
 	var scene = Globals.spawn_scene("environment/door/Door", door["position"])
-	print(door)
-	doors.append(scene)
-	scene.level_exit = door["exit"]
+	next_doors.append(scene)
+	scene.is_exit = door["exit"]
 	scene.locked = door["locked"]
 	scene.rotate_y(deg2rad(door["rotation"]))
+	return scene
+
+func add_entry_door():
+	if next_entry_line == null:
+		return
+	print(next_entry_line)
+	print(next_entry_line_offset)
+	var door = add_door(parse_door(next_entry_line, next_entry_line_offset))
+	door.locked = true
+	current_doors.append(door)
+	add_child(door)
+
+func apply_offset(vec, offset):
+	return Vector3(vec.x + offset.x, vec.y + offset.y, vec.z + offset.z)

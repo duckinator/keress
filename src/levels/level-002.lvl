@@ -2,8 +2,9 @@
 
 start 10 0 2
 light 0.5
-door 10 5 0; rotation=90; locked=true
-door 10 5 40; rotation=-90; exit=true
+entry 10 5 0; rotation=90
+#door 10 5 40; rotation=-90; exit=true
+door 10 5 40; rotation=-90; exit=false
 
 t 0 0 -2
 r 0 0 0
@@ -23,9 +24,9 @@ d Main Arena - Floor
 t 0 1 -1
 r 0 90 90
 d Main Arena - Back Wall
-22222222222
-22222222222
-22222222222
+2222--22222
+2222--22222
+2222--22222
 22222222222
 22222222222
 22222222222

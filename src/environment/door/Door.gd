@@ -6,7 +6,7 @@ const OPENING = 2
 const CLOSING = 3
 
 var state = CLOSED
-var level_exit = false
+var is_exit = false
 var locked = false
 
 var left
@@ -63,3 +63,6 @@ func close():
 	
 	state = CLOSING
 	get_tree().current_scene.closing_door(self)
+
+func through():
+	get_tree().current_scene.through_door(self)
