@@ -112,7 +112,11 @@ func preload_next_level():
 			offset.y = door.translation.y - offset.y
 			offset.z = door.translation.z + 2
 	next_entry_line_offset = offset
-	load_level(next_level, offset)
+	var data = load_level(next_level, offset)
+	next_doors = data["doors"]
+	next_mobs = data["mobs"]
+	next_grids = data["grids"]
+	return data
 
 func switch_to_next_level():
 	Settings.store("current_level", next_level)
