@@ -193,8 +193,9 @@ func remove_comments(data):
 func parse_door(line):
 	# default values
 	var door = {
-		"rotation": 0,
 		"exit": false,
+		"locked": false,
+		"rotation": 0,
 	}
 	
 	var parts = strip_all(line.split(";"))
@@ -223,6 +224,10 @@ func parse_door(line):
 #	PhysicsServer.area_set_param(space, PhysicsServer.AREA_PARAM_GRAVITY_VECTOR, vec)
 
 func can_open_door(door):
+	# If it's locked, always, return false.
+	if door.locked:
+		return false
+	
 	# If it's not a level exit, always let them go through.
 	if not door.level_exit:
 		return true
@@ -249,4 +254,5 @@ func add_door(door):
 	print(door)
 	doors.append(scene)
 	scene.level_exit = door["exit"]
+	scene.locked = door["locked"]
 	scene.rotate_y(deg2rad(door["rotation"]))

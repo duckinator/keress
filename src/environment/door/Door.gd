@@ -7,6 +7,7 @@ const CLOSING = 3
 
 var state = CLOSED
 var level_exit = false
+var locked = false
 
 var left
 var right
