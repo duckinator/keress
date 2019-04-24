@@ -12,6 +12,10 @@ func _ready():
 	Globals.in_game = true
 	
 	mobs.append(Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10)))
+	
+	var door = Globals.spawn_scene("environment/door/Door", Vector3(20, 5, 15))
+	mobs.append(door)
+	door.rotate_y(deg2rad(-90))
 
 func _process(delta):
 	if Globals.reload_level:
@@ -183,3 +187,9 @@ func remove_comments(data):
 #	var space = get_world().get_space()
 #	PhysicsServer.area_set_param(space, PhysicsServer.AREA_PARAM_GRAVITY, strength)
 #	PhysicsServer.area_set_param(space, PhysicsServer.AREA_PARAM_GRAVITY_VECTOR, vec)
+
+func opening_door(door):
+	print("Door opened: " + str(door))
+
+func closing_door(door):
+	print("Door closed: " + str(door))
