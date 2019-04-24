@@ -1,7 +1,6 @@
 start 19 0 2
 light 0.5
-exit 20 5 139
-exit_rotation -90
+door 20 5 139; rotation=-90; exit=true
 
 # LOWER ARENA
   t 0 0 -2

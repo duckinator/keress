@@ -63,8 +63,7 @@ func load_level(level):
 	grids = result[0]
 	$Player.global_translate(result[1])
 	var light = result[2]
-	var exit = result[3]
-	var exit_rotation = result[4]
+	var doors_ = result[3]
 	
 	if light:
 		$WorldEnvironment.environment.ambient_light_energy = light
@@ -72,7 +71,8 @@ func load_level(level):
 	for grid in grids:
 		add_child(grid)
 	
-	add_exit(exit, exit_rotation)
+	for door in doors_:
+		add_door(door)
 
 func load_level_data(level):
 	var filename = "res://levels/level-" + str(level).pad_zeros(3) + ".lvl"
@@ -138,6 +138,7 @@ func build_grids(data):
 	var light = null
 	var exit = null
 	var exit_rotation = 0
+	var doors_ = []
 	
 	var lines = strip_all(data.split("\n"))
 	
@@ -153,10 +154,8 @@ func build_grids(data):
 		if parts[0] == "light":
 			light = float(parts[1])
 			to_remove.append(line)
-		if parts[0] == "exit":
-			exit = str2vec3(parts[1])
-		if parts[0] == "exit_rotation":
-			exit_rotation = float(parts[1])
+		if parts[0] == "door":
+			doors_.append(parse_door(parts[1]))
 	
 	for line in to_remove:
 		var idx = Array(lines).find(line)
@@ -167,7 +166,7 @@ func build_grids(data):
 
 	for g in gs:
 		result.append(grid("t " + g))
-	return [result, start_trans, light, exit, exit_rotation]
+	return [result, start_trans, light, doors_]
 
 func str2vec3(s, sep=" "):
 	var parts = s.strip_edges().split(sep)
@@ -190,6 +189,32 @@ func remove_comments(data):
 		if len(stripped_line) > 0 and stripped_line[0] != "#":
 			result += line + "\n"
 	return result
+
+func parse_door(line):
+	# default values
+	var door = {
+		"rotation": 0,
+		"exit": false,
+	}
+	
+	var parts = strip_all(line.split(";"))
+	door["position"] = str2vec3(parts[0])
+	parts.remove(0)
+	
+	for part in parts:
+		var key_val = strip_all(part.split("=", false, 1))
+		var key = key_val[0]
+		var val = key_val[1]
+		print(val)
+		if key in ["rotation"]:
+			val = float(val)
+		elif val == "true":
+			val = true
+		elif val == "false":
+			val = false
+		door[key] = val
+	
+	return door
 
 # FIXME: set_gravity() is broken.
 #func set_gravity(strength, vec):
@@ -219,8 +244,9 @@ func mob_died(mob):
 	mobs.remove(mobs.find(mob))
 	mob.cleanup()
 
-func add_exit(pos, rotation):
-	var door = Globals.spawn_scene("environment/door/Door", pos)
-	doors.append(door)
-	door.level_exit = true
-	door.rotate_y(deg2rad(rotation))
+func add_door(door):
+	var scene = Globals.spawn_scene("environment/door/Door", door["position"])
+	print(door)
+	doors.append(scene)
+	scene.level_exit = door["exit"]
+	scene.rotate_y(deg2rad(door["rotation"]))
