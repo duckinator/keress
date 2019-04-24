@@ -13,11 +13,6 @@ func _ready():
 	Globals.in_game = true
 	
 	mobs.append(Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10)))
-	
-	var door = Globals.spawn_scene("environment/door/Door", Vector3(20, 5, 139))
-	doors.append(door)
-	door.level_exit = true
-	door.rotate_y(deg2rad(-90))
 
 func _process(delta):
 	if Globals.reload_level:
@@ -65,15 +60,19 @@ func load_level(level):
 		print("ERROR: load_level(): data is null")
 		return
 	var result = build_grids(data)
-	$Player.global_translate(result[0])
-	var light = result[1]
-	grids = result[2]
+	grids = result[0]
+	$Player.global_translate(result[1])
+	var light = result[2]
+	var exit = result[3]
+	var exit_rotation = result[4]
 	
 	if light:
 		$WorldEnvironment.environment.ambient_light_energy = light
 
 	for grid in grids:
 		add_child(grid)
+	
+	add_exit(exit, exit_rotation)
 
 func load_level_data(level):
 	var filename = "res://levels/level-" + str(level).pad_zeros(3) + ".lvl"
@@ -137,6 +136,8 @@ func build_grids(data):
 	data = remove_comments(data)
 	var start_trans = Vector3(0, 0, 0)
 	var light = null
+	var exit = null
+	var exit_rotation = 0
 	
 	var lines = strip_all(data.split("\n"))
 	
@@ -152,6 +153,10 @@ func build_grids(data):
 		if parts[0] == "light":
 			light = float(parts[1])
 			to_remove.append(line)
+		if parts[0] == "exit":
+			exit = str2vec3(parts[1])
+		if parts[0] == "exit_rotation":
+			exit_rotation = float(parts[1])
 	
 	for line in to_remove:
 		var idx = Array(lines).find(line)
@@ -162,7 +167,7 @@ func build_grids(data):
 
 	for g in gs:
 		result.append(grid("t " + g))
-	return [start_trans, light, result]
+	return [result, start_trans, light, exit, exit_rotation]
 
 func str2vec3(s, sep=" "):
 	var parts = s.strip_edges().split(sep)
@@ -213,3 +218,9 @@ func mob_died(mob):
 	
 	mobs.remove(mobs.find(mob))
 	mob.cleanup()
+
+func add_exit(pos, rotation):
+	var door = Globals.spawn_scene("environment/door/Door", pos)
+	doors.append(door)
+	door.level_exit = true
+	door.rotate_y(deg2rad(rotation))
