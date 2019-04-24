@@ -1,24 +1,36 @@
 extends RigidBody
 
-const VIEW_DISTANCE = 20
+const NONE = 0
+const TURN_LEFT = 1
+const TURN_RIGHT = 2
+var turn_state = NONE
+const MOVE_FORWARD = 3
+const MOVE_BACKWARD = 4
+const MOVE_LEFT = 5
+const MOVE_RIGHT = 6
+var move_state = NONE
+
+const VIEW_DISTANCE = 60
 
 const MASS = 150
 
 var MAX_HEALTH = 100
 var health = 0
 
+# Direction being looked at.
+var dir = Vector3(0, 0, 0)
+var goal_direction = null
+
 var left_ray
 var right_ray
+var center_ray
 
 var player_position_guess = Vector3(0, 0, 0)
-var last_left = null
-var last_right = null
-var last_left_time = 0
-var last_right_time = 0
 
 func _ready():
 	left_ray = $RayCast_Left
 	right_ray = $RayCast_Right
+	center_ray = $RayCast_Center
 	health = MAX_HEALTH
 	self.mode = MODE_CHARACTER
 	self.mass = MASS
@@ -27,9 +39,14 @@ func _ready():
 	connect("body_entered", self, "_process_body_entered")
 
 func _process(delta):
-	# Called every frame. Delta is time since last frame.
-	# Update game logic here.
-	pass
+	if turn_state == NONE:
+		return
+	
+	if turn_state == TURN_LEFT:
+		rotate_y(deg2rad(5))
+	
+	if turn_state == TURN_RIGHT:
+		rotate_y(deg2rad(-5))
 
 func die():
 	get_tree().current_scene.mob_died(self)
@@ -67,32 +84,33 @@ func _process_body_entered(body):
 			var damage = ceil(force / 200)
 			adjust_health(-damage)
 
-func found_player(raycast, player, position):
-	if raycast == left_ray:
-		last_left_time = OS.get_ticks_msec()
-		last_left = player
-		if last_right == player:
-			print("PLAYER IS GOING LEFT")
-	
-	if raycast == right_ray:
-		last_right_time = OS.get_ticks_msec()
-		last_right = player
-		if last_left == player:
-			print("PLAYER IS GOING RIGHT")
+func noise_from(position, loudness):
+	# If it was loud, it should be investigated.
+	# If it wasn't, just glance over.
+	if loudness >= 1:
+		print("TODO: Look at the loud noise at " + str(position))
+		#goal_direction = dir
 
-	var diff = abs(last_left_time - last_right_time)
-	if diff > 100:
-		print("    Pretty sure they're still in front of me.")
-	else:
-		print("    They took " + str(diff) + " milliseconds.")
-	#print("  raycast  = " + str(raycast))
-	#print("  position = " + str(position))
+func found_player(raycast, player, position):
+	if center_ray.get_collider() == player:
+		turn_state = NONE
+		return
+	
+	if left_ray.get_collider() == player and right_ray.get_collider() != player:
+		turn_state = TURN_LEFT
+		return
+	
+	if left_ray.get_collider() != player and right_ray.get_collider() == player:
+		turn_state = TURN_RIGHT
+		return
 
 func search_for_player():
 	#print("SEARCHING FOR PLAYER")
+	#turn_state = NONE
 	pass
 
 func found_object(raycast, object, position):
-	print("FOUND OBJECT")
-	print("  object = " + str(object))
-	print("  position = " + str(position))
+	#print("FOUND OBJECT")
+	#print("  object = " + str(object))
+	#print("  position = " + str(position))
+	pass

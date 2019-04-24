@@ -2,6 +2,8 @@ extends Spatial
 
 const LEVEL_SCENE = "res://levels/ProgrammaticLevel.tscn"
 
+const NOISE_DROPOFF = 15
+
 var current_doors = []
 var current_mobs = []
 var current_grids = []
@@ -393,3 +395,10 @@ func add_entry_door():
 
 func apply_offset(vec, offset):
 	return Vector3(vec.x + offset.x, vec.y + offset.y, vec.z + offset.z)
+
+func player_noise(pos, loudness):
+	for mob in current_mobs:
+		var mob_pos = mob.translation
+		var distance = mob_pos.distance_to(pos)
+		loudness *= (NOISE_DROPOFF / distance)
+		mob.noise_from(pos, loudness)

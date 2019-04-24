@@ -11,6 +11,9 @@ const ACCEL = 7
 const DEACCEL = 16
 const MAX_SLOPE_ANGLE = 40
 
+const LOUDNESS_CLIMB = 1
+const LOUDNESS_FALL_DAMAGE = 3
+
 var MOUSE_SENSITIVITY = 0.2
 
 var vel = Vector3(0, 0, 0)
@@ -136,6 +139,7 @@ func process_fall_damage(old_vel, vel):
 		if tmp <= -5:
 			print("Fall damage: " + str(tmp))
 			adjust_health(tmp)
+			get_tree().current_scene.player_noise(translation, LOUDNESS_FALL_DAMAGE)
 
 func _input(event):
 	if is_dead:
