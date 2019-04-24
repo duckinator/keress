@@ -18,9 +18,18 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
+func die():
+	get_tree().current_scene.mob_died(self)
+
+func cleanup():
+	# This can be expanded by adding a death animation and such later.
+	queue_free()
+
 func adjust_health(value):
 	health = clamp(health + value, 0, MAX_HEALTH)
 	print(str(self) + ".health = " + str(health))
+	if health <= 0:
+		die()
 
 func vel_to_speed(vel):
 	var x = abs(vel.x)

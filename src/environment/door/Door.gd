@@ -6,13 +6,13 @@ const OPENING = 2
 const CLOSING = 3
 
 var state = CLOSED
-
-const is_door = true
+var level_exit = false
 
 var left
 var right
 
 func _ready():
+	set_meta("is_door", true)
 	left = $Left_Half
 	right = $Right_Half
 	close()
@@ -49,6 +49,9 @@ func _physics_process(delta):
 func open():
 	if state != CLOSED:
 		return
+	
+	if not get_tree().current_scene.can_open_door(self):
+		return false
 	
 	state = OPENING
 	get_tree().current_scene.opening_door(self)

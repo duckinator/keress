@@ -2,6 +2,7 @@ extends Spatial
 
 const LEVEL_SCENE = "res://levels/ProgrammaticLevel.tscn"
 
+var doors = []
 var mobs = []
 var grids
 var current_level
@@ -13,8 +14,9 @@ func _ready():
 	
 	mobs.append(Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10)))
 	
-	var door = Globals.spawn_scene("environment/door/Door", Vector3(20, 5, 15))
-	mobs.append(door)
+	var door = Globals.spawn_scene("environment/door/Door", Vector3(20, 5, 139))
+	doors.append(door)
+	door.level_exit = true
 	door.rotate_y(deg2rad(-90))
 
 func _process(delta):
@@ -48,6 +50,8 @@ func unload_level():
 		# TODO: Figure out why we're getting a null grid at the start.
 		if grid != null:
 			grid.queue_free()
+	for door in doors:
+		door.queue_free()
 	self.queue_free()
 
 func load_level_scene(next):
@@ -188,8 +192,24 @@ func remove_comments(data):
 #	PhysicsServer.area_set_param(space, PhysicsServer.AREA_PARAM_GRAVITY, strength)
 #	PhysicsServer.area_set_param(space, PhysicsServer.AREA_PARAM_GRAVITY_VECTOR, vec)
 
+func can_open_door(door):
+	# If it's not a level exit, always let them go through.
+	if not door.level_exit:
+		return true
+	
+	# If it is a level exit, make sure there's no remaining mobs.
+	return len(mobs) == 0
+
 func opening_door(door):
 	print("Door opened: " + str(door))
 
 func closing_door(door):
 	print("Door closed: " + str(door))
+
+func mob_died(mob):
+	if not mob in mobs:
+		print("WARNING: Got message about " + str(mob) + ", which we aren't tracking")
+		return
+	
+	mobs.remove(mobs.find(mob))
+	mob.cleanup()
