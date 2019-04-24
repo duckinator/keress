@@ -11,6 +11,7 @@ var next_mobs = []
 var next_grids = []
 var next_entry_line = null
 var next_entry_line_offset = null
+var next_queued = false
 
 var second_or_later_level = false
 
@@ -32,13 +33,41 @@ func _ready():
 
 func _process(delta):
 	if Globals.reload_level:
-		load_level(current_level)
+		Globals.load_new_scene(LEVEL_SCENE)
+		queue_free()
+		Globals.reload_level = false
 
 func _input(event):
 	if not Settings.fetch("debug", false):
 		return
+	
+	if event is InputEventKey and event.pressed and event.scancode == KEY_F4:
+		if load_level(current_level - 1) == null:
+			print("WARNING: No previous level (" + str(current_level - 1) + ") to load.")
+			return
+		print("DEBUG: Loading previous level: " + str(current_level - 1))
+		Settings.store("current_level", current_level - 1)
+		Globals.reload_level = true
+
+	
+	if event is InputEventKey and event.pressed and event.scancode == KEY_F5:
+		print("DEBUG: Reloading level " + str(current_level))
+		Globals.reload_level = true
+
+	if event is InputEventKey and event.pressed and event.scancode == KEY_F6:
+		if load_level(current_level + 1) == null:
+			print("WARNING: No next level (" + str(current_level + 1) + ") to load.")
+			return
+		print("DEBUG: Loading next level: " + str(current_level + 1))
+		Settings.store("current_level", current_level + 1)
+		Globals.reload_level = true
 
 func preload_next_level():
+	if next_queued:
+		print("WARNING: preload_next_level(): Next level already loaded!")
+		return
+	
+	next_queued = true
 	next_level = current_level + 1
 	var offset = null
 	var door_rotation = null
@@ -101,6 +130,7 @@ func switch_to_next_level():
 	next_level = null
 	unload_level(prev_mobs, prev_grids, prev_doors)
 	add_entry_door()
+	next_queued = false
 
 func unload_level(mobs, grids, doors):
 	for mob in mobs:
@@ -137,7 +167,7 @@ func load_level(level, offset=null):
 		doors.append(add_door(door))
 	
 	var mobs = [
-		Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", Vector3(10, 3, 10))
+		Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(Vector3(10, 3, 10), offset))
 	]
 	for mob in mobs:
 		add_child(mob)
