@@ -125,7 +125,7 @@ func state_transition(current_state, delta):
 	elif current_state == EVADE:
 		evade(last_state, delta)
 	else:
-		print("UNKNOWN STATE: " + str(current_state))
+		printerr("UNKNOWN STATE: " + str(current_state))
 	
 	last_state = current_state
 
@@ -137,11 +137,11 @@ func see_player(ray):
 	return obj != null and obj is KinematicBody
 
 func patrol(last_state, delta):
-	print("PATROLING")
+	Debug.print("PATROLING")
 	return
 
 	if see_player("left") or see_player("center") or see_player("right"):
-		print("  FOUND THE PLAYER")
+		Debug.print("  FOUND THE PLAYER")
 		state = ATTACK
 	
 	if obstructed("left") and obstructed("center") and obstructed("right"):
@@ -171,15 +171,16 @@ func patrol(last_state, delta):
 		translate(Vector3(0, 0, 1))
 		return
 	
-	print("  " + str(self) +  " DOESN'T KNOW HOW TO PATROL. :(")
+	printerr("  " + str(self) +  " DOESN'T KNOW HOW TO PATROL. :(")
 
 func search(last_state, delta):
-	print("SEARCHING")
+	Debug.print("SEARCHING")
 
 var attack_offset
 var attack_path
 var last_target_translation = null
 func attack(last_state, delta):
+	Debug.print("ATTACKING (" + str(self) + ")")
 	var need_new_path = false
 	var should_move = true
 	
@@ -193,7 +194,7 @@ func attack(last_state, delta):
 		should_move = false
 	
 	if need_new_path:
-		print("UPDATING PATH")
+		Debug.print("  UPDATING PATH")
 		last_target_translation = target.translation
 		attack_path = map.get_path(translation, target.translation)
 		attack_offset = 0
@@ -201,14 +202,12 @@ func attack(last_state, delta):
 	if should_move:
 		translation = attack_path.interpolate_baked(attack_offset)
 		attack_offset += 0.25
-	
-	print("ATTACKING")
 
 func defend(last_state, delta):
-	print("DEFENDING")
+	Debug.print("DEFENDING")
 
 func evade(last_state, delta):
-	print("EVADING")
+	Debug.print("EVADING")
 
 
 

@@ -71,12 +71,13 @@ func close_popup():
 		popup = null
 		closing_popup = true
 
-func set_debug(debug_on):
-	if debug_on:
-		if debug_display == null:
-			debug_display = DEBUG_SCENE.instance()
-			canvas_layer.add_child(debug_display)
-	elif debug_display:
+func add_debug_display():
+	if debug_display == null:
+		debug_display = DEBUG_SCENE.instance()
+		canvas_layer.add_child(debug_display)
+
+func remove_debug_display():
+	if debug_display:
 		debug_display.queue_free()
 		debug_display = null
 

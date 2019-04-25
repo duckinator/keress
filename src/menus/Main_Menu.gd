@@ -68,7 +68,7 @@ func toggle_debug():
 	load_settings()
 
 func load_settings():
-	Globals.set_debug($Panels/Settings/CheckButton_Debug.pressed)
+	Debug.enabled = $Panels/Settings/CheckButton_Debug.pressed
 	OS.window_fullscreen = $Panels/Settings/CheckButton_Fullscreen.pressed
 	OS.vsync_enabled = $Panels/Settings/CheckButton_VSync.pressed
 	#$Panels/Settings/HSlider_Joypad_Sensitivity = Globals.joypad_sensitivity
