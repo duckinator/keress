@@ -20,7 +20,10 @@ var second_or_later_level = false
 var current_level
 var next_level
 
+var navigation
+
 func _ready():
+	navigation = $Navigation
 	current_level = Settings.fetch("current_level", 1)
 	var data = load_level(current_level)
 	
@@ -32,6 +35,17 @@ func _ready():
 	second_or_later_level = true
 	
 	Globals.in_game = true
+
+func get_path(start, end):
+	var points = navigation.get_simple_path(start, end)
+	if len(points) == 0:
+		return
+	
+	var path = Curve3D.new()
+	for point in points:
+		point.y += 2 # HACK: idk why i need this.
+		path.add_point(point)
+	return path
 
 func _process(delta):
 	if Globals.reload_level:
@@ -167,7 +181,7 @@ func load_level(level, offset=null):
 		$WorldEnvironment.environment.ambient_light_energy = light
 
 	for grid in grids:
-		add_child(grid)
+		navigation.add_child(grid)
 	
 	for door in doors_dict:
 		doors.append(add_door(door))

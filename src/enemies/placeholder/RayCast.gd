@@ -8,7 +8,7 @@ func _ready():
 
 func _process(delta):
 	if not is_colliding():
-		parent.search_for_player()
+		parent.found_nothing(self)
 		return
 	
 	var collider = get_collider()
