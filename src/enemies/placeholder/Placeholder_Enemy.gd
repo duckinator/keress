@@ -51,6 +51,7 @@ var senses = {
 var map
 var player
 var target
+var target_translation
 
 var backoff_distance = 6
 
@@ -154,7 +155,8 @@ func _process_body_entered(body):
 func noise_from(position, loudness):
 	# If it was loud, it should be investigated.
 	if loudness >= 1:
-		print("TODO: Handle the loud noise at " + str(position))
+		Debug.print("Heard noise at " + str(position) + " (loudness=" + str(loudness) + ")")
+		senses["hearing"].append(position)
 
 var last_state = null
 func state_transition(current_state, delta):
@@ -232,7 +234,11 @@ func chase(last_state, backoff=null, rotated=false, meander=false, meander_min=n
 	else:
 		offset = Vector3(0, 0, 0)
 	
-	var distance_check = map.get_path(translation, target.translation)
+	
+	if target_translation == null:
+		target_translation = target.translation
+	
+	var distance_check = map.get_path(translation, target_translation)
 	if state != last_state or chase_path == null or last_target_translation == null:
 		need_new_path = true
 	elif distance_check.get_baked_length() > backoff:
@@ -260,6 +266,11 @@ func chase(last_state, backoff=null, rotated=false, meander=false, meander_min=n
 	if see_player("left") or see_player("center") or see_player("right"):
 		evade_cooldown_start()
 		target = player
+		set_state(EVADE)
+	elif len(senses["hearing"]) > 0:
+		target = null
+		target_translation = senses["hearing"][0]
+		senses["hearing"].remove(0)
 		set_state(EVADE)
 
 
