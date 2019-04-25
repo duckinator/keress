@@ -54,6 +54,11 @@ var target
 
 var backoff_distance = 6
 
+var state_change_cooldown_timer
+var can_change_state
+
+var evade_cooldown_timer
+
 func _ready():
 	map = get_node('..')
 	player = get_node("../Player")
@@ -63,12 +68,48 @@ func _ready():
 	center_ray = $RayCast_Center
 	left_side_ray = $RayCast_Left_Side
 	right_side_ray = $RayCast_Right_Side
+	
+	state_change_cooldown_timer = Timer.new()
+	state_change_cooldown_timer.one_shot = true
+	state_change_cooldown_timer.connect("timeout", self, "_state_change_cooldown_end")
+	_state_change_cooldown_start()
+	
+	evade_cooldown_timer = Timer.new()
+	evade_cooldown_timer.one_shot = true
+	evade_cooldown_timer.connect("timeout", self, "_evade_cooldown_end")
+	
+	can_change_state = true
+	
 	health = MAX_HEALTH
 	self.mode = MODE_CHARACTER
 	self.mass = MASS
 	set_contact_monitor(true)
 	set_max_contacts_reported(5)
 	connect("body_entered", self, "_process_body_entered")
+
+func _state_change_cooldown_start():
+	can_change_state = false
+	state_change_cooldown_timer.wait_time = rand_range(1, 5)
+	state_change_cooldown_timer.start()
+
+func _state_change_cooldown_end():
+	can_change_state = true
+
+func evade_cooldown_start():
+	evade_cooldown_timer.wait_time = rand_range(3, 20)
+	evade_cooldown_timer.start()
+
+func _evade_cooldown_end():
+	_state_change_cooldown_end()
+	set_state(PATROL)
+
+func set_state(new_state):
+	if can_change_state:
+		_state_change_cooldown_start()
+		state = new_state
+
+func get_state():
+	return state
 
 func _process(delta):
 	state_transition(state, delta)
@@ -98,14 +139,13 @@ func impact_to_force(colider, colider_vel):
 
 func _process_body_entered(body):
 	if body.has_method("get_last_velocity"):
-		state = ATTACK # We bumped into the player!
+		set_state(EVADE) # We bumped into the player!
 		var vel = body.get_last_velocity()
 		var force = impact_to_force(body, vel)
 		
 		var height = $MeshInstance.mesh.height
 		# If the player is on top of the enemy, it's a curb stomp.
 		if floor(body.translation.y) > floor(self.translation.y + height):
-			state = EVADE
 			var gravity = Globals.get_total_gravity_for(self)
 			force = impact_to_force(body, Vector3(vel.x, gravity.y, vel.z))
 			var damage = ceil(force / 200)
@@ -151,7 +191,7 @@ var patrol_path
 func patrol(last_state, delta):
 	Debug.print("PATROLING (" + str(self) + ")")
 	target = get_parent().exit_door()
-	chase(last_state, true, true)
+	chase(last_state, 20, true, true)
 
 func search(last_state, delta):
 	Debug.print("SEARCHING")
@@ -160,18 +200,42 @@ func attack(last_state, delta):
 	Debug.print("ATTACKING (" + str(self) + ")")
 	target = player
 	chase(last_state)
+	set_state(EVADE)
+
+func defend(last_state, delta):
+	Debug.print("DEFENDING")
+
+func evade(last_state, delta):
+	Debug.print("EVADING")
+	target = player
+	chase(last_state, 0, false, true, -10, 10)
 
 var chase_offset
 var chase_path
 var last_target_translation = null
-func chase(last_state, rotated=false, meander=false):
+func chase(last_state, backoff=null, rotated=false, meander=false, meander_min=null, meander_max=null):
 	var need_new_path = false
 	var should_move = true
+	if backoff == null:
+		backoff = backoff_distance
+	if meander_min == null:
+		meander_min = 0
+	if meander_max == null:
+		meander_max = 10
+	
+	var offset
+	if meander:
+		var vals = []
+		for i in range(0, 3):
+			vals.append(rand_range(meander_min, meander_max))
+		offset = Vector3(vals[0], vals[1], vals[2])
+	else:
+		offset = Vector3(0, 0, 0)
 	
 	var distance_check = map.get_path(translation, target.translation)
 	if state != last_state or chase_path == null or last_target_translation == null:
 		need_new_path = true
-	elif distance_check.get_baked_length() >= backoff_distance:
+	elif distance_check.get_baked_length() > backoff:
 		need_new_path = (chase_path.get_baked_length() - chase_offset) <= 2
 	else:
 		# We are at or closer than the backoff distance; no need to move.
@@ -180,8 +244,11 @@ func chase(last_state, rotated=false, meander=false):
 	if need_new_path:
 		Debug.print("  UPDATING PATH")
 		last_target_translation = target.translation
-		chase_path = map.get_path(translation, target.translation)
+		chase_path = map.get_path(translation, target.translation + offset)
 		chase_offset = 0
+	
+	if chase_path == null:
+		return
 	
 	if should_move:
 		translation = chase_path.interpolate_baked(chase_offset)
@@ -191,15 +258,9 @@ func chase(last_state, rotated=false, meander=false):
 	#	rotate(Vector3(0, 1, 0), rand_range(85, 95))
 	
 	if see_player("left") or see_player("center") or see_player("right"):
+		evade_cooldown_start()
 		target = player
-		state = ATTACK
-
-func defend(last_state, delta):
-	Debug.print("DEFENDING")
-
-func evade(last_state, delta):
-	Debug.print("EVADING")
-
+		set_state(EVADE)
 
 
 func found_player(raycast, player, position):
