@@ -76,7 +76,7 @@ subdivide_width = 0
 subdivide_height = 0
 subdivide_depth = 0
 
-[node name="Placeholder_Enemy" type="RigidBody"]
+[node name="Placeholder_Enemy" type="RigidBody" index="0"]
 
 input_ray_pickable = true
 input_capture_on_drag = false
@@ -156,7 +156,27 @@ collision_mask = 1
 script = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="MeshInstance2" type="MeshInstance" parent="." index="5"]
+[node name="RayCast_Left_Side" type="RayCast" parent="." index="5"]
+
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 1, -1 )
+enabled = true
+exclude_parent = true
+cast_to = Vector3( 10, 0, 0 )
+collision_mask = 1
+script = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="RayCast_Right_Side" type="RayCast" parent="." index="6"]
+
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 0, 1, 1 )
+enabled = true
+exclude_parent = true
+cast_to = Vector3( 10, 0, 0 )
+collision_mask = 1
+script = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="MeshInstance2" type="MeshInstance" parent="." index="7"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, 0 )
 layers = 1

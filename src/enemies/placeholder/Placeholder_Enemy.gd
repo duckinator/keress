@@ -14,6 +14,8 @@ var goal_direction = null
 var left_ray
 var right_ray
 var center_ray
+var left_side_ray
+var right_side_ray
 
 var player_position_guess = Vector3(0, 0, 0)
 
@@ -59,6 +61,8 @@ func _ready():
 	left_ray = $RayCast_Left
 	right_ray = $RayCast_Right
 	center_ray = $RayCast_Center
+	left_side_ray = $RayCast_Left_Side
+	right_side_ray = $RayCast_Right_Side
 	health = MAX_HEALTH
 	self.mode = MODE_CHARACTER
 	self.mass = MASS
@@ -130,65 +134,45 @@ func state_transition(current_state, delta):
 	last_state = current_state
 
 func obstructed(ray):
-	return senses["vision"][ray] != null
+	var obj = senses["vision"][ray]
+	if obj == null:
+		return false
+	
+	var path = map.get_path(translation, obj.translation)
+	print(path, path.get_baked_length())
+	return path.get_baked_length() <= 40
 
 func see_player(ray):
 	var obj = senses["vision"][ray]
 	return obj != null and obj is KinematicBody
 
+var patrol_offset
+var patrol_path
 func patrol(last_state, delta):
-	Debug.print("PATROLING")
-	return
-
-	if see_player("left") or see_player("center") or see_player("right"):
-		Debug.print("  FOUND THE PLAYER")
-		state = ATTACK
-	
-	if obstructed("left") and obstructed("center") and obstructed("right"):
-		# If everything is obstructed, turn.
-		if not obstructed("left-side"):
-			rotate(Vector3(0, 1, 0), deg2rad(-90))
-		elif not obstructed("right-side"):
-			rotate(Vector3(0, 1, 0), deg2rad(90))
-		else:
-			rotate(Vector3(0, 1, 0), deg2rad(180))
-		return
-	
-	if not obstructed("left") and not obstructed("center") and not obstructed("right"):
-		# If there's no obstruction at all, move forward.
-		translate(Vector3(1, 0, 0))
-		return
-	
-	if not obstructed("left") and obstructed("right"):
-		# If the left ray is unobstructed, but the right one is obstructed,
-		# move to the left.
-		translate(Vector3(0, 0, -1))
-		return
-	
-	if obstructed("left") and not obstructed("right"):
-		# If the left ray is obstructed, but the right one is unobstructed,
-		# move to the right.
-		translate(Vector3(0, 0, 1))
-		return
-	
-	printerr("  " + str(self) +  " DOESN'T KNOW HOW TO PATROL. :(")
+	Debug.print("PATROLING (" + str(self) + ")")
+	target = get_parent().exit_door()
+	chase(last_state, true, true)
 
 func search(last_state, delta):
 	Debug.print("SEARCHING")
 
-var attack_offset
-var attack_path
-var last_target_translation = null
 func attack(last_state, delta):
 	Debug.print("ATTACKING (" + str(self) + ")")
+	target = player
+	chase(last_state)
+
+var chase_offset
+var chase_path
+var last_target_translation = null
+func chase(last_state, rotated=false, meander=false):
 	var need_new_path = false
 	var should_move = true
 	
 	var distance_check = map.get_path(translation, target.translation)
-	if last_state != ATTACK or attack_path == null or last_target_translation == null:
+	if state != last_state or chase_path == null or last_target_translation == null:
 		need_new_path = true
 	elif distance_check.get_baked_length() >= backoff_distance:
-		need_new_path = (attack_path.get_baked_length() - attack_offset) <= 2
+		need_new_path = (chase_path.get_baked_length() - chase_offset) <= 2
 	else:
 		# We are at or closer than the backoff distance; no need to move.
 		should_move = false
@@ -196,12 +180,19 @@ func attack(last_state, delta):
 	if need_new_path:
 		Debug.print("  UPDATING PATH")
 		last_target_translation = target.translation
-		attack_path = map.get_path(translation, target.translation)
-		attack_offset = 0
+		chase_path = map.get_path(translation, target.translation)
+		chase_offset = 0
 	
 	if should_move:
-		translation = attack_path.interpolate_baked(attack_offset)
-		attack_offset += 0.25
+		translation = chase_path.interpolate_baked(chase_offset)
+		chase_offset += 0.25
+	
+	#if rotated:
+	#	rotate(Vector3(0, 1, 0), rand_range(85, 95))
+	
+	if see_player("left") or see_player("center") or see_player("right"):
+		target = player
+		state = ATTACK
 
 func defend(last_state, delta):
 	Debug.print("DEFENDING")
@@ -229,10 +220,10 @@ func raycast_name(raycast):
 		return "right"
 	elif raycast == center_ray:
 		return "center"
-	#elif raycast == left_side_ray:
-	#	return "left-side"
-	#elif raycast == right_side_ray:
-	#	return "right-side"
+	elif raycast == left_side_ray:
+		return "left-side"
+	elif raycast == right_side_ray:
+		return "right-side"
 	else:
 		print("UNKNOWN RAYCAST: " + str(raycast))
 		return "UNKNOWN"

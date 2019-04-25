@@ -407,6 +407,12 @@ func add_entry_door():
 	current_doors.append(door)
 	add_child(door)
 
+func exit_door():
+	for door in current_doors:
+		if door.is_exit:
+			return door
+	return null
+
 func apply_offset(vec, offset):
 	return Vector3(vec.x + offset.x, vec.y + offset.y, vec.z + offset.z)
 
