@@ -11,6 +11,9 @@ const ACCEL = 7
 const DEACCEL = 16
 const MAX_SLOPE_ANGLE = 40
 
+const SOUND_CLIMB = null
+const SOUND_FALL_DAMAGE = null
+
 const LOUDNESS_CLIMB = 1
 const LOUDNESS_FALL_DAMAGE = 3
 
@@ -139,7 +142,7 @@ func process_fall_damage(old_vel, vel):
 		if tmp <= -5:
 			print("Fall damage: " + str(tmp))
 			adjust_health(tmp)
-			get_tree().current_scene.player_noise(translation, LOUDNESS_FALL_DAMAGE)
+			emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
 
 func _input(event):
 	if is_dead:
@@ -182,6 +185,9 @@ func update_hud():
 	$HUD/Panel_Left/Health_Bar.value = health
 	# TODO: Handle weapon/ammo.
 
+func emit_sound(trans, sound, loudness):
+	# TODO: Actually play the noise.
+	get_tree().current_scene.player_noise(translation, loudness)
 
 func safe_rotate(vec):
 	rotation_helper.rotate_x(deg2rad(vec.y * MOUSE_SENSITIVITY * -1))
