@@ -191,7 +191,7 @@ func see_player(ray):
 var patrol_offset
 var patrol_path
 func patrol(last_state, delta):
-	Debug.print("PATROLING (" + str(self) + ")")
+	#Debug.print("PATROLING (" + str(self) + ")")
 	target = get_parent().exit_door()
 	chase(last_state, 20, true, true)
 

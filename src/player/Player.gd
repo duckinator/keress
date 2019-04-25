@@ -85,8 +85,8 @@ func process_input(delta):
 		vel.y = JUMP_SPEED
 
 	# Firing weapons
-	#if Input.is_action_pressed("fire"):
-	#	fire_weapon()
+	if Input.is_action_pressed("fire"):
+		fire_weapon()
 
 	# Reloading weapons
 	#if Input.is_action_just_pressed("reload") or current_weapon.ammo_in_weapon <= 0:
@@ -143,6 +143,28 @@ func process_fall_damage(old_vel, vel):
 			print("Fall damage: " + str(tmp))
 			adjust_health(tmp)
 			emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
+
+var fire_rate = 5 # per second
+var fire_timeout = null
+func fire_weapon():
+	if fire_timeout != null:
+		return
+	
+	fire_timeout = Timer.new()
+	fire_timeout.connect("timeout", self, "_fire_timeout_reset")
+	fire_timeout.wait_time = 1.0 / fire_rate
+	add_child(fire_timeout)
+	fire_timeout.start()
+	
+	var bullet = Globals.spawn_scene("weapons/Bullet", translation + Vector3(1, 0, 0))
+	bullet.apply_impulse(Vector3(0, 0, 0), Vector3(20, 0, 0))
+
+func _fire_timeout_reset():
+	remove_child(fire_timeout)
+	fire_timeout = null
+
+func reload_weapon():
+	pass
 
 func _input(event):
 	if is_dead:
