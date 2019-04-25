@@ -33,11 +33,11 @@ points = PoolVector3Array( -0.0999756, 4, 2, 0.0999756, 4, -2, 0.0999756, 4, 2, 
 radius = 8.0
 height = 8.0
 
-[sub_resource type="BoxShape" id=10]
+[sub_resource type="BoxShape" id=6]
 
 extents = Vector3( 4, 4, 2 )
 
-[sub_resource type="CubeMesh" id=6]
+[sub_resource type="CubeMesh" id=7]
 
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector3( 0.25, 0.25, 12.5 )
@@ -45,11 +45,11 @@ subdivide_width = 0
 subdivide_height = 0
 subdivide_depth = 0
 
-[sub_resource type="ConvexPolygonShape" id=7]
+[sub_resource type="ConvexPolygonShape" id=8]
 
 points = PoolVector3Array( -0.125, 0.125, 6.25, 0.125, 0.125, -6.25, 0.125, 0.125, 6.25, -0.125, 0.125, -6.25, -0.125, -0.125, 6.25, 0.125, -0.125, -6.25, 0.125, -0.125, 6.25, -0.125, -0.125, -6.25, 0.125, 0.125, 6.25, -0.125, 0.125, -6.25, 0.125, 0.125, -6.25, -0.125, 0.125, 6.25, 0.125, -0.125, 6.25, -0.125, -0.125, -6.25, 0.125, -0.125, -6.25, -0.125, -0.125, 6.25, 0.125, 0.125, 6.25, -0.125, -0.125, 6.25, -0.125, 0.125, 6.25, 0.125, -0.125, 6.25, 0.125, 0.125, -6.25, -0.125, -0.125, -6.25, -0.125, 0.125, -6.25, 0.125, -0.125, -6.25 )
 
-[sub_resource type="CubeMesh" id=8]
+[sub_resource type="CubeMesh" id=9]
 
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector3( 0.25, 0.25, 0.25 )
@@ -57,11 +57,11 @@ subdivide_width = 0
 subdivide_height = 0
 subdivide_depth = 0
 
-[sub_resource type="ConvexPolygonShape" id=9]
+[sub_resource type="ConvexPolygonShape" id=10]
 
 points = PoolVector3Array( -0.125, 0.125, 0.125, 0.125, 0.125, -0.125, 0.125, 0.125, 0.125, -0.125, 0.125, -0.125, -0.125, -0.125, 0.125, 0.125, -0.125, -0.125, 0.125, -0.125, 0.125, -0.125, -0.125, -0.125, 0.125, 0.125, 0.125, -0.125, 0.125, -0.125, 0.125, 0.125, -0.125, -0.125, 0.125, 0.125, 0.125, -0.125, 0.125, -0.125, -0.125, -0.125, 0.125, -0.125, -0.125, -0.125, -0.125, 0.125, 0.125, 0.125, 0.125, -0.125, -0.125, 0.125, -0.125, 0.125, 0.125, 0.125, -0.125, 0.125, 0.125, 0.125, -0.125, -0.125, -0.125, -0.125, -0.125, 0.125, -0.125, 0.125, -0.125, -0.125 )
 
-[node name="Door" type="Spatial"]
+[node name="Door" type="Spatial" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 0 )
 script = ExtResource( 1 )
@@ -195,7 +195,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="Area2_Through_Door" index="0"]
 
-shape = SubResource( 10 )
+shape = SubResource( 6 )
 disabled = false
 
 [node name="Top_Bar" type="StaticBody" parent="." index="4"]
@@ -222,13 +222,13 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 6 )
+mesh = SubResource( 7 )
 skeleton = NodePath("..")
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Top_Bar" index="1"]
 
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 disabled = false
 
 [node name="Bottom_Bar" type="StaticBody" parent="." index="5"]
@@ -255,13 +255,13 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 6 )
+mesh = SubResource( 7 )
 skeleton = NodePath("..")
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bottom_Bar" index="1"]
 
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 disabled = false
 
 [node name="Left_End" type="StaticBody" parent="." index="6"]
@@ -288,13 +288,13 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 8 )
+mesh = SubResource( 9 )
 skeleton = NodePath("..")
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Left_End" index="1"]
 
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 disabled = false
 
 [node name="Right_End" type="StaticBody" parent="." index="7"]
@@ -321,13 +321,13 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 8 )
+mesh = SubResource( 9 )
 skeleton = NodePath("..")
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Right_End" index="1"]
 
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 disabled = false
 
 

@@ -151,6 +151,8 @@ func switch_to_next_level():
 	unload_level(prev_mobs, prev_grids, prev_doors)
 	add_entry_door()
 	next_queued = false
+	for mob in current_mobs:
+		mob.set_process(true)
 
 func unload_level(mobs, grids, doors):
 	for mob in mobs:
@@ -190,6 +192,7 @@ func load_level(level, offset=null):
 		Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(Vector3(10, 3, 10), offset))
 	]
 	for mob in mobs:
+		mob.set_process(false)
 		add_child(mob)
 	
 	return {
