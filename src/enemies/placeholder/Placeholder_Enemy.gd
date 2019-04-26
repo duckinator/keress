@@ -134,22 +134,35 @@ func vel_to_speed(vel):
 	var z = abs(vel.z)
 	return sqrt((x * x) + (y * y) + (z * z))
 
-func impact_to_force(colider, colider_vel):
-	var speed = vel_to_speed(colider_vel)
-	return colider.MASS * speed
+func impact_to_force(collider, collider_vel):
+	var speed = vel_to_speed(collider_vel)
+	return collider.MASS * speed
+
+func force_to_damage(force):
+	return ceil(force / 200)
+
+func impact_to_damage(collider, collider_vel):
+	var force = impact_to_force(collider, collider_vel)
+	return force_to_damage(force)
 
 func _process_body_entered(body):
-	if body.has_method("get_last_velocity"):
+	if not body.has_method("get_last_velocity"):
+		return
+	
+	if body is RigidBody:
+		var vel = body.get_last_velocity()
+		var damage = impact_to_damage(body, vel)
+		adjust_health(-damage)
+	
+	if body is KinematicBody:
 		set_state(EVADE) # We bumped into the player!
 		var vel = body.get_last_velocity()
-		var force = impact_to_force(body, vel)
 		
 		var height = $MeshInstance.mesh.height
 		# If the player is on top of the enemy, it's a curb stomp.
 		if floor(body.translation.y) > floor(self.translation.y + height):
 			var gravity = Globals.get_total_gravity_for(self)
-			force = impact_to_force(body, Vector3(vel.x, gravity.y, vel.z))
-			var damage = ceil(force / 200)
+			var damage = impact_to_damage(body, Vector3(vel.x, gravity.y, vel.z))
 			adjust_health(-damage)
 
 func noise_from(position, loudness):
@@ -208,7 +221,7 @@ func defend(last_state, delta):
 	Debug.print("DEFENDING")
 
 func evade(last_state, delta):
-	Debug.print("EVADING")
+	#Debug.print("EVADING")
 	target = player
 	chase(last_state, 0, false, true, -10, 10)
 

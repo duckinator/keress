@@ -156,8 +156,24 @@ func fire_weapon():
 	add_child(fire_timeout)
 	fire_timeout.start()
 	
-	var bullet = Globals.spawn_scene("weapons/Bullet", translation + Vector3(1, 0, 0))
-	bullet.apply_impulse(Vector3(0, 0, 0), Vector3(20, 0, 0))
+	var bullet_pos_offset = Vector3(0, -0.5, 0).normalized() # tweak as needed
+	# TODO: Figure out how to move the bullet starting position higher/lower based on where you look.
+	var bullet = Globals.spawn_scene("weapons/Bullet", translation - transform.basis.z.normalized() + bullet_pos_offset)
+	
+	#print(bullet.rotation_degrees, "; ", rotation_degrees, "; ", rotation_helper.rotation_degrees)
+	
+	# TODO: Figure out how to adjust the bullet angle based on looking up/down.
+	bullet.rotation_degrees.x = rotation_helper.rotation_degrees.x
+	bullet.rotation_degrees.y = rotation_degrees.y - 90
+	bullet.rotation_degrees.z = rotation_helper.rotation_degrees.z + 90
+	
+	var bullet_vel = Vector3(bullet.SPEED, 0, 0)
+	bullet_vel = bullet_vel.rotated(Vector3(1, 0, 0), deg2rad(-rotation_helper.rotation_degrees.x))
+	bullet_vel = bullet_vel.rotated(Vector3(0, 1, 0), deg2rad(rotation_degrees.y + 90))
+	bullet_vel = bullet_vel.rotated(Vector3(0, 0, 1), deg2rad(rotation_helper.rotation_degrees.z))
+	
+	#print("bullet velocity = " + str(bullet_vel))
+	bullet.fire(bullet_vel)
 
 func _fire_timeout_reset():
 	remove_child(fire_timeout)

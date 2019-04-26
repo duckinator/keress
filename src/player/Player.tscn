@@ -170,6 +170,20 @@ playback_default_blend_time = 0.0
 playback_speed = 1.0
 blend_times = [  ]
 
+[node name="Gun_Fire_Points" type="Spatial" parent="Rotation_Helper" index="2"]
+
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, -0.5, -2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Pistol_Fire_Point" type="Spatial" parent="Rotation_Helper/Gun_Fire_Points" index="0"]
+
+[node name="RayCast" type="RayCast" parent="Rotation_Helper/Gun_Fire_Points/Pistol_Fire_Point" index="0"]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector3( 10, 0, 0 )
+collision_mask = 1
+
 [node name="HUD" type="Control" parent="." index="3"]
 
 anchor_left = 0.0
