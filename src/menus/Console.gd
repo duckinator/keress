@@ -7,6 +7,7 @@ var input
 
 func _ready():
 	scrollback = $Panel/Scrollback
+	scrollback.clear()
 	input = $Panel/Input
 	input.connect("text_changed", self, "_text_changed")
 
@@ -32,4 +33,6 @@ func _text_changed():
 		input.text = ""
 		
 func _run(line):
-	self.log("TODO: Do something with this: " + str(line))
+	if line == "":
+		return
+	$CommandProcessor.run(line)

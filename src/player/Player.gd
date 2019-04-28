@@ -63,7 +63,7 @@ func _physics_process(delta):
 	process_respawn(delta)
 
 func process_input(delta):
-	if Globals.console_visible:
+	if Console.visible:
 		return
 	
 	# Walking
@@ -188,7 +188,7 @@ func reload_weapon():
 func _input(event):
 	# TODO: Determine why there's no KEY_BACKTICK or similar?
 	if Input.is_key_pressed(96):
-		Globals.toggle_console()
+		Console.toggle()
 	
 	if is_dead:
 		if Input.is_key_pressed(KEY_SPACE):

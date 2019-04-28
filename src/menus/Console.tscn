@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://menus/Console.gd" type="Script" id=1]
 [ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://menus/CommandProcessor.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -114,5 +115,9 @@ caret_blink = false
 caret_blink_speed = 0.65
 caret_moving_by_right_click = true
 _sections_unfolded = [ "custom_fonts" ]
+
+[node name="CommandProcessor" type="Node" parent="." index="1"]
+
+script = ExtResource( 3 )
 
 
