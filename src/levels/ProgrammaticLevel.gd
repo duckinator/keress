@@ -36,6 +36,9 @@ func _ready():
 	
 	Globals.in_game = true
 
+func get_player():
+	return $Player
+
 func get_path(start, end):
 	var points = navigation.get_simple_path(start, end)
 	if len(points) == 0:

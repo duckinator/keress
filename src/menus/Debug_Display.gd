@@ -6,3 +6,9 @@ func _ready():
 
 func _process(delta):
 	$Panel/Label_FPS.text = "FPS: " + str(Engine.get_frames_per_second())
+
+	var scene = get_tree().current_scene
+	if scene.has_method("get_player"):
+		var pos = scene.get_player().translation.round()
+		$Panel2/Label_Level.text = "Level: " + str(scene.current_level)
+		$Panel2/Label_Coordinates.text = "Position: " + str(pos)
