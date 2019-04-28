@@ -185,14 +185,21 @@ func load_level(level, offset=null):
 	for grid in grids:
 		navigation.add_child(grid)
 	
+	var exit
 	for door in doors_dict:
-		doors.append(add_door(door))
+		var door_scene = add_door(door)
+		if door["exit"]:
+			exit = door_scene
+		doors.append(door_scene)
 	
+	
+	var mob_pos = exit.translation - offset + Vector3(0, 0, -2)
+	print("mob_pos = " + str(mob_pos))
 	var mobs = [
-		Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(Vector3(10, 3, 10), offset))
+		Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(mob_pos, offset))
 	]
 	for mob in mobs:
-		mob.set_process(false)
+		#mob.set_process(false)
 		add_child(mob)
 	
 	return {

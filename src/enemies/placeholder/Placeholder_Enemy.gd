@@ -4,7 +4,7 @@ const VIEW_DISTANCE = 60
 
 const MASS = 150
 
-var MAX_HEALTH = 100
+var MAX_HEALTH = 200
 var health = 0
 
 # Direction being looked at.
@@ -272,6 +272,7 @@ func chase(last_state, backoff=null, rotated=false, meander=false, meander_min=n
 	if should_move:
 		translation = chase_path.interpolate_baked(chase_offset)
 		chase_offset += 0.25
+		print("MOB MOVED TO " + str(translation))
 	
 	#if rotated:
 	#	rotate(Vector3(0, 1, 0), rand_range(85, 95))

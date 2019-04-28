@@ -69,7 +69,7 @@ subdivide_depth = 0
 
 points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 
-[sub_resource type="NavigationMesh" id=4]
+[sub_resource type="NavigationMesh" id=13]
 
 vertices = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 1, 3, 2 ) ]
@@ -156,7 +156,7 @@ subdivide_depth = 0
 
 points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 
-[sub_resource type="NavigationMesh" id=8]
+[sub_resource type="NavigationMesh" id=14]
 
 vertices = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 1, 3, 2 ) ]
@@ -178,7 +178,7 @@ filter/low_hanging_obstacles = false
 filter/ledge_spans = false
 filter/filter_walkable_low_height_spans = false
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=15]
 
 render_priority = 0
 flags_transparent = false
@@ -231,9 +231,9 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo" ]
 
-[sub_resource type="PlaneMesh" id=10]
+[sub_resource type="PlaneMesh" id=16]
 
-material = SubResource( 9 )
+material = SubResource( 15 )
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
@@ -301,7 +301,7 @@ disabled = false
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Wall" index="1"]
 
-navmesh = SubResource( 4 )
+navmesh = SubResource( 13 )
 enabled = true
 
 [node name="Floor" type="MeshInstance" parent="." index="1"]
@@ -337,7 +337,7 @@ disabled = false
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Floor" index="1"]
 
-navmesh = SubResource( 8 )
+navmesh = SubResource( 14 )
 enabled = true
 
 [node name="Wall2" type="MeshInstance" parent="." index="2"]
@@ -351,7 +351,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 10 )
+mesh = SubResource( 16 )
 skeleton = NodePath("..")
 material/0 = null
 

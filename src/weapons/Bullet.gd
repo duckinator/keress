@@ -5,12 +5,12 @@ const MASS = 80
 # Bullet despawns after the specified lifespan, in seconds.
 const BULLET_LIFESPAN = 5
 
-const SPEED = 400
+const SPEED = 300
 
 var last_velocity
 
 func _ready():
-	mass = 0.1
+	mass = 0.4
 	
 	var timer = Timer.new()
 	timer.wait_time = BULLET_LIFESPAN
