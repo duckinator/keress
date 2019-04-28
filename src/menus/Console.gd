@@ -11,10 +11,18 @@ func _ready():
 	input = $Panel/Input
 	input.connect("text_changed", self, "_text_changed")
 
+func date_prefix():
+	var dt = OS.get_datetime()
+	var hour = str(dt["hour"]).pad_zeros(2)
+	var minute = str(dt["minute"]).pad_zeros(2)
+	var second = str(dt["second"]).pad_zeros(2)
+	return "[" + hour + ":" + minute + ":" + second + "] "
+
 func log(text):
 	var lines = text.split("\n")
 	for line in lines:
-		scrollback.append_bbcode(line)
+		var prefix = date_prefix()
+		scrollback.append_bbcode(prefix + line)
 		scrollback.newline()
 
 func set_enabled(enabled):
