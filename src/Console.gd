@@ -26,5 +26,17 @@ func toggle():
 	else:
 		show()
 
+func debug(text):
+	_console.log("DEBUG: " + text)
+
+func error(text):
+	_console.log("ERROR: " + text)
+
+func warn(text):
+	_console.log("WARNING: " + text)
+
 func log(text):
 	_console.log(text)
+
+func clear():
+	_console.clear()

@@ -62,40 +62,40 @@ func _input(event):
 	
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F4:
 		if load_level(current_level - 1) == null:
-			print("WARNING: No previous level (" + str(current_level - 1) + ") to load.")
+			Console.warn("No previous level (" + str(current_level - 1) + ") to load.")
 			return
-		print("DEBUG: Loading previous level: " + str(current_level - 1))
+		Console.debug("Loading previous level: " + str(current_level - 1))
 		Settings.store("current_level", current_level - 1)
 		Globals.reload_level = true
 
 	
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F5:
-		print("DEBUG: Reloading level " + str(current_level))
+		Console.debug("Reloading level " + str(current_level))
 		Globals.reload_level = true
 
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F6:
 		if load_level(current_level + 1) == null:
-			print("WARNING: No next level (" + str(current_level + 1) + ") to load.")
+			Console.warn("No next level (" + str(current_level + 1) + ") to load.")
 			return
-		print("DEBUG: Loading next level: " + str(current_level + 1))
+		Console.debug("Loading next level: " + str(current_level + 1))
 		Settings.store("current_level", current_level + 1)
 		Globals.reload_level = true
 
 func preload_next_level():
+	Console.log("Preloading level #" + str(next_level))
 	if next_queued:
-		print("WARNING: preload_next_level(): Next level already loaded!")
+		Console.error("preload_next_level(): Next level already loaded!")
 		return
 	
 	next_queued = true
 	next_level = current_level + 1
 	var offset = null
 	var door_rotation = null
-	print(current_doors)
 	
 	var exit_door_pos = null
 	var next_level_data = load_level_data(next_level)
 	if next_level_data == null:
-		print("preload_next_level(): Level #" + str(next_level) + " does not exist.")
+		Console.error("preload_next_level(): Level #" + str(next_level) + " does not exist.")
 		return
 	
 	var lines = next_level_data.split("\n")
@@ -119,7 +119,7 @@ func preload_next_level():
 				door_rotation = parts3[1]
 	
 	if offset == null:
-		print("ERROR: offset == null for level #" + str(next_level))
+		Console.error("offset == null for level #" + str(next_level))
 		return
 	
 	if door_rotation == null:
@@ -138,6 +138,7 @@ func preload_next_level():
 	return data
 
 func switch_to_next_level():
+	Console.log("Switching to preloaded level #" + str(next_level))
 	Settings.store("current_level", next_level)
 	var prev_mobs = current_mobs
 	var prev_grids = current_grids
@@ -174,7 +175,7 @@ func load_level(level, offset=null):
 	
 	var data = load_level_data(level)
 	if not data:
-		print("ERROR: load_level(): data is null")
+		Console.error("load_level(): data is null")
 		return
 	var result = build_grids(data, offset)
 	var grids = result[0]
@@ -216,10 +217,10 @@ func load_level(level, offset=null):
 
 func load_level_data(level):
 	var filename = "res://levels/level-" + str(level).pad_zeros(3) + ".lvl"
-	print("Loading " + filename)
+	Console.log("Loading " + filename)
 	var file = File.new()
 	if not file.file_exists(filename):
-		print("ERROR: load_level_data(): no such file: " + filename)
+		Console.error("load_level_data(): no such file: " + filename)
 		return null
 	file.open(filename, File.READ)
 	return file.get_as_text()
@@ -244,7 +245,7 @@ func grid(data, offset):
 	var size = null
 	
 	if not lines[0].begins_with("t "):
-		print("ERROR: fill_grid() expected first line to start with 't '.")
+		Console.error("fill_grid() expected first line to start with 't '.")
 		return null
 
 	trans = str2vec3(lines[0].split(" ", false, 1)[1])
@@ -252,14 +253,14 @@ func grid(data, offset):
 	lines.remove(0)
 	
 	if not lines[0].begins_with("r "):
-		print("ERROR: fill_grid() expected second line to start with 'r '.")
+		Console.error("fill_grid() expected second line to start with 'r '.")
 		return null
 	
 	rot = str2vec3(lines[0].split(" ", false, 1)[1])
 	lines.remove(0)
 	
 	if not lines[0].begins_with("d "):
-		print("ERROR: fill_grid() expected third line to start with 'd '.")
+		Console.error("fill_grid() expected third line to start with 'd '.")
 		return null
 	lines.remove(0)
 	
@@ -316,8 +317,8 @@ func build_grids(data, offset):
 func str2vec3(s, sep=" "):
 	var parts = s.strip_edges().split(sep)
 	if len(parts) != 3:
-		print("ERROR: len(parts) is " + str(len(parts)) + "; expected 3.")
-		print("       parts = <" + str(parts) + ">")
+		Console.error("str2vec3(): len(parts) is " + str(len(parts)) + "; expected 3.")
+		Console.error("    parts = <" + str(parts) + ">")
 		return null
 	return Vector3(float(parts[0]), float(parts[1]), float(parts[2]))
 
@@ -390,15 +391,15 @@ func through_door(door):
 		switch_to_next_level()
 
 func opening_door(door):
-	print("Door opened: " + str(door))
+	Console.log("Door opened: " + str(door))
 	preload_next_level()
 
 func closing_door(door):
-	print("Door closed: " + str(door))
+	Console.log("Door closed: " + str(door))
 
 func mob_died(mob):
 	if not mob in current_mobs:
-		print("WARNING: Got message about " + str(mob) + ", which we aren't tracking")
+		Console.warn("mob_died(): Got message about " + str(mob) + ", which we aren't tracking")
 		return
 	
 	current_mobs.remove(current_mobs.find(mob))

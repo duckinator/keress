@@ -143,7 +143,7 @@ func process_fall_damage(old_vel, vel):
 		var tmp = int(ceil(old_vel.y / 10))
 		tmp -= tmp % 5
 		if tmp <= -5:
-			print("Fall damage: " + str(tmp))
+			Console.log("Player took fall damage: " + str(tmp))
 			adjust_health(tmp)
 			emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
 

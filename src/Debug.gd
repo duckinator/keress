@@ -10,6 +10,10 @@ func print(text):
 	if _enabled:
 		print(text)
 
+func log(text):
+	if _enabled:
+		Console.debug(text)
+
 func _set_enabled(val):
 	_enabled = val
 	if _enabled:

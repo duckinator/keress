@@ -22,8 +22,13 @@ func log(text):
 	var lines = text.split("\n")
 	for line in lines:
 		var prefix = date_prefix()
-		scrollback.append_bbcode(prefix + line)
+		var output = prefix + line
+		scrollback.append_bbcode(output)
+		print(output)
 		scrollback.newline()
+
+func clear():
+	scrollback.clear()
 
 func set_enabled(enabled):
 	if enabled:
