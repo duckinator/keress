@@ -160,6 +160,7 @@ func unload_level(mobs, grids, doors):
 	for grid in grids:
 		# TODO: Figure out why we're getting a null grid at the start.
 		if grid != null:
+			navigation.remove_child(grid)
 			grid.queue_free()
 	for door in doors:
 		door.queue_free()

@@ -263,16 +263,19 @@ func chase(last_state, backoff=null, rotated=false, meander=false, meander_min=n
 	if need_new_path:
 		Debug.print("  UPDATING PATH")
 		last_target_translation = target.translation
-		chase_path = map.get_path(translation, target.translation + offset)
+		var path_end = map.navigation.get_closest_point(target.translation + offset)
+		chase_path = map.get_path(translation, path_end)
 		chase_offset = 0
 	
 	if chase_path == null:
 		return
 	
 	if should_move:
+		print("MOB MOVED")
+		print("  old = " + str(translation))
 		translation = chase_path.interpolate_baked(chase_offset)
 		chase_offset += 0.25
-		print("MOB MOVED TO " + str(translation))
+		print("  new = " + str(translation))
 	
 	#if rotated:
 	#	rotate(Vector3(0, 1, 0), rand_range(85, 95))

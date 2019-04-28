@@ -83,7 +83,7 @@ adjustment_contrast = 1.0
 adjustment_saturation = 1.0
 _sections_unfolded = [ "Ambient Light", "Background" ]
 
-[node name="ProgrammaticLevel" type="Spatial"]
+[node name="ProgrammaticLevel" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
 
@@ -91,13 +91,13 @@ script = ExtResource( 1 )
 
 environment = SubResource( 1 )
 
-[node name="Navigation" type="Navigation" parent="." index="1"]
-
-up_vector = Vector3( 0, 1, 0 )
-
-[node name="Player" parent="." index="2" instance=ExtResource( 2 )]
+[node name="Player" parent="." index="1" instance=ExtResource( 2 )]
 
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 3, 0 )
+
+[node name="Navigation" type="Navigation" parent="." index="2"]
+
+up_vector = Vector3( 0, 1, 0 )
 
 [node name="Grids" type="Node" parent="." index="3"]
 
