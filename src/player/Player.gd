@@ -63,6 +63,9 @@ func _physics_process(delta):
 	process_respawn(delta)
 
 func process_input(delta):
+	if Globals.console_visible:
+		return
+	
 	# Walking
 	dir = Vector3()
 	var cam_xform = camera.get_global_transform()
@@ -183,6 +186,10 @@ func reload_weapon():
 	pass
 
 func _input(event):
+	# TODO: Determine why there's no KEY_BACKTICK or similar?
+	if Input.is_key_pressed(96):
+		Globals.toggle_console()
+	
 	if is_dead:
 		if Input.is_key_pressed(KEY_SPACE):
 			waiting_for_respawn = true

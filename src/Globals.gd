@@ -3,11 +3,16 @@ extends Node
 const MAIN_MENU_PATH = "res://menus/Main_Menu.tscn"
 const DEBUG_SCENE = preload("res://menus/Debug_Display.tscn")
 const PAUSE_SCENE = preload("res://menus/Pause_Popup.tscn")
+const CONSOLE_SCENE = preload("res://menus/Console.tscn")
 var popup = null
 var closing_popup= false
 
 var canvas_layer
 var debug_display = null
+
+var console_display
+
+var console_visible = false
 
 var reload_level = false
 var in_game = false
@@ -16,6 +21,10 @@ func _ready():
 	randomize()
 	canvas_layer = CanvasLayer.new()
 	add_child(canvas_layer)
+	
+	console_display = CONSOLE_SCENE.instance()
+	add_child(console_display)
+	hide_console()
 
 func _process(delta):
 	if not in_game:
@@ -80,6 +89,20 @@ func remove_debug_display():
 	if debug_display:
 		debug_display.queue_free()
 		debug_display = null
+
+func hide_console():
+	console_display.set_enabled(false)
+	console_visible = false
+
+func show_console():
+	console_display.set_enabled(true)
+	console_visible = true
+
+func toggle_console():
+	if console_visible:
+		hide_console()
+	else:
+		show_console()
 
 func load_new_scene(new_scene_path):
 	# Reset respawn points before loading a level.
