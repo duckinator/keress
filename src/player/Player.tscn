@@ -92,7 +92,7 @@ subdivide_depth = 0
 
 points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
 
-[node name="Player" type="KinematicBody"]
+[node name="Player" type="KinematicBody" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
 input_ray_pickable = true
@@ -187,17 +187,19 @@ collision_mask = 1
 [node name="HUD" type="Control" parent="." index="3"]
 
 anchor_left = 0.0
-anchor_top = 0.0
+anchor_top = 1.0
 anchor_right = 0.0
-anchor_bottom = 0.0
+anchor_bottom = 1.0
+margin_top = -720.0
 margin_right = 40.0
-margin_bottom = 40.0
+margin_bottom = -680.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+_sections_unfolded = [ "Anchor" ]
 
 [node name="Crosshair" type="Control" parent="HUD" index="0"]
 
