@@ -91,7 +91,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Main_Menu" type="Control"]
+[node name="Main_Menu" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -145,16 +145,15 @@ blend_times = [  ]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
-anchor_bottom = 0.0
+anchor_bottom = 1.0
 margin_right = 330.0
-margin_bottom = 720.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Anchor", "Rect" ]
 
 [node name="Title_Label" type="Label" parent="Panels/Start" index="0"]
 
@@ -182,13 +181,13 @@ _sections_unfolded = [ "Rect", "custom_fonts" ]
 [node name="Button_Continue" type="Button" parent="Panels/Start" index="1"]
 
 anchor_left = 0.0
-anchor_top = 0.0
+anchor_top = 1.0
 anchor_right = 0.0
-anchor_bottom = 0.0
+anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 520.0
+margin_top = -200.0
 margin_right = 320.0
-margin_bottom = 560.0
+margin_bottom = -160.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -209,13 +208,13 @@ _sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
 [node name="Button_New_Game" type="Button" parent="Panels/Start" index="2"]
 
 anchor_left = 0.0
-anchor_top = 0.0
+anchor_top = 1.0
 anchor_right = 0.0
-anchor_bottom = 0.0
+anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 570.0
+margin_top = -150.0
 margin_right = 320.0
-margin_bottom = 610.0
+margin_bottom = -110.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -236,13 +235,13 @@ _sections_unfolded = [ "custom_fonts" ]
 [node name="Button_Settings" type="Button" parent="Panels/Start" index="3"]
 
 anchor_left = 0.0
-anchor_top = 0.0
+anchor_top = 1.0
 anchor_right = 0.0
-anchor_bottom = 0.0
+anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 620.0
+margin_top = -100.0
 margin_right = 320.0
-margin_bottom = 660.0
+margin_bottom = -60.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -263,13 +262,13 @@ _sections_unfolded = [ "custom_fonts" ]
 [node name="Button_Quit" type="Button" parent="Panels/Start" index="4"]
 
 anchor_left = 0.0
-anchor_top = 0.0
+anchor_top = 1.0
 anchor_right = 0.0
-anchor_bottom = 0.0
+anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 670.0
+margin_top = -50.0
 margin_right = 320.0
-margin_bottom = 710.0
+margin_bottom = -10.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
