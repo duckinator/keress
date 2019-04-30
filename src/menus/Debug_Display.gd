@@ -35,8 +35,8 @@ func _process(delta):
 		ptime_str = "[color=red]" + ptime_str + "[/color]"
 	
 	var lines = [
-		"System:   " + OS.get_name(),
-		"Engine:   Godot " + Engine.get_version_info()["string"],
+		"System:   " + os,
+		"Engine:   Godot " + engine,
 		#"FPS:      " + fps,
 		"Timing:   frame=%s, physics=%s" % [ftime_str, ptime_str],
 		"Level:    " + level,
