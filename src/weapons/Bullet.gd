@@ -5,7 +5,7 @@ const MASS = 80
 # Bullet despawns after the specified lifespan, in seconds.
 const BULLET_LIFESPAN = 5
 
-const SPEED = 80
+const SPEED = 100
 
 var last_velocity
 
