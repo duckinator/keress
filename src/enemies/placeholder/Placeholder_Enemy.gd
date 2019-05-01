@@ -155,12 +155,16 @@ func _process_body_entered(body):
 		adjust_health(-damage)
 	
 	if body is KinematicBody:
-		set_state(EVADE) # We bumped into the player!
-		var vel = body.get_last_velocity()
+		if state != ATTACK:
+			body.adjust_health(-5)
+		else:
+			set_state(EVADE) # We bumped into the player without seeing them!
 		
+		var vel = body.get_last_velocity()
 		var height = $MeshInstance.mesh.height
 		# If the player is on top of the enemy, it's a curb stomp.
 		if floor(body.translation.y) > floor(self.translation.y + height):
+			set_state(EVADE)
 			var gravity = Globals.get_total_gravity_for(self)
 			var damage = impact_to_damage(body, Vector3(vel.x, gravity.y, vel.z))
 			adjust_health(-damage)
@@ -214,7 +218,7 @@ func search(last_state, delta):
 func attack(last_state, delta):
 	Debug.print("ATTACKING (" + str(self) + ")")
 	target = player
-	chase(last_state)
+	chase(last_state, 0, false, true, -20, 20)
 	set_state(EVADE)
 
 func defend(last_state, delta):
@@ -274,7 +278,7 @@ func chase(last_state, backoff=null, rotated=false, meander=false, meander_min=n
 		print("MOB MOVED")
 		print("  old = " + str(translation))
 		translation = chase_path.interpolate_baked(chase_offset)
-		chase_offset += 0.25
+		chase_offset += 0.5
 		print("  new = " + str(translation))
 	
 	#if rotated:

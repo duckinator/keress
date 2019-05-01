@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
-[ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://weapons/pistol/Pistol.tscn" type="PackedScene" id=2]
+[ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -17,7 +18,7 @@ extents = Vector3( 0.691243, 0.405015, 0.693321 )
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=4]
@@ -25,7 +26,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="SpatialMaterial" id=5]
@@ -160,6 +161,11 @@ lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
 mesh = null
 skeleton = NodePath("..")
+
+[node name="Pistol" parent="Rotation_Helper/Model/Armature/Skeleton" index="1" instance=ExtResource( 2 )]
+
+transform = Transform( -0.0347669, -0.00304171, 0.999391, -0.0871558, 0.996195, 0, -0.995588, -0.0871027, -0.0348997, 0.25, -0.5, -1 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Rotation_Helper/Model/Armature" index="1"]
 

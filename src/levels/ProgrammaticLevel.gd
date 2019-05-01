@@ -200,11 +200,17 @@ func load_level(level, offset=null):
 	
 	var mob_pos = exit.translation - offset + Vector3(0, 0, -2)
 	print("mob_pos = " + str(mob_pos))
-	var mobs = [
-		Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(mob_pos, offset))
-	]
+	var mobs = []
+	if current_level == 1:
+		mobs = [
+			Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(mob_pos, offset)),
+			Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(mob_pos, offset)),
+			Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(mob_pos, offset)),
+			Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(mob_pos, offset)),
+			Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(mob_pos, offset)),
+			Globals.spawn_scene("enemies/placeholder/Placeholder_Enemy", apply_offset(mob_pos, offset)),
+		]
 	for mob in mobs:
-		#mob.set_process(false)
 		add_child(mob)
 	
 	return {

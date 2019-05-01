@@ -35,11 +35,20 @@ var animation_manager
 var camera
 var rotation_helper
 
+var weapons
+var weapon
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	camera = $Rotation_Helper/Camera
 	rotation_helper = $Rotation_Helper
+	
+	weapons = {
+		"pistol": $Rotation_Helper/Model/Armature/Skeleton/Pistol,
+	}
+	weapons["pistol"].set_player(self)
+	weapon = weapons["pistol"]
 	
 	animation_manager = $Rotation_Helper/Model/Armature/AnimationPlayer
 	#animation_manager.callback_function = funcref(self, "fire_bullet")
@@ -88,8 +97,8 @@ func process_input(delta):
 		vel.y = JUMP_SPEED
 
 	# Firing weapons
-	if Input.is_action_pressed("fire"):
-		fire_weapon()
+	if Input.is_action_pressed("fire") and weapon != null:
+		weapon.fire()
 
 	# Reloading weapons
 	#if Input.is_action_just_pressed("reload") or current_weapon.ammo_in_weapon <= 0:
@@ -146,41 +155,6 @@ func process_fall_damage(old_vel, vel):
 			Console.log("Player took fall damage: " + str(tmp))
 			adjust_health(tmp)
 			emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
-
-var fire_rate = 5 # per second
-var fire_timeout = null
-func fire_weapon():
-	if fire_timeout != null:
-		return
-	
-	fire_timeout = Timer.new()
-	fire_timeout.connect("timeout", self, "_fire_timeout_reset")
-	fire_timeout.wait_time = 1.0 / fire_rate
-	add_child(fire_timeout)
-	fire_timeout.start()
-	
-	var bullet_pos_offset = Vector3(0, -0.5, 0).normalized() # tweak as needed
-	# TODO: Figure out how to move the bullet starting position higher/lower based on where you look.
-	var bullet = Globals.spawn_scene("weapons/Bullet", translation - transform.basis.z.normalized() + bullet_pos_offset)
-	
-	#print(bullet.rotation_degrees, "; ", rotation_degrees, "; ", rotation_helper.rotation_degrees)
-	
-	# TODO: Figure out how to adjust the bullet angle based on looking up/down.
-	bullet.rotation_degrees.x = rotation_helper.rotation_degrees.x
-	bullet.rotation_degrees.y = rotation_degrees.y - 90
-	bullet.rotation_degrees.z = rotation_helper.rotation_degrees.z + 90
-	
-	var bullet_vel = Vector3(bullet.SPEED, 0, 0)
-	bullet_vel = bullet_vel.rotated(Vector3(1, 0, 0), deg2rad(-rotation_helper.rotation_degrees.x))
-	bullet_vel = bullet_vel.rotated(Vector3(0, 1, 0), deg2rad(rotation_degrees.y + 90))
-	bullet_vel = bullet_vel.rotated(Vector3(0, 0, 1), deg2rad(rotation_helper.rotation_degrees.z))
-	
-	#print("bullet velocity = " + str(bullet_vel))
-	bullet.fire(bullet_vel)
-
-func _fire_timeout_reset():
-	remove_child(fire_timeout)
-	fire_timeout = null
 
 func reload_weapon():
 	pass
