@@ -21,7 +21,7 @@ func show():
 	_console.set_enabled(true)
 
 func toggle():
-	if _console.visible:
+	if visible:
 		hide()
 	else:
 		show()

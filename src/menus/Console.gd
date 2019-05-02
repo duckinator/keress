@@ -1,7 +1,5 @@
 extends Control
 
-var canvas_layer
-
 var scrollback
 var input
 

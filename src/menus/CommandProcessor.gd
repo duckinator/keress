@@ -3,7 +3,7 @@ extends Node
 func _ready():
 	pass
 
-func clear(rest):
+func clear(_rest):
 	Console.clear()
 
 func echo(rest):

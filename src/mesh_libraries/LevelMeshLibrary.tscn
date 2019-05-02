@@ -4,407 +4,91 @@
 [ext_resource path="res://textures/generic-panel-02.png" type="Texture" id=2]
 [ext_resource path="res://textures/generic-panel-03.png" type="Texture" id=3]
 
-[sub_resource type="SpatialMaterial" id=5]
-
-render_priority = 0
-flags_transparent = false
-flags_unshaded = false
-flags_vertex_lighting = false
-flags_no_depth_test = false
-flags_use_point_size = false
-flags_world_triplanar = false
-flags_fixed_size = false
-flags_albedo_tex_force_srgb = false
-vertex_color_use_as_albedo = false
-vertex_color_is_srgb = false
-params_diffuse_mode = 0
-params_specular_mode = 0
-params_blend_mode = 0
-params_cull_mode = 0
-params_depth_draw_mode = 0
-params_line_width = 1.0
-params_point_size = 1.0
-params_billboard_mode = 0
-params_grow = false
-params_use_alpha_scissor = false
-albedo_color = Color( 1, 1, 1, 1 )
+[sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 1 )
-metallic = 0.0
-metallic_specular = 0.5
-metallic_texture_channel = 0
 roughness = 0.0
-roughness_texture_channel = 0
-emission_enabled = false
-normal_enabled = false
-rim_enabled = false
-clearcoat_enabled = false
-anisotropy_enabled = false
-ao_enabled = false
-depth_enabled = false
-subsurf_scatter_enabled = false
-transmission_enabled = false
-refraction_enabled = false
-detail_enabled = false
-uv1_scale = Vector3( 1, 1, 1 )
-uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = false
-uv1_triplanar_sharpness = 1.0
-uv2_scale = Vector3( 1, 1, 1 )
-uv2_offset = Vector3( 0, 0, 0 )
-uv2_triplanar = false
-uv2_triplanar_sharpness = 1.0
-proximity_fade_enable = false
-distance_fade_enable = false
-_sections_unfolded = [ "Albedo" ]
 
-[sub_resource type="PlaneMesh" id=25]
+[sub_resource type="PlaneMesh" id=2]
+material = SubResource( 1 )
 
-material = SubResource( 5 )
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
-size = Vector2( 2, 2 )
-subdivide_width = 0
-subdivide_depth = 0
-
-[sub_resource type="ConvexPolygonShape" id=29]
-
-points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
-
-[sub_resource type="NavigationMesh" id=26]
-
-vertices = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
-polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 1, 3, 2 ) ]
-sample_partition_type/sample_partition_type = 0
-cell/size = 0.3
-cell/height = 0.2
-agent/height = 2.0
-agent/radius = 0.6
-agent/max_climb = 0.9
-agent/max_slope = 45.0
-region/min_size = 8.0
-region/merge_size = 20.0
-edge/max_length = 12.0
-edge/max_error = 1.3
-polygon/verts_per_poly = 6.0
-detail/sample_distance = 6.0
-detail/sample_max_error = 1.0
-filter/low_hanging_obstacles = false
-filter/ledge_spans = false
-filter/filter_walkable_low_height_spans = false
-
-[sub_resource type="SpatialMaterial" id=32]
-
-render_priority = 0
-flags_transparent = false
-flags_unshaded = false
-flags_vertex_lighting = false
-flags_no_depth_test = false
-flags_use_point_size = false
-flags_world_triplanar = false
-flags_fixed_size = false
-flags_albedo_tex_force_srgb = false
-vertex_color_use_as_albedo = false
-vertex_color_is_srgb = false
-params_diffuse_mode = 0
-params_specular_mode = 0
-params_blend_mode = 0
-params_cull_mode = 0
-params_depth_draw_mode = 0
-params_line_width = 1.0
-params_point_size = 1.0
-params_billboard_mode = 0
-params_grow = false
-params_use_alpha_scissor = false
-albedo_color = Color( 1, 1, 1, 1 )
-albedo_texture = ExtResource( 2 )
-metallic = 0.0
-metallic_specular = 0.5
-metallic_texture_channel = 0
-roughness = 0.0
-roughness_texture_channel = 0
-emission_enabled = false
-normal_enabled = false
-rim_enabled = false
-clearcoat_enabled = false
-anisotropy_enabled = false
-ao_enabled = false
-depth_enabled = false
-subsurf_scatter_enabled = false
-transmission_enabled = false
-refraction_enabled = false
-detail_enabled = false
-uv1_scale = Vector3( 1, 1, 1 )
-uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = false
-uv1_triplanar_sharpness = 1.0
-uv2_scale = Vector3( 1, 1, 1 )
-uv2_offset = Vector3( 0, 0, 0 )
-uv2_triplanar = false
-uv2_triplanar_sharpness = 1.0
-proximity_fade_enable = false
-distance_fade_enable = false
-_sections_unfolded = [ "Albedo" ]
-
-[sub_resource type="PlaneMesh" id=33]
-
-material = SubResource( 32 )
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
-size = Vector2( 2, 2 )
-subdivide_width = 0
-subdivide_depth = 0
-
-[sub_resource type="ConvexPolygonShape" id=36]
-
+[sub_resource type="ConvexPolygonShape" id=3]
 points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 
 [sub_resource type="NavigationMesh" id=4]
-
 vertices = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 1, 3, 2 ) ]
-sample_partition_type/sample_partition_type = 0
-cell/size = 0.3
-cell/height = 0.2
-agent/height = 2.0
-agent/radius = 0.6
-agent/max_climb = 0.9
-agent/max_slope = 45.0
-region/min_size = 8.0
-region/merge_size = 20.0
-edge/max_length = 12.0
-edge/max_error = 1.3
-polygon/verts_per_poly = 6.0
-detail/sample_distance = 6.0
-detail/sample_max_error = 1.0
-filter/low_hanging_obstacles = false
-filter/ledge_spans = false
-filter/filter_walkable_low_height_spans = false
 
-[sub_resource type="SpatialMaterial" id=37]
-
-render_priority = 0
-flags_transparent = false
-flags_unshaded = false
-flags_vertex_lighting = false
-flags_no_depth_test = false
-flags_use_point_size = false
-flags_world_triplanar = false
-flags_fixed_size = false
-flags_albedo_tex_force_srgb = false
-vertex_color_use_as_albedo = false
-vertex_color_is_srgb = false
-params_diffuse_mode = 0
-params_specular_mode = 0
-params_blend_mode = 0
-params_cull_mode = 0
-params_depth_draw_mode = 0
-params_line_width = 1.0
-params_point_size = 1.0
-params_billboard_mode = 0
-params_grow = false
-params_use_alpha_scissor = false
-albedo_color = Color( 1, 1, 1, 1 )
-albedo_texture = ExtResource( 3 )
-metallic = 0.0
-metallic_specular = 0.5
-metallic_texture_channel = 0
+[sub_resource type="SpatialMaterial" id=5]
+albedo_texture = ExtResource( 2 )
 roughness = 0.0
-roughness_texture_channel = 0
-emission_enabled = false
-normal_enabled = false
-rim_enabled = false
-clearcoat_enabled = false
-anisotropy_enabled = false
-ao_enabled = false
-depth_enabled = false
-subsurf_scatter_enabled = false
-transmission_enabled = false
-refraction_enabled = false
-detail_enabled = false
-uv1_scale = Vector3( 1, 1, 1 )
-uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = false
-uv1_triplanar_sharpness = 1.0
-uv2_scale = Vector3( 1, 1, 1 )
-uv2_offset = Vector3( 0, 0, 0 )
-uv2_triplanar = false
-uv2_triplanar_sharpness = 1.0
-proximity_fade_enable = false
-distance_fade_enable = false
-_sections_unfolded = [ "Albedo" ]
 
-[sub_resource type="PlaneMesh" id=10]
+[sub_resource type="PlaneMesh" id=6]
+material = SubResource( 5 )
 
-material = SubResource( 37 )
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
-size = Vector2( 2, 2 )
-subdivide_width = 0
-subdivide_depth = 0
-
-[sub_resource type="ConvexPolygonShape" id=11]
-
+[sub_resource type="ConvexPolygonShape" id=7]
 points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 
-[sub_resource type="NavigationMesh" id=38]
-
+[sub_resource type="NavigationMesh" id=8]
 vertices = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 1, 3, 2 ) ]
-sample_partition_type/sample_partition_type = 0
-cell/size = 0.3
-cell/height = 0.2
-agent/height = 2.0
-agent/radius = 0.6
-agent/max_climb = 0.9
-agent/max_slope = 45.0
-region/min_size = 8.0
-region/merge_size = 20.0
-edge/max_length = 12.0
-edge/max_error = 1.3
-polygon/verts_per_poly = 6.0
-detail/sample_distance = 6.0
-detail/sample_max_error = 1.0
-filter/low_hanging_obstacles = false
-filter/ledge_spans = false
-filter/filter_walkable_low_height_spans = false
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_texture = ExtResource( 3 )
+roughness = 0.0
+
+[sub_resource type="PlaneMesh" id=10]
+material = SubResource( 9 )
+
+[sub_resource type="ConvexPolygonShape" id=11]
+points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
+
+[sub_resource type="NavigationMesh" id=12]
+vertices = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
+polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 1, 3, 2 ) ]
 
 [node name="LevelMeshLibrary" type="Spatial"]
 
-[node name="0_Floor" type="MeshInstance" parent="." index="0"]
-
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 25 )
-skeleton = NodePath("..")
+[node name="0_Floor" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
 material/0 = null
 
-[node name="StaticBody" type="StaticBody" parent="0_Floor" index="0"]
+[node name="StaticBody" type="StaticBody" parent="0_Floor"]
 
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
+[node name="CollisionShape" type="CollisionShape" parent="0_Floor/StaticBody"]
+shape = SubResource( 3 )
 
-[node name="CollisionShape" type="CollisionShape" parent="0_Floor/StaticBody" index="0"]
-
-shape = SubResource( 29 )
-disabled = false
-
-[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="0_Floor" index="1"]
-
-navmesh = SubResource( 26 )
-enabled = true
-
-[node name="1_Floor_No_Navmesh" type="MeshInstance" parent="." index="1"]
-
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 25 )
-skeleton = NodePath("..")
-material/0 = null
-
-[node name="StaticBody" type="StaticBody" parent="1_Floor_No_Navmesh" index="0"]
-
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
-
-[node name="CollisionShape" type="CollisionShape" parent="1_Floor_No_Navmesh/StaticBody" index="0"]
-
-shape = SubResource( 29 )
-disabled = false
-
-[node name="2_Wall" type="MeshInstance" parent="." index="2"]
-
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 33 )
-skeleton = NodePath("..")
-material/0 = null
-_sections_unfolded = [ "Geometry" ]
-
-[node name="StaticBody" type="StaticBody" parent="2_Wall" index="0"]
-
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
-
-[node name="CollisionShape" type="CollisionShape" parent="2_Wall/StaticBody" index="0"]
-
-shape = SubResource( 36 )
-disabled = false
-
-[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="2_Wall" index="1"]
-
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="0_Floor"]
 navmesh = SubResource( 4 )
-enabled = true
 
-[node name="3_Wall2" type="MeshInstance" parent="." index="3"]
-
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 10 )
-skeleton = NodePath("..")
+[node name="1_Floor_No_Navmesh" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
 material/0 = null
 
-[node name="StaticBody" type="StaticBody" parent="3_Wall2" index="0"]
+[node name="StaticBody" type="StaticBody" parent="1_Floor_No_Navmesh"]
 
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
+[node name="CollisionShape" type="CollisionShape" parent="1_Floor_No_Navmesh/StaticBody"]
+shape = SubResource( 3 )
 
-[node name="CollisionShape" type="CollisionShape" parent="3_Wall2/StaticBody" index="0"]
+[node name="2_Wall" type="MeshInstance" parent="."]
+mesh = SubResource( 6 )
+material/0 = null
 
+[node name="StaticBody" type="StaticBody" parent="2_Wall"]
+
+[node name="CollisionShape" type="CollisionShape" parent="2_Wall/StaticBody"]
+shape = SubResource( 7 )
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="2_Wall"]
+navmesh = SubResource( 8 )
+
+[node name="3_Wall2" type="MeshInstance" parent="."]
+mesh = SubResource( 10 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="3_Wall2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="3_Wall2/StaticBody"]
 shape = SubResource( 11 )
-disabled = false
 
-[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="3_Wall2" index="1"]
-
-navmesh = SubResource( 38 )
-enabled = true
-
-
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="3_Wall2"]
+navmesh = SubResource( 12 )

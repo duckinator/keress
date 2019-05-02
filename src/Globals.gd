@@ -17,7 +17,7 @@ func _ready():
 	canvas_layer = CanvasLayer.new()
 	add_child(canvas_layer)
 
-func _process(delta):
+func _process(_delta):
 	if not in_game:
 		close_popup()
 		return
@@ -91,7 +91,7 @@ func load_new_scene(new_scene_path):
 	#		sound.queue_free()
 	#created_audio.clear()
 	
-	get_tree().change_scene(new_scene_path)
+	return get_tree().change_scene(new_scene_path)
 
 func spawn_scene(asset, pos):
 	var scene = load("res://" + asset + ".tscn")

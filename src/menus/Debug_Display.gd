@@ -13,7 +13,7 @@ func _ready():
 	os = OS.get_name()
 	engine = Engine.get_version_info()["string"]
 
-func _process(delta):
+func _process(_delta):
 	var level = "(None)"
 	var position = "(None)"
 	
@@ -23,7 +23,7 @@ func _process(delta):
 		level = str(scene.current_level)
 		position = str(pos)
 	
-	var fps = str(Engine.get_frames_per_second())
+	#var fps = str(Engine.get_frames_per_second())
 	var frame_time = Performance.get_monitor(Performance.TIME_PROCESS)
 	var physics_time = Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)
 	var ftime_str = "%.2f" % frame_time

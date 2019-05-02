@@ -1,24 +1,29 @@
 extends Control
 
-var start_menu
-var options_menu
-
-var panels = null
-
 func _ready():
+	var err
+	
 	Globals.in_game = false
 	$Panels/Start.visible = true
 	$Panels/Settings.visible = false
 
-	$Panels/Start/Button_Continue.connect("pressed", self, "game_continue")
-	$Panels/Start/Button_New_Game.connect("pressed", self, "game_new")
-	$Panels/Start/Button_Settings.connect("pressed", self, "panel_select", ["Settings"])
-	$Panels/Start/Button_Quit.connect("pressed", self, "quit")
+	err = $Panels/Start/Button_Continue.connect("pressed", self, "game_continue")
+	assert(err == OK)
+	err = $Panels/Start/Button_New_Game.connect("pressed", self, "game_new")
+	assert(err == OK)
+	err = $Panels/Start/Button_Settings.connect("pressed", self, "panel_select", ["Settings"])
+	assert(err == OK)
+	err = $Panels/Start/Button_Quit.connect("pressed", self, "quit")
+	assert(err == OK)
 
-	$Panels/Settings/Button_Back.connect("pressed", self, "panel_select", ["Start"])
-	$Panels/Settings/CheckButton_VSync.connect("pressed", self, "toggle_vsync")
-	$Panels/Settings/CheckButton_Fullscreen.connect("pressed", self, "toggle_fullscreen")
-	$Panels/Settings/CheckButton_Debug.connect("pressed", self, "toggle_debug")
+	err = $Panels/Settings/Button_Back.connect("pressed", self, "panel_select", ["Start"])
+	assert(err == OK)
+	err = $Panels/Settings/CheckButton_VSync.connect("pressed", self, "toggle_vsync")
+	assert(err == OK)
+	err = $Panels/Settings/CheckButton_Fullscreen.connect("pressed", self, "toggle_fullscreen")
+	assert(err == OK)
+	err = $Panels/Settings/CheckButton_Debug.connect("pressed", self, "toggle_debug")
+	assert(err == OK)
 
 	$Panels/Settings/CheckButton_VSync.pressed = Settings.fetch("vsync", true)
 	$Panels/Settings/CheckButton_Fullscreen.pressed = Settings.fetch("fullscreen", false)

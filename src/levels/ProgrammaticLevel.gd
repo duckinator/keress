@@ -50,7 +50,7 @@ func get_path_curve(start, end):
 		path.add_point(point)
 	return path
 
-func _process(delta):
+func _process(_delta):
 	if Globals.reload_level:
 		Globals.load_new_scene(LEVEL_SCENE)
 		queue_free()
@@ -92,7 +92,6 @@ func preload_next_level():
 	var offset = null
 	var door_rotation = null
 	
-	var exit_door_pos = null
 	var next_level_data = load_level_data(next_level)
 	if next_level_data == null:
 		Console.error("preload_next_level(): Level #" + str(next_level) + " does not exist.")
@@ -248,7 +247,6 @@ func grid(data, offset):
 	var lines = strip_all(data.strip_edges().split("\n"))
 	var trans = null
 	var rot = null
-	var size = null
 	
 	if not lines[0].begins_with("t "):
 		Console.error("fill_grid() expected first line to start with 't '.")
@@ -284,8 +282,6 @@ func build_grids(data, offset):
 	data = remove_comments(data)
 	var start_trans = Vector3(0, 0, 0)
 	var light = null
-	var exit = null
-	var exit_rotation = 0
 	var doors = []
 	
 	var lines = strip_all(data.split("\n"))

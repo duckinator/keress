@@ -26,7 +26,7 @@ const MAX_HEALTH = 100
 var health = 0
 
 var current_weapon = 0
-var changing_weapon
+#var changing_weapon
 
 var is_dead = false
 var waiting_for_respawn = false
@@ -71,7 +71,7 @@ func _physics_process(delta):
 	process_ui(delta)
 	process_respawn(delta)
 
-func process_input(delta):
+func process_input(_delta):
 	if Console.visible:
 		return
 	
@@ -134,16 +134,16 @@ func process_movement(delta):
 
 	process_fall_damage(old_vel, vel)
 
-func process_changing_weapons(delta):
+func process_changing_weapons(_delta):
 	pass
 
-func process_reloading(delta):
+func process_reloading(_delta):
 	pass
 
-func process_ui(delta):
+func process_ui(_delta):
 	update_hud()
 
-func process_respawn(delta):
+func process_respawn(_delta):
 	pass
 
 func process_fall_damage(old_vel, vel):
@@ -206,7 +206,7 @@ func update_hud():
 
 func emit_sound(trans, sound, loudness):
 	# TODO: Actually play the noise.
-	get_tree().current_scene.player_noise(translation, loudness)
+	get_tree().current_scene.player_noise(trans, loudness)
 
 func safe_rotate(vec):
 	rotation_helper.rotate_x(deg2rad(vec.y * MOUSE_SENSITIVITY * -1))
