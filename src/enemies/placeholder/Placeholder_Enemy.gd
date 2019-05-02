@@ -197,7 +197,7 @@ func obstructed(ray):
 	if obj == null:
 		return false
 	
-	var path = map.get_path(translation, obj.translation)
+	var path = map.get_path_curve(translation, obj.translation)
 	print(path, path.get_baked_length())
 	return path.get_baked_length() <= 40
 
@@ -255,7 +255,7 @@ func chase(last_state, backoff=null, rotated=false, meander=false, meander_min=n
 	if target_translation == null:
 		target_translation = target.translation
 	
-	var distance_check = map.get_path(translation, target_translation)
+	var distance_check = map.get_path_curve(translation, target_translation)
 	if state != last_state or chase_path == null or last_target_translation == null:
 		need_new_path = true
 	elif distance_check.get_baked_length() > backoff:
@@ -268,7 +268,7 @@ func chase(last_state, backoff=null, rotated=false, meander=false, meander_min=n
 		Debug.print("  UPDATING PATH")
 		last_target_translation = target.translation
 		var path_end = map.navigation.get_closest_point(target.translation + offset)
-		chase_path = map.get_path(translation, path_end)
+		chase_path = map.get_path_curve(translation, path_end)
 		chase_offset = 0
 	
 	if chase_path == null:

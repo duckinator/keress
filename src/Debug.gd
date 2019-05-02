@@ -21,5 +21,5 @@ func _set_enabled(val):
 	else:
 		Globals.remove_debug_display()
 
-func _get_enabled(val):
+func _get_enabled():
 	return _enabled

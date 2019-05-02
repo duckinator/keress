@@ -39,7 +39,7 @@ func _ready():
 func get_player():
 	return $Player
 
-func get_path(start, end):
+func get_path_curve(start, end):
 	var points = navigation.get_simple_path(start, end)
 	if len(points) == 0:
 		return
