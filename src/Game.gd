@@ -1,6 +1,6 @@
 extends Node
 
-const MAIN_MENU_PATH = "res://menus/Main_Menu.tscn"
+const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
 const DEBUG_SCENE = preload("res://overlays/Debug_Display.tscn")
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
 var popup = null
@@ -34,14 +34,13 @@ func _process(_delta):
 
 	popup = PAUSE_SCENE.instance()
 
-	popup.get_node("Resume_Button").connect("pressed", self, "popup_resume")
-	popup.get_node("Reload_Button").connect("pressed", self, "popup_reload")
-	popup.get_node("Menu_Button").connect("pressed", self, "popup_menu")
-	popup.get_node("Quit_Button").connect("pressed", self, "popup_quit")
+	popup.get_node("CenterContainer/VBoxContainer/Resume_Button").connect("pressed", self, "popup_resume")
+	popup.get_node("CenterContainer/VBoxContainer/Reload_Button").connect("pressed", self, "popup_reload")
+	popup.get_node("CenterContainer/VBoxContainer/Menu_Button").connect("pressed", self, "popup_menu")
+	popup.get_node("CenterContainer/VBoxContainer/Quit_Button").connect("pressed", self, "popup_quit")
 	popup.connect("popup_hide", self, "popup_resume")
 
 	canvas_layer.add_child(popup)
-	popup.popup_centered()
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
