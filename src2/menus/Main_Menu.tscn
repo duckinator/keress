@@ -115,7 +115,6 @@ custom_fonts/font = SubResource( 5 )
 text = "Quit"
 
 [node name="Settings" type="Panel" parent="Panels"]
-visible = false
 margin_right = 660.0
 margin_bottom = 720.0
 

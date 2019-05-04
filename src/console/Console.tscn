@@ -1,12 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://console/Console.gd" type="Script" id=1]
 [ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://fonts/hack/Hack-BoldItalic.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://fonts/hack/Hack-Italic.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://fonts/hack/Hack-Bold.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=6]
-[ext_resource path="res://console/CommandProcessor.gd" type="Script" id=7]
+[ext_resource path="res://console/CommandProcessor.gd" type="Script" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 20
@@ -30,7 +29,7 @@ font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=6]
 size = 20
-font_data = ExtResource( 6 )
+font_data = ExtResource( 2 )
 
 [node name="Console" type="Control"]
 anchor_right = 1.0
@@ -64,4 +63,4 @@ mouse_default_cursor_shape = 0
 custom_fonts/font = SubResource( 6 )
 
 [node name="CommandProcessor" type="Node" parent="."]
-script = ExtResource( 7 )
+script = ExtResource( 6 )

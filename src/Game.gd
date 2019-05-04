@@ -97,6 +97,7 @@ func load_scene(new_scene_path):
 	return get_tree().change_scene(new_scene_path)
 
 func load_level(level):
+	Game.playing = true
 	return load_scene(get_level_scene(level))
 
 func spawn_scene(asset, pos):

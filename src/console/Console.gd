@@ -7,7 +7,7 @@ func _ready():
 	scrollback = $Panel/Scrollback
 	scrollback.clear()
 	input = $Panel/Input
-	input.connect("text_changed", self, "_text_changed")
+	input.connect("text_entered", self, "run")
 
 func date_prefix():
 	var dt = OS.get_datetime()
@@ -37,13 +37,8 @@ func set_enabled(enabled):
 		visible = false
 		input.release_focus()
 
-func _text_changed():
-	var text = input.text
-	if "\n" in text:
-		_run(text.strip_edges())
-		input.text = ""
-		
-func _run(line):
+func run(line):
 	if line == "":
 		return
+	input.text = ""
 	$CommandProcessor.run(line)
