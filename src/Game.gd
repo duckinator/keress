@@ -33,14 +33,21 @@ func _process(_delta):
 		return
 
 	popup = PAUSE_SCENE.instance()
+	
+	var vbox = popup.get_node("CenterContainer/VBoxContainer")
 
-	popup.get_node("CenterContainer/VBoxContainer/Resume_Button").connect("pressed", self, "popup_resume")
-	popup.get_node("CenterContainer/VBoxContainer/Reload_Button").connect("pressed", self, "popup_reload")
-	popup.get_node("CenterContainer/VBoxContainer/Menu_Button").connect("pressed", self, "popup_menu")
-	popup.get_node("CenterContainer/VBoxContainer/Quit_Button").connect("pressed", self, "popup_quit")
+	vbox.get_node("Resume_Button").connect("pressed", self, "popup_resume")
+	vbox.get_node("Reload_Button").connect("pressed", self, "popup_reload")
+	vbox.get_node("Menu_Button").connect("pressed", self, "popup_menu")
+	vbox.get_node("Quit_Button").connect("pressed", self, "popup_quit")
 	popup.connect("popup_hide", self, "popup_resume")
 
 	canvas_layer.add_child(popup)
+
+	for child in vbox.get_children():
+		if child is Button:
+			child.grab_focus()
+			break
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
