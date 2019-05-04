@@ -32,6 +32,8 @@ func _ready():
 	$Panels/Start/Button_Continue.disabled = not Settings.fetch("has_played")
 
 	load_settings()
+	
+	panel_select("Start")
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
@@ -52,8 +54,22 @@ func game_new():
 
 # REQUIREMENT: There should be no panel named "none".
 func panel_select(selected):
+	var active = null
 	for panel in $Panels.get_children():
 		panel.visible = (panel.name == selected)
+		if panel.visible:
+			active = panel
+	
+	if not active:
+		return null
+	
+	for child in active.get_children():
+		if child.has_method("grab_focus") and not child is Label:
+			print(str(child.name) + " has grab_focus()")
+			child.grab_focus()
+			break
+	
+	return active
 
 # TODO: Add quit prompt.
 func quit():

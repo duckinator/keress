@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://menus/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
@@ -17,27 +17,6 @@ default_font = SubResource( 1 )
 size = 80
 outline_color = Color( 0.462745, 0.462745, 0.462745, 1 )
 use_filter = true
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=4]
-size = 30
-outline_color = Color( 0.462745, 0.462745, 0.462745, 1 )
-use_filter = true
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=5]
-size = 30
-outline_color = Color( 0.462745, 0.462745, 0.462745, 1 )
-use_filter = true
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=6]
-size = 30
-use_filter = true
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=7]
-size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=9]
@@ -101,7 +80,7 @@ text = "Keress"
 align = 1
 valign = 1
 
-[node name="Button_Continue" type="LinkButton" parent="Panels/Start"]
+[node name="Button_Continue" type="Button" parent="Panels/Start"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -114,11 +93,10 @@ focus_neighbour_top = NodePath("../Button_Quit")
 focus_neighbour_bottom = NodePath("../Button_New_Game")
 focus_next = NodePath("../Button_New_Game")
 focus_previous = NodePath("../Button_Quit")
-custom_fonts/font = SubResource( 4 )
 text = "Continue"
-underline = 1
+flat = true
 
-[node name="Button_New_Game" type="LinkButton" parent="Panels/Start"]
+[node name="Button_New_Game" type="Button" parent="Panels/Start"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 1.0
@@ -131,11 +109,10 @@ focus_neighbour_top = NodePath("../Button_Continue")
 focus_neighbour_bottom = NodePath("../Button_Settings")
 focus_next = NodePath("../Button_Settings")
 focus_previous = NodePath("../Button_Continue")
-custom_fonts/font = SubResource( 5 )
 text = "New Game"
-underline = 1
+flat = true
 
-[node name="Button_Settings" type="LinkButton" parent="Panels/Start"]
+[node name="Button_Settings" type="Button" parent="Panels/Start"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 1.0
@@ -148,26 +125,24 @@ focus_neighbour_top = NodePath("../Button_New_Game")
 focus_neighbour_bottom = NodePath("../Button_Quit")
 focus_next = NodePath("../Button_Quit")
 focus_previous = NodePath("../Button_New_Game")
-custom_fonts/font = SubResource( 6 )
 text = "Settings"
-underline = 1
+flat = true
 
-[node name="Button_Quit" type="LinkButton" parent="Panels/Start"]
+[node name="Button_Quit" type="Button" parent="Panels/Start"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -55.0
+margin_left = -90.0
 margin_top = -11.0
-margin_right = -623.0
+margin_right = -586.0
 margin_bottom = -335.0
 focus_neighbour_top = NodePath("../Button_Settings")
 focus_neighbour_bottom = NodePath("../Button_Continue")
 focus_next = NodePath("../Button_Continue")
 focus_previous = NodePath("../Button_Settings")
-custom_fonts/font = SubResource( 7 )
 text = "Quit"
-underline = 1
+flat = true
 
 [node name="Settings" type="Panel" parent="Panels"]
 visible = false
