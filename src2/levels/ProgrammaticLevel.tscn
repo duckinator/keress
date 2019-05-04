@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://levels/ProgrammaticLevel.gd" type="Script" id=1]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://mesh_libraries/LevelMeshLibrary.tres" type="MeshLibrary" id=3]
+
+[sub_resource type="Environment" id=1]
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_sky_contribution = 0.0
+fog_color = Color( 0.533447, 0.626099, 0.71875, 1 )
+fog_sun_color = Color( 1, 1, 1, 1 )
+fog_depth_begin = 30.0
+dof_blur_far_distance = 40.0
+dof_blur_far_transition = 30.0
+dof_blur_far_amount = 0.01
+
+[node name="ProgrammaticLevel" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 10, 10, 20 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 3, 0 )
+
+[node name="Navigation" type="Navigation" parent="."]
+
+[node name="Grids" type="Node" parent="."]
+
+[node name="DummyGridMap" type="GridMap" parent="."]
+visible = false
+mesh_library = ExtResource( 3 )
+data = {
+"cells": PoolIntArray(  )
+}
+__meta__ = {
+"_editor_clip_": 0
+}

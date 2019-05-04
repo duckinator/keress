@@ -1,0 +1,198 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 40
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=2]
+
+size = 40
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 40
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=4]
+
+size = 40
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=5]
+
+size = 40
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[node name="Pause_Popup" type="WindowDialog"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -140.0
+margin_top = -185.0
+margin_right = 140.0
+margin_bottom = 185.0
+rect_min_size = Vector2( 280, 230 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+popup_exclusive = false
+window_title = "Game Paused"
+resizable = false
+_sections_unfolded = [ "Visibility" ]
+
+[node name="Label" type="Label" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 280.0
+margin_bottom = 80.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = "GAME PAUSED"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[node name="Resume_Button" type="Button" parent="." index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 90.0
+margin_right = 270.0
+margin_bottom = 150.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 2 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Resume"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[node name="Reload_Button" type="Button" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 160.0
+margin_right = 270.0
+margin_bottom = 220.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 3 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Restart Level"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[node name="Menu_Button" type="Button" parent="." index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 230.0
+margin_right = 270.0
+margin_bottom = 290.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 4 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Main Menu"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[node name="Quit_Button" type="Button" parent="." index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 300.0
+margin_right = 270.0
+margin_bottom = 360.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 5 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Quit"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+

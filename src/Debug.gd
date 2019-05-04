@@ -16,9 +16,9 @@ func log(text):
 func _set_enabled(val):
 	enabled = val
 	if enabled:
-		Globals.add_debug_display()
+		Game.add_debug_display()
 	else:
-		Globals.remove_debug_display()
+		Game.remove_debug_display()
 
 func _get_enabled():
 	return enabled

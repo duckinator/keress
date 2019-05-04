@@ -1,6 +1,6 @@
 extends Node
 
-const CONSOLE_SCENE = preload("res://menus/Console.tscn")
+const CONSOLE_SCENE = preload("res://console/Console.tscn")
 
 var _console
 

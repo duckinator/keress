@@ -1,0 +1,162 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://menus/Console.gd" type="Script" id=1]
+[ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/hack/Hack-BoldItalic.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://fonts/hack/Hack-Italic.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://fonts/hack/Hack-Bold.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://fonts/Titillium-Regular.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://menus/CommandProcessor.gd" type="Script" id=7]
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 2 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=4]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=5]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 4 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=6]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 5 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 2 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=2]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 6 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[node name="Console" type="Control"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_right = -1240.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 1 )
+_sections_unfolded = [ "Anchor" ]
+
+[node name="Panel" type="Panel" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_right = 1240.0
+margin_bottom = 150.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Grow Direction", "Rect" ]
+
+[node name="Scrollback" type="RichTextLabel" parent="Panel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_bottom = 120.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/mono_font = SubResource( 3 )
+custom_fonts/bold_italics_font = SubResource( 4 )
+custom_fonts/italics_font = SubResource( 5 )
+custom_fonts/bold_font = SubResource( 6 )
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = false
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Example Console Output"
+scroll_active = true
+scroll_following = true
+selection_enabled = true
+override_selected_font_color = false
+_sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
+
+[node name="Input" type="TextEdit" parent="Panel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_top = 120.0
+margin_bottom = 150.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 2 )
+text = ""
+readonly = false
+highlight_current_line = false
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+override_selected_font_color = false
+context_menu_enabled = true
+smooth_scrolling = false
+v_scroll_speed = 80.0
+hiding_enabled = 0
+wrap_lines = false
+caret_block_mode = false
+caret_blink = false
+caret_blink_speed = 0.65
+caret_moving_by_right_click = true
+_sections_unfolded = [ "Anchor", "custom_fonts" ]
+
+[node name="CommandProcessor" type="Node" parent="." index="1"]
+
+script = ExtResource( 7 )
+
+
