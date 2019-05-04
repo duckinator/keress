@@ -63,11 +63,7 @@ func panel_select(selected):
 	if not active:
 		return null
 	
-	for child in active.get_children():
-		if child.has_method("grab_focus") and not child is Label:
-			print(str(child.name) + " has grab_focus()")
-			child.grab_focus()
-			break
+	Game.focus_first_control(active)
 	
 	return active
 

@@ -44,10 +44,7 @@ func _process(_delta):
 
 	canvas_layer.add_child(popup)
 
-	for child in vbox.get_children():
-		if child is Button:
-			child.grab_focus()
-			break
+	focus_first_control(vbox)
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
@@ -116,6 +113,13 @@ func spawn_scene(asset, pos):
 
 func quit():
 	get_tree().quit()
+
+func focus_first_control(node):
+	for child in node.get_children():
+		# TODO: Make this more robust.
+		if child.has_method("grab_focus") and not child is Label and not child is HSeparator:
+			child.grab_focus()
+			break
 
 func get_total_gravity_for(body):
 	var state = PhysicsServer.body_get_direct_state(body.get_rid())
