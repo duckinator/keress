@@ -58,7 +58,7 @@ func popup_reload():
 func popup_menu():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	close_popup()
-	load_new_scene(MAIN_MENU_PATH)
+	load_scene(MAIN_MENU_PATH)
 
 func popup_quit():
 	quit()
@@ -81,7 +81,10 @@ func remove_debug_display():
 		debug_display.queue_free()
 		debug_display = null
 
-func load_new_scene(new_scene_path):
+func get_level_scene(level):
+	return "res://levels/Level_" + str(level).pad_zeros(3) + ".tscn"
+
+func load_scene(new_scene_path):
 	# Reset respawn points before loading a level.
 	#respawn_points = null
 
@@ -92,6 +95,9 @@ func load_new_scene(new_scene_path):
 	#created_audio.clear()
 	
 	return get_tree().change_scene(new_scene_path)
+
+func load_level(level):
+	return load_scene(get_level_scene(level))
 
 func spawn_scene(asset, pos):
 	var scene = load("res://" + asset + ".tscn")

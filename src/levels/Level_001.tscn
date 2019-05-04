@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 100, 0.5, 100 )
+
+[sub_resource type="ConvexPolygonShape" id=2]
+points = PoolVector3Array( -50, 0.25, 50, 50, 0.25, -50, 50, 0.25, 50, -50, 0.25, -50, -50, -0.25, 50, 50, -0.25, -50, 50, -0.25, 50, -50, -0.25, -50, 50, 0.25, 50, -50, 0.25, -50, 50, 0.25, -50, -50, 0.25, 50, 50, -0.25, 50, -50, -0.25, -50, 50, -0.25, -50, -50, -0.25, 50, 50, 0.25, 50, -50, -0.25, 50, -50, 0.25, 50, 50, -0.25, 50, 50, 0.25, -50, -50, -0.25, -50, -50, 0.25, -50, 50, -0.25, -50 )
+
+[node name="Level_001" type="Spatial"]
+
+[node name="Floor" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Floor"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor/StaticBody"]
+shape = SubResource( 2 )

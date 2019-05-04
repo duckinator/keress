@@ -43,13 +43,12 @@ func _ready():
 
 func game_continue():
 	panel_select("none")
-	Game.load_new_scene("res://levels/ProgrammaticLevel.tscn")
+	Game.load_level(Settings.fetch("current_level", 1))
 
 func game_new():
-	panel_select("none")
 	Settings.store("has_played", true)
 	Settings.store("current_level", 1)
-	Game.load_new_scene("res://levels/ProgrammaticLevel.tscn")
+	game_continue()
 
 # REQUIREMENT: There should be no panel named "none".
 func panel_select(selected):
