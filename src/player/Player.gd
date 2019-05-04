@@ -31,12 +31,13 @@ var current_weapon = 0
 var is_dead = false
 var waiting_for_respawn = false
 
-var animation_manager
 var camera
 var rotation_helper
 
 var weapons
 var weapon
+
+const BULLET_SCENE = preload("res://weapons/Bullet.tscn")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -45,13 +46,10 @@ func _ready():
 	rotation_helper = $Rotation_Helper
 	
 	weapons = {
-		"pistol": $Rotation_Helper/Model/Armature/Skeleton/Pistol,
+		"pistol": $Rotation_Helper/Pistol,
 	}
 	weapons["pistol"].set_player(self)
 	weapon = weapons["pistol"]
-	
-	animation_manager = $Rotation_Helper/Model/Armature/AnimationPlayer
-	#animation_manager.callback_function = funcref(self, "fire_bullet")
 	
 	adjust_health(MAX_HEALTH)
 
@@ -98,7 +96,8 @@ func process_input(_delta):
 
 	# Firing weapons
 	if Input.is_action_pressed("fire") and weapon != null:
-		weapon.fire()
+		#weapon.fire()
+		fire_bullet(Vector3(100, 0, 0))
 
 	# Reloading weapons
 	#if Input.is_action_just_pressed("reload") or current_weapon.ammo_in_weapon <= 0:
@@ -222,3 +221,9 @@ func safe_rotate(vec):
 	camera_rot.y = 0
 	camera_rot.z = 0
 	rotation_helper.rotation_degrees = camera_rot
+
+func fire_bullet(impulse):
+	var bullet = BULLET_SCENE.instance()
+	bullet.global_translate(Vector3(2, 1, 0)) # TODO: Calculate this?
+	add_child(bullet)
+	bullet.fire(impulse)
