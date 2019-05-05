@@ -12,10 +12,16 @@ var debug_display = null
 var reload_level = false
 var playing = false
 
+var current_level setget set_current_level
+
+func set_current_level(level):
+	Settings.store("current_level", level)
+
 func _ready():
 	randomize()
 	canvas_layer = CanvasLayer.new()
 	add_child(canvas_layer)
+	current_level = Settings.fetch("current_level", 1)
 
 func _process(_delta):
 	if not playing:
@@ -103,7 +109,24 @@ func load_level(level):
 	Game.playing = true
 	var err = load_scene(get_level_scene(level))
 	if err:
-		Console.error("load_level(): " + str(err))
+		Console.error("load_level(): Could not load level " + str(level) + ". (Error " + str(err) + ".)")
+
+func previous_level():
+	current_level -= 1
+	var err = load_level(current_level)
+	if err:
+		Console.error("Couldn't load previous level (" + str(current_level) + ").")
+		Console.error(err)
+
+func next_level():
+	current_level += 1
+	var err = load_level(current_level)
+	if err:
+		Console.error("Couldn't load next level (" + str(current_level) + ").")
+		Console.error(err)
+
+func restart_level():
+	load_level(current_level)
 
 func spawn_scene(asset, pos=null, rot=null):
 	var scene = load("res://" + asset + ".tscn")
@@ -144,3 +167,13 @@ func focus_first_control(node):
 func get_total_gravity_for(body):
 	var state = PhysicsServer.body_get_direct_state(body.get_rid())
 	return state.get_total_gravity()
+
+func _input(event):
+	if event is InputEventKey and event.pressed and event.scancode == KEY_F4:
+		previous_level()
+
+	if event is InputEventKey and event.pressed and event.scancode == KEY_F5:
+		restart_level()
+
+	if event is InputEventKey and event.pressed and event.scancode == KEY_F6:
+		next_level()
