@@ -115,7 +115,7 @@ environment = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 20 )
 
 [node name="Arena_Floor" type="MeshInstance" parent="."]
 editor/display_folded = true
@@ -129,7 +129,6 @@ material/0 = null
 shape = SubResource( 5 )
 
 [node name="Arena_Wall_Left" type="MeshInstance" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 7.5, -20 )
 mesh = SubResource( 6 )
 material/0 = null
