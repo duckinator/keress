@@ -11,8 +11,8 @@ const ACCEL = 7
 const DEACCEL = 16
 const MAX_SLOPE_ANGLE = 40
 
-const SOUND_CLIMB = null
-const SOUND_FALL_DAMAGE = null
+const SOUND_CLIMB = "player/climb"
+const SOUND_FALL_DAMAGE = "player/fall"
 
 const LOUDNESS_CLIMB = 1
 const LOUDNESS_FALL_DAMAGE = 3
@@ -80,8 +80,7 @@ func update_hud():
 	# TODO: Handle weapon/ammo.
 
 func emit_sound(trans, sound, loudness):
-	# TODO: Actually play the noise.
-	get_tree().current_scene.player_noise(trans, loudness)
+	get_tree().current_scene.player_noise(trans, sound, loudness)
 
 func safe_rotate(vec):
 	rotation_helper.rotate_x(deg2rad(vec.y * MOUSE_SENSITIVITY * -1))
