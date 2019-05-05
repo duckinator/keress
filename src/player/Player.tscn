@@ -31,7 +31,7 @@ shape = SubResource( 2 )
 [node name="RotationHelper" type="Spatial" parent="."]
 
 [node name="Camera" type="Camera" parent="RotationHelper"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -1.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
 
 [node name="HUD" parent="." instance=ExtResource( 2 )]
 
