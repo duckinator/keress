@@ -12,10 +12,7 @@ var debug_display = null
 var reload_level = false
 var playing = false
 
-var current_level setget set_current_level
-
-func set_current_level(level):
-	Settings.store("current_level", level)
+var current_level
 
 func _ready():
 	randomize()
@@ -113,6 +110,7 @@ func load_level(level):
 
 func previous_level():
 	current_level -= 1
+	Settings.store("current_level", current_level)
 	var err = load_level(current_level)
 	if err:
 		Console.error("Couldn't load previous level (" + str(current_level) + ").")
@@ -120,6 +118,7 @@ func previous_level():
 
 func next_level():
 	current_level += 1
+	Settings.store("current_level", current_level)
 	var err = load_level(current_level)
 	if err:
 		Console.error("Couldn't load next level (" + str(current_level) + ").")
