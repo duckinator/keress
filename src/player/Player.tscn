@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://player/HUD.tscn" type="PackedScene" id=1]
+
+[node name="Player" type="KinematicBody"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+
+[node name="RotationHelper" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="RotationHelper"]
+
+[node name="HUD" parent="." instance=ExtResource( 1 )]

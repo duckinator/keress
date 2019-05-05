@@ -1,4 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://levels/Level_001.gd" type="Script" id=1]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 100, 0.5, 100 )
@@ -7,6 +10,12 @@ size = Vector3( 100, 0.5, 100 )
 points = PoolVector3Array( -50, 0.25, 50, 50, 0.25, -50, 50, 0.25, 50, -50, 0.25, -50, -50, -0.25, 50, 50, -0.25, -50, 50, -0.25, 50, -50, -0.25, -50, 50, 0.25, 50, -50, 0.25, -50, 50, 0.25, -50, -50, 0.25, 50, 50, -0.25, 50, -50, -0.25, -50, 50, -0.25, -50, -50, -0.25, 50, 50, 0.25, 50, -50, -0.25, 50, -50, 0.25, 50, 50, -0.25, 50, 50, 0.25, -50, -50, -0.25, -50, -50, 0.25, -50, 50, -0.25, -50 )
 
 [node name="Level_001" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Spawns" type="Spatial" parent="."]
+
+[node name="Spawn_1" type="Spatial" parent="Spawns"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="Floor" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
@@ -16,3 +25,5 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Floor/StaticBody"]
 shape = SubResource( 2 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]

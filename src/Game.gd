@@ -101,18 +101,38 @@ func load_scene(new_scene_path):
 
 func load_level(level):
 	Game.playing = true
-	return load_scene(get_level_scene(level))
+	var err = load_scene(get_level_scene(level))
+	if err:
+		Console.error("load_level(): " + str(err))
 
-func spawn_scene(asset, pos):
+func spawn_scene(asset, pos=null, rot=null):
 	var scene = load("res://" + asset + ".tscn")
 	var scene_instance = scene.instance()
 	scene_instance.set_name(asset)
 	get_parent().call_deferred("add_child", scene_instance)
-	scene_instance.set_translation(pos)
+	if pos != null:
+		scene_instance.translation = pos
+	if rot != null:
+		scene_instance.rotation = rot
 	return scene_instance
+
+func find_spawn_point(scene):
+	var spawns = []
+	if scene.has_node("Spawns"):
+		for node in scene.get_node("Spawns").get_children():
+			spawns.push_back(node)
+	else:
+		Console.error("Couldn't find a spawn point!")
+	return spawns[rand_range(0, len(spawns))]
 
 func quit():
 	get_tree().quit()
+
+func spawn_player(scene):
+	var spawn = find_spawn_point(scene)
+	var player = scene.get_node('Player')
+	player.translation = spawn.translation
+	player.rotation = spawn.rotation
 
 func focus_first_control(node):
 	for child in node.get_children():
