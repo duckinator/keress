@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://levels/Level_001.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
@@ -51,11 +51,31 @@ uv1_triplanar = true
 [sub_resource type="ConvexPolygonShape" id=11]
 points = PoolVector3Array( -22, 15, 1.5, 22, 15, -1.5, 22, 15, 1.5, -22, 15, -1.5, -22, -15, 1.5, 22, -15, -1.5, 22, -15, 1.5, -22, -15, -1.5, 22, 15, 1.5, -22, 15, -1.5, 22, 15, -1.5, -22, 15, 1.5, 22, -15, 1.5, -22, -15, -1.5, 22, -15, -1.5, -22, -15, 1.5, 22, 15, 1.5, -22, -15, 1.5, -22, 15, 1.5, 22, -15, 1.5, 22, 15, -1.5, -22, -15, -1.5, -22, 15, -1.5, 22, -15, -1.5 )
 
+[sub_resource type="SpatialMaterial" id=20]
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 0.25, 0, 0.25 )
+uv1_offset = Vector3( 0.5, 0, -0.3 )
+uv1_triplanar = true
+
 [sub_resource type="CubeMesh" id=12]
-size = Vector3( 60, 3, 5 )
+material = SubResource( 20 )
+size = Vector3( 60, 3, 10 )
 
 [sub_resource type="ConvexPolygonShape" id=13]
 points = PoolVector3Array( -30, 1.5, 2.5, 30, 1.5, -2.5, 30, 1.5, 2.5, -30, 1.5, -2.5, -30, -1.5, 2.5, 30, -1.5, -2.5, 30, -1.5, 2.5, -30, -1.5, -2.5, 30, 1.5, 2.5, -30, 1.5, -2.5, 30, 1.5, -2.5, -30, 1.5, 2.5, 30, -1.5, 2.5, -30, -1.5, -2.5, 30, -1.5, -2.5, -30, -1.5, 2.5, 30, 1.5, 2.5, -30, -1.5, 2.5, -30, 1.5, 2.5, 30, -1.5, 2.5, 30, 1.5, -2.5, -30, -1.5, -2.5, -30, 1.5, -2.5, 30, -1.5, -2.5 )
+
+[sub_resource type="SpatialMaterial" id=21]
+albedo_texture = ExtResource( 5 )
+uv1_scale = Vector3( 0.25, 0.25, 0.25 )
+uv1_offset = Vector3( 0, -0.1, 0.5 )
+uv1_triplanar = true
+
+[sub_resource type="CubeMesh" id=22]
+material = SubResource( 21 )
+size = Vector3( 80, 17, 3 )
+
+[sub_resource type="ConvexPolygonShape" id=23]
+points = PoolVector3Array( -40, 8.5, 1.5, 40, 8.5, -1.5, 40, 8.5, 1.5, -40, 8.5, -1.5, -40, -8.5, 1.5, 40, -8.5, -1.5, 40, -8.5, 1.5, -40, -8.5, -1.5, 40, 8.5, 1.5, -40, 8.5, -1.5, 40, 8.5, -1.5, -40, 8.5, 1.5, 40, -8.5, 1.5, -40, -8.5, -1.5, 40, -8.5, -1.5, -40, -8.5, 1.5, 40, 8.5, 1.5, -40, -8.5, 1.5, -40, 8.5, 1.5, 40, -8.5, 1.5, 40, 8.5, -1.5, -40, -8.5, -1.5, -40, 8.5, -1.5, 40, -8.5, -1.5 )
 
 [sub_resource type="SpatialMaterial" id=15]
 albedo_texture = ExtResource( 3 )
@@ -70,6 +90,19 @@ size = Vector3( 20, 1, 105 )
 [sub_resource type="ConvexPolygonShape" id=16]
 points = PoolVector3Array( -10, 0.5, 52.5, 10, 0.5, -52.5, 10, 0.5, 52.5, -10, 0.5, -52.5, -10, -0.5, 52.5, 10, -0.5, -52.5, 10, -0.5, 52.5, -10, -0.5, -52.5, 10, 0.5, 52.5, -10, 0.5, -52.5, 10, 0.5, -52.5, -10, 0.5, 52.5, 10, -0.5, 52.5, -10, -0.5, -52.5, 10, -0.5, -52.5, -10, -0.5, 52.5, 10, 0.5, 52.5, -10, -0.5, 52.5, -10, 0.5, 52.5, 10, -0.5, 52.5, 10, 0.5, -52.5, -10, -0.5, -52.5, -10, 0.5, -52.5, 10, -0.5, -52.5 )
 
+[sub_resource type="SpatialMaterial" id=17]
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 0.25, 1, 0.25 )
+uv1_offset = Vector3( 0.5, 0, -0.25 )
+uv1_triplanar = true
+
+[sub_resource type="CubeMesh" id=18]
+material = SubResource( 17 )
+size = Vector3( 20, 1, 105 )
+
+[sub_resource type="ConvexPolygonShape" id=19]
+points = PoolVector3Array( -10, 0.5, 52.5, 10, 0.5, -52.5, 10, 0.5, 52.5, -10, 0.5, -52.5, -10, -0.5, 52.5, 10, -0.5, -52.5, 10, -0.5, 52.5, -10, -0.5, -52.5, 10, 0.5, 52.5, -10, 0.5, -52.5, 10, 0.5, -52.5, -10, 0.5, 52.5, 10, -0.5, 52.5, -10, -0.5, -52.5, 10, -0.5, -52.5, -10, -0.5, 52.5, 10, 0.5, 52.5, -10, -0.5, 52.5, -10, 0.5, 52.5, 10, -0.5, 52.5, 10, 0.5, -52.5, -10, -0.5, -52.5, -10, 0.5, -52.5, 10, -0.5, -52.5 )
+
 [node name="Level_001" type="Spatial"]
 script = ExtResource( 1 )
 
@@ -82,6 +115,7 @@ environment = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20 )
 
 [node name="Arena_Floor" type="MeshInstance" parent="."]
 editor/display_folded = true
@@ -138,6 +172,17 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="Path_Floor/StaticBody"]
 shape = SubResource( 13 )
 
+[node name="Path_Wall_Rear" type="MeshInstance" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22.5, 35 )
+mesh = SubResource( 22 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Path_Wall_Rear"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Path_Wall_Rear/StaticBody"]
+shape = SubResource( 23 )
+
 [node name="Left_Slope" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -30.9, 18.6, -17.5 )
@@ -148,3 +193,14 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Left_Slope/StaticBody"]
 shape = SubResource( 16 )
+
+[node name="Right_Slope" type="MeshInstance" parent="."]
+editor/display_folded = true
+transform = Transform( 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 30.9, 18.6, -17.5 )
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Right_Slope"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Right_Slope/StaticBody"]
+shape = SubResource( 19 )
