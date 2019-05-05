@@ -3,24 +3,40 @@
 [ext_resource path="res://menus/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="Environment" id=8]
+[sub_resource type="Environment" id=1]
 background_mode = 1
 background_color = Color( 0.313726, 0.0352941, 0, 1 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 2 )
 
-[sub_resource type="Theme" id=2]
-default_font = SubResource( 1 )
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 80
 outline_color = Color( 0.462745, 0.462745, 0.462745, 1 )
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=5]
 size = 80
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=10]
@@ -28,22 +44,6 @@ size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=11]
-size = 30
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=12]
-size = 30
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=13]
-size = 30
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=14]
-size = 30
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=15]
 size = 30
 font_data = ExtResource( 2 )
 
@@ -55,7 +55,7 @@ script = ExtResource( 1 )
 [node name="Background" type="Spatial" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Background"]
-environment = SubResource( 8 )
+environment = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="Background"]
 
@@ -64,7 +64,7 @@ environment = SubResource( 8 )
 [node name="Start" type="Control" parent="Panels"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 2 )
+theme = SubResource( 3 )
 
 [node name="Label_Title" type="Label" parent="Panels/Start"]
 anchor_left = 0.5
@@ -75,7 +75,7 @@ margin_left = -640.0
 margin_top = -360.0
 margin_right = 640.0
 margin_bottom = -210.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Keress"
 align = 1
 valign = 1
@@ -152,7 +152,7 @@ margin_bottom = 720.0
 [node name="Label_Title" type="Label" parent="Panels/Settings"]
 margin_right = 1280.0
 margin_bottom = 150.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 5 )
 text = "Settings"
 align = 1
 valign = 1
@@ -162,7 +162,7 @@ margin_left = 10.0
 margin_top = 150.0
 margin_right = 316.0
 margin_bottom = 190.0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 6 )
 text = "Mouse Sensitivity"
 
 [node name="HSlider_Mouse_Sensitivity" type="HSlider" parent="Panels/Settings"]
@@ -179,7 +179,7 @@ margin_left = 10.0
 margin_top = 200.0
 margin_right = 310.0
 margin_bottom = 240.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 7 )
 text = "Joypad Sensitivity"
 
 [node name="HSlider_Joypad_Sensitivity" type="HSlider" parent="Panels/Settings"]
@@ -201,7 +201,7 @@ focus_neighbour_top = NodePath("../HSlider_Joypad_Sensitivity")
 focus_neighbour_bottom = NodePath("../CheckButton_Fullscreen")
 focus_next = NodePath("../CheckButton_Fullscreen")
 focus_previous = NodePath("../HSlider_Joypad_Sensitivity")
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 8 )
 text = "V-Sync"
 
 [node name="CheckButton_Fullscreen" type="CheckButton" parent="Panels/Settings"]
@@ -213,7 +213,7 @@ focus_neighbour_top = NodePath("../CheckButton_VSync")
 focus_neighbour_bottom = NodePath("../CheckButton_Debug")
 focus_next = NodePath("../CheckButton_Debug")
 focus_previous = NodePath("../CheckButton_VSync")
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 9 )
 text = "Fullscreen"
 
 [node name="CheckButton_Debug" type="CheckButton" parent="Panels/Settings"]
@@ -225,7 +225,7 @@ focus_neighbour_top = NodePath("../CheckButton_Fullscreen")
 focus_neighbour_bottom = NodePath("../Button_Back")
 focus_next = NodePath("../Button_Back")
 focus_previous = NodePath("../CheckButton_Fullscreen")
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 10 )
 text = "Debug Mode"
 
 [node name="Button_Back" type="Button" parent="Panels/Settings"]
@@ -237,5 +237,5 @@ focus_neighbour_top = NodePath("../CheckButton_Debug")
 focus_neighbour_bottom = NodePath("../HSlider_Mouse_Sensitivity")
 focus_next = NodePath("../HSlider_Mouse_Sensitivity")
 focus_previous = NodePath("../CheckButton_Debug")
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 11 )
 text = "Done"
