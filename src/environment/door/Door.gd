@@ -48,6 +48,9 @@ func open():
 	if state == OPENED or state == OPENING:
 		return true
 	
+	if locked:
+		return false
+	
 	if not get_tree().current_scene.can_open_door(self):
 		return false
 	

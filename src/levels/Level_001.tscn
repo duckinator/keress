@@ -273,3 +273,4 @@ shape = SubResource( 39 )
 
 [node name="Exit_Door" parent="." instance=ExtResource( 6 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 4.1, -170 )
+is_exit = true
