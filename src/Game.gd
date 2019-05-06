@@ -129,9 +129,18 @@ func find_spawn_point(scene):
 		Console.error("Couldn't find a spawn point!")
 	return spawns[rand_range(0, len(spawns))]
 
+func get_player(scene=null):
+	if scene == null:
+		scene = get_tree().current_scene
+	
+	if scene.has_node('Player'):
+		return scene.get_node('Player')
+	else:
+		return null
+
 func spawn_player(scene):
 	var spawn = find_spawn_point(scene)
-	var player = scene.get_node('Player')
+	var player = get_player(scene)
 	player.translation = spawn.translation
 	player.rotation = spawn.rotation
 
