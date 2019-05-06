@@ -121,7 +121,7 @@ func process_input(_delta):
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
 	
 	# Jumping
-	if (is_on_floor() or is_on_wall()) and Input.is_action_just_pressed("movement_jump"):
+	if (is_on_floor() or is_on_wall()) and Input.is_action_pressed("movement_jump"):
 		vel.y = JUMP_SPEED
 
 	# Firing weapons
