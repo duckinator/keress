@@ -4,7 +4,6 @@ const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
 const DEBUG_SCENE = preload("res://overlays/Debug_Display.tscn")
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
 var popup = null
-var closing_popup= false
 
 var canvas_layer
 var debug_display = null
@@ -21,61 +20,47 @@ func _ready():
 	current_level = Settings.fetch("current_level", 1)
 
 func _process(_delta):
+	# If we're not playing, hide the pause menu.
 	if not playing:
-		close_popup()
-		return
-	
-	if closing_popup:
-		closing_popup = false
+		resume()
 		return
 
-	if not Input.is_action_just_pressed("ui_cancel"):
-		return
-	
-	if popup != null:
-		return
+	if Input.is_action_just_pressed("ui_cancel"):
+		if popup == null:
+			pause()
+		else:
+			resume()
 
+func pause():
 	popup = PAUSE_SCENE.instance()
-	
 	var vbox = popup.get_node("CenterContainer/VBoxContainer")
-
-	vbox.get_node("Resume_Button").connect("pressed", self, "popup_resume")
-	vbox.get_node("Reload_Button").connect("pressed", self, "popup_reload")
-	vbox.get_node("Menu_Button").connect("pressed", self, "popup_menu")
-	vbox.get_node("Quit_Button").connect("pressed", self, "popup_quit")
+	vbox.get_node("Resume_Button").connect("pressed", self, "resume")
+	vbox.get_node("Reload_Button").connect("pressed", self, "restart_level")
+	vbox.get_node("Menu_Button").connect("pressed", self, "main_menu")
+	vbox.get_node("Quit_Button").connect("pressed", self, "quit")
 	popup.connect("popup_hide", self, "popup_resume")
-
 	canvas_layer.add_child(popup)
-
 	focus_first_control(vbox)
-
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
 	get_tree().paused = true
 	self.pause_mode = PAUSE_MODE_PROCESS
 
-func popup_resume():
-	close_popup()
-
-func popup_reload():
-	close_popup()
-	reload_level = true
-
-func popup_menu():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	close_popup()
-	load_scene(MAIN_MENU_PATH)
-
-func popup_quit():
-	quit()
-
-func close_popup():
+func resume():
 	get_tree().paused = false
-
 	if popup != null:
 		popup.queue_free()
 		popup = null
-		closing_popup = true
+
+func restart_level():
+	resume()
+	reload_level = true
+
+func main_menu():
+	resume()
+	load_scene(MAIN_MENU_PATH)
+
+func quit():
+	get_tree().quit()
 
 func add_debug_display():
 	if debug_display == null:
@@ -124,9 +109,6 @@ func next_level():
 		Console.error("Couldn't load next level (" + str(current_level) + ").")
 		Console.error(err)
 
-func restart_level():
-	load_level(current_level)
-
 func spawn_scene(asset, pos=null, rot=null):
 	var scene = load("res://" + asset + ".tscn")
 	var scene_instance = scene.instance()
@@ -146,9 +128,6 @@ func find_spawn_point(scene):
 	else:
 		Console.error("Couldn't find a spawn point!")
 	return spawns[rand_range(0, len(spawns))]
-
-func quit():
-	get_tree().quit()
 
 func spawn_player(scene):
 	var spawn = find_spawn_point(scene)
