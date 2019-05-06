@@ -1,10 +1,11 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://levels/Level_001.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://textures/generic-panel-01.png" type="Texture" id=3]
 [ext_resource path="res://textures/generic-panel-02.png" type="Texture" id=4]
 [ext_resource path="res://textures/generic-panel-03.png" type="Texture" id=5]
+[ext_resource path="res://environment/door/Door.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -28,7 +29,7 @@ points = PoolVector3Array( -25, 1, 100, 25, 1, -100, 25, 1, 100, -25, 1, -100, -
 
 [sub_resource type="SpatialMaterial" id=7]
 albedo_texture = ExtResource( 4 )
-uv1_scale = Vector3( 0.25, 0.25, 0.25 )
+uv1_scale = Vector3( 0.25, 0.25, 0 )
 uv1_offset = Vector3( 0, 0.4, -0.25 )
 uv1_triplanar = true
 
@@ -205,6 +206,7 @@ material/0 = null
 shape = SubResource( 13 )
 
 [node name="Path_Wall_Rear" type="MeshInstance" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.5, 35 )
 mesh = SubResource( 22 )
 material/0 = null
@@ -268,3 +270,6 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Upper_Right_Wall/StaticBody"]
 shape = SubResource( 39 )
+
+[node name="Exit_Door" parent="." instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 4.1, -170 )

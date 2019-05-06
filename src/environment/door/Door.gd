@@ -1,13 +1,10 @@
 extends Spatial
 
-const OPENED = 0
-const CLOSED = 1
-const OPENING = 2
-const CLOSING = 3
+enum {OPENED, CLOSED, OPENING, CLOSING}
 
 var state = CLOSED
-var is_exit = false
-var locked = false
+export var is_exit = false
+export var locked = false
 
 var left
 var right
@@ -48,18 +45,18 @@ func _physics_process(delta):
 	right.translate(right_pos)
 
 func open():
-	if state != CLOSED:
-		return
+	if state == OPENED or state == OPENING:
+		return true
 	
 	if not get_tree().current_scene.can_open_door(self):
 		return false
 	
 	state = OPENING
-	get_tree().current_scene.opening_door(self)
+	return get_tree().current_scene.opening_door(self)
 
 func close():
-	if state != OPENED:
-		return
+	if state == CLOSED or state == CLOSING:
+		return true
 	
 	state = CLOSING
 	get_tree().current_scene.closing_door(self)
