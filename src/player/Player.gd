@@ -25,17 +25,17 @@ var dir = Vector3(0, 0, 0)
 const MAX_HEALTH = 100
 var health = 0
 
-var current_weapon = 0
-#var changing_weapon
+const INVENTORY_MAX_SIZE = 3
+var inventory = []
+var current_item = 0
+var last_item = 0
+var changing_item = false
 
 var is_dead = false
 var waiting_for_respawn = false
 
 var camera
 var rotation_helper
-
-var weapons
-var weapon
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -58,8 +58,9 @@ func _physics_process(delta):
 	
 	if not is_dead:
 		process_input(delta)
+		process_input_inventory(delta)
 		process_movement(delta)
-		process_changing_weapons(delta)
+		process_changing_item(delta)
 		process_reloading(delta)
 	process_ui(delta)
 	process_respawn(delta)
@@ -99,7 +100,7 @@ func safe_rotate(vec):
 
 # Various _process_* functions:
 
-func process_input(_delta):
+func process_input(delta):
 	if Console.visible:
 		return
 	
@@ -124,20 +125,29 @@ func process_input(_delta):
 	if (is_on_floor() or is_on_wall()) and Input.is_action_pressed("movement_jump"):
 		vel.y = JUMP_SPEED
 
+func process_input_inventory(_delta):
+	if len(inventory) == 0:
+		return
+	
+	current_item = clamp(current_item, 0, len(inventory) - 1)
+	var item = inventory[current_item]
+	if item == null:
+		return
+
 	# Firing weapons
-	if Input.is_action_pressed("action_fire") and weapon != null:
-		Console.log("TODO: Fire weapons.")
+	if Input.is_action_pressed("action_primary"):
+		Console.log("TODO: Primary action.")
+		item.primary()
 		#weapon.fire()
 		#fire_bullet(Vector3(100, 0, 0))
+	if Input.is_action_pressed("action_secondary"):
+		Console.log("TODO: secondary action")
+		item.secondary()
 
 	# Reloading weapons
-	#if Input.is_action_just_pressed("action_reload") or current_weapon.ammo_in_weapon <= 0:
-	#	reload_weapon()
-
-	# If needed, capture the cursor.
-	# This applies both upon starting the game and when un-pausing.
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	var needs_reload = item.has_method("needs_reloaded") and item.needs_reload()
+	if Input.is_action_just_pressed("action_reload") or needs_reload:
+		item.reload()
 
 func process_movement(delta):
 	dir = dir.normalized()
@@ -164,7 +174,7 @@ func process_movement(delta):
 
 	process_fall_damage(old_vel, vel)
 
-func process_changing_weapons(_delta):
+func process_changing_item(_delta):
 	pass
 
 func process_reloading(_delta):
@@ -200,24 +210,31 @@ func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		safe_rotate(event.relative)
 
-	# Changing weapons.
-	var weapon_change_number = current_weapon
-	if Input.is_key_pressed(KEY_1):
-		weapon_change_number = 0
-	if Input.is_key_pressed(KEY_2):
-		weapon_change_number = 1
-	#if Input.is_key_pressed(KEY_3):
-	#	weapon_change_number = 2
-	#if Input.is_key_pressed(KEY_4):
-	#	weapon_change_number = 3
+	# No point doing all of this with an empty inventory.
+	if len(inventory) == 0:
+		return
 
-	if Input.is_action_just_pressed("shift_weapon_positive"):
-		weapon_change_number += 1
-	if Input.is_action_just_pressed("shift_weapon_negative"):
-		weapon_change_number -=1
+	# Changing inventory item.
+	var changing_item_number = current_item
+	if Input.is_action_just_pressed("quick_switch_item"):
+		changing_item_number = last_item
+	if Input.is_key_pressed(KEY_1):
+		changing_item_number = 0
+	if Input.is_key_pressed(KEY_2):
+		changing_item_number = 1
+	if Input.is_key_pressed(KEY_3):
+		changing_item_number = 2
+	if Input.is_key_pressed(KEY_4):
+		changing_item_number = 3
+
+	if Input.is_action_just_pressed("shift_item_positive"):
+		changing_item_number += 1
+	if Input.is_action_just_pressed("shift_item_negative"):
+		changing_item_number -=1
 	
-	#weapon_change_number = clamp(weapon_change_number, 0, weapons.size() - 1)
+	changing_item_number = clamp(changing_item_number, 0, len(inventory) - 1)
 	
-	#if changing_weapon == false:
-	#	if weapon_change_number != weapon_number:
-	#		pass # Change weapons
+	if changing_item == false:
+		if changing_item_number != current_item:
+			Console.log("TODO: Switch to item #" + str(changing_item_number + 1))
+			pass # Change weapons
