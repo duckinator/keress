@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://levels/Level_002.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
@@ -14,12 +14,12 @@ ambient_light_color = Color( 1, 1, 1, 1 )
 [sub_resource type="SpatialMaterial" id=3]
 albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
-uv1_offset = Vector3( 0.5, 0, 0 )
+uv1_offset = Vector3( 0.5, 0, 0.5 )
 uv1_triplanar = true
 
 [sub_resource type="CubeMesh" id=2]
 material = SubResource( 3 )
-size = Vector3( 80, 4, 80 )
+size = Vector3( 76, 4, 76 )
 
 [sub_resource type="ConvexPolygonShape" id=4]
 points = PoolVector3Array( -40, 2, 40, 40, 2, -40, 40, 2, 40, -40, 2, -40, -40, -2, 40, 40, -2, -40, 40, -2, 40, -40, -2, -40, 40, 2, 40, -40, 2, -40, 40, 2, -40, -40, 2, 40, 40, -2, 40, -40, -2, -40, 40, -2, -40, -40, -2, 40, 40, 2, 40, -40, -2, 40, -40, 2, 40, 40, -2, 40, 40, 2, -40, -40, -2, -40, -40, 2, -40, 40, -2, -40 )
@@ -27,12 +27,13 @@ points = PoolVector3Array( -40, 2, 40, 40, 2, -40, 40, 2, 40, -40, 2, -40, -40, 
 [sub_resource type="SpatialMaterial" id=8]
 albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
+uv1_offset = Vector3( 0.5, 0, 0.5 )
 uv1_triplanar = true
 
 [sub_resource type="SpatialMaterial" id=7]
 albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
-uv1_offset = Vector3( 0, 0.5, 0 )
+uv1_offset = Vector3( 0.5, 0.5, 0.5 )
 uv1_triplanar = true
 
 [sub_resource type="SpatialMaterial" id=10]
@@ -51,21 +52,32 @@ points = PoolVector3Array( 0, 22, 4, 0.392069, 22, 3.98074, 0.780361, 22, 3.9231
 [sub_resource type="SpatialMaterial" id=11]
 albedo_texture = ExtResource( 7 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
-uv1_offset = Vector3( 0, 0.5, 0.5 )
+uv1_offset = Vector3( 0.5, 0.5, 0 )
 uv1_triplanar = true
 
-[sub_resource type="SpatialMaterial" id=13]
+[sub_resource type="SpatialMaterial" id=18]
 albedo_texture = ExtResource( 7 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
 uv1_offset = Vector3( 0, 0.5, 0.5 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=14]
-material = SubResource( 13 )
-size = Vector3( 80, 52, 4 )
+[sub_resource type="SpatialMaterial" id=19]
+albedo_texture = ExtResource( 7 )
+uv1_scale = Vector3( 0.25, 0.25, 0.25 )
+uv1_offset = Vector3( 0, 0.5, 0.5 )
+uv1_triplanar = true
 
-[sub_resource type="ConvexPolygonShape" id=15]
-points = PoolVector3Array( -40, 26, 2, 40, 26, -2, 40, 26, 2, -40, 26, -2, -40, -26, 2, 40, -26, -2, 40, -26, 2, -40, -26, -2, 40, 26, 2, -40, 26, -2, 40, 26, -2, -40, 26, 2, 40, -26, 2, -40, -26, -2, 40, -26, -2, -40, -26, 2, 40, 26, 2, -40, -26, 2, -40, 26, 2, 40, -26, 2, 40, 26, -2, -40, -26, -2, -40, 26, -2, 40, -26, -2 )
+[sub_resource type="SpatialMaterial" id=16]
+albedo_texture = ExtResource( 7 )
+uv1_scale = Vector3( 0.25, 0.25, 0.25 )
+uv1_offset = Vector3( 0.5, 0.5, 0 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=17]
+albedo_texture = ExtResource( 7 )
+uv1_scale = Vector3( 0.25, 0.25, 0.25 )
+uv1_offset = Vector3( 0.5, 0.5, 0 )
+uv1_triplanar = true
 
 [node name="Level_002" type="Spatial"]
 script = ExtResource( 1 )
@@ -93,7 +105,7 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 3.1,
 
 [node name="Floor" type="MeshInstance" parent="."]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -40.009 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -38 )
 mesh = SubResource( 2 )
 material/0 = null
 
@@ -104,14 +116,14 @@ shape = SubResource( 4 )
 
 [node name="Floor2" type="CSGCombiner" parent="."]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, -40 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, -38 )
 operation = 2
 use_collision = true
 
 [node name="CSGBox" type="CSGBox" parent="Floor2"]
-width = 80.0
+width = 76.0
 height = 4.0
-depth = 80.0
+depth = 76.0
 material = SubResource( 8 )
 
 [node name="CSGBox2" type="CSGBox" parent="Floor2"]
@@ -123,7 +135,7 @@ material = SubResource( 7 )
 
 [node name="Ceiling" type="MeshInstance" parent="."]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 46, -40 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 46, -38 )
 mesh = SubResource( 2 )
 material/0 = null
 
@@ -144,11 +156,12 @@ material/0 = null
 shape = SubResource( 12 )
 
 [node name="EntryWall" type="CSGCombiner" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, 2 )
 use_collision = true
 
 [node name="CSGBox" type="CSGBox" parent="EntryWall"]
-width = 80.0
+width = 76.0
 height = 52.0
 depth = 4.0
 material = SubResource( 11 )
@@ -160,49 +173,81 @@ width = 20.0
 height = 16.0
 depth = 5.0
 
-[node name="ExitWall" type="CSGCombiner" parent="."]
+[node name="OpposingWall" type="CSGCombiner" parent="."]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 22, -40 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, -78 )
 use_collision = true
 
-[node name="CSGBox" type="CSGBox" parent="ExitWall"]
+[node name="CSGBox" type="CSGBox" parent="OpposingWall"]
+width = 80.0
+height = 52.0
+depth = 4.0
+material = SubResource( 11 )
+
+[node name="CSGBox2" type="CSGBox" parent="OpposingWall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0 )
+operation = 2
+width = 20.0
+height = 16.0
+depth = 5.0
+material = SubResource( 18 )
+
+[node name="CSGBox3" type="CSGBox" parent="OpposingWall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -18, 0 )
+operation = 2
+width = 20.0
+height = 16.0
+depth = 5.0
+material = SubResource( 19 )
+
+[node name="LeftWall" type="CSGCombiner" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 22, -40 )
+use_collision = true
+
+[node name="CSGBox" type="CSGBox" parent="LeftWall"]
 width = 4.0
 height = 52.0
 depth = 80.0
 material = SubResource( 11 )
 
-[node name="CSGBox2" type="CSGBox" parent="ExitWall"]
+[node name="CSGBox2" type="CSGBox" parent="LeftWall"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0 )
 operation = 2
 width = 5.0
 height = 16.0
 depth = 20.0
 
-[node name="OpposingWall" type="MeshInstance" parent="."]
+[node name="RightWall" type="CSGCombiner" parent="."]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, -82 )
-mesh = SubResource( 14 )
-material/0 = null
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 22, -40 )
+use_collision = true
 
-[node name="StaticBody" type="StaticBody" parent="OpposingWall"]
+[node name="CSGBox" type="CSGBox" parent="RightWall"]
+width = 4.0
+height = 52.0
+depth = 80.0
+material = SubResource( 11 )
 
-[node name="CollisionShape" type="CollisionShape" parent="OpposingWall/StaticBody"]
-shape = SubResource( 15 )
+[node name="CSGBox2" type="CSGBox" parent="RightWall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -18, 0 )
+operation = 2
+width = 6.0
+height = 16.0
+depth = 20.0
+material = SubResource( 16 )
 
-[node name="RightWall" type="MeshInstance" parent="."]
-editor/display_folded = true
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 42, 22, -40 )
-mesh = SubResource( 14 )
-material/0 = null
-
-[node name="StaticBody" type="StaticBody" parent="RightWall"]
-
-[node name="CollisionShape" type="CollisionShape" parent="RightWall/StaticBody"]
-shape = SubResource( 15 )
+[node name="CSGBox3" type="CSGBox" parent="RightWall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0 )
+operation = 2
+width = 5.0
+height = 16.0
+depth = 20.0
+material = SubResource( 17 )
 
 [node name="ExitDoor" parent="." instance=ExtResource( 4 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -40, 27, -40 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -38, 27, -40 )
 is_exit = true
 
 [node name="Transition_002" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -60, 23, -40 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -58, 23, -40 )
