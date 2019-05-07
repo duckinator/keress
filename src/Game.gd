@@ -132,8 +132,8 @@ func next_level(seamless_transition=false):
 		Console.error(err)
 		return
 
-	#if seamless_transition:
-	#	Game.restore_player_rotation()
+	if seamless_transition:
+		call_deferred("restore_player_rotation")
 
 func spawn_scene(asset, pos=null, rot=null):
 	var scene = load("res://" + asset + ".tscn")
