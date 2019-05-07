@@ -46,28 +46,35 @@ func _physics_process(delta):
 	right.translate(right_pos)
 
 func open():
+	var scene = get_tree().current_scene
+	
 	if state == OPENED or state == OPENING:
 		return true
 	
 	if locked:
 		return false
 	
-	if not get_tree().current_scene.can_open_door(self):
+	if scene.has_method("can_open_door") and not scene.can_open_door(self):
 		return false
 	
 	state = OPENING
-	return get_tree().current_scene.opening_door(self)
+	if scene.has_method("opening_door"):
+		return scene.opening_door(self)
 
 func close():
 	if state == CLOSED or state == CLOSING:
 		return true
 	
 	state = CLOSING
-	get_tree().current_scene.closing_door(self)
+	var scene = get_tree().current_scene
+	if scene.has_method("closing_door"):
+		return scene.closing_door(self)
 
 func through():
-	get_tree().current_scene.through_door(self)
+	var scene = get_tree().current_scene
+	if scene.has_method("through_door"):
+		scene.through_door(self)
 	
-	if default_exit_behavior and self == get_parent().get_node("Exit_Door"):
+	if default_exit_behavior and is_exit:
 		Console.log("Went through exit door - going to next level.")
 		Game.next_level()
