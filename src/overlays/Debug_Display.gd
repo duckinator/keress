@@ -18,9 +18,9 @@ func _process(_delta):
 	var position = "(None)"
 	
 	var scene = get_tree().current_scene
-	if scene.has_method("get_player"):
-		var pos = scene.get_player().translation.round()
-		level = str(scene.current_level)
+	if Game.playing:
+		var pos = Game.get_player().translation.round()
+		level = str(Game.get_current_level())
 		position = str(pos)
 	
 	#var fps = str(Engine.get_frames_per_second())
