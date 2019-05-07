@@ -96,6 +96,9 @@ func safe_rotate(vec):
 	camera_rot.z = 0
 	rotation_helper.rotation_degrees = camera_rot
 
+func jump(assist=1):
+	vel.y += JUMP_SPEED * assist
+
 # Various _process_* functions:
 
 func process_input(_delta):

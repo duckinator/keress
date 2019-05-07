@@ -173,6 +173,7 @@ margin_bottom = 190.0
 focus_neighbour_bottom = NodePath("../HSlider_Joypad_Sensitivity")
 focus_next = NodePath("../HSlider_Joypad_Sensitivity")
 focus_previous = NodePath("../Button_Back")
+ticks_on_borders = false
 
 [node name="Label_Joypad_Sensitivity" type="Label" parent="Panels/Settings"]
 margin_left = 10.0
@@ -191,6 +192,7 @@ focus_neighbour_top = NodePath("../HSlider_Mouse_Sensitivity")
 focus_neighbour_bottom = NodePath("../CheckButton_VSync")
 focus_next = NodePath("../CheckButton_VSync")
 focus_previous = NodePath("../HSlider_Mouse_Sensitivity")
+ticks_on_borders = false
 
 [node name="CheckButton_VSync" type="CheckButton" parent="Panels/Settings"]
 margin_left = 10.0
