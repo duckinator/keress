@@ -2,7 +2,7 @@ extends Spatial
 
 var mobs = []
 func _ready():
-	pass
+	Game.restore_player_rotation()
 
 func player_noise(trans, sound, loudness):
 	trans = trans.round()
