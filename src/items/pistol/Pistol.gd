@@ -18,7 +18,7 @@ func secondary():
 func reload():
 	var diff = clamp(MAX_IN_WEAPON - in_weapon, 0, ammo)
 	ammo -= diff
-	in_weapon == diff
+	in_weapon = diff
 
 func needs_reload():
 	return in_weapon < (MAX_IN_WEAPON / 4)
