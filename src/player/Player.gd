@@ -43,11 +43,9 @@ func _ready():
 	camera = $RotationHelper/Camera
 	rotation_helper = $RotationHelper
 
-	#weapons = {
-	#	"pistol": $Rotation_Helper/Pistol,
-	#}
-	#weapons["pistol"].set_player(self)
-	#weapon = weapons["pistol"]
+	inventory.append($Pistol)
+	#inventory.append($Rifle)
+	#inventory.append($Shotgun)
 
 	adjust_health(MAX_HEALTH)
 
@@ -122,6 +120,7 @@ func process_input(delta):
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
 	
 	# Jumping
+	# TODO: Add debounce timer.
 	if (is_on_floor() or is_on_wall()) and Input.is_action_pressed("movement_jump"):
 		vel.y = JUMP_SPEED
 
@@ -138,7 +137,6 @@ func process_input_inventory(_delta):
 	if Input.is_action_pressed("action_primary"):
 		Console.log("TODO: Primary action.")
 		item.primary()
-		#weapon.fire()
 		#fire_bullet(Vector3(100, 0, 0))
 	if Input.is_action_pressed("action_secondary"):
 		Console.log("TODO: secondary action")
