@@ -60,6 +60,7 @@ material/0 = null
 shape = SubResource( 4 )
 
 [node name="Area" type="Area" parent="."]
+editor/display_folded = true
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0, 0 )
 visible = false
 input_ray_pickable = false
@@ -69,6 +70,7 @@ script = ExtResource( 2 )
 shape = SubResource( 5 )
 
 [node name="Area2_Through_Door" type="Area" parent="."]
+editor/display_folded = true
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 8, 0, 0 )
 input_ray_pickable = false
 script = ExtResource( 3 )
@@ -87,6 +89,7 @@ material/0 = null
 shape = SubResource( 8 )
 
 [node name="Bottom_Bar" type="StaticBody" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.125, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Bottom_Bar"]
@@ -97,6 +100,7 @@ material/0 = null
 shape = SubResource( 8 )
 
 [node name="Left_End" type="StaticBody" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -6.125 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Left_End"]
@@ -107,6 +111,7 @@ material/0 = null
 shape = SubResource( 10 )
 
 [node name="Right_End" type="StaticBody" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 6.125 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Right_End"]
