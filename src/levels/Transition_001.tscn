@@ -75,7 +75,7 @@ size = Vector3( 12, 4, 32 )
 points = PoolVector3Array( -6, 2, 16, 6, 2, -16, 6, 2, 16, -6, 2, -16, -6, -2, 16, 6, -2, -16, 6, -2, 16, -6, -2, -16, 6, 2, 16, -6, 2, -16, 6, 2, -16, -6, 2, 16, 6, -2, 16, -6, -2, -16, 6, -2, -16, -6, -2, 16, 6, 2, 16, -6, -2, 16, -6, 2, 16, 6, -2, 16, 6, 2, -16, -6, -2, -16, -6, 2, -16, 6, -2, -16 )
 
 [sub_resource type="CapsuleShape" id=22]
-radius = 2.0
+radius = 2.3
 height = 32.0
 
 [node name="Transition_001" type="Spatial"]
@@ -197,7 +197,7 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="Ceiling/StaticBody"]
 shape = SubResource( 20 )
 
-[node name="Area" type="Area" parent="."]
+[node name="Area" type="StaticBody" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 4, 0 )
