@@ -198,6 +198,7 @@ material/0 = null
 shape = SubResource( 20 )
 
 [node name="Area" type="StaticBody" parent="."]
+editor/display_folded = true
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 4, 0 )
