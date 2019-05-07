@@ -43,9 +43,9 @@ func _ready():
 	camera = $RotationHelper/Camera
 	rotation_helper = $RotationHelper
 
-	inventory.append($Pistol)
-	#inventory.append($Rifle)
-	#inventory.append($Shotgun)
+	inventory.append($RotationHelper/Pistol)
+	#inventory.append($RotationHelper/Rifle)
+	#inventory.append($RotationHelper/Shotgun)
 
 	adjust_health(MAX_HEALTH)
 
@@ -98,7 +98,7 @@ func safe_rotate(vec):
 
 # Various _process_* functions:
 
-func process_input(delta):
+func process_input(_delta):
 	if Console.visible:
 		return
 	
