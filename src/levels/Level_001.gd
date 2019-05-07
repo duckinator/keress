@@ -12,10 +12,10 @@ func can_open_door(door):
 	return len(mobs) == 0
 
 func opening_door(door):
-	print("Opening door: " + door.name)
+	Console.log("Opening door: " + door.name)
 
 func closing_door(door):
-	print("Closing door: " + door.name)
+	Console.log("Closing door: " + door.name)
 
 func through_door(door):
-	print("Through door: " + door.name)
+	Console.log("Went through door: " + str(door))

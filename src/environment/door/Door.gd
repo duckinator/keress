@@ -5,6 +5,7 @@ enum {OPENED, CLOSED, OPENING, CLOSING}
 var state = CLOSED
 export var is_exit = false
 export var locked = false
+export var default_exit_behavior = true
 
 var left
 var right
@@ -66,3 +67,7 @@ func close():
 
 func through():
 	get_tree().current_scene.through_door(self)
+	
+	if default_exit_behavior and self == get_parent().get_node("Exit_Door"):
+		Console.log("Went through exit door - going to next level.")
+		Game.next_level()
