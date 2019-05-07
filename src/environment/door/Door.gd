@@ -6,6 +6,7 @@ var state = CLOSED
 export var is_exit = false
 export var locked = false
 export var default_exit_behavior = true
+export var seamless_transition = true
 
 var left
 var right
@@ -77,4 +78,5 @@ func through():
 	
 	if default_exit_behavior and is_exit:
 		Console.log("Went through exit door - going to next level.")
-		Game.next_level()
+		Game.next_level(seamless_transition)
+		default_exit_behavior = false

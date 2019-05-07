@@ -8,14 +8,14 @@ func player_noise(trans, sound, loudness):
 	trans = trans.round()
 	Console.log("player_noise(" + str(trans) + ", " + str(sound) + ", " + str(loudness) + ")")
 
-func can_open_door(_door):
+func can_open_door(door):
 	return len(mobs) == 0
 
 func opening_door(door):
-	Console.log("Opening door: " + door.name)
+	pass
 
 func closing_door(door):
-	Console.log("Closing door: " + door.name)
+	pass
 
 func through_door(door):
-	Console.log("Went through door: " + str(door))
+	pass

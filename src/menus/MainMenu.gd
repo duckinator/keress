@@ -45,11 +45,11 @@ func _ready():
 
 func game_continue():
 	panel_select("none")
-	Game.load_level(Settings.fetch("current_level", 1))
+	Game.load_level(Game.get_current_level())
 
 func game_new():
 	Settings.store("has_played", true)
-	Settings.store("current_level", 1)
+	Settings.store("current_level", Game.FIRST_LEVEL)
 	game_continue()
 
 # REQUIREMENT: There should be no panel named "none".

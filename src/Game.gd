@@ -1,5 +1,10 @@
 extends Node
 
+# TODO: See if these can be automagically determined?
+const FIRST_LEVEL = 1
+const MIN_LEVEL = FIRST_LEVEL
+const MAX_LEVEL = 2
+
 const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
 const DEBUG_SCENE = preload("res://overlays/Debug_Display.tscn")
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
@@ -11,13 +16,16 @@ var debug_display = null
 var reload_level = false
 var playing = false
 
-var current_level
+func set_current_level(level):
+	return Settings.store("current_level", level)
+
+func get_current_level():
+	return Settings.fetch("current_level", 1)
 
 func _ready():
 	randomize()
 	canvas_layer = CanvasLayer.new()
 	add_child(canvas_layer)
-	current_level = Settings.fetch("current_level", 1)
 
 func _process(_delta):
 	# If we're not playing, hide the pause menu.
@@ -92,22 +100,40 @@ func load_level(level):
 	var err = load_scene(get_level_scene(level))
 	if err:
 		Console.error("load_level(): Could not load level " + str(level) + ". (Error " + str(err) + ".)")
+	set_current_level(level)
 
 func previous_level():
-	current_level -= 1
-	Settings.store("current_level", current_level)
-	var err = load_level(current_level)
-	if err:
-		Console.error("Couldn't load previous level (" + str(current_level) + ").")
-		Console.error(err)
+	var prev_level = get_current_level() - 1
+	
+	if prev_level < MIN_LEVEL:
+		Console.error("Can't go to previous level; current_level is " + str(get_current_level()) + ", MIN_LEVEL is " + str(MIN_LEVEL))
+		return
 
-func next_level():
-	current_level += 1
-	Settings.store("current_level", current_level)
-	var err = load_level(current_level)
+	
+	var err = load_level(prev_level)
 	if err:
-		Console.error("Couldn't load next level (" + str(current_level) + ").")
+		Console.error("Couldn't load previous level (" + str(prev_level) + ").")
 		Console.error(err)
+		return
+
+func next_level(seamless_transition=false):
+	var _next_level = get_current_level() + 1
+	
+	if _next_level > MAX_LEVEL:
+		Console.error("Can't go to next level; current_level is " + str(get_current_level()) + ", MAX_LEVEL is " + str(MAX_LEVEL))
+		return
+	
+	if seamless_transition:
+		Game.store_player_rotation()
+	
+	var err = load_level(_next_level)
+	if err:
+		Console.error("Couldn't load next level (" + str(_next_level) + ").")
+		Console.error(err)
+		return
+
+	if seamless_transition:
+		Game.restore_player_rotation()
 
 func spawn_scene(asset, pos=null, rot=null):
 	var scene = load("res://" + asset + ".tscn")
@@ -154,6 +180,29 @@ func focus_first_control(node):
 func get_total_gravity_for(body):
 	var state = PhysicsServer.body_get_direct_state(body.get_rid())
 	return state.get_total_gravity()
+
+var stored_player_rotation = null
+func store_player_rotation():
+	var player = get_player()
+	if player == null:
+		Console.error("Game.gd/store_player_rotation(): player is null")
+		return
+	var rot1 = player.rotation_degrees
+	var rot2 = player.rotation_helper.rotation_degrees
+	stored_player_rotation = [rot1, rot2]
+	Console.log("store...(): player=" + str(player) + "; stored_player_rotation = " + str(stored_player_rotation))
+
+func restore_player_rotation():
+	var player = get_player()
+	if player == null:
+		Console.error("Game.gd/restore_player_rotation(): player is null")
+		return
+	Console.log("restore...(): player=" + str(player) + "; stored_player_rotation = " + str(stored_player_rotation))
+	if stored_player_rotation == null:
+		return
+	player.rotation_degrees = stored_player_rotation[0]
+	player.rotation_helper.rotation_degrees = stored_player_rotation[1]
+	stored_player_rotation = null
 
 func _input(event):
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F4:
