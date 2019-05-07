@@ -18,7 +18,7 @@ func _ready():
 	close()
 
 func _adjust_light():
-	if not is_exit:
+	if not is_exit and not locked:
 		$Lights/Green.visible = false
 		$Lights/Red.visible = false
 		return
