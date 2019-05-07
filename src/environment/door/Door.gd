@@ -17,6 +17,15 @@ func _ready():
 	right = $Right_Half
 	close()
 
+func _adjust_light():
+	if not is_exit:
+		$Lights/Green.visible = false
+		$Lights/Red.visible = false
+		return
+	
+	$Lights/Green.visible = !locked
+	$Lights/Red.visible = locked
+
 func _physics_process(delta):
 	if state == OPENED or state == CLOSED:
 		return
@@ -48,6 +57,7 @@ func _physics_process(delta):
 
 func open():
 	var scene = get_tree().current_scene
+	_adjust_light()
 	
 	if state == OPENED or state == OPENING:
 		return true
@@ -63,6 +73,7 @@ func open():
 		return scene.opening_door(self)
 
 func close():
+	_adjust_light()
 	if state == CLOSED or state == CLOSING:
 		return true
 	

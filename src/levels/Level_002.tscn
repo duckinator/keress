@@ -11,6 +11,8 @@
 
 [sub_resource type="Environment" id=1]
 ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.1
+ambient_light_sky_contribution = 0.0
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_texture = ExtResource( 5 )
@@ -205,6 +207,7 @@ height = 16.0
 depth = 5.0
 
 [node name="OpposingWall" type="CSGCombiner" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, -78 )
 use_collision = true
 
