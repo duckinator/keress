@@ -223,10 +223,10 @@ depth = 5.0
 material = SubResource( 11 )
 
 [node name="CSGBox3" type="CSGBox" parent="OpposingWall"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -18, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -16, 0 )
 operation = 2
 width = 20.0
-height = 16.0
+height = 20.1
 depth = 6.0
 material = SubResource( 12 )
 
