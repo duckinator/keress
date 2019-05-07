@@ -67,7 +67,6 @@ shape = SubResource( 12 )
 [node name="Area" type="Area" parent="."]
 editor/display_folded = true
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0, 0 )
-visible = false
 input_ray_pickable = false
 script = ExtResource( 2 )
 
