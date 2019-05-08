@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://menus/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://menus/InputMapper.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -241,3 +242,6 @@ focus_next = NodePath("../HSlider_Mouse_Sensitivity")
 focus_previous = NodePath("../CheckButton_Debug")
 custom_fonts/font = SubResource( 11 )
 text = "Done"
+
+[node name="InputMapper" parent="Panels" instance=ExtResource( 3 )]
+visible = false

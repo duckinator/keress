@@ -1,5 +1,8 @@
 extends Control
 
+const CONFIG_FILE = "user://InputMapper.cfg"
+const CONFIG_SECTION = "InputMapper"
+
 var _waiting_for_input
 
 const CONTROLS = {
@@ -25,14 +28,10 @@ const CONTROLS = {
 	#"action_quick_switch": "Quick switch",
 }
 
-onready var hbox = $Panel/ScrollContainer/HBoxContainer
-onready var vbox = hbox.get_node("VBoxContainer")
-#onready var sound = vbox.get_node("Sound")
-onready var controls = vbox.get_node("Controls")
-onready var mouse = vbox.get_node("Mouse")
-onready var joypad = vbox.get_node("Joypad")
-
-onready var controls_reset = vbox.get_node("HBoxContainer2").get_node("Controls_Reset")
+var controls
+var sound
+var mouse
+var joypad
 
 onready var categories = {
 	#"sound": sound,
@@ -47,16 +46,31 @@ func label(text):
 	return l
 
 func _ready():
+	var hbox = $Panel/ScrollContainer/HBoxContainer
+	var vbox = hbox.get_node("VBoxContainer")
+	#sound = vbox.get_node("Sound")
+	controls = vbox.get_node("Controls")
+	mouse = vbox.get_node("Mouse")
+	joypad = vbox.get_node("Joypad")
+	
+	var hbox2 = vbox.get_node("HBoxContainer2")
+	var controls_reset = hbox2.get_node("Controls_Reset")
+	var controls_save = hbox2.get_node("Controls_Save")
+	
 	Game.show_cursor()
 	hbox.add_spacer(true)
 	hbox.add_spacer(false)
 	hbox.add_constant_override("separation", 20)
 	vbox.add_constant_override("separation", 20)
 	
-	controls_reset.connect("pressed", self, "reset")
+	controls_reset.connect("pressed", self, "reset_config")
+	controls_save.connect("pressed", self, "save_config")
 	
 	for setting in CONTROLS.keys():
 		add_input_mapper(controls, setting, CONTROLS[setting])
+
+	load_config()
+
 
 func add_input_mapper(parent, setting, display_name):
 	var scene = load("res://menus/ActionMapper.tscn").instance()
@@ -112,5 +126,39 @@ func prompt_hide():
 	_waiting_for_input = false
 	$InputMapDialog.hide()
 
-func reset():
+func reset_config():
 	InputMap.load_from_globals()
+
+func load_config():
+	if not File.new().file_exists(CONFIG_FILE):
+		return
+	
+	var config = ConfigFile.new()
+	var err = config.load(CONFIG_FILE)
+	if err != OK:
+		Console.error("InputMapper.gd: load_config(): Error loading " + CONFIG_FILE + ". (" + str(err) + ")")
+		return
+	
+	if not config.has_section(CONFIG_SECTION):
+		Console.error("InputMapper.gd: load_config(): Config file " + CONFIG_FILE + " does not have section " + CONFIG_SECTION)
+		return
+	
+	for action in config.get_section_keys(CONFIG_SECTION):
+		var action_events = config.get_value(CONFIG_SECTION, action)
+		
+		for event in action_events:
+			if event in InputMap.get_action_list(action):
+				continue
+			
+			InputMap.action_add_event(action, event)
+
+func save_config():
+	var config = ConfigFile.new()
+	
+	for action in CONTROLS.keys():
+		config.set_value(CONFIG_SECTION, action, InputMap.get_action_list(action))
+	
+	var err = config.save(CONFIG_FILE)
+	if err != OK:
+		Console.error("InputMapper.gd: save_config(): Error saving " + CONFIG_FILE + ". (" + str(err) + ")")
+	return err

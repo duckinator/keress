@@ -10,6 +10,7 @@ func _ready():
 	_console = CONSOLE_SCENE.instance()
 	add_child(_console)
 	hide()
+	self.log("Config files are located in " + str(OS.get_user_data_dir()))
 
 func _get_visible():
 	return _console.visible
