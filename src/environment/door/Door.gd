@@ -1,7 +1,7 @@
 extends Spatial
 
 # The number of seconds it takes to open or close a set of doors.
-const DOOR_OPEN_SPEED = 0.25
+const DOOR_OPEN_SPEED = 0.5
 const DOOR_CLOSE_SPEED = 2
 
 # z translations for doors when open and closed.
