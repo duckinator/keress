@@ -8,7 +8,7 @@ var _waiting_for_input
 const CONTROLS = {
 	#"ui_accept": "Accept",
 	#"ui_select": "Select",
-	#"ui_cancel": "Cancel",
+	"ui_cancel": "Pause/Resume",
 	#"ui_left": "Left (Menu)",
 	#"ui_right": "Right (Menu)",
 	#"ui_up": "Up (Menu)",
