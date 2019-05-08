@@ -179,7 +179,6 @@ func spawn_player(scene):
 	player.rotation = spawn.rotation
 
 func focus_first_control(node):
-	Console.log("focus first control: " + str(node) + " (" + node.name + ")")
 	for child in node.get_children():
 		# Skip hidden nodes.
 		if not child.visible:
@@ -199,16 +198,13 @@ func focus_first_control(node):
 			continue
 		
 		if child.has_method("grab_focus"):
-			Console.log("child = " + str(child) + " (" + child.name + ")")
 			child.grab_focus()
 			return true
 	
 	# If we get here, we've not found something - go deeper.
 	for child in node.get_children():
-		Console.log("RECURSE")
 		if focus_first_control(child):
 			return true
-	
 	return false
 
 func get_total_gravity_for(body):
