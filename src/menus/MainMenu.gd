@@ -24,6 +24,10 @@ func _ready():
 	assert(err == OK)
 	err = $Panels/Settings/CheckButton_Debug.connect("pressed", self, "toggle_debug")
 	assert(err == OK)
+	err = $Panels/Settings/Button_Controls.connect("pressed", self, "panel_select", ["InputMapper"])
+	assert(err == OK)
+	err = $Panels/InputMapper.done.connect("pressed", self, "panel_select", ["Settings"])
+	assert(err == OK)
 
 	$Panels/Settings/CheckButton_VSync.pressed = Settings.fetch("vsync", true)
 	$Panels/Settings/CheckButton_Fullscreen.pressed = Settings.fetch("fullscreen", false)
@@ -31,6 +35,7 @@ func _ready():
 
 	$Panels/Start/Button_Continue.disabled = not Settings.fetch("has_played")
 
+	$Panels/InputMapper.load_config()
 	load_settings()
 	
 	panel_select("Start")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://menus/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
@@ -44,8 +44,14 @@ font_data = ExtResource( 2 )
 size = 30
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=12]
 size = 30
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 20
+use_filter = true
 font_data = ExtResource( 2 )
 
 [node name="MainMenu" type="Control"]
@@ -146,7 +152,6 @@ text = "Quit"
 flat = true
 
 [node name="Settings" type="Panel" parent="Panels"]
-visible = false
 margin_right = 1280.0
 margin_bottom = 720.0
 
@@ -231,17 +236,25 @@ focus_previous = NodePath("../CheckButton_Fullscreen")
 custom_fonts/font = SubResource( 10 )
 text = "Debug Mode"
 
+[node name="Button_Controls" type="Button" parent="Panels/Settings"]
+margin_left = 20.0
+margin_top = 410.0
+margin_right = 224.0
+margin_bottom = 464.0
+custom_fonts/font = SubResource( 12 )
+text = "Controls"
+
 [node name="Button_Back" type="Button" parent="Panels/Settings"]
-margin_left = 500.0
-margin_top = 660.0
-margin_right = 800.0
-margin_bottom = 710.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 120.0
+margin_bottom = 60.0
 focus_neighbour_top = NodePath("../CheckButton_Debug")
 focus_neighbour_bottom = NodePath("../HSlider_Mouse_Sensitivity")
 focus_next = NodePath("../HSlider_Mouse_Sensitivity")
 focus_previous = NodePath("../CheckButton_Debug")
 custom_fonts/font = SubResource( 11 )
-text = "Done"
+text = "< Back"
 
 [node name="InputMapper" parent="Panels" instance=ExtResource( 3 )]
 visible = false

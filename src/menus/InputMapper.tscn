@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://menus/InputMapper.gd" type="Script" id=1]
 [ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
@@ -20,6 +20,11 @@ font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 40
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
 use_filter = true
 font_data = ExtResource( 2 )
 
@@ -118,8 +123,15 @@ margin_top = 154.0
 margin_right = 1225.0
 margin_bottom = 154.0
 
+[node name="Done" type="Button" parent="Panel"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 120.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 5 )
+text = "< Back"
+
 [node name="InputMapDialog" type="ConfirmationDialog" parent="."]
-visible = true
 margin_right = 200.0
 margin_bottom = 70.0
 window_title = "Set Binding"

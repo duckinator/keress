@@ -32,6 +32,7 @@ var controls
 var sound
 var mouse
 var joypad
+var done
 
 onready var categories = {
 	#"sound": sound,
@@ -46,6 +47,7 @@ func label(text):
 	return l
 
 func _ready():
+	done = $Panel/Done
 	var hbox = $Panel/ScrollContainer/HBoxContainer
 	var vbox = hbox.get_node("VBoxContainer")
 	#sound = vbox.get_node("Sound")
