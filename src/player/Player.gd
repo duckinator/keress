@@ -232,7 +232,6 @@ func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		safe_rotate(event.relative)
 	
-
 	# No point doing all of this with an empty inventory.
 	if len(inventory) == 0:
 		return
