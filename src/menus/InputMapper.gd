@@ -58,34 +58,12 @@ func _ready():
 	for setting in CONTROLS.keys():
 		add_input_mapper(controls, setting, CONTROLS[setting])
 
-func _process(delta):
-	update_buttons()
-
 func add_input_mapper(parent, setting, display_name):
-	var hbox = HBoxContainer.new()
-	var hbox2 = HBoxContainer.new()
-	var vbox = VBoxContainer.new()
-	var label = Label.new()
-	var button = Button.new()
-	var list = Label.new()
-	label.text = display_name
-	button.text = "..." # TODO: Is there a better way to convey that it's not set?
-	button.connect("pressed", self, "prompt_input_map", [button, setting])
-	button.name = "Button"
-	list.name = "ActionList"
-	hbox.name = "HBox"
-	hbox2.name = "HBox2"
-	vbox.set_meta("action", setting)
-	
-	hbox.add_child(label)
-	hbox.add_child(button)
-	vbox.add_child(hbox)
-	var bullshit = Label.new()
-	bullshit.text = "    "
-	hbox2.add_child(bullshit)
-	hbox2.add_child(list)
-	vbox.add_child(hbox2)
-	parent.add_child(vbox)
+	var scene = load("res://menus/ActionMapper.tscn").instance()
+	parent.add_child(scene)
+	scene.label = display_name
+	scene.action = setting
+	scene.set_prompt_function(self, "prompt_input_map")
 
 func prompt_input_map(button, setting):
 	var dialog = $InputMapDialog
@@ -99,7 +77,6 @@ func prompt_input_map(button, setting):
 	dialog.disconnect("confirmed", self, "prompt_confirm")
 	dialog.connect("confirmed", self, "prompt_confirm", [button, setting])
 	cancel.connect("pressed", self, "prompt_hide")
-	print("UPDATE INPUT MAP: button=" + str(button) + "; setting=" + setting)
 
 var last_event = null
 func _input(event):
@@ -119,7 +96,6 @@ func _input(event):
 		prompt_hide()
 
 func prompt_confirm(button, action):
-	print("CONFIRMED")
 	if last_event != null:
 		var event = last_event
 		if InputMap.action_has_event(action, event):
@@ -135,22 +111,6 @@ func prompt_confirm(button, action):
 func prompt_hide():
 	_waiting_for_input = false
 	$InputMapDialog.hide()
-
-func update_buttons():
-	for vbox in controls.get_children():
-		if not vbox is VBoxContainer:
-			continue
-		
-		var hbox = vbox.get_node("HBox")
-		var action = vbox.get_meta("action")
-		var label = vbox.get_node("HBox2").get_node("ActionList")
-		var action_list = InputMap.get_action_list(action)
-		var action_list_str = ""
-		for idx in range(0, len(action_list)):
-			if idx != 0:
-				action_list_str += "\n"
-			action_list_str += action_list[idx].as_text()
-		label.text = action_list_str
 
 func reset():
 	InputMap.load_from_globals()
