@@ -1,5 +1,8 @@
 extends Node
 
+const DEFAULT_MOUSE_SENSITIVITY = 20
+const DEFAULT_JOYPAD_SENSITIVITY = 20
+
 # TODO: See if these can be automagically determined?
 const FIRST_LEVEL = 1
 const MIN_LEVEL = FIRST_LEVEL
@@ -16,11 +19,23 @@ var debug_display = null
 var reload_level = false
 var playing = false
 
+var _cache = {}
+
 func set_current_level(level):
 	return Settings.store("current_level", level)
 
 func get_current_level():
 	return Settings.fetch("current_level", 1)
+
+func get_mouse_sensitivity(cache_bust=false):
+	if cache_bust or not "mouse_sensitivity" in _cache.keys():
+		_cache["mouse_sensitivity"] = Settings.fetch("mouse_sensitivity", DEFAULT_MOUSE_SENSITIVITY)
+	return _cache["mouse_sensitivity"]
+
+func get_joypad_sensitivity(cache_bust=false):
+	if cache_bust or not "joypad_sensitivity" in _cache.keys():
+		_cache["joypad_sensitivity"] = Settings.fetch("joypad_sensitivity", DEFAULT_JOYPAD_SENSITIVITY)
+	return _cache["joypad_sensitivity"]
 
 func show_cursor():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

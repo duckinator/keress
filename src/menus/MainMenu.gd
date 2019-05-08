@@ -37,6 +37,11 @@ func _ready():
 
 	$Panels/InputMapper.load_config()
 	load_settings()
+
+	err = $Panels/Settings/HSlider_Mouse_Sensitivity.connect("value_changed", self, "update_mouse_sensitivity")
+	assert(err == OK)
+	err = $Panels/Settings/HSlider_Joypad_Sensitivity.connect("value_changed", self, "update_joypad_sensitivity")
+	assert(err == OK)
 	
 	panel_select("Start")
 
@@ -88,9 +93,17 @@ func toggle_debug():
 	Settings.store("debug", $Panels/Settings/CheckButton_Debug.pressed)
 	load_settings()
 
+func update_mouse_sensitivity(value):
+	Settings.store("mouse_sensitivity", value)
+	load_settings()
+
+func update_joypad_sensitivity(value):
+	Settings.store("joypad_sensitivity", value)
+	load_settings()
+
 func load_settings():
 	Debug.enabled = $Panels/Settings/CheckButton_Debug.pressed
 	OS.window_fullscreen = $Panels/Settings/CheckButton_Fullscreen.pressed
 	OS.vsync_enabled = $Panels/Settings/CheckButton_VSync.pressed
-	#$Panels/Settings/HSlider_Joypad_Sensitivity = Globals.joypad_sensitivity
-	#$Panels/Settings/HSlider_Mouse_Sensitivity = Globals.mouse_sensitivity
+	$Panels/Settings/HSlider_Joypad_Sensitivity.value = Game.get_joypad_sensitivity()
+	$Panels/Settings/HSlider_Mouse_Sensitivity.value = Game.get_mouse_sensitivity()

@@ -19,7 +19,8 @@ const SOUND_FALL_DAMAGE = "player/fall"
 const LOUDNESS_CLIMB = 1
 const LOUDNESS_FALL_DAMAGE = 3
 
-var MOUSE_SENSITIVITY = 0.2
+var MOUSE_SENSITIVITY = 0
+var JOYPAD_SENSITIVITY = 0
 
 var vel = Vector3(0, 0, 0)
 var dir = Vector3(0, 0, 0)
@@ -52,10 +53,13 @@ func _ready():
 	adjust_health(MAX_HEALTH)
 
 func _process(delta):
+	MOUSE_SENSITIVITY = float(Game.get_mouse_sensitivity()) / 100
+	JOYPAD_SENSITIVITY = Game.get_joypad_sensitivity()
+	
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
 	var vert = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
-	horiz *= 20
-	vert *= 20
+	horiz *= JOYPAD_SENSITIVITY
+	vert *= JOYPAD_SENSITIVITY
 	safe_rotate(Vector2(horiz, vert))
 
 func _physics_process(delta):
@@ -224,9 +228,8 @@ func _input(event):
 			waiting_for_respawn = true
 		return
 	
+	# Mouse movement.
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		# Mouse movement.
-		Console.log(str(event.relative))
 		safe_rotate(event.relative)
 	
 
