@@ -76,7 +76,16 @@ func reload_weapon():
 func update_hud():
 	$HUD/Panel_Left/Label_Health.text = str(health)
 	$HUD/Panel_Left/Health_Bar.value = health
-	# TODO: Handle weapon/ammo.
+	
+	var in_weapon = "?"
+	var total_ammo = 0
+	if len(inventory) > 0 and inventory[current_item] != null:
+		var item = inventory[current_item]
+		in_weapon = str(item.in_weapon) + " +" + str(item.ammo)
+		#total_ammo = 100 * item.MAX_AMMO / item.ammo
+		total_ammo = item.ammo
+	$HUD/Panel_Left/Label_Ammo.text = in_weapon
+	$HUD/Panel_Left/Ammo_Bar.value = total_ammo
 
 func emit_sound(trans, sound, loudness):
 	get_tree().current_scene.player_noise(trans, sound, loudness)
@@ -138,15 +147,12 @@ func process_input_inventory(_delta):
 
 	# Firing weapons
 	if Input.is_action_pressed("action_primary"):
-		Console.log("TODO: Primary action.")
 		item.primary()
-		#fire_bullet(Vector3(100, 0, 0))
 	if Input.is_action_pressed("action_secondary"):
-		Console.log("TODO: secondary action")
 		item.secondary()
 
 	# Reloading weapons
-	var needs_reload = item.has_method("needs_reloaded") and item.needs_reload()
+	var needs_reload = item.has_method("needs_reload") and item.needs_reload()
 	if Input.is_action_just_pressed("action_reload") or needs_reload:
 		item.reload()
 
