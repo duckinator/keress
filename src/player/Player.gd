@@ -1,6 +1,8 @@
 extends KinematicBody
 
 var fall_damage_enabled = false
+const WALL_RUN_MULTIPLIER = 0.75
+
 
 const MASS = 100
 
@@ -160,6 +162,9 @@ func process_movement(delta):
 	dir = dir.normalized()
 	
 	vel += Vector3(delta * gravity.x, delta * gravity.y, delta * gravity.z)
+	
+	if is_on_wall() and vel.y < 0:
+		vel.y *= WALL_RUN_MULTIPLIER
 	
 	var hvel = vel
 	hvel.y = 0
