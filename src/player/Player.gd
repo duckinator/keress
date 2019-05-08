@@ -121,13 +121,13 @@ func process_input(_delta):
 	var input_movement_vector = Vector2()
 	
 	if Input.is_action_pressed("movement_forward"):
-		input_movement_vector.y += 1
+		input_movement_vector.y += Input.get_action_strength("movement_forward")
 	if Input.is_action_pressed("movement_backward"):
-		input_movement_vector.y -= 1
+		input_movement_vector.y -= Input.get_action_strength("movement_backward")
 	if Input.is_action_pressed("movement_left"):
-		input_movement_vector.x -= 1
+		input_movement_vector.x -= Input.get_action_strength("movement_left")
 	if Input.is_action_pressed("movement_right"):
-		input_movement_vector.x += 1
+		input_movement_vector.x += Input.get_action_strength("movement_right")
 	input_movement_vector = input_movement_vector.normalized()
 	dir += -cam_xform.basis.z.normalized() * input_movement_vector.y
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
