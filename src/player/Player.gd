@@ -1,6 +1,6 @@
 extends KinematicBody
 
-var fall_damage_enabled = true
+var fall_damage_enabled = false
 
 const MASS = 100
 
