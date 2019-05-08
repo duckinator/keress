@@ -51,6 +51,13 @@ func _ready():
 
 	adjust_health(MAX_HEALTH)
 
+func _process(delta):
+	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
+	var vert = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
+	horiz *= 20
+	vert *= 20
+	safe_rotate(Vector2(horiz, vert))
+
 func _physics_process(delta):
 	if not gravity:
 		gravity = Game.get_total_gravity_for($DummyRigidBody)
@@ -128,7 +135,7 @@ func process_input(_delta):
 		input_movement_vector.x -= Input.get_action_strength("movement_left")
 	if Input.is_action_pressed("movement_right"):
 		input_movement_vector.x += Input.get_action_strength("movement_right")
-	#input_movement_vector = input_movement_vector.normalized()
+	input_movement_vector = input_movement_vector.normalized()
 	dir += -cam_xform.basis.z.normalized() * input_movement_vector.y
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
 	
@@ -217,9 +224,11 @@ func _input(event):
 			waiting_for_respawn = true
 		return
 	
-	# Mouse movement.
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		# Mouse movement.
+		Console.log(str(event.relative))
 		safe_rotate(event.relative)
+	
 
 	# No point doing all of this with an empty inventory.
 	if len(inventory) == 0:
