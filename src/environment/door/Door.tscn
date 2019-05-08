@@ -5,16 +5,16 @@
 [ext_resource path="res://environment/door/Area2_Through_Door.gd" type="Script" id=3]
 
 [sub_resource type="CubeMesh" id=1]
-size = Vector3( 0.2, 10, 6 )
+size = Vector3( 0.2, 8, 6 )
 
-[sub_resource type="ConvexPolygonShape" id=2]
-points = PoolVector3Array( -0.1, 5, 3, 0.1, 5, -3, 0.1, 5, 3, -0.1, 5, -3, -0.1, -5, 3, 0.1, -5, -3, 0.1, -5, 3, -0.1, -5, -3, 0.1, 5, 3, -0.1, 5, -3, 0.1, 5, -3, -0.1, 5, 3, 0.1, -5, 3, -0.1, -5, -3, 0.1, -5, -3, -0.1, -5, 3, 0.1, 5, 3, -0.1, -5, 3, -0.1, 5, 3, 0.1, -5, 3, 0.1, 5, -3, -0.1, -5, -3, -0.1, 5, -3, 0.1, -5, -3 )
+[sub_resource type="ConvexPolygonShape" id=12]
+points = PoolVector3Array( -0.1, 4, 3, 0.1, 4, -3, 0.1, 4, 3, -0.1, 4, -3, -0.1, -4, 3, 0.1, -4, -3, 0.1, -4, 3, -0.1, -4, -3, 0.1, 4, 3, -0.1, 4, -3, 0.1, 4, -3, -0.1, 4, 3, 0.1, -4, 3, -0.1, -4, -3, 0.1, -4, -3, -0.1, -4, 3, 0.1, 4, 3, -0.1, -4, 3, -0.1, 4, 3, 0.1, -4, 3, 0.1, 4, -3, -0.1, -4, -3, -0.1, 4, -3, 0.1, -4, -3 )
 
 [sub_resource type="CubeMesh" id=3]
-size = Vector3( 0.2, 10, 6 )
+size = Vector3( 0.2, 8, 6 )
 
-[sub_resource type="ConvexPolygonShape" id=4]
-points = PoolVector3Array( -0.1, 5, 3, 0.1, 5, -3, 0.1, 5, 3, -0.1, 5, -3, -0.1, -5, 3, 0.1, -5, -3, 0.1, -5, 3, -0.1, -5, -3, 0.1, 5, 3, -0.1, 5, -3, 0.1, 5, -3, -0.1, 5, 3, 0.1, -5, 3, -0.1, -5, -3, 0.1, -5, -3, -0.1, -5, 3, 0.1, 5, 3, -0.1, -5, 3, -0.1, 5, 3, 0.1, -5, 3, 0.1, 5, -3, -0.1, -5, -3, -0.1, 5, -3, 0.1, -5, -3 )
+[sub_resource type="ConvexPolygonShape" id=13]
+points = PoolVector3Array( -0.1, 4, 3, 0.1, 4, -3, 0.1, 4, 3, -0.1, 4, -3, -0.1, -4, 3, 0.1, -4, -3, 0.1, -4, 3, -0.1, -4, -3, 0.1, 4, 3, -0.1, 4, -3, 0.1, 4, -3, -0.1, 4, 3, 0.1, -4, 3, -0.1, -4, -3, 0.1, -4, -3, -0.1, -4, 3, 0.1, 4, 3, -0.1, -4, 3, -0.1, 4, 3, 0.1, -4, 3, 0.1, 4, -3, -0.1, -4, -3, -0.1, 4, -3, 0.1, -4, -3 )
 
 [sub_resource type="CapsuleShape" id=5]
 radius = 8.0
@@ -24,10 +24,10 @@ height = 8.0
 extents = Vector3( 4, 4, 2 )
 
 [sub_resource type="CubeMesh" id=7]
-size = Vector3( 0.25, 0.25, 16.5 )
+size = Vector3( 0.25, 0.25, 20.5 )
 
-[sub_resource type="ConvexPolygonShape" id=8]
-points = PoolVector3Array( -0.125, 0.125, 8.25, 0.125, 0.125, -8.25, 0.125, 0.125, 8.25, -0.125, 0.125, -8.25, -0.125, -0.125, 8.25, 0.125, -0.125, -8.25, 0.125, -0.125, 8.25, -0.125, -0.125, -8.25, 0.125, 0.125, 8.25, -0.125, 0.125, -8.25, 0.125, 0.125, -8.25, -0.125, 0.125, 8.25, 0.125, -0.125, 8.25, -0.125, -0.125, -8.25, 0.125, -0.125, -8.25, -0.125, -0.125, 8.25, 0.125, 0.125, 8.25, -0.125, -0.125, 8.25, -0.125, 0.125, 8.25, 0.125, -0.125, 8.25, 0.125, 0.125, -8.25, -0.125, -0.125, -8.25, -0.125, 0.125, -8.25, 0.125, -0.125, -8.25 )
+[sub_resource type="ConvexPolygonShape" id=14]
+points = PoolVector3Array( -0.125, 0.125, 10.25, 0.125, 0.125, -10.25, 0.125, 0.125, 10.25, -0.125, 0.125, -10.25, -0.125, -0.125, 10.25, 0.125, -0.125, -10.25, 0.125, -0.125, 10.25, -0.125, -0.125, -10.25, 0.125, 0.125, 10.25, -0.125, 0.125, -10.25, 0.125, 0.125, -10.25, -0.125, 0.125, 10.25, 0.125, -0.125, 10.25, -0.125, -0.125, -10.25, 0.125, -0.125, -10.25, -0.125, -0.125, 10.25, 0.125, 0.125, 10.25, -0.125, -0.125, 10.25, -0.125, 0.125, 10.25, 0.125, -0.125, 10.25, 0.125, 0.125, -10.25, -0.125, -0.125, -10.25, -0.125, 0.125, -10.25, 0.125, -0.125, -10.25 )
 
 [sub_resource type="CubeMesh" id=9]
 size = Vector3( 0.25, 0.25, 0.25 )
@@ -39,11 +39,10 @@ points = PoolVector3Array( -0.125, 0.125, 0.125, 0.125, 0.125, -0.125, 0.125, 0.
 points = PoolVector3Array( -0.125, 0.125, 6.25, 0.125, 0.125, -6.25, 0.125, 0.125, 6.25, -0.125, 0.125, -6.25, -0.125, -0.125, 6.25, 0.125, -0.125, -6.25, 0.125, -0.125, 6.25, -0.125, -0.125, -6.25, 0.125, 0.125, 6.25, -0.125, 0.125, -6.25, 0.125, 0.125, -6.25, -0.125, 0.125, 6.25, 0.125, -0.125, 6.25, -0.125, -0.125, -6.25, 0.125, -0.125, -6.25, -0.125, -0.125, 6.25, 0.125, 0.125, 6.25, -0.125, -0.125, 6.25, -0.125, 0.125, 6.25, 0.125, -0.125, 6.25, 0.125, 0.125, -6.25, -0.125, -0.125, -6.25, -0.125, 0.125, -6.25, 0.125, -0.125, -6.25 )
 
 [node name="Door" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.25, 0 )
 script = ExtResource( 1 )
 
 [node name="Left_Half" type="StaticBody" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
 
 [node name="Left_Half_Mesh" type="MeshInstance" parent="Left_Half"]
@@ -51,10 +50,9 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Left_Half"]
-shape = SubResource( 2 )
+shape = SubResource( 12 )
 
 [node name="Right_Half" type="StaticBody" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
 
 [node name="Right_Half_Mesh" type="MeshInstance" parent="Right_Half"]
@@ -62,7 +60,7 @@ mesh = SubResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Right_Half"]
-shape = SubResource( 4 )
+shape = SubResource( 13 )
 
 [node name="Area" type="Area" parent="."]
 editor/display_folded = true
@@ -83,19 +81,18 @@ script = ExtResource( 3 )
 shape = SubResource( 6 )
 
 [node name="Top_Bar" type="StaticBody" parent="."]
-editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 4.9, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 4, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Top_Bar"]
 mesh = SubResource( 7 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Top_Bar"]
-shape = SubResource( 8 )
+shape = SubResource( 14 )
 
 [node name="Left_End" type="StaticBody" parent="."]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9, -8.125 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -10.125 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Left_End"]
 mesh = SubResource( 9 )
@@ -106,7 +103,7 @@ shape = SubResource( 10 )
 
 [node name="Right_End" type="StaticBody" parent="."]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9, 8.125 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 10.125 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Right_End"]
 mesh = SubResource( 9 )
@@ -116,14 +113,24 @@ material/0 = null
 shape = SubResource( 10 )
 
 [node name="Bottom_Bar" type="StaticBody" parent="."]
-editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.925, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, -4, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Bottom_Bar"]
 mesh = SubResource( 7 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bottom_Bar"]
+shape = SubResource( 11 )
+
+[node name="Bottom_Bar2" type="StaticBody" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.25, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Bottom_Bar2"]
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Bottom_Bar2"]
 shape = SubResource( 11 )
 
 [node name="Lights" type="Spatial" parent="."]
@@ -142,3 +149,7 @@ light_color = Color( 0, 0.576471, 0.0784314, 1 )
 light_energy = 10.0
 shadow_enabled = true
 omni_range = 20.0
+
+[node name="LeftTween" type="Tween" parent="."]
+
+[node name="RightTween" type="Tween" parent="."]

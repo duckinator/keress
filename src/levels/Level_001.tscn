@@ -252,6 +252,7 @@ material/0 = null
 shape = SubResource( 18 )
 
 [node name="Right" type="MeshInstance" parent="Arena_Wall_Exit"]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 7, -167 )
 mesh = SubResource( 17 )
 material/0 = null
@@ -339,14 +340,14 @@ material/0 = null
 shape = SubResource( 38 )
 
 [node name="Exit_Door" parent="." instance=ExtResource( 6 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 4.1, -165 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5.1, -165 )
 is_exit = true
 
 [node name="Transition_001" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -185 )
 
 [node name="Transition_Door" parent="." instance=ExtResource( 6 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 4.1, -205 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 5.1, -205 )
 locked = true
 
 [node name="Lights" type="Spatial" parent="."]

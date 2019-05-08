@@ -1,5 +1,13 @@
 extends Spatial
 
+# The number of seconds it takes to open or close a set of doors.
+const DOOR_OPEN_SPEED = 0.25
+const DOOR_CLOSE_SPEED = 2
+
+# z translations for doors when open and closed.
+const DOOR_OPEN_OFFSET = 7
+const DOOR_CLOSED_OFFSET = 3
+
 enum {OPENED, CLOSED, OPENING, CLOSING}
 
 var state = CLOSED
@@ -30,30 +38,27 @@ func _physics_process(delta):
 	if state == OPENED or state == CLOSED:
 		return
 	
-	var left_pos
-	var left_target
-	var diff
+	var left_target = null
+	var right_target = null
+	var door_speed
 	if state == OPENING:
-		left_target = Vector3(0, 0, -2)
-		diff = left_target
-		left_pos = left.translation.linear_interpolate(left_target, delta)
-	else:
-		left_target = Vector3(0, 0, 2)
-		diff = Vector3(0, 0, 4)
-		left_pos = diff.linear_interpolate(left.translation, delta)
-	
-	if (state == OPENING and left_pos.z <= left_target.z):
+		left_target = Vector3(0, 0, -DOOR_OPEN_OFFSET)
+		right_target = Vector3(0, 0, DOOR_OPEN_OFFSET)
+		door_speed = DOOR_OPEN_SPEED
 		state = OPENED
-		left_pos = left_target
-	
-	if (state == CLOSING and left_pos.z >= left_target.z):
+	elif state == CLOSING:
+		left_target = Vector3(0, 0, -DOOR_CLOSED_OFFSET)
+		right_target = Vector3(0, 0, DOOR_CLOSED_OFFSET)
+		door_speed = DOOR_CLOSE_SPEED
 		state = CLOSED
-		left_pos = left_target
 	
-	left.translate(left_pos)
+	if left_target != null:
+		$LeftTween.interpolate_property(left, "translation", left.translation, left_target, door_speed, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
+		$LeftTween.start()
 
-	var right_pos = Vector3(left_pos.x, left_pos.y, -left_pos.z)
-	right.translate(right_pos)
+	if right_target != null:
+		$RightTween.interpolate_property(right, "translation", right.translation, right_target, door_speed, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT) 
+		$RightTween.start()
 
 func open():
 	var scene = get_tree().current_scene

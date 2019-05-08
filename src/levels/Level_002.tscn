@@ -93,7 +93,7 @@ uv1_triplanar = true
 material = SubResource( 16 )
 size = Vector3( 20, 44, 4 )
 
-[sub_resource type="ConvexPolygonShape" id=20]
+[sub_resource type="ConvexPolygonShape" id=18]
 points = PoolVector3Array( -10, 18, 2, 10, 18, -2, 10, 18, 2, -10, 18, -2, -10, -18, 2, 10, -18, -2, 10, -18, 2, -10, -18, -2, 10, 18, 2, -10, 18, -2, 10, 18, -2, -10, 18, 2, 10, -18, 2, -10, -18, -2, 10, -18, -2, -10, -18, 2, 10, 18, 2, -10, -18, 2, -10, 18, 2, 10, -18, 2, 10, 18, -2, -10, -18, -2, -10, 18, -2, 10, -18, -2 )
 
 [sub_resource type="SpatialMaterial" id=19]
@@ -102,7 +102,7 @@ uv1_scale = Vector3( 0.25, 0.25, 0.25 )
 uv1_offset = Vector3( 0.5, 0.5, 0.5 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=18]
+[sub_resource type="CubeMesh" id=20]
 material = SubResource( 19 )
 size = Vector3( 4, 44, 12 )
 
@@ -130,11 +130,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 35 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 20 )
 
 [node name="Transition_Entry_Door" parent="." instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 3.1, 40 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 4.1, 40 )
 locked = true
 
 [node name="Level_Entry_Door" parent="." instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 3.1, 0 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 4.1, 0 )
 
 [node name="Floor" type="MeshInstance" parent="."]
 editor/display_folded = true
@@ -148,7 +148,6 @@ material/0 = null
 shape = SubResource( 4 )
 
 [node name="Floor2" type="CSGCombiner" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, -38 )
 operation = 2
 use_collision = true
@@ -263,7 +262,7 @@ depth = 80.0
 material = SubResource( 10 )
 
 [node name="ExitDoor" parent="." instance=ExtResource( 4 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -38, 27, -40 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -38, 28, -40 )
 is_exit = true
 
 [node name="Transition_002" parent="." instance=ExtResource( 3 )]
@@ -306,12 +305,12 @@ material/0 = null
 [node name="StaticBody" type="StaticBody" parent="BounceWallRear"]
 
 [node name="CollisionShape" type="CollisionShape" parent="BounceWallRear/StaticBody"]
-shape = SubResource( 20 )
+shape = SubResource( 18 )
 
 [node name="BounceWallLeft" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 22, -86 )
-mesh = SubResource( 18 )
+mesh = SubResource( 20 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="BounceWallLeft"]
@@ -322,7 +321,7 @@ shape = SubResource( 21 )
 [node name="BounceWallRight" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 22, -86 )
-mesh = SubResource( 18 )
+mesh = SubResource( 20 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="BounceWallRight"]
