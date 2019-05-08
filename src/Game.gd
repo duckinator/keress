@@ -54,6 +54,7 @@ func pause():
 	self.pause_mode = PAUSE_MODE_PROCESS
 
 func resume():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	get_tree().paused = false
 	if popup != null:
 		popup.queue_free()
