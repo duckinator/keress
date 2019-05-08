@@ -29,22 +29,10 @@ const CONTROLS = {
 }
 
 var controls
-var sound
+#var sound
 var mouse
 var joypad
 var done
-
-onready var categories = {
-	#"sound": sound,
-	"controls": controls,
-	"mouse": mouse,
-	"joypad": joypad
-}
-
-func label(text):
-	var l = Label.new()
-	l.text = text
-	return l
 
 func _ready():
 	done = $Panel/Done
@@ -88,7 +76,6 @@ func add_input_mapper(parent, setting, display_name):
 
 func prompt_input_map(button, setting):
 	var dialog = $InputMapDialog
-	var okay = dialog.get_ok()
 	var cancel = dialog.get_cancel()
 	
 	_waiting_for_input = true
@@ -116,7 +103,7 @@ func _input(event):
 		$InputMapDialog.get_ok().emit_signal("pressed")
 		prompt_hide()
 
-func prompt_confirm(button, action):
+func prompt_confirm(_button, action):
 	if last_event != null:
 		var event = last_event
 		if InputMap.action_has_event(action, event):
