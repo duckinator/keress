@@ -22,6 +22,12 @@ func set_current_level(level):
 func get_current_level():
 	return Settings.fetch("current_level", 1)
 
+func show_cursor():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func capture_cursor():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 func _ready():
 	randomize()
 	canvas_layer = CanvasLayer.new()
