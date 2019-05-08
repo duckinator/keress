@@ -121,6 +121,7 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Bottom_Bar"]
 shape = SubResource( 11 )
+disabled = true
 
 [node name="Bottom_Bar2" type="StaticBody" parent="."]
 editor/display_folded = true

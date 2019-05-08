@@ -53,10 +53,12 @@ func _physics_process(delta):
 		state = CLOSED
 	
 	if left_target != null:
+		$LeftTween.reset_all()
 		$LeftTween.interpolate_property(left, "translation", left.translation, left_target, door_speed, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
 		$LeftTween.start()
 
 	if right_target != null:
+		$RightTween.reset_all()
 		$RightTween.interpolate_property(right, "translation", right.translation, right_target, door_speed, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT) 
 		$RightTween.start()
 
