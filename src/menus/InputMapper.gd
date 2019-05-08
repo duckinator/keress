@@ -116,12 +116,8 @@ func prompt_confirm(button, action):
 		var event = last_event
 		if InputMap.action_has_event(action, event):
 			InputMap.action_erase_event(action, event)
-			return
-		
-		for act in CONTROLS:
-			if InputMap.action_has_event(act, event):
-				InputMap.action_erase_event(act, event)
-		InputMap.action_add_event(action, event)
+		else:
+			InputMap.action_add_event(action, event)
 	_waiting_for_input = false
 
 func prompt_hide():
