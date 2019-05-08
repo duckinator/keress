@@ -7,5 +7,4 @@ export_presets.cfg
 # Mono-specific ignores
 .mono/
 
-src/release/*
-!src/release/.gitkeep
+/build/
