@@ -83,8 +83,7 @@ func update_hud():
 	var total_ammo = 0
 	if len(inventory) > 0 and inventory[current_item] != null:
 		var item = inventory[current_item]
-		in_weapon = str(item.in_weapon) + " +" + str(item.ammo)
-		#total_ammo = 100 * item.MAX_AMMO / item.ammo
+		in_weapon = str(item.in_weapon) + " +" + str((item.ammo - item.in_weapon) / item.MAX_IN_WEAPON)
 		total_ammo = item.ammo
 	$HUD/Panel_Left/Label_Ammo.text = in_weapon
 	$HUD/Panel_Left/Ammo_Bar.value = total_ammo
