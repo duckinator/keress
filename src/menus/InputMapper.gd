@@ -59,6 +59,9 @@ func _ready():
 	var controls_reset = hbox2.get_node("Controls_Reset")
 	var controls_save = hbox2.get_node("Controls_Save")
 	
+	controls_reset.set_meta("no_auto_focus", true)
+	controls_save.set_meta("no_auto_focus", true)
+	
 	Game.show_cursor()
 	hbox.add_spacer(true)
 	hbox.add_spacer(false)
@@ -72,6 +75,8 @@ func _ready():
 		add_input_mapper(controls, setting, CONTROLS[setting])
 
 	load_config()
+	
+	Game.focus_first_control(hbox2)
 
 
 func add_input_mapper(parent, setting, display_name):

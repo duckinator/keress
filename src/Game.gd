@@ -179,11 +179,37 @@ func spawn_player(scene):
 	player.rotation = spawn.rotation
 
 func focus_first_control(node):
+	Console.log("focus first control: " + str(node) + " (" + node.name + ")")
 	for child in node.get_children():
-		# TODO: Make this more robust.
-		if child.has_method("grab_focus") and not child is Label and not child is HSeparator:
+		# Skip hidden nodes.
+		if not child.visible:
+			continue
+		
+		# If it shouldn't be auto-focused, don't auto-focus it.
+		if child.has_meta("no_auto_focus"):
+			continue
+		
+		# If it's a "Done" button, used for going back up to the previous menu,
+		# don't auto-focus it.
+		if child.name == "Done":
+			continue
+		
+		# These are the only types of things we want to auto-focus.
+		if not (child is Button or child is HSlider or child is VSlider):
+			continue
+		
+		if child.has_method("grab_focus"):
+			Console.log("child = " + str(child) + " (" + child.name + ")")
 			child.grab_focus()
-			break
+			return true
+	
+	# If we get here, we've not found something - go deeper.
+	for child in node.get_children():
+		Console.log("RECURSE")
+		if focus_first_control(child):
+			return true
+	
+	return false
 
 func get_total_gravity_for(body):
 	var state = PhysicsServer.body_get_direct_state(body.get_rid())
