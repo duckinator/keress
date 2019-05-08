@@ -28,6 +28,13 @@ const CONTROLS = {
 	#"action_quick_switch": "Quick switch",
 }
 
+const JOYPAD_CONTROLS = {
+	"look_left": "Turn left",
+	"look_right": "Turn right",
+	"look_up": "Look up",
+	"look_down:": "Look down",
+}
+
 var controls
 #var sound
 var mouse
@@ -61,7 +68,10 @@ func _ready():
 	
 	for setting in CONTROLS.keys():
 		add_input_mapper(controls, setting, CONTROLS[setting])
-
+	
+	for setting in JOYPAD_CONTROLS.keys():
+		add_input_mapper(joypad, setting, JOYPAD_CONTROLS[setting])
+	
 	load_config()
 	
 	Game.focus_first_control(hbox2)
