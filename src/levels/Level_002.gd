@@ -11,6 +11,9 @@ func player_noise(trans, sound, loudness):
 	trans = trans.round()
 	Console.log("player_noise(" + str(trans) + ", " + str(sound) + ", " + str(loudness) + ")")
 
+func can_open_door(door):
+	return (not door.is_exit) or (len(mobs) == 0)
+
 func mob_died(mob):
 	Console.log("MOB DIED: " + str(mob))
 	mobs.remove(mobs.find(mob))

@@ -70,6 +70,7 @@ func _process_body_entered(body):
 			var vel = body.get_last_velocity()
 			var damage = impact_to_damage(body, vel)
 			adjust_health(-damage * 3)
+			body.jump()
 		#if state != ATTACK:
 		#	body.adjust_health(-5)
 		pass
