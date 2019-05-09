@@ -69,7 +69,7 @@ func _process_body_entered(body):
 		if body.translation.y > translation.y:
 			var vel = body.get_last_velocity()
 			var damage = impact_to_damage(body, vel)
-			adjust_health(-damage * 2)
+			adjust_health(-damage * 3)
 		#if state != ATTACK:
 		#	body.adjust_health(-5)
 		pass
