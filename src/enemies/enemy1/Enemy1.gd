@@ -66,6 +66,10 @@ func _process_body_entered(body):
 		adjust_health(-damage)
 	
 	if body is KinematicBody:
+		if body.translation.y > translation.y:
+			var vel = body.get_last_velocity()
+			var damage = impact_to_damage(body, vel)
+			adjust_health(-damage * 2)
 		#if state != ATTACK:
 		#	body.adjust_health(-5)
 		pass
