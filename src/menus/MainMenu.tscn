@@ -44,12 +44,12 @@ font_data = ExtResource( 2 )
 size = 30
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=11]
 size = 30
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=12]
 size = 20
 use_filter = true
 font_data = ExtResource( 2 )
@@ -241,7 +241,7 @@ margin_left = 20.0
 margin_top = 410.0
 margin_right = 224.0
 margin_bottom = 464.0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 11 )
 text = "Controls"
 
 [node name="Button_Back" type="Button" parent="Panels/Settings"]
@@ -253,7 +253,7 @@ focus_neighbour_top = NodePath("../Button_Controls")
 focus_neighbour_bottom = NodePath("../HSlider_Mouse_Sensitivity")
 focus_next = NodePath("../HSlider_Mouse_Sensitivity")
 focus_previous = NodePath("../CheckButton_Debug")
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "< Back"
 
 [node name="InputMapper" parent="Panels" instance=ExtResource( 3 )]

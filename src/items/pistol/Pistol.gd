@@ -3,7 +3,7 @@ extends StaticBody
 const MAX_AMMO = 200
 const MAX_IN_WEAPON = 30
 
-const PRIMARY_TIMEOUT = 0.125
+const PRIMARY_TIMEOUT = 0.05
 
 
 var ammo = MAX_AMMO - MAX_IN_WEAPON
