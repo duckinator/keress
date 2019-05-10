@@ -46,7 +46,7 @@ func _ready():
 	camera = $RotationHelper/Camera
 	rotation_helper = $RotationHelper
 
-	inventory.append($RotationHelper/Pistol)
+	inventory.append($RotationHelper/Revolver)
 	#inventory.append($RotationHelper/Rifle)
 	#inventory.append($RotationHelper/Shotgun)
 

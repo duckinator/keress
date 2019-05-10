@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
-[ext_resource path="res://items/pistol/Pistol.tscn" type="PackedScene" id=2]
-[ext_resource path="res://items/revolver/Revolver.tscn" type="PackedScene" id=3]
-[ext_resource path="res://player/HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://items/revolver/Revolver.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/HUD.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleMesh" id=1]
 radius = 1.5
@@ -36,13 +35,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 [node name="Camera" type="Camera" parent="RotationHelper"]
 far = 200.0
 
-[node name="Pistol" parent="RotationHelper" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, 0 )
+[node name="Revolver" parent="RotationHelper" instance=ExtResource( 2 )]
+transform = Transform( 0.4, 0, 0, 0, 0.399756, -0.0139598, 0, 0.0139598, 0.399756, 0, -1, -4 )
 
-[node name="Revolver" parent="RotationHelper" instance=ExtResource( 3 )]
-transform = Transform( 0.353553, 0.120922, 0.332231, 0, 0.469846, -0.17101, -0.353553, 0.120922, 0.332231, 0, 0, -4 )
-
-[node name="HUD" parent="." instance=ExtResource( 4 )]
+[node name="HUD" parent="." instance=ExtResource( 3 )]
 
 [node name="DummyRigidBody" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
