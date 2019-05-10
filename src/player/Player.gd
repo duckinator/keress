@@ -110,8 +110,10 @@ func safe_rotate(vec):
 	self.rotation_degrees.z = 0
 	
 	var camera_rot = rotation_helper.rotation_degrees
-	# FIXME: -70,70 is pretty arbitrary. It's worth playing with.
-	camera_rot.x = clamp(camera_rot.x, -70, 70)
+	# FIXME: This clamp() is pretty arbitrary. It's worth playing with.
+	#        -89,89 is one degree before straight down to one degree before straight up.
+	#        Anything beyond this would allow the player to see behind them, which is a bit silly.
+	camera_rot.x = clamp(camera_rot.x, -80, 89)
 	# Set y/z to zero to avoid very strange camera stuff.
 	camera_rot.y = 0
 	camera_rot.z = 0
