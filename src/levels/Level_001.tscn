@@ -14,7 +14,7 @@
 [sub_resource type="Environment" id=2]
 background_sky = SubResource( 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 0.4
+ambient_light_energy = 0.1
 ambient_light_sky_contribution = 0.0
 
 [sub_resource type="SpatialMaterial" id=3]
@@ -353,7 +353,6 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 5.1,
 locked = true
 
 [node name="Lights" type="Spatial" parent="."]
-visible = false
 
 [node name="Light" parent="Lights" instance=ExtResource( 8 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 41, -10 )
