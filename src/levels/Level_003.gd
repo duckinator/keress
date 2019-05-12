@@ -3,13 +3,16 @@ extends Spatial
 var mobs = []
 func _ready():
 	# $Platform
-	#spawn_enemy(Vector3(-48, 4, 60))
-	#spawn_enemy(Vector3(-30, 4, 50))
-	#spawn_enemy(Vector3(-48, 4, -60))
-	#spawn_enemy(Vector3(-30, 4, -50))
+	spawn_horde(Vector3(-56, 0, 40), Vector2(30, 100), 3)
+	spawn_horde(Vector3(-56, 0, -180), Vector2(30, 100), 3)
 	
 	# $Platform_Left
-	spawn_small_horde(Vector3(-100, -99, 164), Vector2(80, 80), 9)
+	spawn_horde(Vector3(-370, -27, 150), Vector2(280, 30), 20)
+	# $Platform_Right
+	spawn_horde(Vector3(-370, -27, -180), Vector2(280, 30), 20)
+	
+	# $Platform_Mid
+	spawn_horde(Vector3(-220, -55, -182), Vector2(30, 400), 16)
 
 func player_noise(trans, sound, loudness):
 	trans = trans.round()
@@ -38,23 +41,11 @@ func spawn_enemy(pos):
 	mobs.append(scene)
 
 func remove_adjacent(available, dimensions, pos):
-	var x = pos.x
-	var y = pos.y
-	for x2 in range(clamp(x - 8, 0, dimensions.x), clamp(x + 8, 0, dimensions.x)):
-		var item = available.find(Vector2(x2, y))
-		if item:
-			Console.log("REMOVED: " + str(Vector2(x2, y)))
-			available.remove(item)
-		else:
-			Console.log("NO ITEM: " + str(Vector2(x2, y)))
-	for y2 in range(clamp(y - 8, 0, dimensions.y), clamp(y + 8, 0, dimensions.y)):
-		for x2 in range(clamp(x - 4, 0, dimensions.x), clamp(x + 4, 0, dimensions.x)):
-			var item = available.find(Vector2(x2, y2))
-			if item:
-				Console.log("REMOVED: " + str(Vector2(x2, y2)))
-				available.remove(item)
-			else:
-				Console.log("NO ITEM: " + str(Vector2(x2, y2)))
+	var x_spacing = clamp(dimensions.x / 4, 1, 8)
+	var y_spacing = clamp(dimensions.y / 4, 1, 8)
+	for item in available:
+		if (abs(item.x - pos.x) < x_spacing) or (abs(item.y - pos.y) < x_spacing):
+			available.remove(available.find(item))
 
 func horde_coords(dimensions, horde_size):
 	var available = []
@@ -64,13 +55,15 @@ func horde_coords(dimensions, horde_size):
 	
 	var coords = []
 	for idx in range(0, horde_size):
+		if len(available) == 0:
+			break
 		var pos = available[rand_range(0, len(available))]
 		available.remove(available.find(pos))
 		remove_adjacent(available, dimensions, pos)
 		coords.append(pos)
 	return coords
 
-func spawn_small_horde(center, dimensions, horde_size=null):
+func spawn_horde(center, dimensions, horde_size=null):
 	if horde_size == null:
 		horde_size = 9
 	
@@ -78,7 +71,8 @@ func spawn_small_horde(center, dimensions, horde_size=null):
 	
 	for idx in range(0, len(coords)):
 		var pos2d = coords[idx]
-		var pos = Vector3(center.x + pos2d.x, center.y, center.y + pos2d.y)
-		Console.log(str(pos))
+		Console.log("MOB POS: " + str(pos2d))
+		var pos = Vector3(center.x + pos2d.x, center.y, center.z + pos2d.y)
+		Console.log("MOB AT: " + str(pos))
 		spawn_enemy(pos)
 
