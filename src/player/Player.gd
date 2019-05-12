@@ -119,6 +119,10 @@ func safe_rotate(vec):
 	camera_rot.z = 0
 	rotation_helper.rotation_degrees = camera_rot
 
+func jostle(amplitude):
+	var y = rand_range(0, -amplitude)
+	safe_rotate(Vector3(0, y, 0))
+
 func jump(assist=1):
 	vel.y = JUMP_SPEED * assist
 
@@ -162,6 +166,7 @@ func process_input_inventory(_delta):
 	# Firing weapons
 	if Input.is_action_pressed("action_primary"):
 		item.primary()
+		jostle(item.JOSTLE_PRIMARY)
 	if Input.is_action_pressed("action_secondary"):
 		item.secondary()
 

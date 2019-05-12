@@ -1,6 +1,8 @@
 extends Spatial
 
 const DAMAGE = 70
+const JOSTLE_PRIMARY = 1
+const JOSTLE_SECONDARY = 0
 
 const PRIMARY_TIMEOUT = 0.6
 
