@@ -65,7 +65,6 @@ func reset_position(object, key):
 	rotation = reset_rot
 
 func gun_kick_undo(object, key):
-	Console.log("undo???")
 	var tween = $KickTween
 	tween.reset_all()
 	tween.disconnect("tween_completed", self, "gun_kick_undo")
