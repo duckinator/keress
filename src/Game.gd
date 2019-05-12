@@ -118,12 +118,14 @@ func load_scene(new_scene_path):
 	
 	return get_tree().change_scene(new_scene_path)
 
-func load_level(level):
+func load_level(level, should_spawn_player=false):
 	Game.playing = true
 	var err = load_scene(get_level_scene(level))
 	if err:
 		Console.error("load_level(): Could not load level " + str(level) + ". (Error " + str(err) + ".)")
 	set_current_level(level)
+	if should_spawn_player:
+		call_deferred("spawn_player")
 
 func previous_level():
 	var prev_level = get_current_level() - 1
@@ -187,7 +189,9 @@ func get_player(scene=null):
 	else:
 		return null
 
-func spawn_player(scene):
+func spawn_player(scene=null):
+	if scene == null:
+		scene = get_tree().current_scene
 	var spawn = find_spawn_point(scene)
 	var player = get_player(scene)
 	player.translation = spawn.translation

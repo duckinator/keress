@@ -55,7 +55,7 @@ func _ready():
 
 func game_continue():
 	panel_select("none")
-	Game.load_level(Game.get_current_level())
+	Game.load_level(Game.get_current_level(), true)
 
 func game_new():
 	Settings.store("has_played", true)
