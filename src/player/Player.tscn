@@ -33,7 +33,7 @@ shape = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 
 [node name="Camera" type="Camera" parent="RotationHelper"]
-far = 200.0
+far = 450.0
 
 [node name="Revolver" parent="RotationHelper" instance=ExtResource( 2 )]
 transform = Transform( 0.4, 0, 0, 0, 0.399756, -0.0139598, 0, 0.0139598, 0.399756, 0, -1, -4 )
