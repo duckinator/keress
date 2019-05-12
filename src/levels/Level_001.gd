@@ -2,8 +2,6 @@ extends Spatial
 
 var mobs = []
 func _ready():
-	Game.spawn_player(self)
-	
 	spawn_enemy(Vector3(15, 10, -140))
 	spawn_enemy(Vector3(10, 10, -120))
 	spawn_enemy(Vector3(0, 10, -100))
