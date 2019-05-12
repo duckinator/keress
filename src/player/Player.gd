@@ -53,7 +53,14 @@ func _ready():
 	#inventory.append($RotationHelper/Rifle)
 	#inventory.append($RotationHelper/Shotgun)
 
+	select_item(0)
+
 	adjust_health(MAX_HEALTH)
+
+func select_item(item_number):
+	current_item = item_number
+	for idx in range(0, len(inventory)):
+		inventory[idx].visible = idx == current_item
 
 func _process(delta):
 	MOUSE_SENSITIVITY = float(Game.get_mouse_sensitivity()) / 100

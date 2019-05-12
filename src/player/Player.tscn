@@ -37,6 +37,7 @@ far = 200.0
 
 [node name="Revolver" parent="RotationHelper" instance=ExtResource( 2 )]
 transform = Transform( 0.4, 0, 0, 0, 0.399756, -0.0139598, 0, 0.0139598, 0.399756, 0, -1, -4 )
+visible = false
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
