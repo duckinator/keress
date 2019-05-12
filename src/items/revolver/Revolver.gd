@@ -1,10 +1,21 @@
 extends Spatial
 
+# The damage a single shot deals.
 const DAMAGE = 70
-const JOSTLE_PRIMARY = 1
+
+# The maximum amount the camera can rotate up (positive) or down (negative)
+# after the primary or secondary actions.
+const JOSTLE_PRIMARY = 0.25
 const JOSTLE_SECONDARY = 0
 
-const PRIMARY_TIMEOUT = 0.6
+# If the timeout and recoil duration mismatch, it makes the weapon feel
+# more "sloppy" -- the more quickly you fire it, the less accurate it gets.
+
+# The shortest duration possible between firing.
+const PRIMARY_TIMEOUT = 0.4
+# The time it takes to finish recoiling.
+# TODO: Make PRIMARY_RECOIL_DURATION actually used.
+#const PRIMARY_RECOIL_DURATION = 0.6
 
 const MAX_IN_WEAPON = 6
 const MAX_AMMO = MAX_IN_WEAPON
