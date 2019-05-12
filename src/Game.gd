@@ -6,7 +6,7 @@ const DEFAULT_JOYPAD_SENSITIVITY = 20
 # TODO: See if these can be automagically determined?
 const FIRST_LEVEL = 1
 const MIN_LEVEL = FIRST_LEVEL
-const MAX_LEVEL = 2
+const MAX_LEVEL = 3
 
 const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
 const DEBUG_SCENE = preload("res://overlays/Debug_Display.tscn")
