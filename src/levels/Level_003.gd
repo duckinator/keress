@@ -37,14 +37,6 @@ func spawn_enemy(pos):
 	scene.translate(pos)
 	mobs.append(scene)
 
-func acceptable_horde_member_position(coords, pos):
-	if len(coords) == 0:
-		return true
-	return true # TODO
-
-func rand_vec2_up_to(dimensions):
-	return Vector2(rand_range(0, dimensions.x), rand_range(0, dimensions.y))
-
 func remove_adjacent(available, dimensions, pos):
 	var x = pos.x
 	var y = pos.y
@@ -89,18 +81,4 @@ func spawn_small_horde(center, dimensions, horde_size=null):
 		var pos = Vector3(center.x + pos2d.x, center.y, center.y + pos2d.y)
 		Console.log(str(pos))
 		spawn_enemy(pos)
-
-func rand_sign():
-	randomize()
-	if rand_range(0, 100) > 50:
-		return 1
-	else:
-		return -1
-
-func meander(center, min_x, max_x, min_z, max_z):
-	var pos = center
-	pos.x += rand_range(min_x, max_x) * rand_sign()
-	pos.z += rand_range(min_z, max_z) * rand_sign()
-	return pos
-
 
