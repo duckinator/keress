@@ -21,6 +21,7 @@ margin_right = 640.0
 margin_bottom = 360.0
 
 [node name="Crosshair" type="Control" parent="."]
+visible = false
 margin_left = 620.0
 margin_top = 340.0
 margin_right = 654.0
