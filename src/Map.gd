@@ -10,6 +10,9 @@ func _process(delta):
 	if not scene.name.begins_with("Level_"):
 		return
 	var mobs = scene.mobs
+	if len(mobs) == 0:
+		return
+	
 	var mob = mobs[rand_range(0, len(mobs))]
 	var current = null
 	var current_distance = 0
@@ -42,5 +45,5 @@ func get_path_curve(start, end):
 func add_area_of_interest(mob, trans):
 	trans = trans.round()
 	if not trans in aois:
-		Console.log("Added Area of Interest: " + str(trans))
+		#Console.log("Added Area of Interest: " + str(trans))
 		aois.append(trans)
