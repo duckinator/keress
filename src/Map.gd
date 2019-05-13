@@ -1,12 +1,21 @@
 extends Node
 
 var aois = []
+var current_scene = null
 
 func _ready():
 	pass
 
 func _process(delta):
 	var scene = get_tree().current_scene
+	if current_scene == null:
+		current_scene = scene
+	
+	if current_scene != scene:
+		current_scene = scene
+		clear_areas_of_interest()
+		return
+	
 	if not scene.name.begins_with("Level_"):
 		return
 	var mobs = scene.mobs
@@ -46,3 +55,6 @@ func add_area_of_interest(mob, trans):
 	if not trans in aois:
 		#Console.log("Added Area of Interest: " + str(trans))
 		aois.append(trans)
+
+func clear_areas_of_interest():
+	aois = []
