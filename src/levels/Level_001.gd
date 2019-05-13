@@ -1,5 +1,7 @@
 extends Spatial
 
+signal noise
+
 var mobs = []
 func _ready():
 	spawn_enemy(Vector3(15, 10, -140))
