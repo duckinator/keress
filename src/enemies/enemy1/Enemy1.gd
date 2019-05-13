@@ -237,7 +237,7 @@ func _process_body_entered(body):
 			adjust_health(-diff * FALL_DAMAGE_MULTIPLIER)
 		last_y = translation.y
 		return
-
+	
 	if not body.has_method("get_last_velocity"):
 		return
 	
@@ -252,23 +252,10 @@ func _process_body_entered(body):
 	var height = $MeshInstance.mesh.height
 	if body is KinematicBody:
 		# Curb stomps.
-		Console.log("KINEMATICBODY COLLISION")
-		if floor(body.translation.y) > floor(self.translation.y + height):
-			Console.log("CURB STOMP")
+		if floor(body.translation.y) > floor(translation.y):
 			var vel = body.get_last_velocity()
 			var damage = impact_to_damage(body, vel)
 			adjust_health(-damage)
 			body.jump()
 		set_state(EVADE)
 		return
-	        
-	#var vel = body.get_last_velocity()
-	# If the player is on top of the enemy, it's a curb stomp.
-	#if floor(body.translation.y) > floor(self.translation.y + height):
-	#	#set_state(EVADE)
-	#	#var gravity = Game.get_total_gravity_for(self)
-	#	#var damage = impact_to_damage(body, Vector3(vel.x, gravity.y, vel.z))
-	#	var vel = body.get_last_velocity()
-	#	var damage = impact_to_damage(body, vel)
-	#	adjust_health(-damage)
-	#	set_state(EVADE)
