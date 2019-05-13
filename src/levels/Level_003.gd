@@ -18,7 +18,6 @@ func _ready():
 
 func player_noise(trans, sound, loudness):
 	trans = trans.round()
-	Console.log("player_noise(" + str(trans) + ", " + str(sound) + ", " + str(loudness) + ")")
 	emit_signal("noise", trans, sound, loudness)
 
 func can_open_door(door):
