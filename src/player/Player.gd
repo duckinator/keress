@@ -177,8 +177,13 @@ func process_input_inventory(_delta):
 	if Input.is_action_pressed("action_primary"):
 		item.primary()
 		jostle(item.JOSTLE_PRIMARY)
+		if item.SOUND_PRIMARY != null:
+			emit_sound(translation, item.SOUND_PRIMARY, item.LOUDNESS_PRIMARY)
 	if Input.is_action_pressed("action_secondary"):
 		item.secondary()
+		jostle(item.JOSTLE_SECONDARY)
+		if item.SOUND_SECONDARY != null:
+			emit_sound(translation, item.SOUND_SECONDARY, item.LOUDNESS_SECONDARY)
 
 	# Reloading weapons
 	var needs_reload = item.has_method("needs_reload") and item.needs_reload()
@@ -232,13 +237,14 @@ func process_respawn(_delta):
 
 func process_fall_damage(old_vel, vel):
 	# If we're going down faster than we can jump up, take damage.
-	if fall_damage_enabled and old_vel.y < -JUMP_SPEED and vel.y >= -1:
-		var tmp = int(ceil(old_vel.y / 10))
-		tmp -= tmp % 5
-		if tmp <= -5:
-			Console.log("Player took fall damage: " + str(tmp))
-			adjust_health(tmp)
-			emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
+	if old_vel.y < -JUMP_SPEED and vel.y >= -1:
+		if  fall_damage_enabled:
+			var tmp = int(ceil(old_vel.y / 10))
+			tmp -= tmp % 5
+			if tmp <= -5:
+				Console.log("Player took fall damage: " + str(tmp))
+				adjust_health(tmp)
+		emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
 
 func _input(event):
 	# TODO: Determine why there's no KEY_BACKTICK or similar?

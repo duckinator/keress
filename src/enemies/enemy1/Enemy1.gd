@@ -1,10 +1,32 @@
 extends RigidBody
 
+enum { IDLE, SEARCH, ATTACK, EVADE }
+
 const MAX_SPEED = 50
 const MAX_HEALTH = 140
 const MASS = 80
 
 var health
+
+var navigation = null
+var player = null
+
+var state = IDLE
+
+onready var RAYCAST_NAMES = {
+	#???: "left",
+	$Front: "front",
+	#???: "right",
+	$Left: "left-side",
+	$Right: "right-side",
+}
+
+var senses = {
+	"left-side": null,
+	"right-side": null,
+	"front": null,
+	"hearing": [],
+}
 
 var target = null
 func _ready():
@@ -17,7 +39,72 @@ func _ready():
 
 
 func _process(delta):
+	# If no Navigation has been assigned, we can't move, so just return.
+	if navigation == null:
+		return
+	
+	# If no Player has been assigned, we can't do anything useful, so just return.
+	if player == null:
+		return
+	
+	match state:
+		IDLE:
+			idle(delta)
+		SEARCH:
+			search(delta)
+		ATTACK:
+			attack(delta)
+		EVADE:
+			evade(delta)
+
+func distance_to_player():
+	return translation.distance_to(player.translation)
+
+func have_line_of_sight():
+	# TODO: Add RayCasts and such to _actually_ determine line of sight.
+	return distance_to_player() < 50
+
+func check(trans):
+	Console.log("MOB " + str(self) + " INSTRUCTED TO CHECK " + str(trans))
+	target = trans
+	state = SEARCH
+
+func idle(delta):
+	if have_line_of_sight():
+		state = SEARCH
+		target = player.translation
+		Console.log(str(self) + " can see the player!")
+		Map.get_path_curve(translation, target)
+
+func search(delta):
+	#Console.log(str(self) + " SEARCH")
 	pass
+
+func attack(delta):
+	#Console.log(str(self) + " ATTACK")
+	pass
+
+func evade(delta):
+	#Console.log(str(self) + " EVADE")
+	pass
+
+
+func raycast_name(raycast):
+	return RAYCAST_NAMES[raycast]
+
+func found_player(raycast, player, position):
+	senses[raycast_name(raycast)] = player
+
+func found_nothing(raycast):
+	senses[raycast_name(raycast)] = null
+
+func found_object(raycast, object, position):
+	senses[raycast_name(raycast)] = object
+
+func heard_noise(trans, _sound, _loudness):
+	if translation.distance_to(trans) < 50:
+		Map.add_area_of_interest(self, trans)
+
 
 func die():
 	var scene = get_tree().current_scene
@@ -29,6 +116,7 @@ func cleanup():
 	queue_free()
 
 func adjust_health(value):
+	Map.add_area_of_interest(self, translation)
 	health = clamp(health + value, 0, MAX_HEALTH)
 	Console.debug(str(self) + ".health = " + str(health))
 	if health <= 0:

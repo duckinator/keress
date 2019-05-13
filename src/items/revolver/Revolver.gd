@@ -1,5 +1,13 @@
 extends Spatial
 
+# Sound name and loudness for primary action.
+const SOUND_PRIMARY = "weapon/revolver_fire"
+const LOUDNESS_PRIMARY = 15
+
+# Sound name and loudness for secondary action.
+const SOUND_SECONDARY = null
+const LOUDNESS_SECONDARY = 15
+
 # The damage a single shot deals.
 const DAMAGE = 70
 

@@ -1,5 +1,7 @@
 extends Spatial
 
+signal noise
+
 var mobs = []
 func _ready():
 	# $Platform
@@ -17,6 +19,7 @@ func _ready():
 func player_noise(trans, sound, loudness):
 	trans = trans.round()
 	Console.log("player_noise(" + str(trans) + ", " + str(sound) + ", " + str(loudness) + ")")
+	emit_signal("noise", trans, sound, loudness)
 
 func can_open_door(door):
 	return (not door.is_exit) or (len(mobs) == 0)
@@ -39,6 +42,9 @@ func spawn_enemy(pos):
 	add_child(scene)
 	scene.translate(pos)
 	mobs.append(scene)
+	scene.navigation = $Navigation
+	scene.player = $Player
+	connect("noise", scene, "heard_noise")
 
 func remove_adjacent(available, dimensions, pos):
 	var x_spacing = clamp(dimensions.x / 4, 1, 8)
