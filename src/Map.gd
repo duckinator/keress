@@ -38,7 +38,6 @@ func get_path_curve(start, end):
 		return
 	var path = Curve3D.new()
 	for point in points:
-		point.y += 2 # HACK: idk why i need this. or if i still do.
 		path.add_point(point)
 	return path
 
