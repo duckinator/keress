@@ -1,7 +1,7 @@
 extends KinematicBody
 
 var fall_damage_enabled = false
-const WALL_RUN_MULTIPLIER = 0.9
+const WALL_RUN_MULTIPLIER = 0.75
 
 const FALL_MULTIPLIER = 1.0
 const LOW_JUMP_MULTIPLIER = 1.5
@@ -160,8 +160,7 @@ func process_input(_delta):
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
 	
 	# Jumping
-	# TODO: Add debounce timer.
-	if (is_on_floor() or is_on_wall()) and Input.is_action_pressed("movement_jump"):
+	if (is_on_floor() or is_on_wall()) and Input.is_action_just_pressed("movement_jump"):
 		vel.y = JUMP_SPEED
 
 func process_input_inventory(_delta):
