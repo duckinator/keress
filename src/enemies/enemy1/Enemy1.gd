@@ -6,6 +6,8 @@ const MAX_SPEED = 50
 const MAX_HEALTH = 140
 const MASS = 80
 
+const BACKOFF = 16
+
 var health
 
 var navigation = null
@@ -28,15 +30,23 @@ var senses = {
 	"hearing": [],
 }
 
-var target = null
+var last_target = null
+var target = null setget set_target, get_target
 func _ready():
 	self.health = MAX_HEALTH
 	self.mass = MASS
+	self.mode = MODE_CHARACTER
 	
 	set_contact_monitor(true)
 	set_max_contacts_reported(5)
 	connect("body_entered", self, "_process_body_entered")
 
+func set_target(new_target):
+	last_target = target
+	target = new_target
+
+func get_target():
+	return target
 
 func _process(delta):
 	# If no Navigation has been assigned, we can't move, so just return.
@@ -73,16 +83,55 @@ func idle(delta):
 	if have_line_of_sight():
 		state = SEARCH
 		target = player.translation
-		Console.log(str(self) + " can see the player!")
-		Map.get_path_curve(translation, target)
 
+var search_path = null
+var search_path_offset = 0
 func search(delta):
-	#Console.log(str(self) + " SEARCH")
-	pass
+	var offset = Vector3(rand_range(-BACKOFF, BACKOFF), 0, rand_range(-BACKOFF, BACKOFF))
+	if search_path == null:
+		search_path = Map.get_path_curve(translation, target + offset)
+		search_path_offset = 0
+	
+	if search_path == null:
+		return
+		
+	if translation.distance_to(target) <= BACKOFF:
+		state = ATTACK
+		search_path = null
+		return
+	
+	translation = search_path.interpolate_baked(search_path_offset)
+	search_path_offset += 0.5
 
+var attack_path = null
+var attack_path_offset = 0
+var attack_path_timeout = null
 func attack(delta):
-	#Console.log(str(self) + " ATTACK")
-	pass
+	if attack_path == null:
+		attack_path = Map.get_path_curve(translation, target)
+	
+	if attack_path == null or attack_path_timeout != null:
+		return
+	
+	translation = attack_path.interpolate_baked(attack_path_offset)
+	attack_path_offset += 0.5
+
+const ATTACK_TIMEOUT = 0.5
+func _start_attack_path_timeout():
+	if attack_path_timeout == null:
+		attack_path_timeout = Timer.new()
+		attack_path_timeout.wait_time = rand_range(ATTACK_TIMEOUT, ATTACK_TIMEOUT * 2)
+		attack_path_timeout.one_shot = true
+		attack_path_timeout.connect("timeout", self, "_end_attack_path_timeout")
+		add_child(attack_path_timeout)
+		attack_path_timeout.start()
+
+func _end_attack_path_timeout():
+	remove_child(attack_path_timeout)
+	attack_path_timeout.stop()
+	attack_path_timeout.queue_free()
+	attack_path_timeout = null
+
 
 func evade(delta):
 	#Console.log(str(self) + " EVADE")
