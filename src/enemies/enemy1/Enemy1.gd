@@ -8,12 +8,16 @@ const MASS = 80
 
 const BACKOFF = 16
 
+# How many times more damage is dealt the mob slams into a floor.
+const FALL_DAMAGE_MULTIPLIER = MAX_HEALTH / 100.0
+
 var health
 
 var navigation = null
 var player = null
 
 var state = IDLE
+var last_state = state
 
 onready var RAYCAST_NAMES = {
 	#???: "left",
@@ -30,6 +34,10 @@ var senses = {
 	"hearing": [],
 }
 
+var last_y = null
+
+var last_velocity = Vector3(0, 0, 0)
+
 var last_target = null
 var target = null setget set_target, get_target
 func _ready():
@@ -41,12 +49,19 @@ func _ready():
 	set_max_contacts_reported(5)
 	connect("body_entered", self, "_process_body_entered")
 
+func get_last_velocity():
+	return linear_velocity
+
 func set_target(new_target):
 	last_target = target
 	target = new_target
 
 func get_target():
 	return target
+
+func set_state(new_state):
+	last_state = state
+	state = new_state
 
 func _process(delta):
 	# If no Navigation has been assigned, we can't move, so just return.
@@ -57,6 +72,10 @@ func _process(delta):
 	if player == null:
 		return
 	
+	if see_player() or near_player() and not (state == ATTACK or state == EVADE or state == SEARCH):
+		target = player.translation
+		set_state(SEARCH)
+	
 	match state:
 		IDLE:
 			idle(delta)
@@ -66,55 +85,70 @@ func _process(delta):
 			attack(delta)
 		EVADE:
 			evade(delta)
+	last_state = state
+
+func _physics_process(_delta):
+	if last_y == null:
+		last_y = translation.y
 
 func distance_to_player():
 	return translation.distance_to(player.translation)
 
-func have_line_of_sight():
-	# TODO: Add RayCasts and such to _actually_ determine line of sight.
+func near_player():
 	return distance_to_player() < 50
 
+func see_player():
+	for key in senses.keys():
+		if key != "hearing" and senses[key] == player:
+			return true
+	return false
+
 func check(trans):
-	Console.log("MOB " + str(self) + " INSTRUCTED TO CHECK " + str(trans))
+	#Console.log("MOB " + str(self) + " INSTRUCTED TO CHECK " + str(trans))
 	target = trans
-	state = SEARCH
+	set_state(SEARCH)
 
 func idle(delta):
-	if have_line_of_sight():
-		state = SEARCH
-		target = player.translation
+	pass
 
-var search_path = null
-var search_path_offset = 0
+var chase_path = null
+var chase_path_offset = 0
+func chase(delta, backoff):
+	var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
+
+	if chase_path == null or last_state != state:
+		chase_path = Map.get_path_curve(translation, target + offset)
+		chase_path_offset = 0
+	
+	if chase_path == null:
+		set_state(IDLE)
+		return
+	
+	var pos = chase_path.interpolate_baked(chase_path_offset)
+	var diff = pos - translation
+	apply_central_impulse(diff)
+	last_velocity = diff
+	chase_path_offset += 0.5
+
 func search(delta):
-	var offset = Vector3(rand_range(-BACKOFF, BACKOFF), 0, rand_range(-BACKOFF, BACKOFF))
-	if search_path == null:
-		search_path = Map.get_path_curve(translation, target + offset)
-		search_path_offset = 0
-	
-	if search_path == null:
-		return
-		
+	chase(delta, BACKOFF - 2)
 	if translation.distance_to(target) <= BACKOFF:
-		state = ATTACK
-		search_path = null
+		set_state(ATTACK)
 		return
-	
-	translation = search_path.interpolate_baked(search_path_offset)
-	search_path_offset += 0.5
 
-var attack_path = null
-var attack_path_offset = 0
 var attack_path_timeout = null
 func attack(delta):
-	if attack_path == null:
-		attack_path = Map.get_path_curve(translation, target)
-	
-	if attack_path == null or attack_path_timeout != null:
+	if attack_path_timeout != null:
+		set_state(EVADE)
+		return
+	if not see_player() and not near_player():
+		set_state(IDLE)
 		return
 	
-	translation = attack_path.interpolate_baked(attack_path_offset)
-	attack_path_offset += 0.5
+	chase(delta, 0)
+	if distance_to_player() < 4:
+		Console.log("PEW PEW")
+		player.adjust_health(-5)
 
 const ATTACK_TIMEOUT = 0.5
 func _start_attack_path_timeout():
@@ -135,7 +169,7 @@ func _end_attack_path_timeout():
 
 func evade(delta):
 	#Console.log(str(self) + " EVADE")
-	pass
+	chase(delta, 16)
 
 
 func raycast_name(raycast):
@@ -186,7 +220,7 @@ func impact_to_force(collider, collider_vel):
 	return collider.MASS * speed
 
 func force_to_damage(force):
-	return ceil(force / 200)
+	return ceil(force / 400)
 
 func impact_to_damage(collider, collider_vel):
 	var force = impact_to_force(collider, collider_vel)
@@ -194,32 +228,47 @@ func impact_to_damage(collider, collider_vel):
 
 
 func _process_body_entered(body):
+	# Fall damage.
+	if body is StaticBody:
+		if last_y == null:
+			return
+		var diff = abs(translation.y - last_y)
+		if diff > 1:
+			adjust_health(-diff * FALL_DAMAGE_MULTIPLIER)
+		last_y = translation.y
+		return
+
 	if not body.has_method("get_last_velocity"):
 		return
 	
-	if body is RigidBody:
+	if body is RigidBody and body.name.begins_with("Enemy"):
+		# lol infighting
+		target = body.translation
 		var vel = body.get_last_velocity()
 		var damage = impact_to_damage(body, vel)
 		adjust_health(-damage)
+		return
 	
+	var height = $MeshInstance.mesh.height
 	if body is KinematicBody:
-		if body.translation.y > translation.y:
+		# Curb stomps.
+		Console.log("KINEMATICBODY COLLISION")
+		if floor(body.translation.y) > floor(self.translation.y + height):
+			Console.log("CURB STOMP")
 			var vel = body.get_last_velocity()
 			var damage = impact_to_damage(body, vel)
-			adjust_health(-damage * 3)
+			adjust_health(-damage)
 			body.jump()
-		#if state != ATTACK:
-		#	body.adjust_health(-5)
-		pass
-	else:
-		pass
-		#set_state(EVADE) # We bumped into the player without seeing them!
+		set_state(EVADE)
+		return
 	        
-	var vel = body.get_last_velocity()
-	var height = $MeshInstance.mesh.height
+	#var vel = body.get_last_velocity()
 	# If the player is on top of the enemy, it's a curb stomp.
-	if floor(body.translation.y) > floor(self.translation.y + height):
-		#set_state(EVADE)
-		var gravity = Game.get_total_gravity_for(self)
-		var damage = impact_to_damage(body, Vector3(vel.x, gravity.y, vel.z))
-		adjust_health(-damage)
+	#if floor(body.translation.y) > floor(self.translation.y + height):
+	#	#set_state(EVADE)
+	#	#var gravity = Game.get_total_gravity_for(self)
+	#	#var damage = impact_to_damage(body, Vector3(vel.x, gravity.y, vel.z))
+	#	var vel = body.get_last_velocity()
+	#	var damage = impact_to_damage(body, vel)
+	#	adjust_health(-damage)
+	#	set_state(EVADE)

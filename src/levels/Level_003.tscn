@@ -199,10 +199,8 @@ depth = 20.0
 material = SubResource( 6 )
 
 [node name="Navigation" type="Navigation" parent="."]
-editor/display_folded = true
 
 [node name="Floor" type="MeshInstance" parent="Navigation"]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -220, -102, 0 )
 mesh = SubResource( 3 )
 material/0 = null

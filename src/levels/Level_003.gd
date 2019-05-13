@@ -9,12 +9,12 @@ func _ready():
 	spawn_horde(Vector3(-56, 3, -180), Vector2(30, 100), 3)
 	
 	# $Platform_Left
-	spawn_horde(Vector3(-370, -24, 150), Vector2(280, 30), 20)
+	spawn_horde(Vector3(-370, -27, 150), Vector2(280, 30), 20)
 	# $Platform_Right
-	spawn_horde(Vector3(-370, -24, -180), Vector2(280, 30), 20)
+	spawn_horde(Vector3(-370, -27, -180), Vector2(280, 30), 20)
 	
 	# $Platform_Mid
-	spawn_horde(Vector3(-220, -52, -182), Vector2(30, 400), 16)
+	spawn_horde(Vector3(-220, -55, -182), Vector2(30, 400), 16)
 
 func player_noise(trans, sound, loudness):
 	trans = trans.round()
@@ -76,7 +76,6 @@ func spawn_horde(center, dimensions, horde_size=null):
 	
 	for idx in range(0, len(coords)):
 		var pos2d = coords[idx]
-		Console.log("MOB POS: " + str(pos2d))
 		var pos = Vector3(center.x + pos2d.x, center.y, center.z + pos2d.y)
 		Console.log("MOB AT: " + str(pos))
 		spawn_enemy(pos)
