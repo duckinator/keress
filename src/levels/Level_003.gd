@@ -5,16 +5,16 @@ signal noise
 var mobs = []
 func _ready():
 	# $Platform
-	spawn_horde(Vector3(-56, 0, 40), Vector2(30, 100), 3)
-	spawn_horde(Vector3(-56, 0, -180), Vector2(30, 100), 3)
+	spawn_horde(Vector3(-56, 3, 40), Vector2(30, 100), 3)
+	spawn_horde(Vector3(-56, 3, -180), Vector2(30, 100), 3)
 	
 	# $Platform_Left
-	spawn_horde(Vector3(-370, -27, 150), Vector2(280, 30), 20)
+	spawn_horde(Vector3(-370, -24, 150), Vector2(280, 30), 20)
 	# $Platform_Right
-	spawn_horde(Vector3(-370, -27, -180), Vector2(280, 30), 20)
+	spawn_horde(Vector3(-370, -24, -180), Vector2(280, 30), 20)
 	
 	# $Platform_Mid
-	spawn_horde(Vector3(-220, -55, -182), Vector2(30, 400), 16)
+	spawn_horde(Vector3(-220, -52, -182), Vector2(30, 400), 16)
 
 func player_noise(trans, sound, loudness):
 	trans = trans.round()
