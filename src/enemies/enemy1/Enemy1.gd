@@ -126,8 +126,11 @@ func chase(delta, backoff):
 	
 	var pos = chase_path.interpolate_baked(chase_path_offset)
 	var diff = pos - translation
-	apply_central_impulse(diff)
-	last_velocity = diff
+	# HACK: Why is this diff4 nonsense needed? :(
+	var diff4 = diff * 4
+	diff4.y = diff.y
+	apply_central_impulse(diff4)
+	last_velocity = diff4
 	chase_path_offset += 0.5
 
 func search(delta):
