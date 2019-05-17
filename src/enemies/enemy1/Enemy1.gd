@@ -43,7 +43,7 @@ var target = null setget set_target, get_target
 func _ready():
 	self.health = MAX_HEALTH
 	self.mass = MASS
-	self.mode = MODE_CHARACTER
+	#self.mode = MODE_CHARACTER
 	
 	set_contact_monitor(true)
 	set_max_contacts_reported(5)
