@@ -114,6 +114,14 @@ func primary():
 		var collider = raycast.get_collider()
 		if collider.has_method("adjust_health"):
 			collider.adjust_health(-DAMAGE)
+			if collider is RigidBody:
+				var impulse = (to_global($Spatial/SpotLight.translation) - to_global($Spatial/RayCast.translation))
+				var impulse_y = impulse.y
+				impulse *= 800
+				impulse.y = 4000
+				if impulse_y < -2:
+					impulse.y = -impulse.y
+				collider.apply_impulse(Vector3(0, 3, 0), impulse)
 	gun_kick()
 	cylinder_revolve()
 
