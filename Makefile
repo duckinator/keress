@@ -35,7 +35,7 @@ release:
 
 bin/godot-headless:
 	rm -f bin/godot-headless
-	curl ${GODOT_DOWNLOAD_URL} | funzip > bin/godot-headless
+	curl -sS ${GODOT_DOWNLOAD_URL} | funzip > bin/godot-headless
 	chmod +x bin/godot-headless
 
 ci-nightly:
