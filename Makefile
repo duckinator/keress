@@ -1,3 +1,6 @@
+DATE := $(date +"%Y-%m-%d")
+REV := $(rev-parse --short HEAD)
+
 all: debug
 
 linux:
@@ -20,16 +23,17 @@ _all_platforms:
 
 debug:
 	$(MAKE) _all_platforms EXPORT_FLAG=--export-debug BUILD_TYPE=debug
-	zip -r keress-debug.zip build/debug
+	cd build/ && zip -r keress-debug-${DATE}-${REV}.zip debug
 
 release:
 	$(MAKE) _all_platforms EXPORT_FLAG=--export BUILD_TYPE=release
-	zip -r keress-release.zip build/release
+	cd build/ && zip -r keress-release-${DATE}-${REV}.zip release
 
 test:
 	@echo TODO
 
 clean:
-	rm build/*/*
+	rm build/*.zip || exit 0
+	rm build/*/* || exit 0
 
 .PHONY: all _all_platforms linux macos windows debug release clean
