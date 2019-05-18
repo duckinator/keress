@@ -1,7 +1,12 @@
 extends KinematicBody
 
 var fall_damage_enabled = false
-const WALL_RUN_MULTIPLIER = 0.75
+const WALLRUN_FALL_MULTIPLIER = 0.75
+const WALLRUN_SPEED_MULTIPLIER = 3
+const WALLRUN_ACCEL_MULTIPLIER = 8
+
+const NEUTRAL_CAMERA_ROTATION = 0
+const WALLRUN_CAMERA_ROTATION = -20
 
 const FALL_MULTIPLIER = 1.0
 const LOW_JUMP_MULTIPLIER = 1.5
@@ -200,7 +205,7 @@ func process_movement(delta):
 		vel += Vector3.UP * gravity.y * (LOW_JUMP_MULTIPLIER - 1) * delta
 	
 	if is_on_wall() and vel.y < 0:
-		vel.y *= WALL_RUN_MULTIPLIER
+		vel.y *= WALLRUN_FALL_MULTIPLIER
 	
 	var hvel = vel
 	hvel.y = 0
@@ -213,6 +218,25 @@ func process_movement(delta):
 		accel = ACCEL
 	else:
 		accel = DEACCEL
+	
+	var weapon = $RotationHelper/Revolver
+	
+	if is_on_wall() and not is_on_floor():
+		var speedup = false
+		if Input.is_action_pressed("movement_left"):
+			camera.rotation_degrees.z = WALLRUN_CAMERA_ROTATION
+			speedup = true
+		elif Input.is_action_pressed("movement_right"):
+			camera.rotation_degrees.z = -WALLRUN_CAMERA_ROTATION
+			speedup = true
+		if speedup:
+			# TODO: Slight weapon translation?
+			target *= WALLRUN_SPEED_MULTIPLIER
+			accel *= WALLRUN_ACCEL_MULTIPLIER
+	else:
+		camera.rotation_degrees.z = NEUTRAL_CAMERA_ROTATION
+	weapon.rotation_degrees.z = camera.rotation_degrees.z
+	
 	
 	hvel = hvel.linear_interpolate(target, accel * delta)
 	vel.x = hvel.x
