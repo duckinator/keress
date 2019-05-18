@@ -219,24 +219,23 @@ func process_movement(delta):
 	else:
 		accel = DEACCEL
 	
-	var weapon = $RotationHelper/Revolver
-	
 	if is_on_wall() and not is_on_floor():
 		var speedup = false
 		if riding_wall($LeftShortRaycast):
-			camera.rotation_degrees.z = -WALLRUN_CAMERA_ROTATION
+			camera_rotation_tween(camera.rotation_degrees.z, -WALLRUN_CAMERA_ROTATION)
+			#camera.rotation_degrees.z = -WALLRUN_CAMERA_ROTATION
 			speedup = true
 		elif riding_wall($RightShortRaycast):
-			camera.rotation_degrees.z = WALLRUN_CAMERA_ROTATION
+			camera_rotation_tween(camera.rotation_degrees.z, WALLRUN_CAMERA_ROTATION)
+			#camera.rotation_degrees.z = WALLRUN_CAMERA_ROTATION
 			speedup = true
 		if speedup:
 			# TODO: Slight weapon translation?
 			target *= WALLRUN_SPEED_MULTIPLIER
 			accel *= WALLRUN_ACCEL_MULTIPLIER
 	else:
+		camera_rotation_tween(camera.rotation_degrees.z, NEUTRAL_CAMERA_ROTATION)
 		camera.rotation_degrees.z = NEUTRAL_CAMERA_ROTATION
-	weapon.rotation_degrees.z = camera.rotation_degrees.z
-	
 	
 	hvel = hvel.linear_interpolate(target, accel * delta)
 	vel.x = hvel.x
@@ -321,3 +320,33 @@ func raycast_adjacent(ray):
 func riding_wall(ray):
 	var node = raycast_adjacent(ray)
 	return node != null and node.name.ends_with("Wall")
+
+func set_camera_rotation_z(new_z):
+	Console.log("NEW_Z = " + str(new_z))
+	camera.rotation_degrees.z = new_z
+	
+	var weapon = $RotationHelper/Revolver
+	weapon.rotation_degrees.z = camera.rotation_degrees.z
+
+const CAMERA_ROTATION_TWEEN_SPEED = 0.125
+var camera_tween = null
+func camera_rotation_tween(cur_z, new_z):
+	if camera_tween != null:
+		return
+	var camera_tween = $CameraRotationTween.duplicate()
+	var speed = CAMERA_ROTATION_TWEEN_SPEED
+	camera_tween.connect("tween_completed", self, "camera_rotation_tween_end")
+	camera_tween.repeat = false
+	#tween.stop(camera.rotation, "z")
+	camera_tween.interpolate_method(self, "set_camera_rotation_z", cur_z, new_z, speed, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	add_child(camera_tween)
+	camera_tween.start()
+	#camera.rotation_degrees.z
+
+func camera_rotation_tween_end(object, key):
+	if camera_tween == null:
+		return
+	camera_tween.stop_all()
+	remove_child(camera_tween)
+	camera_tween.queue_free()
+	camera_tween = null
