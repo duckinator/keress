@@ -1,6 +1,11 @@
 GODOT := bin/godot-headless
 
-GODOT_DOWNLOAD_URL := https://downloads.tuxfamily.org/godotengine/3.1.1/Godot_v3.1.1-stable_linux_headless.64.zip
+GODOT_VERSION := 3.1.1
+
+GODOT_DOWNLOAD_URL := https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux_headless.64.zip
+GODOT_EXPORT_TEMPLATE_URL := https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+GODOT_TEMPLATE_DIR := ${HOME}/.local/share/godot/templates/
+
 
 DATE := $(shell date +"%Y-%m-%d")
 REV := $(shell git rev-parse --short HEAD)
@@ -38,7 +43,14 @@ bin/godot-headless:
 	curl -sS ${GODOT_DOWNLOAD_URL} | funzip > bin/godot-headless
 	chmod +x bin/godot-headless
 
-ci-setup: bin/godot-headless
+ci-download-export-templates:
+	mkdir -p ${GODOT_TEMPLATE_DIR}
+	cd ${GODOT_TEMPLATE_DIR}
+	curl -sS ${GODOT_EXPORT_TEMPLATE_URL} -o godot-templates.zip
+	unzip godot-templates.zip
+	mv ./templates ${GODOT_VERSION}.stable
+
+ci-setup: bin/godot-headless ci-download-export-templates
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
 
 ci-nightly:
@@ -51,4 +63,4 @@ clean:
 	rm build/*.zip || exit 0
 	rm build/*/* || exit 0
 
-.PHONY: all _all_platforms linux macos windows debug release clean
+.PHONY: all _all_platforms test linux macos windows debug release clean ci-download-export-templates ci-setup ci-nightly
