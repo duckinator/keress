@@ -223,11 +223,9 @@ func process_movement(delta):
 		var speedup = false
 		if riding_wall($LeftShortRaycast):
 			camera_rotation_tween(camera.rotation_degrees.z, -WALLRUN_CAMERA_ROTATION)
-			#camera.rotation_degrees.z = -WALLRUN_CAMERA_ROTATION
 			speedup = true
 		elif riding_wall($RightShortRaycast):
 			camera_rotation_tween(camera.rotation_degrees.z, WALLRUN_CAMERA_ROTATION)
-			#camera.rotation_degrees.z = WALLRUN_CAMERA_ROTATION
 			speedup = true
 		if speedup:
 			# TODO: Slight weapon translation?
@@ -322,10 +320,8 @@ func riding_wall(ray):
 	return node != null and node.name.ends_with("Wall")
 
 func set_camera_rotation_z(new_z):
-	Console.log("NEW_Z = " + str(new_z))
-	camera.rotation_degrees.z = new_z
-	
 	var weapon = $RotationHelper/Revolver
+	camera.rotation_degrees.z = new_z
 	weapon.rotation_degrees.z = camera.rotation_degrees.z
 
 const CAMERA_ROTATION_TWEEN_SPEED = 0.125
@@ -337,11 +333,9 @@ func camera_rotation_tween(cur_z, new_z):
 	var speed = CAMERA_ROTATION_TWEEN_SPEED
 	camera_tween.connect("tween_completed", self, "camera_rotation_tween_end")
 	camera_tween.repeat = false
-	#tween.stop(camera.rotation, "z")
 	camera_tween.interpolate_method(self, "set_camera_rotation_z", cur_z, new_z, speed, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	add_child(camera_tween)
 	camera_tween.start()
-	#camera.rotation_degrees.z
 
 func camera_rotation_tween_end(object, key):
 	if camera_tween == null:
