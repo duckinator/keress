@@ -1,0 +1,10 @@
+Linux_task:
+  container:
+    image: debian:9-slim
+  install_script:
+    - apt-get update -y
+    - apt-get install -y git make wget unzip
+  script:
+    - make
+    - make ci-nightly
+

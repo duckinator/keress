@@ -42,6 +42,9 @@ bin/godot-headless:
 	mv Godot_*_linux_headless.64 bin/godot-headless
 	rm -r ./tmp/
 
+ci-nightly:
+	test ${BRANCH} == "nightly" && $(MAKE) nightly-publish
+
 test:
 	@echo TODO
 
