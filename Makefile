@@ -1,5 +1,5 @@
-DATE := $(date +"%Y-%m-%d")
-REV := $(rev-parse --short HEAD)
+DATE := $(shell date +"%Y-%m-%d")
+REV := "$(shell git rev-parse --short HEAD)"
 
 all: debug
 
