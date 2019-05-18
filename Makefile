@@ -39,10 +39,10 @@ bin/godot-headless:
 	chmod +x bin/godot-headless
 
 ci-setup: bin/godot-headless
-	test "${CIRRUS_CI}" == "true" && cp src/export_presets.cfg{.cirrus-ci,}
+	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg{.cirrus-ci,}
 
 ci-nightly:
-	test "${BRANCH}" == "nightly" && $(MAKE) nightly-publish
+	test "${BRANCH}" = "nightly" && $(MAKE) nightly-publish
 
 test:
 	@echo TODO
