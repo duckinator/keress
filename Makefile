@@ -20,7 +20,7 @@ _all_platforms:
 
 debug:
 	$(MAKE) _all_platforms EXPORT_FLAG=--export-debug BUILD_TYPE=debug
-	zip -r build/debug keress-debug.zip
+	zip -r keress-debug.zip build/debug
 
 release:
 	$(MAKE) _all_platforms EXPORT_FLAG=--export BUILD_TYPE=release
