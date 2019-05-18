@@ -2,8 +2,8 @@ Linux_task:
   container:
     image: debian:9-slim
   install_script:
-    - apt-get update -y
-    - apt-get install -y git make curl unzip
+    - apt-get update -yq
+    - apt-get install -yq git make curl unzip
   script:
     - make
     - make ci-nightly
