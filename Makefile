@@ -14,7 +14,7 @@ linux: ${GODOT}
 macos: ${GODOT}
 	mkdir -p build/${BUILD_TYPE}
 	${GODOT} src/project.godot ${EXPORT_FLAG} macos ../build/${BUILD_TYPE}/keress_macos.zp
-	mv build/${BUILD_TYPE}/keress_macos.z{,i}p
+	mv build/${BUILD_TYPE}/keress_macos.zp build/${BUILD_TYPE}/keress_macos.zip
 
 windows: ${GODOT}
 	mkdir -p build/${BUILD_TYPE}
@@ -39,7 +39,7 @@ bin/godot-headless:
 	chmod +x bin/godot-headless
 
 ci-setup: bin/godot-headless
-	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg{.cirrus-ci,}
+	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
 
 ci-nightly:
 	test "${BRANCH}" = "nightly" && $(MAKE) nightly-publish
