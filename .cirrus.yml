@@ -4,7 +4,7 @@ Linux_task:
   install_script:
     - apt-get update -yq
     - apt-get install -yq git make curl unzip
-    - make bin/godot-headless
+    - make ci-setup
   script:
     - make
     - make ci-nightly
