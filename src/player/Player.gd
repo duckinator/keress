@@ -223,11 +223,11 @@ func process_movement(delta):
 	
 	if is_on_wall() and not is_on_floor():
 		var speedup = false
-		if Input.is_action_pressed("movement_left"):
-			camera.rotation_degrees.z = WALLRUN_CAMERA_ROTATION
-			speedup = true
-		elif Input.is_action_pressed("movement_right"):
+		if riding_wall($LeftShortRaycast):
 			camera.rotation_degrees.z = -WALLRUN_CAMERA_ROTATION
+			speedup = true
+		elif riding_wall($RightShortRaycast):
+			camera.rotation_degrees.z = WALLRUN_CAMERA_ROTATION
 			speedup = true
 		if speedup:
 			# TODO: Slight weapon translation?
@@ -311,3 +311,13 @@ func _input(event):
 		if changing_item_number != current_item:
 			Console.log("TODO: Switch to item #" + str(changing_item_number + 1))
 			pass # Change weapons
+
+func raycast_adjacent(ray):
+	ray.force_raycast_update()
+	if not ray.is_colliding():
+		return null
+	return ray.get_collider()
+
+func riding_wall(ray):
+	var node = raycast_adjacent(ray)
+	return node != null and node.name.ends_with("Wall")

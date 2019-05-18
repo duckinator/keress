@@ -52,3 +52,13 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="DummyRigidBody"]
 shape = SubResource( 4 )
+
+[node name="CameraRotationTween" type="Tween" parent="."]
+
+[node name="LeftShortRaycast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+cast_to = Vector3( 2, 0, 0 )
+
+[node name="RightShortRaycast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+cast_to = Vector3( -2, 0, 0 )
