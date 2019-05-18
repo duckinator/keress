@@ -35,6 +35,7 @@ release:
 
 bin/godot-headless:
 	rm -f bin/godot-headless
+	rm -rf ./tmp
 	mkdir ./tmp
 	wget ${GODOT_DOWNLOAD_URL} -O ./tmp/godot-headless.zip
 	unzip ./tmp/godot-headless.zip
