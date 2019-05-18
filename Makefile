@@ -35,12 +35,8 @@ release:
 
 bin/godot-headless:
 	rm -f bin/godot-headless
-	rm -rf ./tmp
-	mkdir ./tmp
-	wget ${GODOT_DOWNLOAD_URL} -O ./tmp/godot-headless.zip
-	unzip ./tmp/godot-headless.zip
-	mv Godot_*_linux_headless.64 bin/godot-headless
-	rm -r ./tmp/
+	curl ${GODOT_DOWNLOAD_URL} | funzip > bin/godot-headless
+	chmod +x bin/godot-headless
 
 ci-nightly:
 	test ${BRANCH} == "nightly" && $(MAKE) nightly-publish
