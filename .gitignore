@@ -8,3 +8,5 @@ export_presets.cfg
 .mono/
 
 /build/
+/bin/godot-headless
+/tmp
