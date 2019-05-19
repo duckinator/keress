@@ -3,7 +3,7 @@ Linux_task:
     image: debian:9-slim
   install_script:
     - apt-get update -yq
-    - apt-get install -yq git make curl unzip
+    - apt-get install -yq git make curl zip unzip
     - make ci-setup
   script:
     - make
