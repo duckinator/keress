@@ -1,12 +1,5 @@
 GODOT := bin/godot-headless
 
-GODOT_VERSION := 3.1.1
-
-GODOT_DOWNLOAD_URL := https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux_headless.64.zip
-GODOT_EXPORT_TEMPLATE_URL := https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
-GODOT_TEMPLATE_DIR := ${HOME}/.local/share/godot/templates/
-
-
 DATE := $(shell date +"%Y-%m-%d")
 REV := $(shell git rev-parse --short HEAD)
 
@@ -37,17 +30,6 @@ debug:
 release:
 	$(MAKE) _all_platforms EXPORT_FLAG=--export BUILD_TYPE=release
 	cd build/ && zip -r keress-release-${DATE}-${REV}.zip release
-
-bin/godot-headless:
-	rm -f bin/godot-headless
-	curl -sS ${GODOT_DOWNLOAD_URL} | funzip > bin/godot-headless
-	chmod +x bin/godot-headless
-
-ci-download-export-templates:
-	mkdir -p ${GODOT_TEMPLATE_DIR}
-	cd ${GODOT_TEMPLATE_DIR} && curl -sS ${GODOT_EXPORT_TEMPLATE_URL} -o godot-templates.zip
-	cd ${GODOT_TEMPLATE_DIR} && unzip godot-templates.zip
-	cd ${GODOT_TEMPLATE_DIR} && mv ./templates ${GODOT_VERSION}.stable
 
 ci-setup: bin/godot-headless ci-download-export-templates
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
