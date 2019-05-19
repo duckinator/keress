@@ -114,6 +114,9 @@ func idle(delta):
 var chase_path = null
 var chase_path_offset = 0
 func chase(delta, backoff):
+	if target == null:
+		return
+	
 	var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
 
 	if chase_path == null or last_state != state:
@@ -203,7 +206,7 @@ func cleanup():
 
 func adjust_health(value):
 	Map.add_area_of_interest(self, translation)
-	health = clamp(health + value, 0, MAX_HEALTH)
+	health = clamp(round(health + value), 0, MAX_HEALTH)
 	Console.debug(str(self) + ".health = " + str(health))
 	if health <= 0:
 		die()
@@ -244,21 +247,23 @@ func _process_body_entered(body):
 	if not body.has_method("get_last_velocity"):
 		return
 	
-	if body is RigidBody and body.name.begins_with("Enemy"):
-		# lol infighting
-		target = body.translation
-		var vel = body.get_last_velocity()
-		var damage = impact_to_damage(body, vel)
-		adjust_health(-damage)
-		return
-	
 	var height = $MeshInstance.mesh.height
-	if body is KinematicBody:
+	if floor(body.translation.y) > floor(translation.y):
 		# Curb stomps.
-		if floor(body.translation.y) > floor(translation.y):
-			var vel = body.get_last_velocity()
-			var damage = impact_to_damage(body, vel)
-			adjust_health(-damage)
-			body.jump()
-		set_state(EVADE)
-		return
+		var vel = body.get_last_velocity()
+		var damage = impact_to_damage(body, vel) * 10
+		adjust_health(-damage)
+	else:
+		# Less dramatic impacts.
+		var vel = body.get_last_velocity()
+		var damage = impact_to_damage(body, vel) / 10
+		adjust_health(-damage)
+	
+	if body.has_method("jump"):
+		body.jump()
+	
+	var is_player = body is KinematicBody and body.name == "Player"
+	var is_enemy = body is RigidBody and body.name.begins_with("Enemy")
+	if is_enemy or is_player:
+		target = body.translation
+	set_state(EVADE)
