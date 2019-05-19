@@ -45,10 +45,9 @@ bin/godot-headless:
 
 ci-download-export-templates:
 	mkdir -p ${GODOT_TEMPLATE_DIR}
-	cd ${GODOT_TEMPLATE_DIR}
-	curl -sS ${GODOT_EXPORT_TEMPLATE_URL} -o godot-templates.zip
-	unzip godot-templates.zip
-	mv ./templates ${GODOT_VERSION}.stable
+	cd ${GODOT_TEMPLATE_DIR} && curl -sS ${GODOT_EXPORT_TEMPLATE_URL} -o godot-templates.zip
+	cd ${GODOT_TEMPLATE_DIR} && unzip godot-templates.zip
+	cd ${GODOT_TEMPLATE_DIR} && mv ./templates ${GODOT_VERSION}.stable
 
 ci-setup: bin/godot-headless ci-download-export-templates
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
