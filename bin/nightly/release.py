@@ -29,5 +29,9 @@ def store(file_path):
         client.put_object(Bucket=bucket_name, Key=file_name, Body=f, ACL="public-read")
 
 files = glob("./debug/*")
+if len(files) == 0:
+    print("No files to upload")
+    exit(1)
+
 list(map(store, files))
 
