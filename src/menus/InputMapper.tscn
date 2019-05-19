@@ -13,12 +13,12 @@ size = 40
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 20
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 40
 use_filter = true
 font_data = ExtResource( 2 )
@@ -47,6 +47,7 @@ margin_bottom = 240.0
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/HBoxContainer"]
+editor/display_folded = true
 margin_right = 1225.0
 margin_bottom = 240.0
 
@@ -80,14 +81,14 @@ margin_bottom = 180.0
 [node name="Controls_Reset" type="Button" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 margin_right = 216.0
 margin_bottom = 30.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "Reset to Defaults"
 
 [node name="Controls_Save" type="Button" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 margin_left = 220.0
 margin_right = 280.0
 margin_bottom = 30.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "Save"
 
 [node name="Controls" type="VBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
@@ -100,7 +101,7 @@ visible = false
 margin_top = 154.0
 margin_right = 1225.0
 margin_bottom = 202.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Mouse"
 
 [node name="Mouse" type="VBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
@@ -113,7 +114,7 @@ margin_bottom = 154.0
 margin_top = 188.0
 margin_right = 1225.0
 margin_bottom = 236.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Joypad"
 
 [node name="Joypad" type="VBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]

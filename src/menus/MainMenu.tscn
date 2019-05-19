@@ -163,60 +163,86 @@ text = "Settings"
 align = 1
 valign = 1
 
-[node name="Label_Mouse_Sensitivity" type="Label" parent="Panels/Settings"]
-margin_left = 10.0
-margin_top = 150.0
-margin_right = 316.0
-margin_bottom = 190.0
+[node name="ScrollContainer" type="ScrollContainer" parent="Panels/Settings"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 140.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panels/Settings/ScrollContainer"]
+margin_left = 20.0
+margin_right = 344.0
+margin_bottom = 366.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panels/Settings/ScrollContainer/HBoxContainer"]
+margin_right = 324.0
+margin_bottom = 366.0
+
+[node name="Label_Mouse_Sensitivity" type="Label" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_right = 324.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 6 )
 text = "Mouse Sensitivity"
 
-[node name="HSlider_Mouse_Sensitivity" type="HSlider" parent="Panels/Settings"]
-margin_left = 350.0
-margin_top = 150.0
-margin_right = 650.0
-margin_bottom = 190.0
+[node name="HSlider_Mouse_Sensitivity" type="HSlider" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 324.0
+margin_bottom = 56.0
 focus_neighbour_bottom = NodePath("../HSlider_Joypad_Sensitivity")
 focus_next = NodePath("../HSlider_Joypad_Sensitivity")
-focus_previous = NodePath("../Button_Back")
-ticks_on_borders = true
+focus_previous = NodePath("../../../../Button_Back")
 
-[node name="Label_Joypad_Sensitivity" type="Label" parent="Panels/Settings"]
-margin_left = 10.0
-margin_top = 200.0
-margin_right = 310.0
-margin_bottom = 240.0
+[node name="Label_Joypad_Sensitivity" type="Label" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 60.0
+margin_right = 324.0
+margin_bottom = 96.0
 custom_fonts/font = SubResource( 7 )
 text = "Joypad Sensitivity"
 
-[node name="HSlider_Joypad_Sensitivity" type="HSlider" parent="Panels/Settings"]
-margin_left = 350.0
-margin_top = 200.0
-margin_right = 650.0
-margin_bottom = 240.0
+[node name="HSlider_Joypad_Sensitivity" type="HSlider" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 100.0
+margin_right = 324.0
+margin_bottom = 116.0
 focus_neighbour_top = NodePath("../HSlider_Mouse_Sensitivity")
+focus_neighbour_bottom = NodePath("../HSlider_Field_of_View")
+focus_next = NodePath("../HSlider_Field_of_View")
+focus_previous = NodePath("../HSlider_Mouse_Sensitivity")
+
+[node name="Label_Field_of_View" type="Label" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 120.0
+margin_right = 324.0
+margin_bottom = 156.0
+custom_fonts/font = SubResource( 7 )
+text = "Field of View"
+
+[node name="HSlider_Field_of_View" type="HSlider" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 160.0
+margin_right = 324.0
+margin_bottom = 176.0
+focus_neighbour_top = NodePath("../HSlider_Joypad_Sensitivity")
 focus_neighbour_bottom = NodePath("../CheckButton_VSync")
 focus_next = NodePath("../CheckButton_VSync")
-focus_previous = NodePath("../HSlider_Mouse_Sensitivity")
-ticks_on_borders = true
+focus_previous = NodePath("../HSlider_Joypad_Sensitivity")
+min_value = 50.0
+max_value = 150.0
+step = 10.0
+value = 100.0
+tick_count = 3
 
-[node name="CheckButton_VSync" type="CheckButton" parent="Panels/Settings"]
-margin_left = 10.0
-margin_top = 250.0
-margin_right = 410.0
-margin_bottom = 294.0
-focus_neighbour_top = NodePath("../HSlider_Joypad_Sensitivity")
+[node name="CheckButton_VSync" type="CheckButton" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 180.0
+margin_right = 324.0
+margin_bottom = 224.0
+focus_neighbour_top = NodePath("../HSlider_Field_of_View")
 focus_neighbour_bottom = NodePath("../CheckButton_Fullscreen")
 focus_next = NodePath("../CheckButton_Fullscreen")
-focus_previous = NodePath("../HSlider_Joypad_Sensitivity")
+focus_previous = NodePath("../HSlider_Field_of_View")
 custom_fonts/font = SubResource( 8 )
 text = "V-Sync"
 
-[node name="CheckButton_Fullscreen" type="CheckButton" parent="Panels/Settings"]
-margin_left = 10.0
-margin_top = 300.0
-margin_right = 410.0
-margin_bottom = 344.0
+[node name="CheckButton_Fullscreen" type="CheckButton" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 228.0
+margin_right = 324.0
+margin_bottom = 272.0
 focus_neighbour_top = NodePath("../CheckButton_VSync")
 focus_neighbour_bottom = NodePath("../CheckButton_Debug")
 focus_next = NodePath("../CheckButton_Debug")
@@ -224,11 +250,10 @@ focus_previous = NodePath("../CheckButton_VSync")
 custom_fonts/font = SubResource( 9 )
 text = "Fullscreen"
 
-[node name="CheckButton_Debug" type="CheckButton" parent="Panels/Settings"]
-margin_left = 10.0
-margin_top = 350.0
-margin_right = 410.0
-margin_bottom = 394.0
+[node name="CheckButton_Debug" type="CheckButton" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 276.0
+margin_right = 324.0
+margin_bottom = 320.0
 focus_neighbour_top = NodePath("../CheckButton_Fullscreen")
 focus_neighbour_bottom = NodePath("../Button_Controls")
 focus_next = NodePath("../Button_Controls")
@@ -236,11 +261,10 @@ focus_previous = NodePath("../CheckButton_Fullscreen")
 custom_fonts/font = SubResource( 10 )
 text = "Debug Mode"
 
-[node name="Button_Controls" type="Button" parent="Panels/Settings"]
-margin_left = 20.0
-margin_top = 410.0
-margin_right = 224.0
-margin_bottom = 464.0
+[node name="Button_Controls" type="Button" parent="Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 324.0
+margin_right = 324.0
+margin_bottom = 366.0
 custom_fonts/font = SubResource( 11 )
 text = "Controls"
 
@@ -249,10 +273,9 @@ margin_left = 20.0
 margin_top = 20.0
 margin_right = 120.0
 margin_bottom = 60.0
-focus_neighbour_top = NodePath("../Button_Controls")
-focus_neighbour_bottom = NodePath("../HSlider_Mouse_Sensitivity")
-focus_next = NodePath("../HSlider_Mouse_Sensitivity")
-focus_previous = NodePath("../CheckButton_Debug")
+focus_neighbour_bottom = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/HSlider_Mouse_Sensitivity")
+focus_next = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/HSlider_Mouse_Sensitivity")
+focus_previous = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/CheckButton_Debug")
 custom_fonts/font = SubResource( 12 )
 text = "< Back"
 
