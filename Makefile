@@ -5,16 +5,16 @@ REV := $(shell git rev-parse --short HEAD)
 
 all: debug
 
-linux: ${GODOT}
+linux:
 	mkdir -p build/${BUILD_TYPE}
 	${GODOT} src/project.godot ${EXPORT_FLAG} linux ../build/${BUILD_TYPE}/keress.x86_64
 
-macos: ${GODOT}
+macos:
 	mkdir -p build/${BUILD_TYPE}
 	${GODOT} src/project.godot ${EXPORT_FLAG} macos ../build/${BUILD_TYPE}/keress_macos.zp
 	mv build/${BUILD_TYPE}/keress_macos.zp build/${BUILD_TYPE}/keress_macos.zip
 
-windows: ${GODOT}
+windows:
 	mkdir -p build/${BUILD_TYPE}
 	${GODOT} src/project.godot ${EXPORT_FLAG} windows ../build/${BUILD_TYPE}/keress.exe
 
@@ -31,7 +31,7 @@ release:
 	$(MAKE) _all_platforms EXPORT_FLAG=--export BUILD_TYPE=release
 	cd build/ && zip -r keress-release-${DATE}-${REV}.zip release
 
-ci-setup: bin/godot-headless ci-download-export-templates
+ci-setup:
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
 
 ci-nightly-publish: all
@@ -44,4 +44,4 @@ clean:
 	rm build/*.zip || exit 0
 	rm build/*/* || exit 0
 
-.PHONY: all _all_platforms test linux macos windows debug release clean ci-download-export-templates ci-setup ci-nightly
+.PHONY: all _all_platforms test linux macos windows debug release clean ci-setup ci-nightly-publish

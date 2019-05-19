@@ -15,4 +15,4 @@ nightly_task:
   install_script:
     - make ci-setup
   script:
-    - make ci-nightly
+    - make ci-nightly-publish
