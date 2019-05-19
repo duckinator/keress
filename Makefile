@@ -1,4 +1,4 @@
-GODOT := bin/godot-headless
+GODOT ?= bin/godot-headless
 
 DATE := $(shell date +"%Y-%m-%d")
 REV := $(shell git rev-parse --short HEAD)
