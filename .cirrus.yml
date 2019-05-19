@@ -1,4 +1,4 @@
-Linux_task:
+test_task:
   container:
     image: debian:9-slim
   install_script:
@@ -6,6 +6,17 @@ Linux_task:
     - apt-get install -yq git make curl zip unzip
     - make ci-setup
   script:
-    - make
-    - make ci-nightly
+    - make test
 
+nightly_task:
+  only_if: $BRANCH == 'nightly'
+  #depends_on:
+  #  - test
+  container:
+    image: debian:9-slim
+  install_script:
+    - apt-get update -yq
+    - apt-get install -yq git make curl zip unzip
+    - make ci-setup
+  script:
+    - make ci-nightly

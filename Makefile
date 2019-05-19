@@ -52,11 +52,11 @@ ci-download-export-templates:
 ci-setup: bin/godot-headless ci-download-export-templates
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
 
-ci-nightly:
-	test "${BRANCH}" = "nightly" && $(MAKE) nightly-publish
+ci-nightly-publish: all
+	./bin/nightly/release.sh
 
-test:
-	@echo TODO
+test: all
+	@echo "No tests to run. :("
 
 clean:
 	rm build/*.zip || exit 0
