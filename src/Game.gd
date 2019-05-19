@@ -2,6 +2,7 @@ extends Node
 
 const DEFAULT_MOUSE_SENSITIVITY = 20
 const DEFAULT_JOYPAD_SENSITIVITY = 20
+const DEFAULT_FIELD_OF_VIEW = 100
 
 # TODO: See if these can be automagically determined?
 const FIRST_LEVEL = 1
@@ -36,6 +37,11 @@ func get_joypad_sensitivity(cache_bust=false):
 	if cache_bust or not "joypad_sensitivity" in _cache.keys():
 		_cache["joypad_sensitivity"] = Settings.fetch("joypad_sensitivity", DEFAULT_JOYPAD_SENSITIVITY)
 	return _cache["joypad_sensitivity"]
+
+func get_field_of_view(cache_bust=false):
+	if cache_bust or not "field_of_view" in _cache.keys():
+		_cache["field_of_view"] = Settings.fetch("field_of_view", DEFAULT_FIELD_OF_VIEW)
+	return _cache["field_of_view"]
 
 func show_cursor():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

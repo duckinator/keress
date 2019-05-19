@@ -55,6 +55,8 @@ func _ready():
 	assert(err == OK)
 	err = _joypad_sensitivity.connect("value_changed", self, "update_joypad_sensitivity")
 	assert(err == OK)
+	err = _field_of_view.connect("value_changed", self, "update_joypad_sensitivity")
+	assert(err == OK)
 	
 	panel_select("Start")
 
@@ -120,3 +122,4 @@ func load_settings():
 	OS.vsync_enabled = _vsync.pressed
 	_mouse_sensitivity.value = Game.get_joypad_sensitivity()
 	_joypad_sensitivity.value = Game.get_mouse_sensitivity()
+	_field_of_view.value = Game.get_field_of_view()
