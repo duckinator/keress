@@ -54,6 +54,8 @@ func _ready():
 	camera = $RotationHelper/Camera
 	rotation_helper = $RotationHelper
 
+	#camera.fov = Game.get_field_of_view()
+
 	inventory.append($RotationHelper/Revolver)
 	#inventory.append($RotationHelper/Rifle)
 	#inventory.append($RotationHelper/Shotgun)

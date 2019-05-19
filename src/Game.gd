@@ -2,7 +2,7 @@ extends Node
 
 const DEFAULT_MOUSE_SENSITIVITY = 20
 const DEFAULT_JOYPAD_SENSITIVITY = 20
-const DEFAULT_FIELD_OF_VIEW = 100
+const DEFAULT_FIELD_OF_VIEW = 90
 
 # TODO: See if these can be automagically determined?
 const FIRST_LEVEL = 1

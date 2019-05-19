@@ -55,7 +55,7 @@ func _ready():
 	assert(err == OK)
 	err = _joypad_sensitivity.connect("value_changed", self, "update_joypad_sensitivity")
 	assert(err == OK)
-	err = _field_of_view.connect("value_changed", self, "update_joypad_sensitivity")
+	err = _field_of_view.connect("value_changed", self, "update_field_of_view")
 	assert(err == OK)
 	
 	panel_select("Start")
@@ -109,6 +109,7 @@ func toggle_debug():
 	load_settings()
 
 func update_mouse_sensitivity(value):
+	Console.log("MOUSE SENSITIVITY = " + str(value))
 	Settings.store("mouse_sensitivity", value)
 	load_settings()
 
@@ -116,10 +117,14 @@ func update_joypad_sensitivity(value):
 	Settings.store("joypad_sensitivity", value)
 	load_settings()
 
+func update_field_of_view(value):
+	Settings.store("field_of_view", value)
+	load_settings()
+
 func load_settings():
 	Debug.enabled = _debug.pressed
 	OS.window_fullscreen = _fullscreen.pressed
 	OS.vsync_enabled = _vsync.pressed
-	_mouse_sensitivity.value = Game.get_joypad_sensitivity()
-	_joypad_sensitivity.value = Game.get_mouse_sensitivity()
-	_field_of_view.value = Game.get_field_of_view()
+	_mouse_sensitivity.value = Game.get_mouse_sensitivity(true)
+	_joypad_sensitivity.value = Game.get_joypad_sensitivity(true)
+	_field_of_view.value = Game.get_field_of_view(true)
