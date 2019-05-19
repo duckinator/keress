@@ -8,6 +8,9 @@ test_task:
 
 nightly_task:
   only_if: $BRANCH == 'nightly'
+  env:
+    AWS_ACCESS_KEY: ENCRYPTED[6225d9d36a98846a08354b42b8d76ec3817ffc33be7b4195a782d1a69c65b78edbd77164b9bc31e553ea0afa4e8e54aa]
+    AWS_SECRET_KEY: ENCRYPTED[b0a0eec0f1380df3e071c2b0bf1f593eada7a5eae051e031b17c7c4f7b4fd36c3915f8eb250aebe26529e8d9eed68cde]
   #depends_on:
   #  - test
   container:
