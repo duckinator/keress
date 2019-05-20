@@ -24,4 +24,4 @@ nightly_task:
     - make release
     - butler push build/linux duckinator/keress:linux-nightly
     - butler push build/windows duckinator/keress:windows-nightly
-    - butler push build/macos duckinator/keress:macos-nightly
+    - butler push build/mac duckinator/keress:mac-nightly
