@@ -21,6 +21,7 @@ nightly_task:
   install_script:
     - make ci-setup
   script:
+    - make release
     - butler push build/linux duckinator/keress:linux-nightly
     - butler push build/windows duckinator/keress:windows-nightly
     - butler push build/macos duckinator/keress:macos-nightly
