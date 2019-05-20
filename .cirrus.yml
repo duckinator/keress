@@ -13,6 +13,7 @@ nightly_task:
     AWS_BUCKET: 'keress'
     AWS_ACCESS_KEY: ENCRYPTED[6225d9d36a98846a08354b42b8d76ec3817ffc33be7b4195a782d1a69c65b78edbd77164b9bc31e553ea0afa4e8e54aa]
     AWS_SECRET_KEY: ENCRYPTED[b0a0eec0f1380df3e071c2b0bf1f593eada7a5eae051e031b17c7c4f7b4fd36c3915f8eb250aebe26529e8d9eed68cde]
+    BUTLER_API_KEY: ENCRYPTED[46a314af5ccb389fce4671b233802ae05d7f554aaa0a13102c6d908b8b824416c4308cfb61c7271a3bb8e25b0463f23d]
   #depends_on:
   #  - test
   container:
@@ -20,4 +21,6 @@ nightly_task:
   install_script:
     - make ci-setup
   script:
-    - make ci-nightly-publish
+    - butler push build/linux duckinator/keress:linux-nightly
+    - butler push build/windows duckinator/keress:windows-nightly
+    - butler push build/macos duckinator/keress:macos-nightly
