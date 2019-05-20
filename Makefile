@@ -1,27 +1,19 @@
 GODOT ?= bin/godot-headless
 
-DATE := $(shell date +"%Y-%m-%d")
-REV := $(shell git rev-parse --short HEAD)
-
 all: debug
 
 linux:
 	mkdir -p build/linux
 	${GODOT} src/project.godot ${EXPORT_FLAG} linux ../build/linux/keress.x86_64
 
-macos:
+mac:
 	mkdir -p build/mac
 	${GODOT} src/project.godot ${EXPORT_FLAG} macos ../build/mac/keress_macos.zp
-	mv build/${BUILD_TYPE}/keress_macos.zp build/mac/keress_macos.zip
+	mv build/mac/keress_macos.zp build/mac/keress_macos.zip
 
 windows:
 	mkdir -p build/windows
 	${GODOT} src/project.godot ${EXPORT_FLAG} windows ../build/windows/keress.exe
-
-_all_platforms:
-	$(MAKE) linux EXPORT_FLAG=${EXPORT_FLAG}
-	$(MAKE) macos EXPORT_FLAG=${EXPORT_FLAG}
-	$(MAKE) windows EXPORT_FLAG=${EXPORT_FLAG}
 
 debug:
 	$(MAKE) EXPORT_FLAG=--export-debug linux windows mac
