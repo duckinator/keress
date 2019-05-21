@@ -2,7 +2,7 @@ extends KinematicBody
 
 var fall_damage_enabled = false
 const WALLRUN_FALL_MULTIPLIER = 0.75
-const WALLRUN_SPEED_MULTIPLIER = 3
+const WALLRUN_SPEED_MULTIPLIER = 2
 const WALLRUN_ACCEL_MULTIPLIER = 8
 
 const NEUTRAL_CAMERA_ROTATION = 0
