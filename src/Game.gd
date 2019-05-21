@@ -206,7 +206,7 @@ func spawn_player(scene=null):
 func focus_first_control(node):
 	for child in node.get_children():
 		# Skip hidden nodes.
-		if not child.visible:
+		if not child is Node and not child.visible:
 			continue
 		
 		# If it shouldn't be auto-focused, don't auto-focus it.

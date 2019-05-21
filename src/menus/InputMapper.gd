@@ -60,7 +60,7 @@ func _ready():
 	controls_reset.connect("pressed", self, "reset_config")
 	controls_save.connect("pressed", self, "save_config")
 
-	var err = done.connect("pressed", self, "hide")
+	var err = done.connect("pressed", self, "deactivate")
 	assert(err == OK)
 	
 	for setting in CONTROLS.keys():
@@ -76,6 +76,11 @@ func _ready():
 func activate():
 	show()
 	Game.focus_first_control(self)
+
+func deactivate():
+	hide()
+	# TODO: Make this just use get_parent() once InputMapper is a child of Settings.
+	Game.focus_first_control(get_parent().get_node('Settings'))
 
 func add_input_mapper(parent, setting, display_name):
 	var scene = load("res://menus/ActionMapper.tscn").instance()

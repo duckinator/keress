@@ -32,7 +32,7 @@ func _ready():
 	err = _field_of_view.connect("value_changed", self, "update_field_of_view")
 	assert(err == OK)
 	
-	err = $Button_Back.connect("pressed", self, "hide")
+	err = $Button_Back.connect("pressed", self, "deactivate")
 	assert(err == OK)
 	
 	load_settings()
@@ -40,6 +40,10 @@ func _ready():
 func activate():
 	show()
 	Game.focus_first_control(self)
+
+func deactivate():
+	hide()
+	Game.focus_first_control(get_parent())
 
 func toggle_vsync():
 	Settings.store("vsync", _vsync.pressed)
