@@ -1,20 +1,12 @@
 extends Control
 
-onready var vbox = $Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer
-onready var _vsync = vbox.get_node('CheckButton_VSync')
-onready var _fullscreen = vbox.get_node('CheckButton_Fullscreen')
-onready var _debug = vbox.get_node('CheckButton_Debug')
-onready var _controls = vbox.get_node('Button_Controls')
-onready var _mouse_sensitivity = vbox.get_node('HSlider_Mouse_Sensitivity')
-onready var _joypad_sensitivity = vbox.get_node('HSlider_Joypad_Sensitivity')
-onready var _field_of_view = vbox.get_node('HSlider_Field_of_View')
-
 func _ready():
 	var err
 	
 	Game.playing = false
 	$Panels/Start.visible = true
 	$Panels/Settings.visible = false
+	$Panels/InputMapper.visible = false
 	
 	$Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer.add_constant_override("separation", 20)
 
@@ -26,47 +18,23 @@ func _ready():
 	assert(err == OK)
 	err = $Panels/Start/Button_Quit.connect("pressed", self, "quit")
 	assert(err == OK)
-
+	
+	# TODO: Move this to SettingsMenu, and make it just hide itself.
 	err = $Panels/Settings/Button_Back.connect("pressed", self, "panel_select", ["Start"])
 	assert(err == OK)
 	
-	err = _vsync.connect("pressed", self, "toggle_vsync")
-	assert(err == OK)
-	err = _fullscreen.connect("pressed", self, "toggle_fullscreen")
-	assert(err == OK)
-	err = _debug.connect("pressed", self, "toggle_debug")
-	assert(err == OK)
-	err = _controls.connect("pressed", self, "panel_select", ["InputMapper"])
-	assert(err == OK)
-	
+	# TODO: Move this to InputMapper, and make it just hide itself.
 	err = $Panels/InputMapper.done.connect("pressed", self, "panel_select", ["Settings"])
 	assert(err == OK)
-
-	_vsync.pressed = Settings.fetch("vsync", true)
-	_fullscreen.pressed = Settings.fetch("fullscreen", false)
-	_debug.pressed = Settings.fetch("debug", false)
-
+	
 	$Panels/Start/Button_Continue.disabled = not Settings.fetch("has_played")
-
+	
+	# TODO: Move this to InputMapper.
 	$Panels/InputMapper.load_config()
-	load_settings()
-
-	err = _mouse_sensitivity.connect("value_changed", self, "update_mouse_sensitivity")
-	assert(err == OK)
-	err = _joypad_sensitivity.connect("value_changed", self, "update_joypad_sensitivity")
-	assert(err == OK)
-	err = _field_of_view.connect("value_changed", self, "update_field_of_view")
-	assert(err == OK)
 	
 	panel_select("Start")
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
 
 func game_continue():
 	panel_select("none")
@@ -95,36 +63,3 @@ func panel_select(selected):
 # TODO: Add quit prompt.
 func quit():
 	Game.quit()
-
-func toggle_vsync():
-	Settings.store("vsync", _vsync.pressed)
-	load_settings()
-
-func toggle_fullscreen():
-	Settings.store("fullscreen", _fullscreen.pressed)
-	load_settings()
-
-func toggle_debug():
-	Settings.store("debug", _debug.pressed)
-	load_settings()
-
-func update_mouse_sensitivity(value):
-	Console.log("MOUSE SENSITIVITY = " + str(value))
-	Settings.store("mouse_sensitivity", value)
-	load_settings()
-
-func update_joypad_sensitivity(value):
-	Settings.store("joypad_sensitivity", value)
-	load_settings()
-
-func update_field_of_view(value):
-	Settings.store("field_of_view", value)
-	load_settings()
-
-func load_settings():
-	Debug.enabled = _debug.pressed
-	OS.window_fullscreen = _fullscreen.pressed
-	OS.vsync_enabled = _vsync.pressed
-	_mouse_sensitivity.value = Game.get_mouse_sensitivity(true)
-	_joypad_sensitivity.value = Game.get_joypad_sensitivity(true)
-	_field_of_view.value = Game.get_field_of_view(true)

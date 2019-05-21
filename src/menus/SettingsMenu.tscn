@@ -1,0 +1,167 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://menus/SettingsMenu.gd" type="Script" id=1]
+[ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 80
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 30
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 20
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="Settings" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Label_Title" type="Label" parent="."]
+margin_right = 1280.0
+margin_bottom = 150.0
+custom_fonts/font = SubResource( 1 )
+text = "Settings"
+align = 1
+valign = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 140.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+margin_right = 324.0
+margin_bottom = 366.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+margin_right = 324.0
+margin_bottom = 366.0
+
+[node name="Label_Mouse_Sensitivity" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_right = 324.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 2 )
+text = "Mouse Sensitivity"
+
+[node name="HSlider_Mouse_Sensitivity" type="HSlider" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 324.0
+margin_bottom = 56.0
+focus_neighbour_bottom = NodePath("../HSlider_Joypad_Sensitivity")
+focus_next = NodePath("../HSlider_Joypad_Sensitivity")
+focus_previous = NodePath("../../../../Button_Back")
+tick_count = 10
+
+[node name="Label_Joypad_Sensitivity" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 60.0
+margin_right = 324.0
+margin_bottom = 96.0
+custom_fonts/font = SubResource( 3 )
+text = "Joypad Sensitivity"
+
+[node name="HSlider_Joypad_Sensitivity" type="HSlider" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 100.0
+margin_right = 324.0
+margin_bottom = 116.0
+focus_neighbour_top = NodePath("../HSlider_Mouse_Sensitivity")
+focus_neighbour_bottom = NodePath("../HSlider_Field_of_View")
+focus_next = NodePath("../HSlider_Field_of_View")
+focus_previous = NodePath("../HSlider_Mouse_Sensitivity")
+
+[node name="Label_Field_of_View" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 120.0
+margin_right = 324.0
+margin_bottom = 156.0
+custom_fonts/font = SubResource( 3 )
+text = "Field of View"
+
+[node name="HSlider_Field_of_View" type="HSlider" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 160.0
+margin_right = 324.0
+margin_bottom = 176.0
+focus_neighbour_top = NodePath("../HSlider_Joypad_Sensitivity")
+focus_neighbour_bottom = NodePath("../CheckButton_VSync")
+focus_next = NodePath("../CheckButton_VSync")
+focus_previous = NodePath("../HSlider_Joypad_Sensitivity")
+min_value = 50.0
+max_value = 150.0
+step = 10.0
+value = 100.0
+tick_count = 3
+
+[node name="CheckButton_VSync" type="CheckButton" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 180.0
+margin_right = 324.0
+margin_bottom = 224.0
+focus_neighbour_top = NodePath("../HSlider_Field_of_View")
+focus_neighbour_bottom = NodePath("../CheckButton_Fullscreen")
+focus_next = NodePath("../CheckButton_Fullscreen")
+focus_previous = NodePath("../HSlider_Field_of_View")
+custom_fonts/font = SubResource( 4 )
+text = "V-Sync"
+
+[node name="CheckButton_Fullscreen" type="CheckButton" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 228.0
+margin_right = 324.0
+margin_bottom = 272.0
+focus_neighbour_top = NodePath("../CheckButton_VSync")
+focus_neighbour_bottom = NodePath("../CheckButton_Debug")
+focus_next = NodePath("../CheckButton_Debug")
+focus_previous = NodePath("../CheckButton_VSync")
+custom_fonts/font = SubResource( 5 )
+text = "Fullscreen"
+
+[node name="CheckButton_Debug" type="CheckButton" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 276.0
+margin_right = 324.0
+margin_bottom = 320.0
+focus_neighbour_top = NodePath("../CheckButton_Fullscreen")
+focus_neighbour_bottom = NodePath("../Button_Controls")
+focus_next = NodePath("../Button_Controls")
+focus_previous = NodePath("../CheckButton_Fullscreen")
+custom_fonts/font = SubResource( 6 )
+text = "Debug Mode"
+
+[node name="Button_Controls" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+margin_top = 324.0
+margin_right = 324.0
+margin_bottom = 366.0
+custom_fonts/font = SubResource( 7 )
+text = "Controls"
+
+[node name="Button_Back" type="Button" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 120.0
+margin_bottom = 60.0
+focus_neighbour_bottom = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/HSlider_Mouse_Sensitivity")
+focus_next = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/HSlider_Mouse_Sensitivity")
+focus_previous = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/CheckButton_Debug")
+custom_fonts/font = SubResource( 8 )
+text = "< Back"
