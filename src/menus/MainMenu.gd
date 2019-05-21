@@ -14,18 +14,18 @@ func _ready():
 	assert(err == OK)
 	err = $Panels/Start/Button_New_Game.connect("pressed", self, "game_new")
 	assert(err == OK)
-	err = $Panels/Start/Button_Settings.connect("pressed", self, "panel_select", ["Settings"])
+	err = $Panels/Start/Button_Settings.connect("pressed", $Panels/Settings, "activate")
 	assert(err == OK)
 	err = $Panels/Start/Button_Quit.connect("pressed", self, "quit")
 	assert(err == OK)
 	
 	# TODO: Move this to SettingsMenu, and make it just hide itself.
-	err = $Panels/Settings/Button_Back.connect("pressed", self, "panel_select", ["Start"])
-	assert(err == OK)
+	#err = $Panels/Settings/Button_Back.connect("pressed", self, "panel_select", ["Start"])
+	#assert(err == OK)
 	
 	# TODO: Move this to InputMapper, and make it just hide itself.
-	err = $Panels/InputMapper.done.connect("pressed", self, "panel_select", ["Settings"])
-	assert(err == OK)
+	#err = $Panels/InputMapper.done.connect("pressed", self, "panel_select", ["Settings"])
+	#assert(err == OK)
 	
 	$Panels/Start/Button_Continue.disabled = not Settings.fetch("has_played")
 	
@@ -49,9 +49,9 @@ func game_new():
 func panel_select(selected):
 	var active = null
 	for panel in $Panels.get_children():
-		panel.visible = (panel.name == selected)
-		if panel.visible:
+		if panel.name == selected:
 			active = panel
+			panel.visible = true
 	
 	if not active:
 		return null

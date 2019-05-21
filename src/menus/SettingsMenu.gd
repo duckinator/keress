@@ -18,7 +18,7 @@ func _ready():
 	assert(err == OK)
 	err = _debug.connect("pressed", self, "toggle_debug")
 	assert(err == OK)
-	err = _controls.connect("pressed", get_parent().get_parent(), "panel_select", ["InputMapper"])
+	err = _controls.connect("pressed", get_parent().get_node('InputMapper'), "activate")
 	assert(err == OK)
 	
 	_vsync.pressed = Settings.fetch("vsync", true)
@@ -31,7 +31,15 @@ func _ready():
 	assert(err == OK)
 	err = _field_of_view.connect("value_changed", self, "update_field_of_view")
 	assert(err == OK)
+	
+	err = $Button_Back.connect("pressed", self, "hide")
+	assert(err == OK)
+	
 	load_settings()
+
+func activate():
+	show()
+	Game.focus_first_control(self)
 
 func toggle_vsync():
 	Settings.store("vsync", _vsync.pressed)

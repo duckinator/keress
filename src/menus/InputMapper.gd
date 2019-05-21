@@ -35,25 +35,19 @@ const JOYPAD_CONTROLS = {
 	"look_down:": "Look down",
 }
 
-var controls
-#var sound
-var mouse
-var joypad
-var done
+onready var done = $Panel/Done
+onready var hbox = $Panel/ScrollContainer/HBoxContainer
+onready var vbox = hbox.get_node("VBoxContainer")
+#onready var sound = vbox.get_node("Sound")
+onready var controls = vbox.get_node("Controls")
+onready var mouse = vbox.get_node("Mouse")
+onready var joypad = vbox.get_node("Joypad")
+	
+onready var hbox2 = vbox.get_node("HBoxContainer2")
+onready var controls_reset = hbox2.get_node("Controls_Reset")
+onready var controls_save = hbox2.get_node("Controls_Save")
 
 func _ready():
-	done = $Panel/Done
-	var hbox = $Panel/ScrollContainer/HBoxContainer
-	var vbox = hbox.get_node("VBoxContainer")
-	#sound = vbox.get_node("Sound")
-	controls = vbox.get_node("Controls")
-	mouse = vbox.get_node("Mouse")
-	joypad = vbox.get_node("Joypad")
-	
-	var hbox2 = vbox.get_node("HBoxContainer2")
-	var controls_reset = hbox2.get_node("Controls_Reset")
-	var controls_save = hbox2.get_node("Controls_Save")
-	
 	controls_reset.set_meta("no_auto_focus", true)
 	controls_save.set_meta("no_auto_focus", true)
 	
@@ -65,6 +59,9 @@ func _ready():
 	
 	controls_reset.connect("pressed", self, "reset_config")
 	controls_save.connect("pressed", self, "save_config")
+
+	var err = done.connect("pressed", self, "hide")
+	assert(err == OK)
 	
 	for setting in CONTROLS.keys():
 		add_input_mapper(controls, setting, CONTROLS[setting])
@@ -76,6 +73,9 @@ func _ready():
 	
 	Game.focus_first_control(hbox2)
 
+func activate():
+	show()
+	Game.focus_first_control(self)
 
 func add_input_mapper(parent, setting, display_name):
 	var scene = load("res://menus/ActionMapper.tscn").instance()

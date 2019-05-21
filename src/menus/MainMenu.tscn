@@ -121,4 +121,3 @@ flat = true
 [node name="Settings" parent="Panels" instance=ExtResource( 3 )]
 
 [node name="InputMapper" parent="Panels" instance=ExtResource( 4 )]
-visible = false
