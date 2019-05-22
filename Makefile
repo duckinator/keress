@@ -1,4 +1,5 @@
 GODOT ?= bin/godot-headless
+EXPORT_FLAG ?= --export
 
 all: debug
 
@@ -10,6 +11,8 @@ mac:
 	mkdir -p build/mac
 	${GODOT} src/project.godot ${EXPORT_FLAG} macos ../build/mac/keress_macos.zp
 	mv build/mac/keress_macos.zp build/mac/keress_macos.zip
+	cd build/mac && unzip keress_macos.zip
+	rm build/mac/keress_macos.zip
 
 windows:
 	mkdir -p build/windows
