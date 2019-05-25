@@ -69,7 +69,9 @@ func _process(_delta):
 func pause():
 	popup = PAUSE_SCENE.instance()
 	var vbox = popup.get_node("CenterContainer/VBoxContainer")
+	var settings = popup.get_node("Settings")
 	vbox.get_node("Resume_Button").connect("pressed", self, "resume")
+	vbox.get_node("Settings_Button").connect("pressed", self, "show_settings", [settings])
 	vbox.get_node("Reload_Button").connect("pressed", self, "restart_level")
 	vbox.get_node("Menu_Button").connect("pressed", self, "main_menu")
 	vbox.get_node("Quit_Button").connect("pressed", self, "quit")
@@ -87,6 +89,9 @@ func resume():
 	if popup != null:
 		popup.queue_free()
 		popup = null
+
+func show_settings(settings):
+	settings.activate()
 
 func restart_level():
 	resume()
