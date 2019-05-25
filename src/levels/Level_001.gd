@@ -4,12 +4,12 @@ signal noise
 
 var mobs = []
 func _ready():
-	spawn_enemy(Vector3(15, 10, -140))
-	spawn_enemy(Vector3(10, 10, -120))
-	spawn_enemy(Vector3(0, 10, -100))
-	spawn_enemy(Vector3(0, 10, -120))
-	spawn_enemy(Vector3(-10, 10, -120))
-	spawn_enemy(Vector3(-15, 10, -140))
+	Enemies.spawn(Vector3(15, 10, -140))
+	Enemies.spawn(Vector3(10, 10, -120))
+	Enemies.spawn(Vector3(0, 10, -100))
+	Enemies.spawn(Vector3(0, 10, -120))
+	Enemies.spawn(Vector3(-10, 10, -120))
+	Enemies.spawn(Vector3(-15, 10, -140))
 
 func player_noise(trans, sound, loudness):
 	trans = trans.round()
@@ -30,9 +30,3 @@ func through_door(door):
 func mob_died(mob):
 	mobs.remove(mobs.find(mob))
 	mob.cleanup()
-
-func spawn_enemy(pos):
-	var scene = load("res://enemies/enemy1/Enemy1.tscn").instance()
-	add_child(scene)
-	scene.translate(pos)
-	mobs.append(scene)
