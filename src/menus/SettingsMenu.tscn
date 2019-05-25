@@ -164,8 +164,9 @@ margin_right = 120.0
 margin_bottom = 60.0
 focus_neighbour_bottom = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/HSlider_Mouse_Sensitivity")
 focus_next = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/HSlider_Mouse_Sensitivity")
-focus_previous = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/CheckButton_Debug")
+focus_previous = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/Button_Controls")
 custom_fonts/font = SubResource( 8 )
 text = "< Back"
 
 [node name="InputMapper" parent="." instance=ExtResource( 3 )]
+visible = false
