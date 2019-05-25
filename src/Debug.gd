@@ -15,7 +15,9 @@ func log(text):
 
 func _set_enabled(val):
 	enabled = val
-	if enabled:
+
+func _process(delta):
+	if enabled and Game.playing:
 		Game.add_debug_display()
 	else:
 		Game.remove_debug_display()
