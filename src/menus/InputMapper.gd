@@ -45,7 +45,8 @@ onready var joypad = vbox.get_node("Joypad")
 	
 onready var hbox2 = vbox.get_node("HBoxContainer2")
 onready var controls_reset = hbox2.get_node("Controls_Reset")
-onready var controls_save = hbox2.get_node("Controls_Save")
+onready var hbox3 = vbox.get_node("HBoxContainer3")
+onready var controls_save = hbox3.get_node("Controls_Save")
 
 func _ready():
 	controls_reset.set_meta("no_auto_focus", true)
