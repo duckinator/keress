@@ -63,6 +63,9 @@ func set_state(new_state):
 	last_state = state
 	state = new_state
 
+func jump(assist=1):
+	apply_central_impulse(Vector3.UP * (3000 * assist))
+
 func _process(delta):
 	# If no Navigation has been assigned, we can't move, so just return.
 	if navigation == null:

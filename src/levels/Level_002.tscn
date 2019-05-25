@@ -156,8 +156,24 @@ shape = SubResource( 4 )
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation/Floor"]
 navmesh = SubResource( 23 )
 
-[node name="Floor2" type="CSGCombiner" parent="Navigation"]
+[node name="Floor3" type="MeshInstance" parent="Navigation"]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, -38 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/Floor3"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/Floor3/StaticBody"]
+shape = SubResource( 4 )
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation/Floor3"]
+navmesh = SubResource( 23 )
+
+[node name="Floor2" type="CSGCombiner" parent="Navigation"]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22, -38 )
+visible = false
 operation = 2
 use_collision = true
 
