@@ -6,7 +6,6 @@ func _ready():
 	Game.playing = false
 	$Panels/Start.visible = true
 	$Panels/Settings.visible = false
-	$Panels/InputMapper.visible = false
 	
 	$Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer.add_constant_override("separation", 20)
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://menus/SettingsMenu.gd" type="Script" id=1]
 [ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://menus/InputMapper.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 80
@@ -51,6 +52,7 @@ align = 1
 valign = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 140.0
@@ -165,3 +167,5 @@ focus_next = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/HSlider_Mo
 focus_previous = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/CheckButton_Debug")
 custom_fonts/font = SubResource( 8 )
 text = "< Back"
+
+[node name="InputMapper" parent="." instance=ExtResource( 3 )]

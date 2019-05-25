@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://menus/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://menus/SettingsMenu.tscn" type="PackedScene" id=3]
-[ext_resource path="res://menus/InputMapper.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -119,5 +118,3 @@ text = "Quit"
 flat = true
 
 [node name="Settings" parent="Panels" instance=ExtResource( 3 )]
-
-[node name="InputMapper" parent="Panels" instance=ExtResource( 4 )]

@@ -79,8 +79,7 @@ func activate():
 
 func deactivate():
 	hide()
-	# TODO: Make this just use get_parent() once InputMapper is a child of Settings.
-	Game.focus_first_control(get_parent().get_node('Settings'))
+	Game.focus_first_control(get_parent())
 
 func add_input_mapper(parent, setting, display_name):
 	var scene = load("res://menus/ActionMapper.tscn").instance()

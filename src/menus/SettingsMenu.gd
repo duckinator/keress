@@ -12,13 +12,15 @@ onready var _field_of_view = vbox.get_node('HSlider_Field_of_View')
 func _ready():
 	var err
 	
+	$InputMapper.visible = false
+	
 	err = _vsync.connect("pressed", self, "toggle_vsync")
 	assert(err == OK)
 	err = _fullscreen.connect("pressed", self, "toggle_fullscreen")
 	assert(err == OK)
 	err = _debug.connect("pressed", self, "toggle_debug")
 	assert(err == OK)
-	err = _controls.connect("pressed", get_parent().get_node('InputMapper'), "activate")
+	err = _controls.connect("pressed", $InputMapper, "activate")
 	assert(err == OK)
 	
 	_vsync.pressed = Settings.fetch("vsync", true)
