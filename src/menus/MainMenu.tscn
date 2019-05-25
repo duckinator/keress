@@ -118,3 +118,4 @@ text = "Quit"
 flat = true
 
 [node name="Settings" parent="Panels" instance=ExtResource( 3 )]
+visible = false
