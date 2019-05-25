@@ -1,6 +1,7 @@
 extends Panel
 
-onready var vbox = $ScrollContainer/HBoxContainer/VBoxContainer
+onready var hbox = $ScrollContainer/HBoxContainer
+onready var vbox = hbox.get_node('VBoxContainer')
 onready var _vsync = vbox.get_node('CheckButton_VSync')
 onready var _fullscreen = vbox.get_node('CheckButton_Fullscreen')
 onready var _debug = vbox.get_node('CheckButton_Debug')
@@ -13,6 +14,11 @@ func _ready():
 	var err
 	
 	$InputMapper.visible = false
+	
+	hbox.add_spacer(true)
+	hbox.add_spacer(false)
+	hbox.add_constant_override("separation", 20)
+	vbox.add_constant_override("separation", 20)
 	
 	err = _vsync.connect("pressed", self, "toggle_vsync")
 	assert(err == OK)
