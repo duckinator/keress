@@ -27,6 +27,7 @@ Debug="*res://Debug.gd"
 Console="*res://Console.gd"
 Keyboard="*res://Keyboard.gd"
 Map="*res://Map.gd"
+Enemies="*res://Enemies.gd"
 
 [display]
 
