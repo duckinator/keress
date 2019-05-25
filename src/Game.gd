@@ -268,3 +268,9 @@ func _input(event):
 
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F6:
 		next_level()
+
+func setup_hbox_vbox(hbox, vbox):
+	hbox.add_spacer(true)
+	hbox.add_spacer(false)
+	hbox.add_constant_override("separation", 20)
+	vbox.add_constant_override("separation", 20)

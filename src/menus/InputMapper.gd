@@ -52,10 +52,7 @@ func _ready():
 	controls_save.set_meta("no_auto_focus", true)
 	
 	Game.show_cursor()
-	hbox.add_spacer(true)
-	hbox.add_spacer(false)
-	hbox.add_constant_override("separation", 20)
-	vbox.add_constant_override("separation", 20)
+	Game.setup_hbox_vbox(hbox, vbox)
 	
 	controls_reset.connect("pressed", self, "reset_config")
 	controls_save.connect("pressed", self, "save_config")

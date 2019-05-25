@@ -15,10 +15,7 @@ func _ready():
 	
 	$InputMapper.visible = false
 	
-	hbox.add_spacer(true)
-	hbox.add_spacer(false)
-	hbox.add_constant_override("separation", 20)
-	vbox.add_constant_override("separation", 20)
+	Game.setup_hbox_vbox(hbox, vbox)
 	
 	err = _vsync.connect("pressed", self, "toggle_vsync")
 	assert(err == OK)
