@@ -11,7 +11,7 @@ height = 1.0
 albedo_color = Color( 0.180392, 0.85098, 0.180392, 1 )
 
 [sub_resource type="CylinderShape" id=3]
-radius = 4.0
+radius = 6.0
 
 [node name="BouncePad" type="RigidBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
@@ -33,7 +33,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 shape = SubResource( 3 )
 
 [node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 light_color = Color( 0.180392, 0.85098, 0.180392, 1 )
 light_energy = 5.0
 omni_range = 10.0
+omni_shadow_detail = 0
