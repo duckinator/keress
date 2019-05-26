@@ -223,6 +223,14 @@ assist = 3.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.5, -110 )
 assist = 3.0
 
+[node name="BouncePad3" parent="Navigation/Floor" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -180, 2.5, 110 )
+assist = 3.5
+
+[node name="BouncePad4" parent="Navigation/Floor" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -180, 2.5, -110 )
+assist = 3.5
+
 [node name="Platform" type="MeshInstance" parent="Navigation"]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -1, 0 )
