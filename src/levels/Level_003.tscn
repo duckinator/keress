@@ -216,7 +216,11 @@ shape = SubResource( 4 )
 navmesh = SubResource( 7 )
 
 [node name="BouncePad" parent="Navigation/Floor" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.5, 110 )
+assist = 3.0
+
+[node name="BouncePad2" parent="Navigation/Floor" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.5, -110 )
 assist = 3.0
 
 [node name="Platform" type="MeshInstance" parent="Navigation"]
@@ -240,6 +244,7 @@ mesh = SubResource( 9 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Navigation/Platform_Mid"]
+editor/display_folded = true
 
 [node name="CollisionShape" type="CollisionShape" parent="Navigation/Platform_Mid/StaticBody"]
 shape = SubResource( 12 )
