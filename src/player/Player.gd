@@ -16,7 +16,7 @@ const MASS = 100
 
 var gravity
 const MAX_SPEED = 80
-const JUMP_SPEED = 50
+const JUMP_SPEED = 60
 const ACCEL = 7
 const DEACCEL = 16
 const MAX_SLOPE_ANGLE = 40
