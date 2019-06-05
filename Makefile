@@ -27,9 +27,6 @@ release:
 ci-setup:
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
 
-ci-nightly-publish: all
-	./bin/nightly/release.py
-
 test: all
 	@echo "No tests to run. :("
 
@@ -37,4 +34,4 @@ clean:
 	rm build/*.zip || exit 0
 	rm build/*/* || exit 0
 
-.PHONY: all _all_platforms test linux macos windows debug release clean ci-setup ci-nightly-publish
+.PHONY: all _all_platforms test linux macos windows debug release clean ci-setup
