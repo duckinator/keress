@@ -122,7 +122,6 @@ material/0 = null
 shape = SubResource( 4 )
 
 [node name="EntryWall" type="CSGCombiner" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 0 )
 use_collision = true
 
