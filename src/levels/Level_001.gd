@@ -16,7 +16,7 @@ func player_noise(trans, sound, loudness):
 	Console.log("player_noise(" + str(trans) + ", " + str(sound) + ", " + str(loudness) + ")")
 
 func can_open_door(door):
-	return len(mobs) == 0
+	return (not door.is_exit) or (len(mobs) == 0)
 
 func opening_door(door):
 	pass
