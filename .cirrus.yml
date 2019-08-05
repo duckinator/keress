@@ -7,11 +7,12 @@ test_task:
     - make test
 
 nightly_task:
-  only_if: $BRANCH == 'nightly'
+  only_if: $BRANCH == 'master'
+  trigger_type: manual
+  depends_on:
+    - test
   env:
     BUTLER_API_KEY: ENCRYPTED[46a314af5ccb389fce4671b233802ae05d7f554aaa0a13102c6d908b8b824416c4308cfb61c7271a3bb8e25b0463f23d]
-  #depends_on:
-  #  - test
   container:
     image: duckinator/godot-builder:latest
   install_script:
