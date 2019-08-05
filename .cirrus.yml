@@ -11,7 +11,7 @@ test_task:
     - make test
 
 nightly_task:
-  only_if: $BRANCH == 'master'
+  #only_if: $BRANCH == 'master'
   trigger_type: manual
   depends_on:
     - test
