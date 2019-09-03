@@ -10,9 +10,8 @@ test_task:
   script:
     - make test
 
-nightly_task:
+release_task:
   only_if: $BRANCH == 'master'
-  trigger_type: manual
   depends_on:
     - test
   env:
@@ -23,6 +22,6 @@ nightly_task:
     - make ci-setup
   script:
     - make release
-    - butler push build/linux duckinator/keress:linux-nightly
-    - butler push build/windows duckinator/keress:windows-nightly
-    - butler push build/mac duckinator/keress:mac-nightly
+    - butler push build/linux duckinator/keress:linux
+    - butler push build/windows duckinator/keress:windows
+    - butler push build/mac duckinator/keress:mac
