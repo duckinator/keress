@@ -94,7 +94,13 @@ func gun_kick_undo(object, key):
 func gun_kick():
 	var tween = $KickTween
 	tween.reset_all()
-	tween.disconnect("tween_completed", self, "gun_kick_undo")
+	
+	# This _shouldn't_ be connected, but if it is it breaks the animation.
+	# If it is in fact connected, just disconnect it, print an error, and hope for the best.
+	if tween.is_connected("tween_completed", self, "gun_kick_undo"):
+		Console.error("Revolver.gd/gun_kick(): tween_completed signal was connected to gun_kick_undo() when it shouldn't have been.")
+		tween.disconnect("tween_completed", self, "gun_kick_undo")
+	
 	tween.disconnect("tween_completed", self, "reset_position")
 	tween.connect("tween_completed", self, "gun_kick_undo")
 	tween.interpolate_method(self, "kick_by", start_vec, end_vec, kick_part_length, Tween.TRANS_LINEAR, Tween.EASE_IN)
