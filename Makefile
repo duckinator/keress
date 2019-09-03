@@ -1,6 +1,19 @@
 GODOT ?= bin/godot-headless
 EXPORT_FLAG ?= --export
 
+# TODO: When https://github.com/cirruslabs/cirrus-ci-docs/issues/305 is
+#       resolved, switch to CIRRUS_TASK_NUMBER.
+
+# TODO: Include BUILD_ID and BUILD_HASH in the actual builds, somehow.
+
+ifeq ($(GITHUB_CHECK_SUITE_ID),)
+BUILD_ID ?= "non-release build"
+else
+BUILD_ID ?= ${GITHUB_CHECK_SUITE_ID}
+endif
+
+BUILD_HASH := $(git rev-parse --short HEAD)
+
 all: debug
 
 linux:
@@ -19,10 +32,10 @@ windows:
 	${GODOT} src/project.godot ${EXPORT_FLAG} windows ../build/windows/keress.exe
 
 debug:
-	$(MAKE) EXPORT_FLAG=--export-debug linux windows mac
+	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export-debug linux windows mac
 
 release:
-	$(MAKE) EXPORT_FLAG=--export linux windows mac
+	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export linux windows mac
 
 ci-setup:
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
