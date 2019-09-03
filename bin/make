@@ -5,4 +5,4 @@ if [ -z "${WHALEDO_UID}" ]; then
 fi
 
 # Use /tmp/cirrus-ci-build because that's what CI uses and I'm lazy.
-docker run --rm -it -v "$(pwd):/tmp/cirrus-ci-build" -w /tmp/cirrus-ci-build -u $WHALEDO_UID duckinator/godot-builder make "$@"
+docker run --rm -it -v "$(pwd):/tmp/cirrus-ci-build:z" -w /tmp/cirrus-ci-build -u $WHALEDO_UID duckinator/godot-builder make "$@"
