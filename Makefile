@@ -52,7 +52,6 @@ test: debug-linux
 	@echo "No tests to run. :("
 
 clean:
-	rm build/*.zip || exit 0
-	rm build/*/* || exit 0
+	rm -rf build/
 
 .PHONY: all _all_platforms test linux macos windows debug release clean ci-setup
