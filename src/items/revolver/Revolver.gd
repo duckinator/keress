@@ -31,7 +31,7 @@ const MAX_AMMO = MAX_IN_WEAPON
 var ammo = MAX_AMMO
 var in_weapon = MAX_AMMO
 
-onready var laser = $Spatial/Spotlight
+onready var laser = $Spatial/SpotLight
 onready var raycast = $Spatial/RayCast
 var primary_timeout = null
 
@@ -74,28 +74,37 @@ var kick_rot = 2.0
 var kick_trans_y = 0.2
 var kick_trans_z = 0.3
 
+onready var tween = $KickTween
+
 onready var reset_vec = self.translation
 onready var reset_rot = self.rotation
 var start_vec = Vector3(0, 0, 0)
 var end_vec = Vector3(kick_rot, kick_trans_y, kick_trans_z)
 
+func _disconnect_tween_signals():
+	if tween.is_connected("tween_completed", self, "gun_kick_undo"):
+		tween.disconnect("tween_completed", self, "gun_kick_undo")
+
+	if tween.is_connected("tween_completed", self, "reset_position"):
+		tween.disconnect("tween_completed", self, "reset_position")
+
 func reset_position(object, key):
+	_disconnect_tween_signals()
 	translation = reset_vec
 	rotation = reset_rot
 
 func gun_kick_undo(object, key):
-	var tween = $KickTween
 	tween.reset_all()
-	tween.disconnect("tween_completed", self, "gun_kick_undo")
+	_disconnect_tween_signals()
 	tween.connect("tween_completed", self, "reset_position")
 	tween.interpolate_method(self, "kick_negative_by", start_vec, end_vec, kick_part_length, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	tween.start()
 
 func gun_kick():
-	var tween = $KickTween
 	tween.reset_all()
-	tween.disconnect("tween_completed", self, "gun_kick_undo")
-	tween.disconnect("tween_completed", self, "reset_position")
+	
+	_disconnect_tween_signals()
+	
 	tween.connect("tween_completed", self, "gun_kick_undo")
 	tween.interpolate_method(self, "kick_by", start_vec, end_vec, kick_part_length, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	tween.start()

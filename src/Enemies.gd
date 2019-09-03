@@ -8,7 +8,7 @@ func spawn(pos):
 	map.mobs.append(scene)
 	scene.navigation = map.get_node('Navigation')
 	scene.player = map.get_node('Player')
-	connect("noise", scene, "heard_noise")
+	map.connect("noise", scene, "heard_noise")
 
 func remove_adjacent(available, dimensions, pos):
 	var x_spacing = clamp(dimensions.x / 4, 1, 8)
