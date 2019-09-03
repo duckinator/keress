@@ -31,7 +31,7 @@ const MAX_AMMO = MAX_IN_WEAPON
 var ammo = MAX_AMMO
 var in_weapon = MAX_AMMO
 
-onready var laser = $Spatial/Spotlight
+onready var laser = $Spatial/SpotLight
 onready var raycast = $Spatial/RayCast
 var primary_timeout = null
 
