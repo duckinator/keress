@@ -31,16 +31,24 @@ windows:
 	mkdir -p build/windows
 	${GODOT} src/project.godot ${EXPORT_FLAG} windows ../build/windows/keress.exe
 
-debug:
-	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export-debug linux windows mac
-
 release:
 	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export linux windows mac
+
+debug-linux:
+	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export-debug linux
+
+debug-windows:
+	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export-debug windows
+
+debug-mac:
+	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export-debug mac
+
+debug: debug-linux debug-windows debug-mac
 
 ci-setup:
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
 
-test: all
+test: debug-linux
 	@echo "No tests to run. :("
 
 clean:
