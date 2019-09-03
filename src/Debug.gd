@@ -3,7 +3,8 @@ extends Node
 var enabled = false setget _set_enabled, _get_enabled
 
 func _ready():
-	pass
+	if "--debug" in OS.get_cmdline_args():
+		_set_enabled(true)
 
 func print(text):
 	if enabled:
@@ -14,6 +15,14 @@ func log(text):
 		Console.debug(text)
 
 func _set_enabled(val):
+	if enabled == val:
+		return
+	
+	if val:
+		Console.log("!!! Enabling debug output.")
+	else:
+		Console.log("!!! Disabling debug output.")
+	
 	enabled = val
 
 func _process(delta):
