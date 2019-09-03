@@ -28,7 +28,8 @@ func toggle():
 		show()
 
 func debug(text):
-	_console.log("DEBUG: " + text)
+	if Debug.enabled:
+		_console.log("DEBUG: " + text)
 
 func error(text):
 	_console.log("ERROR: " + text)
