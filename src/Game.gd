@@ -75,7 +75,6 @@ func pause():
 	vbox.get_node("Reload_Button").connect("pressed", self, "restart_level")
 	vbox.get_node("Menu_Button").connect("pressed", self, "main_menu")
 	vbox.get_node("Quit_Button").connect("pressed", self, "quit")
-	popup.connect("popup_hide", self, "popup_resume")
 	canvas_layer.add_child(popup)
 	focus_first_control(vbox)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
