@@ -12,7 +12,7 @@ onready var build_hash = metadata.result["build_hash"]
 onready var cirrus_task_id = metadata.result["cirrus_task_id"]
 
 var source_url = null
-var cirrus_url = metadata.result["cirrus_task_id"]
+var cirrus_url = null
 
 func _ready():
 	normalize_metadata()
