@@ -12,22 +12,25 @@ else
 BUILD_ID ?= ${GITHUB_CHECK_SUITE_ID}
 endif
 
-BUILD_HASH := $(git rev-parse --short HEAD)
+BUILD_HASH := $(shell git rev-parse --short HEAD)
 
 all: debug
 
-linux:
+build_info:
+	echo "{\"build_id\": \""${BUILD_ID}"\", \"build_hash\": \"${BUILD_HASH}\"}" > src/build_info.json
+
+linux: build_info
 	mkdir -p build/linux
 	${GODOT} src/project.godot ${EXPORT_FLAG} linux ../build/linux/keress.x86_64
 
-mac:
+mac: build_info
 	mkdir -p build/mac
 	${GODOT} src/project.godot ${EXPORT_FLAG} macos ../build/mac/keress_macos.zp
 	mv build/mac/keress_macos.zp build/mac/keress_macos.zip
 	cd build/mac && unzip keress_macos.zip
 	rm build/mac/keress_macos.zip
 
-windows:
+windows: build_info
 	mkdir -p build/windows
 	${GODOT} src/project.godot ${EXPORT_FLAG} windows ../build/windows/keress.exe
 
