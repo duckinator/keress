@@ -17,6 +17,7 @@ BUILD_HASH := $(shell git rev-parse --short HEAD)
 all: debug
 
 build_info:
+	env
 	echo "{\"build_id\": \""${BUILD_ID}"\", \"build_hash\": \"${BUILD_HASH}\"}" > src/build_info.json
 
 linux: build_info
