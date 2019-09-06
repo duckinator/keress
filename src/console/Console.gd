@@ -7,7 +7,13 @@ func _ready():
 	scrollback = $Panel/Scrollback
 	scrollback.clear()
 	input = $Panel/Input
+	input.connect("text_changed", self, "_text_changed")
 	input.connect("text_entered", self, "run")
+
+func _text_changed(new_text):
+	if "`" in new_text:
+		input.text = new_text.replace("`", "")
+		Console.hide()
 
 func date_prefix():
 	var dt = OS.get_datetime()
@@ -33,6 +39,7 @@ func set_enabled(enabled):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		visible = true
 		input.call_deferred("grab_focus")
+		input.call_deferred("set_cursor_position", len(input.text))
 	else:
 		visible = false
 		input.release_focus()
