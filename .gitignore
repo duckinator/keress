@@ -10,3 +10,5 @@ export_presets.cfg
 /build/
 /bin/godot-headless
 /tmp
+
+src/build_info.json

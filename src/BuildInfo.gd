@@ -6,8 +6,8 @@ var defaults = {
 }
 
 onready var metadata = load_metadata()
-onready var build_id = metadata["build_id"]
-onready var build_hash = metadata["build_hash"]
+onready var build_id = metadata.result["build_id"]
+onready var build_hash = metadata.result["build_hash"]
 
 func _ready():
 	if build_id == null:
