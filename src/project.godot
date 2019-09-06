@@ -21,6 +21,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+BuildInfo="*res://BuildInfo.gd"
 Settings="*res://Settings.gd"
 Game="*res://Game.gd"
 Debug="*res://Debug.gd"
