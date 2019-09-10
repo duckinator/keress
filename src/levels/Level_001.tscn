@@ -30,154 +30,154 @@ size = Vector3( 50, 2, 200 )
 [sub_resource type="ConvexPolygonShape" id=5]
 points = PoolVector3Array( -25, 1, 100, 25, 1, -100, 25, 1, 100, -25, 1, -100, -25, -1, 100, 25, -1, -100, 25, -1, 100, -25, -1, -100, 25, 1, 100, -25, 1, -100, 25, 1, -100, -25, 1, 100, 25, -1, 100, -25, -1, -100, 25, -1, -100, -25, -1, 100, 25, 1, 100, -25, -1, 100, -25, 1, 100, 25, -1, 100, 25, 1, -100, -25, -1, -100, -25, 1, -100, 25, -1, -100 )
 
-[sub_resource type="NavigationMesh" id=39]
+[sub_resource type="NavigationMesh" id=6]
 vertices = PoolVector3Array( -25, 1, 100, 25, 1, -100, 25, 1, 100, -25, 1, -100, -25, -1, 100, 25, -1, -100, 25, -1, 100, -25, -1, -100, 25, 1, 100, -25, 1, -100, 25, 1, -100, -25, 1, 100, 25, -1, 100, -25, -1, -100, 25, -1, -100, -25, -1, 100, 25, 1, 100, -25, -1, 100, -25, 1, 100, 25, -1, 100, 25, 1, -100, -25, -1, -100, -25, 1, -100, 25, -1, -100 )
 polygons = [ PoolIntArray( 0, 2, 4 ), PoolIntArray( 2, 6, 4 ), PoolIntArray( 1, 3, 5 ), PoolIntArray( 3, 7, 5 ), PoolIntArray( 8, 10, 12 ), PoolIntArray( 10, 14, 12 ), PoolIntArray( 9, 11, 13 ), PoolIntArray( 11, 15, 13 ), PoolIntArray( 16, 18, 20 ), PoolIntArray( 18, 22, 20 ), PoolIntArray( 17, 19, 21 ), PoolIntArray( 19, 23, 21 ) ]
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=7]
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 0.25, 0, 0.25 )
 uv1_offset = Vector3( 0.5, 0, 0.4 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=7]
-material = SubResource( 6 )
+[sub_resource type="CubeMesh" id=8]
+material = SubResource( 7 )
 size = Vector3( 20, 1, 205 )
 
-[sub_resource type="ConvexPolygonShape" id=8]
+[sub_resource type="ConvexPolygonShape" id=9]
 points = PoolVector3Array( -10, 0.5, 102.5, 10, 0.5, -102.5, 10, 0.5, 102.5, -10, 0.5, -102.5, -10, -0.5, 102.5, 10, -0.5, -102.5, 10, -0.5, 102.5, -10, -0.5, -102.5, 10, 0.5, 102.5, -10, 0.5, -102.5, 10, 0.5, -102.5, -10, 0.5, 102.5, 10, -0.5, 102.5, -10, -0.5, -102.5, 10, -0.5, -102.5, -10, -0.5, 102.5, 10, 0.5, 102.5, -10, -0.5, 102.5, -10, 0.5, 102.5, 10, -0.5, 102.5, 10, 0.5, -102.5, -10, -0.5, -102.5, -10, 0.5, -102.5, 10, -0.5, -102.5 )
 
-[sub_resource type="NavigationMesh" id=40]
+[sub_resource type="NavigationMesh" id=10]
 vertices = PoolVector3Array( -10, 0.5, 102.5, 10, 0.5, -102.5, 10, 0.5, 102.5, -10, 0.5, -102.5, -10, -0.5, 102.5, 10, -0.5, -102.5, 10, -0.5, 102.5, -10, -0.5, -102.5, 10, 0.5, 102.5, -10, 0.5, -102.5, 10, 0.5, -102.5, -10, 0.5, 102.5, 10, -0.5, 102.5, -10, -0.5, -102.5, 10, -0.5, -102.5, -10, -0.5, 102.5, 10, 0.5, 102.5, -10, -0.5, 102.5, -10, 0.5, 102.5, 10, -0.5, 102.5, 10, 0.5, -102.5, -10, -0.5, -102.5, -10, 0.5, -102.5, 10, -0.5, -102.5 )
 polygons = [ PoolIntArray( 0, 2, 4 ), PoolIntArray( 2, 6, 4 ), PoolIntArray( 1, 3, 5 ), PoolIntArray( 3, 7, 5 ), PoolIntArray( 8, 10, 12 ), PoolIntArray( 10, 14, 12 ), PoolIntArray( 9, 11, 13 ), PoolIntArray( 11, 15, 13 ), PoolIntArray( 16, 18, 20 ), PoolIntArray( 18, 22, 20 ), PoolIntArray( 17, 19, 21 ), PoolIntArray( 19, 23, 21 ) ]
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=11]
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 0.25, 1, 0.25 )
 uv1_offset = Vector3( 0.5, 0, -0.6 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=10]
-material = SubResource( 9 )
+[sub_resource type="CubeMesh" id=12]
+material = SubResource( 11 )
 size = Vector3( 20, 1, 205 )
 
-[sub_resource type="ConvexPolygonShape" id=11]
+[sub_resource type="ConvexPolygonShape" id=13]
 points = PoolVector3Array( -10, 0.5, 102.5, 10, 0.5, -102.5, 10, 0.5, 102.5, -10, 0.5, -102.5, -10, -0.5, 102.5, 10, -0.5, -102.5, 10, -0.5, 102.5, -10, -0.5, -102.5, 10, 0.5, 102.5, -10, 0.5, -102.5, 10, 0.5, -102.5, -10, 0.5, 102.5, 10, -0.5, 102.5, -10, -0.5, -102.5, 10, -0.5, -102.5, -10, -0.5, 102.5, 10, 0.5, 102.5, -10, -0.5, 102.5, -10, 0.5, 102.5, 10, -0.5, 102.5, 10, 0.5, -102.5, -10, -0.5, -102.5, -10, 0.5, -102.5, 10, -0.5, -102.5 )
 
-[sub_resource type="NavigationMesh" id=41]
+[sub_resource type="NavigationMesh" id=14]
 vertices = PoolVector3Array( -10, 0.5, 102.5, 10, 0.5, -102.5, 10, 0.5, 102.5, -10, 0.5, -102.5, -10, -0.5, 102.5, 10, -0.5, -102.5, 10, -0.5, 102.5, -10, -0.5, -102.5, 10, 0.5, 102.5, -10, 0.5, -102.5, 10, 0.5, -102.5, -10, 0.5, 102.5, 10, -0.5, 102.5, -10, -0.5, -102.5, 10, -0.5, -102.5, -10, -0.5, 102.5, 10, 0.5, 102.5, -10, -0.5, 102.5, -10, 0.5, 102.5, 10, -0.5, 102.5, 10, 0.5, -102.5, -10, -0.5, -102.5, -10, 0.5, -102.5, 10, -0.5, -102.5 )
 polygons = [ PoolIntArray( 0, 2, 4 ), PoolIntArray( 2, 6, 4 ), PoolIntArray( 1, 3, 5 ), PoolIntArray( 3, 7, 5 ), PoolIntArray( 8, 10, 12 ), PoolIntArray( 10, 14, 12 ), PoolIntArray( 9, 11, 13 ), PoolIntArray( 11, 15, 13 ), PoolIntArray( 16, 18, 20 ), PoolIntArray( 18, 22, 20 ), PoolIntArray( 17, 19, 21 ), PoolIntArray( 19, 23, 21 ) ]
 
-[sub_resource type="SpatialMaterial" id=12]
+[sub_resource type="SpatialMaterial" id=15]
 albedo_texture = ExtResource( 4 )
 uv1_scale = Vector3( 0.25, 0.25, 0 )
 uv1_offset = Vector3( 0, 0.4, -0.25 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=13]
-material = SubResource( 12 )
+[sub_resource type="CubeMesh" id=16]
+material = SubResource( 15 )
 size = Vector3( 3, 13, 200 )
 
-[sub_resource type="ConvexPolygonShape" id=14]
+[sub_resource type="ConvexPolygonShape" id=17]
 points = PoolVector3Array( -1.5, 6.5, 100, 1.5, 6.5, -100, 1.5, 6.5, 100, -1.5, 6.5, -100, -1.5, -6.5, 100, 1.5, -6.5, -100, 1.5, -6.5, 100, -1.5, -6.5, -100, 1.5, 6.5, 100, -1.5, 6.5, -100, 1.5, 6.5, -100, -1.5, 6.5, 100, 1.5, -6.5, 100, -1.5, -6.5, -100, 1.5, -6.5, -100, -1.5, -6.5, 100, 1.5, 6.5, 100, -1.5, -6.5, 100, -1.5, 6.5, 100, 1.5, -6.5, 100, 1.5, 6.5, -100, -1.5, -6.5, -100, -1.5, 6.5, -100, 1.5, -6.5, -100 )
 
-[sub_resource type="ConvexPolygonShape" id=15]
+[sub_resource type="ConvexPolygonShape" id=18]
 points = PoolVector3Array( -1.5, 6.5, 100, 1.5, 6.5, -100, 1.5, 6.5, 100, -1.5, 6.5, -100, -1.5, -6.5, 100, 1.5, -6.5, -100, 1.5, -6.5, 100, -1.5, -6.5, -100, 1.5, 6.5, 100, -1.5, 6.5, -100, 1.5, 6.5, -100, -1.5, 6.5, 100, 1.5, -6.5, 100, -1.5, -6.5, -100, 1.5, -6.5, -100, -1.5, -6.5, 100, 1.5, 6.5, 100, -1.5, -6.5, 100, -1.5, 6.5, 100, 1.5, -6.5, 100, 1.5, 6.5, -100, -1.5, -6.5, -100, -1.5, 6.5, -100, 1.5, -6.5, -100 )
 
-[sub_resource type="CubeMesh" id=16]
+[sub_resource type="CubeMesh" id=19]
 size = Vector3( 44, 40, 3 )
 
-[sub_resource type="SpatialMaterial" id=17]
+[sub_resource type="SpatialMaterial" id=20]
 albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
 uv1_offset = Vector3( 0.5, 0, 0.5 )
 uv1_triplanar = true
 
-[sub_resource type="ConvexPolygonShape" id=18]
+[sub_resource type="ConvexPolygonShape" id=21]
 points = PoolVector3Array( -22, 20, 1.5, 22, 20, -1.5, 22, 20, 1.5, -22, 20, -1.5, -22, -20, 1.5, 22, -20, -1.5, 22, -20, 1.5, -22, -20, -1.5, 22, 20, 1.5, -22, 20, -1.5, 22, 20, -1.5, -22, 20, 1.5, 22, -20, 1.5, -22, -20, -1.5, 22, -20, -1.5, -22, -20, 1.5, 22, 20, 1.5, -22, -20, 1.5, -22, 20, 1.5, 22, -20, 1.5, 22, 20, -1.5, -22, -20, -1.5, -22, 20, -1.5, 22, -20, -1.5 )
 
-[sub_resource type="SpatialMaterial" id=19]
+[sub_resource type="SpatialMaterial" id=22]
 albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
 uv1_offset = Vector3( 0.5, 0.75, 0 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=20]
-material = SubResource( 19 )
+[sub_resource type="CubeMesh" id=23]
+material = SubResource( 22 )
 size = Vector3( 75, 30, 4 )
 
-[sub_resource type="ConvexPolygonShape" id=21]
+[sub_resource type="ConvexPolygonShape" id=24]
 points = PoolVector3Array( -37.5, 15, 2, 37.5, 15, -2, 37.5, 15, 2, -37.5, 15, -2, -37.5, -15, 2, 37.5, -15, -2, 37.5, -15, 2, -37.5, -15, -2, 37.5, 15, 2, -37.5, 15, -2, 37.5, 15, -2, -37.5, 15, 2, 37.5, -15, 2, -37.5, -15, -2, 37.5, -15, -2, -37.5, -15, 2, 37.5, 15, 2, -37.5, -15, 2, -37.5, 15, 2, 37.5, -15, 2, 37.5, 15, -2, -37.5, -15, -2, -37.5, 15, -2, 37.5, -15, -2 )
 
-[sub_resource type="SpatialMaterial" id=22]
+[sub_resource type="SpatialMaterial" id=25]
 albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
 uv1_offset = Vector3( 0.5, 0.5, 0 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=23]
-material = SubResource( 22 )
+[sub_resource type="CubeMesh" id=26]
+material = SubResource( 25 )
 size = Vector3( 12, 12, 4 )
 
-[sub_resource type="ConvexPolygonShape" id=24]
+[sub_resource type="ConvexPolygonShape" id=27]
 points = PoolVector3Array( -6, 6, 2, 6, 6, -2, 6, 6, 2, -6, 6, -2, -6, -6, 2, 6, -6, -2, 6, -6, 2, -6, -6, -2, 6, 6, 2, -6, 6, -2, 6, 6, -2, -6, 6, 2, 6, -6, 2, -6, -6, -2, 6, -6, -2, -6, -6, 2, 6, 6, 2, -6, -6, 2, -6, 6, 2, 6, -6, 2, 6, 6, -2, -6, -6, -2, -6, 6, -2, 6, -6, -2 )
 
-[sub_resource type="ConvexPolygonShape" id=25]
+[sub_resource type="ConvexPolygonShape" id=28]
 points = PoolVector3Array( -6, 6, 2, 6, 6, -2, 6, 6, 2, -6, 6, -2, -6, -6, 2, 6, -6, -2, 6, -6, 2, -6, -6, -2, 6, 6, 2, -6, 6, -2, 6, 6, -2, -6, 6, 2, 6, -6, 2, -6, -6, -2, 6, -6, -2, -6, -6, 2, 6, 6, 2, -6, -6, 2, -6, 6, 2, 6, -6, 2, 6, 6, -2, -6, -6, -2, -6, 6, -2, 6, -6, -2 )
 
-[sub_resource type="SpatialMaterial" id=26]
+[sub_resource type="SpatialMaterial" id=29]
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 0.25, 0, 0.25 )
 uv1_offset = Vector3( 0.5, 0, -0.3 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=27]
-material = SubResource( 26 )
+[sub_resource type="CubeMesh" id=30]
+material = SubResource( 29 )
 size = Vector3( 60, 3, 10 )
 
-[sub_resource type="ConvexPolygonShape" id=28]
+[sub_resource type="ConvexPolygonShape" id=31]
 points = PoolVector3Array( -30, 1.5, 2.5, 30, 1.5, -2.5, 30, 1.5, 2.5, -30, 1.5, -2.5, -30, -1.5, 2.5, 30, -1.5, -2.5, 30, -1.5, 2.5, -30, -1.5, -2.5, 30, 1.5, 2.5, -30, 1.5, -2.5, 30, 1.5, -2.5, -30, 1.5, 2.5, 30, -1.5, 2.5, -30, -1.5, -2.5, 30, -1.5, -2.5, -30, -1.5, 2.5, 30, 1.5, 2.5, -30, -1.5, 2.5, -30, 1.5, 2.5, 30, -1.5, 2.5, 30, 1.5, -2.5, -30, -1.5, -2.5, -30, 1.5, -2.5, 30, -1.5, -2.5 )
 
-[sub_resource type="SpatialMaterial" id=29]
+[sub_resource type="SpatialMaterial" id=32]
 albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
 uv1_offset = Vector3( 0, -0.4, 0.5 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=30]
-material = SubResource( 29 )
+[sub_resource type="CubeMesh" id=33]
+material = SubResource( 32 )
 size = Vector3( 80, 27, 3 )
 
-[sub_resource type="ConvexPolygonShape" id=31]
+[sub_resource type="ConvexPolygonShape" id=34]
 points = PoolVector3Array( -40, 8.5, 1.5, 40, 8.5, -1.5, 40, 8.5, 1.5, -40, 8.5, -1.5, -40, -8.5, 1.5, 40, -8.5, -1.5, 40, -8.5, 1.5, -40, -8.5, -1.5, 40, 8.5, 1.5, -40, 8.5, -1.5, 40, 8.5, -1.5, -40, 8.5, 1.5, 40, -8.5, 1.5, -40, -8.5, -1.5, 40, -8.5, -1.5, -40, -8.5, 1.5, 40, 8.5, 1.5, -40, -8.5, 1.5, -40, 8.5, 1.5, 40, -8.5, 1.5, 40, 8.5, -1.5, -40, -8.5, -1.5, -40, 8.5, -1.5, 40, -8.5, -1.5 )
 
-[sub_resource type="SpatialMaterial" id=32]
+[sub_resource type="SpatialMaterial" id=35]
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
 uv1_offset = Vector3( 0, 0, 0.125 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=33]
-material = SubResource( 32 )
+[sub_resource type="CubeMesh" id=36]
+material = SubResource( 35 )
 size = Vector3( 80, 3, 210 )
 
-[sub_resource type="ConvexPolygonShape" id=34]
+[sub_resource type="ConvexPolygonShape" id=37]
 points = PoolVector3Array( -40, 1.5, 105, 40, 1.5, -105, 40, 1.5, 105, -40, 1.5, -105, -40, -1.5, 105, 40, -1.5, -105, 40, -1.5, 105, -40, -1.5, -105, 40, 1.5, 105, -40, 1.5, -105, 40, 1.5, -105, -40, 1.5, 105, 40, -1.5, 105, -40, -1.5, -105, 40, -1.5, -105, -40, -1.5, 105, 40, 1.5, 105, -40, -1.5, 105, -40, 1.5, 105, 40, -1.5, 105, 40, 1.5, -105, -40, -1.5, -105, -40, 1.5, -105, 40, -1.5, -105 )
 
-[sub_resource type="SpatialMaterial" id=35]
+[sub_resource type="SpatialMaterial" id=38]
 albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 0.25, 0.25, 0.25 )
 uv1_offset = Vector3( 0, 0.75, 0.25 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=36]
-material = SubResource( 35 )
+[sub_resource type="CubeMesh" id=39]
+material = SubResource( 38 )
 size = Vector3( 3, 18, 204 )
 
-[sub_resource type="ConvexPolygonShape" id=37]
+[sub_resource type="ConvexPolygonShape" id=40]
 points = PoolVector3Array( -1.5, 9, 102, 1.5, 9, -102, 1.5, 9, 102, -1.5, 9, -102, -1.5, -9, 102, 1.5, -9, -102, 1.5, -9, 102, -1.5, -9, -102, 1.5, 9, 102, -1.5, 9, -102, 1.5, 9, -102, -1.5, 9, 102, 1.5, -9, 102, -1.5, -9, -102, 1.5, -9, -102, -1.5, -9, 102, 1.5, 9, 102, -1.5, -9, 102, -1.5, 9, 102, 1.5, -9, 102, 1.5, 9, -102, -1.5, -9, -102, -1.5, 9, -102, 1.5, -9, -102 )
 
-[sub_resource type="ConvexPolygonShape" id=38]
+[sub_resource type="ConvexPolygonShape" id=41]
 points = PoolVector3Array( -1.5, 9, 102, 1.5, 9, -102, 1.5, 9, 102, -1.5, 9, -102, -1.5, -9, 102, 1.5, -9, -102, 1.5, -9, 102, -1.5, -9, -102, 1.5, 9, 102, -1.5, 9, -102, 1.5, 9, -102, -1.5, 9, 102, 1.5, -9, 102, -1.5, -9, -102, 1.5, -9, -102, -1.5, -9, 102, 1.5, 9, 102, -1.5, -9, 102, -1.5, 9, 102, 1.5, -9, 102, 1.5, 9, -102, -1.5, -9, -102, -1.5, 9, -102, 1.5, -9, -102 )
 
 [node name="Level_001" type="Spatial"]
@@ -210,68 +210,68 @@ material/0 = null
 shape = SubResource( 5 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation/Arena_Floor"]
-navmesh = SubResource( 39 )
+navmesh = SubResource( 6 )
 
 [node name="Left_Slope" type="MeshInstance" parent="Navigation"]
 editor/display_folded = true
 transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -30.9, 18.6, -67.5 )
-mesh = SubResource( 7 )
+mesh = SubResource( 8 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Navigation/Left_Slope"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Navigation/Left_Slope/StaticBody"]
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation/Left_Slope"]
-navmesh = SubResource( 40 )
+navmesh = SubResource( 10 )
 
 [node name="Right_Slope" type="MeshInstance" parent="Navigation"]
 editor/display_folded = true
 transform = Transform( 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 30.9, 18.6, -67.5 )
-mesh = SubResource( 10 )
+mesh = SubResource( 12 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Navigation/Right_Slope"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Navigation/Right_Slope/StaticBody"]
-shape = SubResource( 11 )
+shape = SubResource( 13 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation/Right_Slope"]
-navmesh = SubResource( 41 )
+navmesh = SubResource( 14 )
 
 [node name="Arena_Wall_Left" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 7.5, -70 )
-mesh = SubResource( 13 )
+mesh = SubResource( 16 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Arena_Wall_Left"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Arena_Wall_Left/StaticBody"]
-shape = SubResource( 14 )
+shape = SubResource( 17 )
 
 [node name="Arena_Wall_Right" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 7.5, -70 )
-mesh = SubResource( 13 )
+mesh = SubResource( 16 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Arena_Wall_Right"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Arena_Wall_Right/StaticBody"]
-shape = SubResource( 15 )
+shape = SubResource( 18 )
 
 [node name="Arena_Wall_Entry" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21, 28.5 )
-mesh = SubResource( 16 )
-material/0 = SubResource( 17 )
+mesh = SubResource( 19 )
+material/0 = SubResource( 20 )
 
 [node name="StaticBody" type="StaticBody" parent="Arena_Wall_Entry"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Arena_Wall_Entry/StaticBody"]
-shape = SubResource( 18 )
+shape = SubResource( 21 )
 
 [node name="Arena_Wall_Exit" type="Spatial" parent="."]
 editor/display_folded = true
@@ -279,94 +279,95 @@ editor/display_folded = true
 [node name="Top" type="MeshInstance" parent="Arena_Wall_Exit"]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28, -167 )
-mesh = SubResource( 20 )
+mesh = SubResource( 23 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Arena_Wall_Exit/Top"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Arena_Wall_Exit/Top/StaticBody"]
-shape = SubResource( 21 )
+shape = SubResource( 24 )
 
 [node name="Left" type="MeshInstance" parent="Arena_Wall_Exit"]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 7, -167 )
-mesh = SubResource( 23 )
+mesh = SubResource( 26 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Arena_Wall_Exit/Left"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Arena_Wall_Exit/Left/StaticBody"]
-shape = SubResource( 24 )
+shape = SubResource( 27 )
 
 [node name="Right" type="MeshInstance" parent="Arena_Wall_Exit"]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 7, -167 )
-mesh = SubResource( 23 )
+mesh = SubResource( 26 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Arena_Wall_Exit/Right"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Arena_Wall_Exit/Right/StaticBody"]
-shape = SubResource( 25 )
+shape = SubResource( 28 )
 
 [node name="Path_Floor" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.5, 32.5 )
-mesh = SubResource( 27 )
+mesh = SubResource( 30 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Path_Floor"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Path_Floor/StaticBody"]
-shape = SubResource( 28 )
+shape = SubResource( 31 )
 
 [node name="Path_Wall_Rear" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.5, 35 )
-mesh = SubResource( 30 )
+mesh = SubResource( 33 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Path_Wall_Rear"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Path_Wall_Rear/StaticBody"]
-shape = SubResource( 31 )
+shape = SubResource( 34 )
 
 [node name="Ceiling" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 42.5, -68.5 )
-mesh = SubResource( 33 )
+mesh = SubResource( 36 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Ceiling"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Ceiling/StaticBody"]
-shape = SubResource( 34 )
+shape = SubResource( 37 )
 
 [node name="Upper_Left_Wall" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5, 32, -68 )
-mesh = SubResource( 36 )
+mesh = SubResource( 39 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Upper_Left_Wall"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Upper_Left_Wall/StaticBody"]
-shape = SubResource( 37 )
+shape = SubResource( 40 )
 
 [node name="Upper_Right_Wall" type="MeshInstance" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -38.5, 32, -68 )
-mesh = SubResource( 36 )
+mesh = SubResource( 39 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Upper_Right_Wall"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Upper_Right_Wall/StaticBody"]
-shape = SubResource( 38 )
+shape = SubResource( 41 )
 
 [node name="Exit_Door" parent="." instance=ExtResource( 6 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5.1, -165 )
 is_exit = true
+locked = true
 
 [node name="Transition_001" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -185 )
