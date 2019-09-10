@@ -35,6 +35,8 @@ func _adjust_light():
 	$Lights/Red.visible = locked
 
 func _physics_process(delta):
+	update_state()
+	
 	if state == OPENED or state == CLOSED:
 		return
 	
@@ -62,9 +64,14 @@ func _physics_process(delta):
 		$RightTween.interpolate_property(right, "translation", right.translation, right_target, door_speed, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT) 
 		$RightTween.start()
 
+func update_state():
+	var scene = get_tree().current_scene
+	if scene.has_method("update_door_locks"):
+		scene.update_door_locks()
+	_adjust_light()
+
 func open():
 	var scene = get_tree().current_scene
-	_adjust_light()
 	
 	if state == OPENED or state == OPENING:
 		return true
@@ -80,7 +87,6 @@ func open():
 		return scene.opening_door(self)
 
 func close():
-	_adjust_light()
 	if state == CLOSED or state == CLOSING:
 		return true
 	

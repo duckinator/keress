@@ -15,8 +15,9 @@ func player_noise(trans, sound, loudness):
 	trans = trans.round()
 	Console.log("player_noise(" + str(trans) + ", " + str(sound) + ", " + str(loudness) + ")")
 
-func can_open_door(door):
-	return (not door.is_exit) or (len(mobs) == 0)
+func update_door_locks():
+	if len(mobs) == 0:
+		$Exit_Door.locked = false
 
 func opening_door(door):
 	pass

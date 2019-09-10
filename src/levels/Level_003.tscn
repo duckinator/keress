@@ -319,6 +319,7 @@ assist = 2.5
 [node name="Level_Exit_Door" parent="." instance=ExtResource( 4 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -416, -96, -2 )
 is_exit = true
+locked = true
 
 [node name="Transition_Exit_Door" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -456, -96, -2 )
