@@ -63,7 +63,7 @@ func select_item(item_number):
 	for idx in range(0, len(inventory)):
 		inventory[idx].visible = idx == current_item
 
-func _process(delta):
+func _process(_delta):
 	MOUSE_SENSITIVITY = float(Game.get_mouse_sensitivity()) / 100
 	JOYPAD_SENSITIVITY = Game.get_joypad_sensitivity()
 	
