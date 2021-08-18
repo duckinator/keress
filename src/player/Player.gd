@@ -1,6 +1,12 @@
 extends KinematicBody
 
 var fall_damage_enabled = false
+const WALLRUN_FALL_MULTIPLIER = 0.75
+const WALLRUN_SPEED_MULTIPLIER = 2
+const WALLRUN_ACCEL_MULTIPLIER = 8
+
+const NEUTRAL_CAMERA_ROTATION = 0
+const WALLRUN_CAMERA_ROTATION = -20
 
 const FALL_MULTIPLIER = 1.0
 const LOW_JUMP_MULTIPLIER = 1.5
@@ -161,8 +167,7 @@ func process_input(_delta):
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
 	
 	# Jumping
-	# TODO: add debounce timer.
-	if (is_on_floor() or is_on_wall()) and Input.is_action_pressed("movement_jump"):
+	if (is_on_floor() or is_on_wall()) and Input.is_action_just_pressed("movement_jump"):
 		vel.y = JUMP_SPEED
 
 func process_input_inventory(_delta):
@@ -201,6 +206,9 @@ func process_movement(delta):
 	elif (vel.y > 0) and not Input.is_action_pressed("movement_jump"):
 		vel += Vector3.UP * gravity.y * (LOW_JUMP_MULTIPLIER - 1) * delta
 	
+	if is_on_wall() and vel.y < 0:
+		vel.y *= WALLRUN_FALL_MULTIPLIER
+	
 	var hvel = vel
 	hvel.y = 0
 	
@@ -212,6 +220,22 @@ func process_movement(delta):
 		accel = ACCEL
 	else:
 		accel = DEACCEL
+	
+	if is_on_wall() and not is_on_floor():
+		var speedup = false
+		if riding_wall($LeftShortRaycast):
+			camera_rotation_tween(camera.rotation_degrees.z, -WALLRUN_CAMERA_ROTATION)
+			speedup = true
+		elif riding_wall($RightShortRaycast):
+			camera_rotation_tween(camera.rotation_degrees.z, WALLRUN_CAMERA_ROTATION)
+			speedup = true
+		if speedup:
+			# TODO: Slight weapon translation?
+			target *= WALLRUN_SPEED_MULTIPLIER
+			accel *= WALLRUN_ACCEL_MULTIPLIER
+	else:
+		camera_rotation_tween(camera.rotation_degrees.z, NEUTRAL_CAMERA_ROTATION)
+		camera.rotation_degrees.z = NEUTRAL_CAMERA_ROTATION
 	
 	hvel = hvel.linear_interpolate(target, accel * delta)
 	vel.x = hvel.x
@@ -301,3 +325,24 @@ func set_camera_rotation_z(new_z):
 	var weapon = $RotationHelper/Revolver
 	camera.rotation_degrees.z = new_z
 	weapon.rotation_degrees.z = camera.rotation_degrees.z
+
+const CAMERA_ROTATION_TWEEN_SPEED = 0.125
+var camera_tween = null
+func camera_rotation_tween(cur_z, new_z):
+	if camera_tween != null:
+		return
+	var camera_tween = $CameraRotationTween.duplicate()
+	var speed = CAMERA_ROTATION_TWEEN_SPEED
+	camera_tween.connect("tween_completed", self, "camera_rotation_tween_end")
+	camera_tween.repeat = false
+	camera_tween.interpolate_method(self, "set_camera_rotation_z", cur_z, new_z, speed, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	add_child(camera_tween)
+	camera_tween.start()
+
+func camera_rotation_tween_end(object, key):
+	if camera_tween == null:
+		return
+	camera_tween.stop_all()
+	remove_child(camera_tween)
+	camera_tween.queue_free()
+	camera_tween = null
