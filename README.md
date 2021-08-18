@@ -7,7 +7,7 @@
 
 A first-person shooter.
 
-Builds from the master branch are available at <https://duckinator.itch.io/keress>.
+Builds from the `main` branch are available at <https://duckinator.itch.io/keress>.
 
 ## Development
 
