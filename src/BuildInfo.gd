@@ -47,7 +47,7 @@ func load_metadata():
 	var file = File.new()
 	
 	if not file.file_exists(path):
-		return defaults
+		return {"result": defaults}
 	
 	file.open(path, File.READ)
 	var content = file.get_as_text()
