@@ -4,12 +4,12 @@ signal noise
 
 var mobs = []
 func _ready():
-	Enemies.spawn(Vector3(15, 10, -140))
-	Enemies.spawn(Vector3(10, 10, -120))
-	Enemies.spawn(Vector3(0, 10, -100))
-	Enemies.spawn(Vector3(0, 10, -120))
-	Enemies.spawn(Vector3(-10, 10, -120))
-	Enemies.spawn(Vector3(-15, 10, -140))
+	Enemies.spawn(Vector3(15, 30, -14))
+	Enemies.spawn(Vector3(10, 30, -12))
+	Enemies.spawn(Vector3(0, 30, -10))
+	Enemies.spawn(Vector3(0, 30, -12))
+	Enemies.spawn(Vector3(-10, 30, -12))
+	Enemies.spawn(Vector3(-15, 30, -14))
 
 func player_noise(trans, sound, loudness):
 	trans = trans.round()

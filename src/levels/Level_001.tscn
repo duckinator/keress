@@ -8,10 +8,10 @@
 [ext_resource path="res://blender/exports/Warehouse.escn" type="PackedScene" id=6]
 
 [sub_resource type="CubeMesh" id=1]
-size = Vector3( 70, 1, 70 )
+size = Vector3( 100, 1, 100 )
 
 [sub_resource type="ConvexPolygonShape" id=2]
-points = PoolVector3Array( -35, 0.5, 35, 35, 0.5, -35, 35, 0.5, 35, -35, 0.5, -35, -35, -0.5, 35, 35, -0.5, -35, 35, -0.5, 35, -35, -0.5, -35, 35, 0.5, 35, -35, 0.5, -35, 35, 0.5, -35, -35, 0.5, 35, 35, -0.5, 35, -35, -0.5, -35, 35, -0.5, -35, -35, -0.5, 35, 35, 0.5, 35, -35, -0.5, 35, -35, 0.5, 35, 35, -0.5, 35, 35, 0.5, -35, -35, -0.5, -35, -35, 0.5, -35, 35, -0.5, -35 )
+points = PoolVector3Array( -50, 0.5, 50, 50, 0.5, -50, 50, 0.5, 50, -50, 0.5, -50, -50, -0.5, 50, 50, -0.5, -50, 50, -0.5, 50, -50, -0.5, -50, 50, 0.5, 50, -50, 0.5, -50, 50, 0.5, -50, -50, 0.5, 50, 50, -0.5, 50, -50, -0.5, -50, 50, -0.5, -50, -50, -0.5, 50, 50, 0.5, 50, -50, -0.5, 50, -50, 0.5, 50, 50, -0.5, 50, 50, 0.5, -50, -50, -0.5, -50, -50, 0.5, -50, 50, -0.5, -50 )
 
 [node name="Level_001" type="Spatial"]
 script = ExtResource( 1 )
@@ -27,14 +27,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 20 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 20 )
 
 [node name="Exit_Door" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5.1, -165 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5.1, -36.2723 )
 is_exit = true
 
 [node name="Transition_001" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -185 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -56.2723 )
 
 [node name="Transition_Door" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 5.1, -205 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 5.1, -76.2723 )
 locked = true
 
 [node name="Lights" type="Spatial" parent="."]
@@ -52,10 +52,12 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 41, 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -1, -10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="FloorStaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.5441 )
 mesh = SubResource( 1 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="FloorStaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.5441 )
 shape = SubResource( 2 )
 
 [editable path="Warehouse"]
