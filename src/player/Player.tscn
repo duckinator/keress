@@ -35,8 +35,7 @@ fov = 90.0
 far = 550.0
 
 [node name="Revolver" parent="RotationHelper" instance=ExtResource( 2 )]
-transform = Transform( 0.4, 0, 0, 0, 0.399756, -0.0139598, 0, 0.0139598, 0.399756, 0, -1, -4 )
-visible = false
+transform = Transform( 0.05, 0, 0, 0, 0.0499695, -0.00174498, 0, 0.00174498, 0.0499695, 0, -0.501542, -0.58898 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
