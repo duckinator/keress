@@ -100,7 +100,7 @@ func through():
 	if scene.has_method("through_door"):
 		scene.through_door(self)
 	
-	if default_exit_behavior and is_exit:
-		Console.log("Went through exit door - going to next level.")
-		Game.next_level(seamless_transition)
-		default_exit_behavior = false
+	#if default_exit_behavior and is_exit:
+	#	Console.log("Went through exit door - going to next level.")
+	#	Game.next_level(seamless_transition)
+	#	default_exit_behavior = false

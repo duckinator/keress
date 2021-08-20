@@ -88,7 +88,6 @@ albedo_texture = ExtResource( 3 )
 [node name="Transition_001" type="Spatial"]
 
 [node name="Floor" type="MeshInstance" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2 )
 mesh = SubResource( 2 )
 material/0 = null
@@ -99,7 +98,6 @@ material/0 = null
 shape = SubResource( 3 )
 
 [node name="Wall_Left" type="MeshInstance" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 7, 0 )
 mesh = SubResource( 5 )
 material/0 = null
@@ -110,7 +108,6 @@ material/0 = null
 shape = SubResource( 6 )
 
 [node name="Wall_Right" type="MeshInstance" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 7, 0 )
 mesh = SubResource( 5 )
 material/0 = null
@@ -124,7 +121,6 @@ shape = SubResource( 7 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 18 )
 
 [node name="Top" type="MeshInstance" parent="Wall_Entrance"]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0 )
 mesh = SubResource( 9 )
 material/0 = null
@@ -145,7 +141,6 @@ material/0 = null
 shape = SubResource( 13 )
 
 [node name="Right" type="MeshInstance" parent="Wall_Entrance"]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0 )
 mesh = SubResource( 12 )
 material/0 = null
@@ -156,11 +151,9 @@ material/0 = null
 shape = SubResource( 14 )
 
 [node name="Wall_Exit" type="Spatial" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -18 )
 
 [node name="Top" type="MeshInstance" parent="Wall_Exit"]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0 )
 mesh = SubResource( 9 )
 material/0 = null
@@ -171,7 +164,6 @@ material/0 = null
 shape = SubResource( 10 )
 
 [node name="Left" type="MeshInstance" parent="Wall_Exit"]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, 0 )
 mesh = SubResource( 12 )
 material/0 = null
@@ -182,7 +174,6 @@ material/0 = null
 shape = SubResource( 13 )
 
 [node name="Right" type="MeshInstance" parent="Wall_Exit"]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0 )
 mesh = SubResource( 12 )
 material/0 = null
@@ -193,7 +184,6 @@ material/0 = null
 shape = SubResource( 14 )
 
 [node name="Ceiling" type="MeshInstance" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, 0 )
 mesh = SubResource( 16 )
 material/0 = null
