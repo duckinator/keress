@@ -15,9 +15,9 @@ const LOW_JUMP_MULTIPLIER = 1.5
 const MASS = 100
 
 var gravity
-const MAX_SPEED = 80
-const JUMP_SPEED = 60
-const ACCEL = 7
+const MAX_SPEED = 30
+const JUMP_SPEED = 30
+const ACCEL = 4
 const DEACCEL = 16
 const MAX_SLOPE_ANGLE = 40
 
