@@ -6,7 +6,7 @@ var current_scene = null
 func _ready():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	var scene = get_tree().current_scene
 	if current_scene == null:
 		current_scene = scene
@@ -50,7 +50,7 @@ func get_path_curve(start, end):
 		path.add_point(point)
 	return path
 
-func add_area_of_interest(mob, trans):
+func add_area_of_interest(_mob, trans):
 	trans = trans.round()
 	if not trans in aois:
 		#Console.log("Added Area of Interest: " + str(trans))

@@ -24,7 +24,7 @@ func horde_coords(dimensions, horde_size):
 			available.append(Vector2(x, z))
 	
 	var coords = []
-	for idx in range(0, horde_size):
+	for _idx in range(0, horde_size):
 		if len(available) == 0:
 			break
 		var pos = available[rand_range(0, len(available))]

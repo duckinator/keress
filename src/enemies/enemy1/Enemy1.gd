@@ -64,7 +64,7 @@ func set_state(new_state):
 	state = new_state
 
 func jump(assist=1):
-	apply_central_impulse(Vector3.UP * (3000 * assist))
+	apply_central_impulse(Vector3.UP * (1000 * assist))
 
 func _process(delta):
 	# If no Navigation has been assigned, we can't move, so just return.
@@ -184,13 +184,13 @@ func evade(delta):
 func raycast_name(raycast):
 	return RAYCAST_NAMES[raycast]
 
-func found_player(raycast, player, position):
+func found_player(raycast, player, _position):
 	senses[raycast_name(raycast)] = player
 
 func found_nothing(raycast):
 	senses[raycast_name(raycast)] = null
 
-func found_object(raycast, object, position):
+func found_object(raycast, object, _position):
 	senses[raycast_name(raycast)] = object
 
 func heard_noise(trans, _sound, _loudness):
@@ -250,7 +250,7 @@ func _process_body_entered(body):
 	if not body.has_method("get_last_velocity"):
 		return
 	
-	var height = $MeshInstance.mesh.height
+	#var height = $MeshInstance.mesh.height
 	if floor(body.translation.y) > floor(translation.y):
 		# Curb stomps.
 		var vel = body.get_last_velocity()

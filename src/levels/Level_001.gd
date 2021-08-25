@@ -19,10 +19,12 @@ func can_open_door(door):
 	return (not door.is_exit) or (len(mobs) == 0)
 
 func opening_door(door):
-	pass
+	var trans = door.translation
+	Console.log('player_noise(' + str(trans) +  ', "door/open", "1")')
 
 func closing_door(door):
-	pass
+	var trans = door.translation
+	Console.log('player_noise(' + str(trans) +  ', "door/close", "1")')
 
 func through_door(door):
 	pass

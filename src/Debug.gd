@@ -25,7 +25,7 @@ func _set_enabled(val):
 	
 	enabled = val
 
-func _process(delta):
+func _process(_delta):
 	if enabled and Game.playing:
 		Game.add_debug_display()
 	else:

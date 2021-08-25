@@ -6,7 +6,7 @@ extends Node
 func _ready():
 	pass # Replace with function body.
 
-func _input(event):
+func _input(_event):
 	# TODO: Determine why there's no KEY_BACKTICK or similar?
 	if Game.playing and Input.is_key_pressed(96):
 		Console.toggle()
