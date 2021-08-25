@@ -23,7 +23,7 @@ func _process(_delta):
 		level = str(Game.get_current_level())
 		position = str(pos)
 	
-	#var fps = str(Engine.get_frames_per_second())
+	var fps = Performance.get_monitor(Performance.TIME_FPS)
 	var frame_time = Performance.get_monitor(Performance.TIME_PROCESS)
 	var physics_time = Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)
 	var ftime_str = "%.2f" % frame_time
@@ -37,7 +37,7 @@ func _process(_delta):
 	var lines = [
 		"System:   " + os,
 		"Engine:   Godot " + engine,
-		#"FPS:      " + fps,
+		"FPS:      %s" % [fps],
 		"Timing:   frame=%s, physics=%s" % [ftime_str, ptime_str],
 		"Level:    " + level,
 		"Position: " + position,
