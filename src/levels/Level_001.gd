@@ -1,7 +1,5 @@
 extends Spatial
 
-signal noise
-
 var mobs = []
 func _ready():
 	Enemies.spawn(Vector3(15, 30, -14))
@@ -11,20 +9,16 @@ func _ready():
 	Enemies.spawn(Vector3(-10, 30, -12))
 	Enemies.spawn(Vector3(-15, 30, -14))
 
-func player_noise(trans, sound, loudness):
-	trans = trans.round()
-	Console.log("player_noise(" + str(trans) + ", " + str(sound) + ", " + str(loudness) + ")")
-
 func can_open_door(door):
 	return (not door.is_exit) or (len(mobs) == 0)
 
 func opening_door(door):
 	var trans = door.translation
-	Console.log('player_noise(' + str(trans) +  ', "door/open", "1")')
+	Noise.emit(trans, "door/open", "10")
 
 func closing_door(door):
 	var trans = door.translation
-	Console.log('player_noise(' + str(trans) +  ', "door/close", "1")')
+	Noise.emit(trans, "door/close", "10")
 
 func through_door(door):
 	pass

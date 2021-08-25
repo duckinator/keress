@@ -1,7 +1,5 @@
 extends Spatial
 
-signal noise
-
 var mobs = []
 func _ready():
 	# $Platform
@@ -15,10 +13,6 @@ func _ready():
 	
 	# $Platform_Mid
 	Enemies.spawn_horde(Vector3(-220, -55, -182), Vector2(30, 400), 16)
-
-func player_noise(trans, sound, loudness):
-	trans = trans.round()
-	emit_signal("noise", trans, sound, loudness)
 
 func update_door_locks():
 	if len(mobs) == 0:

@@ -117,7 +117,7 @@ func update_hud():
 	$HUD/Panel_Left/Ammo_Bar.value = total_ammo
 
 func emit_sound(trans, sound, loudness):
-	get_tree().current_scene.player_noise(trans, sound, loudness)
+	Noise.emit(trans.round(), sound, loudness)
 
 func safe_rotate(vec):
 	rotation_helper.rotate_x(deg2rad(vec.y * MOUSE_SENSITIVITY * -1))
