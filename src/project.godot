@@ -27,9 +27,9 @@ Debug="*res://Debug.gd"
 Console="*res://Console.gd"
 BuildInfo="*res://BuildInfo.gd"
 Keyboard="*res://Keyboard.gd"
-Map="*res://Map.gd"
 Enemies="*res://Enemies.gd"
 Noise="*res://systems/Noise.gd"
+AreasOfInterest="*res://systems/AreasOfInterest.gd"
 
 [display]
 

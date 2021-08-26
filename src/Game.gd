@@ -1,5 +1,7 @@
 extends Node
 
+signal load_level
+
 const DEFAULT_MOUSE_SENSITIVITY = 20
 const DEFAULT_JOYPAD_SENSITIVITY = 20
 const DEFAULT_FIELD_OF_VIEW = 90
@@ -129,6 +131,7 @@ func load_scene(new_scene_path):
 	return get_tree().change_scene(new_scene_path)
 
 func load_level(level, should_spawn_player=false):
+	emit_signal("load_level", level)
 	Game.playing = true
 	var err = load_scene(get_level_scene(level))
 	if err:

@@ -117,7 +117,7 @@ func see_player():
 			return true
 	return false
 
-func check(trans):
+func investigate(trans):
 	#Console.log("MOB " + str(self) + " INSTRUCTED TO CHECK " + str(trans))
 	target = trans
 	set_state(SEARCH)
@@ -134,8 +134,9 @@ func chase(delta, backoff):
 	var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
 
 	if chase_path == null or last_state != state:
-		chase_path = Map.get_path_curve(translation, target + offset)
-		chase_path_offset = 0
+		#chase_path = Map.get_path_curve(translation, target + offset)
+		#chase_path_offset = 0
+		pass
 	
 	if chase_path == null:
 		set_state(IDLE)
@@ -205,8 +206,9 @@ func found_object(raycast, object, _position):
 	senses[raycast_name(raycast)] = object
 
 func heard_noise(trans, _sound, _loudness):
-	if translation.distance_to(trans) < 50:
-		Map.add_area_of_interest(self, trans)
+	#if translation.distance_to(trans) < 50:
+	#	AreasOfInterest.add_aoi(trans)
+	pass
 
 
 func die():
@@ -219,7 +221,7 @@ func cleanup():
 	queue_free()
 
 func adjust_health(value):
-	Map.add_area_of_interest(self, translation)
+	AreasOfInterest.add_aoi(translation)
 	health = clamp(round(health + value), 0, MAX_HEALTH)
 	Console.debug(str(self) + ".health = " + str(health))
 	if health <= 0:
