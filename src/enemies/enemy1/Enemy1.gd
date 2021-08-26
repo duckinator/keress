@@ -11,13 +11,14 @@ const BACKOFF = 16
 # How many times more damage is dealt the mob slams into a floor.
 const FALL_DAMAGE_MULTIPLIER = MAX_HEALTH / 100.0
 
-var health
-
-var navigation = null
-var player = null
+onready var health = MAX_HEALTH
 
 var state = IDLE
 var last_state = state
+
+var map
+var navigation
+var player
 
 onready var RAYCAST_NAMES = {
 	#???: "left",
@@ -40,14 +41,24 @@ var last_velocity = Vector3(0, 0, 0)
 
 var last_target = null
 var target = null setget set_target, get_target
+
 func _ready():
-	self.health = MAX_HEALTH
+	Console.log("Enemy1._ready()")
 	self.mass = MASS
 	#self.mode = MODE_CHARACTER
 	
+	map = get_tree().current_scene
+	navigation = map.get_node('Navigation')
+	player = map.get_node('Player')
+	
 	set_contact_monitor(true)
 	set_max_contacts_reported(5)
-	connect("body_entered", self, "_process_body_entered")
+	var err = connect("body_entered", self, "_process_body_entered")
+	if err != OK:
+		Console.log(err)
+	Noise.add_listener(self, "heard_noise")
+	
+	map.mobs.append(self)
 
 func get_last_velocity():
 	return linear_velocity

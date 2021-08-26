@@ -1,8 +1,13 @@
 extends Area
 
 func _ready():
-	connect("body_entered", self, "_process_body_entered")
-	connect("body_exited", self, "_process_body_exited")
+	var err
+	err = connect("body_entered", self, "_process_body_entered")
+	if err != OK:
+		Console.log(err)
+	err = connect("body_exited", self, "_process_body_exited")
+	if err != OK:
+		Console.log(err)
 
 func _process_body_entered(body):
 	if body is KinematicBody:

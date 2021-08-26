@@ -10,7 +10,7 @@ onready var list = $HBoxContainer2/ActionList
 func _ready():
 	pass # Replace with function body.
 
-func _process(delta):
+func _process(_delta):
 	if action == "" or action == null:
 		return
 	

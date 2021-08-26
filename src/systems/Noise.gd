@@ -1,16 +1,18 @@
 extends Node
 
-signal event
+signal noise
 
 func _ready():
 	pass
 
 func add_listener(node, function):
-	connect("noise", node, function)
+	var err = connect("noise", node, function)
+	if err != OK:
+		Console.log(err)
 
 func emit(trans, sound, loudness):
 	emit_signal("noise", trans, sound, loudness)
 	Console.log('noise: trans=' + str(trans) + ', sound=' + str(sound) + ', loudness=' + str(loudness))
 
-func _process(delta):
+func _process(_delta):
 	pass

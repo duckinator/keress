@@ -20,7 +20,7 @@ func closing_door(door):
 	var trans = door.translation
 	Noise.emit(trans, "door/close", "10")
 
-func through_door(door):
+func through_door(_door):
 	pass
 
 func mob_died(mob):

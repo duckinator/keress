@@ -17,7 +17,6 @@ func _process(_delta):
 	var level = "(None)"
 	var position = "(None)"
 	
-	var scene = get_tree().current_scene
 	if Game.playing:
 		var pos = Game.get_player().translation.round()
 		level = str(Game.get_current_level())
