@@ -47,6 +47,9 @@ func add_aoi(trans):
 const MAX_DISTANCE = 10
 var counter = 0.0
 func _process(delta):
+	if not Game.playing:
+		return
+
 	counter += delta
 	if counter < 1:
 		return
