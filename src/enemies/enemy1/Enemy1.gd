@@ -57,6 +57,7 @@ func _ready():
 	if err != OK:
 		Console.log(err)
 	Noise.add_listener(self, "heard_noise")
+	AreasOfInterest.add_mob(self)
 	
 	map.mobs.append(self)
 
@@ -212,6 +213,7 @@ func heard_noise(trans, _sound, _loudness):
 
 
 func die():
+	AreasOfInterest.remove_mob(self)
 	var scene = get_tree().current_scene
 	if scene.has_method("mob_died"):
 		scene.mob_died(self)
