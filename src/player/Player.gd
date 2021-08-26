@@ -89,7 +89,6 @@ func _physics_process(delta):
 		process_input_inventory(delta)
 		process_movement(delta)
 		process_changing_item(delta)
-		process_reloading(delta)
 	process_ui(delta)
 	process_respawn(delta)
 
@@ -100,21 +99,20 @@ func adjust_health(diff):
 	health = clamp(health + diff, 0, MAX_HEALTH)
 	return health
 
-func reload_weapon():
-	pass
-
 func update_hud():
 	$HUD/Panel_Left/Label_Health.text = str(health)
 	$HUD/Panel_Left/Health_Bar.value = health
 	
 	var in_weapon = "?"
 	var total_ammo = 0
+	var max_value = 1
 	if len(inventory) > 0 and inventory[current_item] != null:
 		var item = inventory[current_item]
-		in_weapon = str(item.in_weapon) + " +" + str((item.ammo - item.in_weapon) / item.MAX_IN_WEAPON)
 		total_ammo = item.ammo
-	$HUD/Panel_Left/Label_Ammo.text = in_weapon
+		max_value = item.MAX_AMMO
+	$HUD/Panel_Left/Label_Ammo.text = str(total_ammo)
 	$HUD/Panel_Left/Ammo_Bar.value = total_ammo
+	$HUD/Panel_Left/Ammo_Bar.max_value = max_value
 
 func emit_sound(trans, sound, loudness):
 	Noise.emit(trans.round(), sound, loudness)
@@ -182,19 +180,8 @@ func process_input_inventory(_delta):
 	# Firing weapons
 	if Input.is_action_pressed("action_primary"):
 		item.primary()
-		jostle(item.JOSTLE_PRIMARY)
-		if item.SOUND_PRIMARY != null:
-			emit_sound(translation, item.SOUND_PRIMARY, item.LOUDNESS_PRIMARY)
 	if Input.is_action_pressed("action_secondary"):
 		item.secondary()
-		jostle(item.JOSTLE_SECONDARY)
-		if item.SOUND_SECONDARY != null:
-			emit_sound(translation, item.SOUND_SECONDARY, item.LOUDNESS_SECONDARY)
-
-	# Reloading weapons
-	var needs_reload = item.has_method("needs_reload") and item.needs_reload()
-	if Input.is_action_just_pressed("action_reload") or needs_reload:
-		item.reload()
 
 func process_movement(delta):
 	dir = dir.normalized()
@@ -246,9 +233,6 @@ func process_movement(delta):
 	process_fall_damage(old_vel, vel)
 
 func process_changing_item(_delta):
-	pass
-
-func process_reloading(_delta):
 	pass
 
 func process_ui(_delta):

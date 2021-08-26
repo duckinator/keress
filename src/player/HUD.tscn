@@ -78,6 +78,9 @@ margin_bottom = 100.0
 custom_fonts/font = SubResource( 2 )
 text = "22"
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Ammo_Bar" type="ProgressBar" parent="Panel_Left"]
 margin_left = 130.0

@@ -1,5 +1,12 @@
 extends Node
 
+# Areas Of Interest system
+# ========================
+# Listens to events from systems that are of interest to enemies, such as Noise.
+# Mobs register as listeners when they are spawned.
+# When the level changes, +mobs+ and +areas+ both get cleared.
+# 
+
 signal event
 
 const AOI_GRANULARITY = 20.0
@@ -38,7 +45,15 @@ func add_aoi(trans):
 	Console.log('AOIs = ' + str(areas))
 
 const MAX_DISTANCE = 10
-func _process(_delta):
+var counter = 0.0
+func _process(delta):
+	counter += delta
+	if counter < 1:
+		return
+	else:
+		counter = 0
+	Console.log("AreasOfInterest._process()")
+
 	var distance
 	for mob in mobs:
 		if mob == null:
@@ -52,4 +67,7 @@ func _process(_delta):
 	# Prune null items.
 	# I think these show up when mobs die? Not sure.
 	for _idx in range(len(mobs)):
-		mobs.remove(mobs.find(null))
+		var null_item = mobs.find(null)
+		if null_item == -1:
+			break
+		mobs.remove(null_item)

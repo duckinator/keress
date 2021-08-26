@@ -19,11 +19,9 @@ const JOSTLE_SECONDARY = 0
 # The shortest duration possible between firing.
 const PRIMARY_TIMEOUT = 0.4
 
-const MAX_IN_WEAPON = 6
-const MAX_AMMO = MAX_IN_WEAPON
+const MAX_AMMO = 200
 
 var ammo = MAX_AMMO
-var in_weapon = MAX_AMMO
 
 onready var laser = $Spatial/SpotLight
 onready var raycast = $Spatial/RayCast
@@ -45,11 +43,13 @@ func primary_timeout_reset():
 	primary_timeout = null
 
 func primary():
-	if primary_timeout != null:
+	if  ammo > 0 and primary_timeout != null:
 		return
 	
 	primary_timeout_start()
+	Noise.emit(get_parent().translation, SOUND_PRIMARY, LOUDNESS_PRIMARY)
 	raycast.force_raycast_update()
+	ammo -= 1
 	if raycast.is_colliding():
 		var collider = raycast.get_collider()
 		if collider.has_method("adjust_health"):
@@ -65,3 +65,4 @@ func primary():
 
 func secondary():
 	Console.log("TODO: Pistol secondary")
+	# Noise.emit(get_parent().translation, SOUND_PRIMARY, LOUDNESS_PRIMARY)
