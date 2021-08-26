@@ -12,7 +12,7 @@ func add_listener(node, function):
 
 func emit(trans, sound, loudness):
 	emit_signal("noise", trans, sound, loudness)
-	Console.debug('noise: trans=' + str(trans) + ', sound=' + str(sound) + ', loudness=' + str(loudness))
+	#Console.debug('noise: trans=' + str(trans) + ', sound=' + str(sound) + ', loudness=' + str(loudness))
 
 func _process(_delta):
 	pass
