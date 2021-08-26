@@ -24,7 +24,7 @@ const CONTROLS = {
 
 	"action_primary": "Primary action/fire weapon",
 	"action_secondary": "Secondary action",
-	"action_reload": "Reload",
+	#"action_reload": "Reload",
 	#"action_quick_switch": "Quick switch",
 }
 
