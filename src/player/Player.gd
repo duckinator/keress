@@ -1,6 +1,6 @@
 extends KinematicBody
 
-var fall_damage_enabled = false
+var fall_damage_enabled = true
 const WALLRUN_FALL_MULTIPLIER = 0.75
 const WALLRUN_SPEED_MULTIPLIER = 2
 const WALLRUN_ACCEL_MULTIPLIER = 8
