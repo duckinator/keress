@@ -118,14 +118,14 @@ func investigate(trans):
 	target = trans
 	set_state(SEARCH)
 
-func idle(delta):
+func idle(_delta):
 	pass
 
 func chase(delta, backoff):
 	if target == null or state != SEARCH:
 		return
 	
-	var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
+	#var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
 
 	if translation.distance_to(target) < 1:
 		#set_state(ATTACK)
@@ -181,8 +181,8 @@ func evade(delta):
 func raycast_name(raycast):
 	return RAYCAST_NAMES[raycast]
 
-func found_player(raycast, player, _position):
-	senses[raycast_name(raycast)] = player
+func found_player(raycast, player_obj, _position):
+	senses[raycast_name(raycast)] = player_obj
 
 func found_nothing(raycast):
 	senses[raycast_name(raycast)] = null

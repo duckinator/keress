@@ -5,7 +5,7 @@ var parent
 func _ready():
 	parent = get_parent()
 
-func _process(delta):
+func _process(_delta):
 	if not is_colliding():
 		parent.found_nothing(self)
 		return

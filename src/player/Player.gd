@@ -103,7 +103,6 @@ func update_hud():
 	$HUD/Panel_Left/Label_Health.text = str(health)
 	$HUD/Panel_Left/Health_Bar.value = health
 	
-	var in_weapon = "?"
 	var total_ammo = 0
 	var max_value = 1
 	if len(inventory) > 0 and inventory[current_item] != null:
@@ -241,9 +240,9 @@ func process_ui(_delta):
 func process_respawn(_delta):
 	pass
 
-func process_fall_damage(old_vel, vel):
+func process_fall_damage(old_vel, cur_vel):
 	# If we're going down faster than we can jump up, take damage.
-	if old_vel.y < -JUMP_SPEED and vel.y >= -1:
+	if old_vel.y < -JUMP_SPEED and cur_vel.y >= -1:
 		if  fall_damage_enabled:
 			var tmp = int(ceil(old_vel.y / 10))
 			tmp -= tmp % 5
@@ -315,7 +314,7 @@ var camera_tween = null
 func camera_rotation_tween(cur_z, new_z):
 	if camera_tween != null:
 		return
-	var camera_tween = $CameraRotationTween.duplicate()
+	camera_tween = $CameraRotationTween.duplicate()
 	var speed = CAMERA_ROTATION_TWEEN_SPEED
 	camera_tween.connect("tween_completed", self, "camera_rotation_tween_end")
 	camera_tween.repeat = false
@@ -323,7 +322,7 @@ func camera_rotation_tween(cur_z, new_z):
 	add_child(camera_tween)
 	camera_tween.start()
 
-func camera_rotation_tween_end(object, key):
+func camera_rotation_tween_end(_object, _key):
 	if camera_tween == null:
 		return
 	camera_tween.stop_all()

@@ -34,7 +34,7 @@ func _adjust_light():
 	$Lights/Green.visible = !locked
 	$Lights/Red.visible = locked
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	update_state()
 	
 	if state == OPENED or state == CLOSED:
