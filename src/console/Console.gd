@@ -41,6 +41,7 @@ func set_enabled(enabled):
 		input.call_deferred("grab_focus")
 		input.call_deferred("set_cursor_position", len(input.text))
 	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		visible = false
 		input.release_focus()
 
