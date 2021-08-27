@@ -20,9 +20,8 @@ var map
 var player
 
 onready var RAYCAST_NAMES = {
-	#???: "left",
 	$Front: "front",
-	#???: "right",
+	$Rear: "rear",
 	$Left: "left-side",
 	$Right: "right-side",
 }
@@ -31,6 +30,7 @@ var senses = {
 	"left-side": null,
 	"right-side": null,
 	"front": null,
+	"rear": null,
 	"hearing": [],
 }
 
@@ -58,6 +58,9 @@ func _ready():
 	AreasOfInterest.add_mob(self)
 	
 	map.mobs.append(self)
+	
+	$Sprite3D.set_texture($Viewport.get_texture())
+	$Viewport/Label.text = self.name
 
 func get_last_velocity():
 	return linear_velocity
@@ -74,12 +77,17 @@ func set_state(new_state):
 	state = new_state
 
 func jump(assist=1):
-	apply_central_impulse(Vector3.UP * (1000 * assist))
+	$Below.force_raycast_update()
+	if $Below.is_colliding():
+		apply_central_impulse(Vector3.UP * (1000 * assist))
 
 func _process(delta):
 	if see_player() or near_player() and not (state == ATTACK or state == EVADE):
 		target = player.translation
 		set_state(SEARCH)
+	
+	if target != null and target.y < 0:
+		target.y = 0
 	
 	match state:
 		IDLE:
@@ -102,7 +110,7 @@ func distance_to_player():
 func near_player():
 	if player == null:
 		return false
-	return distance_to_player() < 50
+	return distance_to_player() < 20
 
 func see_player():
 	if player == null:
@@ -121,7 +129,8 @@ func investigate(trans):
 func idle(_delta):
 	pass
 
-func chase(delta, backoff):
+var current = 0.0
+func chase(delta, backoff):	
 	if target == null or state != SEARCH:
 		return
 	
@@ -138,6 +147,10 @@ func chase(delta, backoff):
 	#Console.log("chase(" + str(delta) + ", " + str(backoff) + "); velocity = " + str(velocity))
 	apply_central_impulse(velocity)
 	last_velocity = velocity
+	
+	current += delta
+	if not see_player() and current > 1:
+		rotate_y(5)
 
 func search(delta):
 	chase(delta, BACKOFF - 2)
@@ -147,10 +160,6 @@ func search(delta):
 
 var attack_path_timeout = null
 func attack(delta):
-	if attack_path_timeout != null:
-		set_state(EVADE)
-		return
-	
 	if not see_player() and not near_player():
 		set_state(IDLE)
 		return
@@ -177,6 +186,7 @@ func _end_attack_path_timeout():
 	attack_path_timeout.stop()
 	attack_path_timeout.queue_free()
 	attack_path_timeout = null
+	set_state(EVADE)
 
 
 func evade(delta):
@@ -241,7 +251,8 @@ func impact_to_damage(collider, collider_vel):
 	return force_to_damage(force)
 
 
-func _process_body_entered(body):
+var last_body = null
+func _process_body_entered(body):	
 	# Fall damage.
 	if body is StaticBody:
 		if last_y == null:
@@ -275,3 +286,4 @@ func _process_body_entered(body):
 	if is_enemy or is_player:
 		target = body.translation
 	set_state(EVADE)
+	last_body = body
