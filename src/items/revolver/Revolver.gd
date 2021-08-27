@@ -23,8 +23,7 @@ const MAX_AMMO = 200
 
 var ammo = MAX_AMMO
 
-onready var laser = $Spatial/SpotLight
-onready var raycast = $Spatial/RayCast
+onready var raycast = get_tree().current_scene.get_node('Player/RotationHelper/TargetRayCast')
 var primary_timeout = null
 
 func _ready():
@@ -50,12 +49,14 @@ func primary():
 	Noise.emit(get_parent().translation, SOUND_PRIMARY, LOUDNESS_PRIMARY)
 	raycast.force_raycast_update()
 	ammo -= 1
+	Console.log(str(raycast))
 	if raycast.is_colliding():
+		Console.log(str(raycast.is_colliding()))
 		var collider = raycast.get_collider()
 		if collider.has_method("adjust_health"):
 			collider.adjust_health(-DAMAGE)
 			if collider is RigidBody:
-				var impulse = (to_global($Spatial/SpotLight.translation) - to_global($Spatial/RayCast.translation))
+				var impulse = (to_global($Spatial/SpotLight.translation) - to_global(raycast.translation))
 				var impulse_y = impulse.y
 				impulse *= 800
 				impulse.y = 4000

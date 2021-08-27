@@ -104,6 +104,7 @@ material = ExtResource( 2 )
 
 [node name="SpotLight" type="SpotLight" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
+visible = false
 light_color = Color( 0.12549, 1, 0, 1 )
 light_energy = 16.0
 spot_range = 200.0

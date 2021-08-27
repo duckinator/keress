@@ -15,11 +15,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Crosshair" type="Control" parent="."]
-visible = false
 margin_left = 620.0
 margin_top = 340.0
 margin_right = 654.0
 margin_bottom = 374.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Top" type="ColorRect" parent="Crosshair"]
 margin_left = 15.0
