@@ -47,7 +47,6 @@ script = ExtResource( 2 )
 cast_to = Vector3( 0, 10, 0 )
 
 [node name="Below" type="RayCast" parent="."]
-visible = false
 cast_to = Vector3( 0, -5, 0 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]

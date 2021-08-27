@@ -42,7 +42,6 @@ var last_target = null
 var target = null setget set_target, get_target
 
 func _ready():
-	Console.log("Enemy1._ready()")
 	self.mass = MASS
 	self.mode = MODE_CHARACTER
 	
@@ -81,7 +80,12 @@ func jump(assist=1):
 	if $Below.is_colliding():
 		apply_central_impulse(Vector3.UP * (1000 * assist))
 
+var current = 0.0
 func _process(delta):
+	current += delta
+	if current < 0.5:
+		return
+	
 	if see_player() or near_player() and not (state == ATTACK or state == EVADE):
 		target = player.translation
 		set_state(SEARCH)
@@ -129,8 +133,8 @@ func investigate(trans):
 func idle(_delta):
 	pass
 
-var current = 0.0
-func chase(delta, backoff):	
+#var chase_current = 0.0
+func chase(delta, backoff):
 	if target == null or state != SEARCH:
 		return
 	
@@ -148,9 +152,9 @@ func chase(delta, backoff):
 	apply_central_impulse(velocity)
 	last_velocity = velocity
 	
-	current += delta
-	if not see_player() and current > 1:
-		rotate_y(5)
+	#chase_current += delta
+	#if not see_player() and chase_current > 1:
+	#	rotate_y(5)
 
 func search(delta):
 	chase(delta, BACKOFF - 2)
@@ -158,36 +162,23 @@ func search(delta):
 		set_state(ATTACK)
 		return
 
-var attack_path_timeout = null
+const ATTACK_DELAY = 0.5
+var attack_delta = 0.0
 func attack(delta):
+	if attack_delta < ATTACK_DELAY:
+		attack_delta += delta
+		return
+	attack_delta = 0.0
+	
 	if not see_player() and not near_player():
 		set_state(IDLE)
 		return
 	
 	chase(delta, 0)
-	_start_attack_path_timeout()
 	
 	if distance_to_player() < 4:
 		Console.log("PEW PEW")
 		player.adjust_health(-5)
-
-const ATTACK_TIMEOUT = 0.5
-func _start_attack_path_timeout():
-	if attack_path_timeout == null:
-		attack_path_timeout = Timer.new()
-		attack_path_timeout.wait_time = rand_range(ATTACK_TIMEOUT, ATTACK_TIMEOUT * 2)
-		attack_path_timeout.one_shot = true
-		attack_path_timeout.connect("timeout", self, "_end_attack_path_timeout")
-		add_child(attack_path_timeout)
-		attack_path_timeout.start()
-
-func _end_attack_path_timeout():
-	remove_child(attack_path_timeout)
-	attack_path_timeout.stop()
-	attack_path_timeout.queue_free()
-	attack_path_timeout = null
-	set_state(EVADE)
-
 
 func evade(delta):
 	#Console.log(str(self) + " EVADE")
