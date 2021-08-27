@@ -95,8 +95,8 @@ func show_settings(settings):
 	settings.activate()
 
 func restart_level():
+	load_level(get_current_level())
 	resume()
-	reload_level = true
 
 func main_menu():
 	resume()
