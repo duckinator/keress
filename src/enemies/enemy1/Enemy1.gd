@@ -125,14 +125,16 @@ func chase(delta, backoff):
 	if target == null or state != SEARCH:
 		return
 	
-	#var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
+	var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
+	
+	var cur_target = target + offset
 
 	if translation.distance_to(target) < 1:
 		Console.log("chase() <1m from target")
 		#set_state(ATTACK)
 		return
 	
-	var velocity = translation.direction_to(target) * 100
+	var velocity = translation.direction_to(cur_target) * 100
 	#Console.log("chase(" + str(delta) + ", " + str(backoff) + "); velocity = " + str(velocity))
 	apply_central_impulse(velocity)
 	last_velocity = velocity
@@ -148,15 +150,17 @@ func attack(delta):
 	if attack_path_timeout != null:
 		set_state(EVADE)
 		return
+	
 	if not see_player() and not near_player():
 		set_state(IDLE)
 		return
 	
 	chase(delta, 0)
+	_start_attack_path_timeout()
+	
 	if distance_to_player() < 4:
 		Console.log("PEW PEW")
 		player.adjust_health(-5)
-		set_state(EVADE)
 
 const ATTACK_TIMEOUT = 0.5
 func _start_attack_path_timeout():

@@ -43,7 +43,6 @@ func add_aoi(trans):
 	areas.append(rounded)
 	Console.log('AOIs = ' + str(areas))
 
-const MAX_DISTANCE = 20
 var counter = 0.0
 func _process(delta):
 	if not Game.playing or len(mobs) == 0 or len(areas) == 0:

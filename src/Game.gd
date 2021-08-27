@@ -13,11 +13,13 @@ const MAX_LEVEL = 3
 
 const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
 const DEBUG_SCENE = preload("res://overlays/Debug_Display.tscn")
+const MOB_DEBUG_SCENE = preload("res://overlays/MobDebug.tscn")
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
 var popup = null
 
 var canvas_layer
 var debug_display = null
+var mob_debug_display = null
 
 var reload_level = false
 var playing = false
@@ -114,6 +116,17 @@ func remove_debug_display():
 	if debug_display:
 		debug_display.queue_free()
 		debug_display = null
+
+func add_mob_debug_display():
+	if mob_debug_display == null:
+		mob_debug_display = MOB_DEBUG_SCENE.instance()
+		canvas_layer.add_child(mob_debug_display)
+
+func remove_mob_debug_display():
+	if mob_debug_display:
+		mob_debug_display.queue_free()
+		mob_debug_display = null
+
 
 func get_level_scene(level):
 	return "res://levels/Level_" + str(level).pad_zeros(3) + ".tscn"
