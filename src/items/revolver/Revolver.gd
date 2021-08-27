@@ -9,7 +9,7 @@ const SOUND_SECONDARY = null
 const LOUDNESS_SECONDARY = 15
 
 # The damage a single shot deals.
-const DAMAGE = 70
+const DAMAGE = 40
 
 # The maximum amount the camera can rotate up (positive) or down (negative)
 # after the primary or secondary actions.
