@@ -9,7 +9,7 @@ extends Node
 
 signal event
 
-const AOI_GRANULARITY = 20.0
+const AOI_GRANULARITY = 10.0
 const MAX_AREAS = 10
 
 var mobs = []
@@ -44,7 +44,7 @@ func add_aoi(trans):
 	areas.append(rounded)
 	Console.log('AOIs = ' + str(areas))
 
-const MAX_DISTANCE = 10
+const MAX_DISTANCE = 20
 var counter = 0.0
 func _process(delta):
 	if not Game.playing:
@@ -55,16 +55,19 @@ func _process(delta):
 		return
 	else:
 		counter = 0
-	Console.log("AreasOfInterest._process()")
+	#Console.log("AreasOfInterest._process()")
 
 	var distance
 	for mob in mobs:
 		if mob == null:
 			continue
 		for area in areas:
+			Console.log("Attempting to find mob to investigate " + str(area) + "; trying " + str(mob))
 			distance = mob.translation.distance_to(area)
 			if distance < MAX_DISTANCE:
+				Console.log("Having " + str(mob) + " investigate " + str(area))
 				mob.investigate(area)
+				areas.remove(areas.find(area))
 				break
 
 	# Prune null items.
