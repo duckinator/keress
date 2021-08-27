@@ -12,7 +12,10 @@ func _process(_delta):
 	
 	for idx in len(AreasOfInterest.mobs):
 		var mob = AreasOfInterest.mobs[idx]
-		lines.append(mob.name + " #" + str(idx) + ": " + str(mob.target))
+		if mob == null:
+			lines.append("! mobs[" + str(idx) + "] is null.")
+		else:
+			lines.append(mob.name + " #" + str(idx) + ": " + str(mob.target))
 	
 	label.clear()
 	for idx in range(0, len(lines)):
