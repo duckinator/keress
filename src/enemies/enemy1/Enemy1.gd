@@ -141,20 +141,11 @@ func chase(delta, backoff):
 	var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
 	
 	var cur_target = target + offset
-
-	if translation.distance_to(target) < 1:
-		Console.log("chase() <1m from target")
-		#set_state(ATTACK)
-		return
 	
 	var velocity = translation.direction_to(cur_target) * 100
 	#Console.log("chase(" + str(delta) + ", " + str(backoff) + "); velocity = " + str(velocity))
 	apply_central_impulse(velocity)
 	last_velocity = velocity
-	
-	#chase_current += delta
-	#if not see_player() and chase_current > 1:
-	#	rotate_y(5)
 
 func search(delta):
 	chase(delta, BACKOFF - 2)
