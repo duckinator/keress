@@ -1,6 +1,6 @@
 extends RigidBody
 
-enum { IDLE, SEARCH, ATTACK, EVADE }
+enum { IDLE, CHASE, SEARCH, ATTACK, EVADE }
 
 const MAX_SPEED = 50
 const MAX_HEALTH = 140
@@ -17,7 +17,6 @@ var state = IDLE
 var last_state = state
 
 var map
-var navigation
 var player
 
 onready var RAYCAST_NAMES = {
@@ -45,10 +44,9 @@ var target = null setget set_target, get_target
 func _ready():
 	Console.log("Enemy1._ready()")
 	self.mass = MASS
-	#self.mode = MODE_CHARACTER
+	self.mode = MODE_CHARACTER
 	
 	map = get_tree().current_scene
-	navigation = map.get_node('Navigation')
 	player = map.get_node('Player')
 	
 	set_contact_monitor(true)
@@ -79,14 +77,6 @@ func jump(assist=1):
 	apply_central_impulse(Vector3.UP * (1000 * assist))
 
 func _process(delta):
-	# If no Navigation has been assigned, we can't move, so just return.
-	if navigation == null:
-		return
-	
-	# If no Player has been assigned, we can't do anything useful, so just return.
-	if player == null:
-		return
-	
 	if see_player() or near_player() and not (state == ATTACK or state == EVADE or state == SEARCH):
 		target = player.translation
 		set_state(SEARCH)
@@ -110,47 +100,41 @@ func distance_to_player():
 	return translation.distance_to(player.translation)
 
 func near_player():
+	if player == null:
+		return false
 	return distance_to_player() < 50
 
 func see_player():
+	if player == null:
+		return false
+	
 	for key in senses.keys():
 		if key != "hearing" and senses[key] == player:
 			return true
 	return false
 
 func investigate(trans):
-	#Console.log("MOB " + str(self) + " INSTRUCTED TO CHECK " + str(trans))
+	Console.log("MOB " + str(self) + " INSTRUCTED TO CHECK " + str(trans))
 	target = trans
 	set_state(SEARCH)
 
 func idle(delta):
 	pass
 
-var chase_path = null
-var chase_path_offset = 0
 func chase(delta, backoff):
-	if target == null:
+	if target == null or state != SEARCH:
 		return
 	
 	var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
 
-	if chase_path == null or last_state != state:
-		#chase_path = Map.get_path_curve(translation, target + offset)
-		#chase_path_offset = 0
-		pass
-	
-	if chase_path == null:
-		set_state(IDLE)
+	if translation.distance_to(target) < 1:
+		#set_state(ATTACK)
 		return
 	
-	var pos = chase_path.interpolate_baked(chase_path_offset)
-	var diff = pos - translation
-	# HACK: Why is this diff4 nonsense needed? :(
-	var diff4 = diff * 4
-	diff4.y = diff.y
-	apply_central_impulse(diff4)
-	last_velocity = diff4
-	chase_path_offset += 0.5
+	var velocity = translation.direction_to(target) * 100
+	Console.log("chase(" + str(delta) + ", " + str(backoff) + "); velocity = " + str(velocity))
+	apply_central_impulse(velocity)
+	last_velocity = velocity
 
 func search(delta):
 	chase(delta, BACKOFF - 2)

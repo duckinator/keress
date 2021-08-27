@@ -49,9 +49,7 @@ func primary():
 	Noise.emit(get_parent().translation, SOUND_PRIMARY, LOUDNESS_PRIMARY)
 	raycast.force_raycast_update()
 	ammo -= 1
-	Console.log(str(raycast))
 	if raycast.is_colliding():
-		Console.log(str(raycast.is_colliding()))
 		var collider = raycast.get_collider()
 		if collider.has_method("adjust_health"):
 			collider.adjust_health(-DAMAGE)
