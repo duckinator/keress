@@ -6,7 +6,7 @@ extends Node
 # Mobs register as listeners when they are spawned.
 # When the level changes, +mobs+ and +areas+ both get cleared.
 
-const AOI_GRANULARITY = 10.0
+const AOI_GRANULARITY = 5.0
 const MAX_AREAS = 10
 
 var mobs = []
@@ -24,6 +24,7 @@ func clear(_level):
 
 func add_mob(node):
 	mobs.append(node)
+	Console.log("add_mob(): mobs = " + str(mobs) + "; node = " + str(node))
 
 func remove_mob(node):
 	mobs.remove(mobs.find(node))
@@ -34,7 +35,6 @@ func add_noise_aoi(trans, _sound, _loudness):
 # Given +trans+, make it less precise in a predictable way, then add it to +areas+  if it's not in it already.
 func add_aoi(trans):
 	var rounded
-	trans = trans.round()
 	rounded = Vector3(trans.x - fmod(trans.x, AOI_GRANULARITY), trans.y - fmod(trans.y, AOI_GRANULARITY), trans.z - fmod(trans.z, AOI_GRANULARITY))
 	if rounded in areas:
 		return
@@ -43,10 +43,10 @@ func add_aoi(trans):
 	areas.append(rounded)
 	Console.log('AOIs = ' + str(areas))
 
-const MAX_DISTANCE = 5
+const MAX_DISTANCE = 20
 var counter = 0.0
 func _process(delta):
-	if not Game.playing:
+	if not Game.playing or len(mobs) == 0 or len(areas) == 0:
 		return
 
 	counter += delta
@@ -54,20 +54,19 @@ func _process(delta):
 		return
 	else:
 		counter = 0
-	#Console.log("AreasOfInterest._process()")
 
-	var distance
-	for mob in mobs:
-		if mob == null:
-			continue
-		for area in areas:
-			Console.log("Attempting to find mob to investigate " + str(area) + "; trying " + str(mob))
-			distance = mob.translation.distance_to(area)
-			if distance < MAX_DISTANCE:
-				Console.log("Having " + str(mob) + " investigate " + str(area))
-				mob.investigate(area)
-				areas.remove(areas.find(area))
-				break
+	var area = areas[0]
+	var mob = mobs[0]
+	var distance = 0
+	for current_mob in mobs:
+		var current_distance = mob.translation.distance_to(area)
+		if current_distance <= distance:
+			mob = current_mob
+			distance = current_distance
+
+	Console.log("Having " + str(mob) + " (" + mob.name + ") investigate " + str(area))
+	mob.investigate(area)
+	areas.remove(areas.find(area))
 
 	# Prune null items.
 	# I think these show up when mobs die? Not sure.

@@ -6,7 +6,7 @@ const MAX_SPEED = 50
 const MAX_HEALTH = 140
 const MASS = 80
 
-const BACKOFF = 16
+const BACKOFF = 3
 
 # How many times more damage is dealt the mob slams into a floor.
 const FALL_DAMAGE_MULTIPLIER = MAX_HEALTH / 100.0
@@ -77,7 +77,7 @@ func jump(assist=1):
 	apply_central_impulse(Vector3.UP * (1000 * assist))
 
 func _process(delta):
-	if see_player() or near_player() and not (state == ATTACK or state == EVADE or state == SEARCH):
+	if see_player() or near_player() and not (state == ATTACK or state == EVADE):
 		target = player.translation
 		set_state(SEARCH)
 	
@@ -128,11 +128,12 @@ func chase(delta, backoff):
 	#var offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
 
 	if translation.distance_to(target) < 1:
+		Console.log("chase() <1m from target")
 		#set_state(ATTACK)
 		return
 	
 	var velocity = translation.direction_to(target) * 100
-	Console.log("chase(" + str(delta) + ", " + str(backoff) + "); velocity = " + str(velocity))
+	#Console.log("chase(" + str(delta) + ", " + str(backoff) + "); velocity = " + str(velocity))
 	apply_central_impulse(velocity)
 	last_velocity = velocity
 
@@ -155,6 +156,7 @@ func attack(delta):
 	if distance_to_player() < 4:
 		Console.log("PEW PEW")
 		player.adjust_health(-5)
+		set_state(EVADE)
 
 const ATTACK_TIMEOUT = 0.5
 func _start_attack_path_timeout():

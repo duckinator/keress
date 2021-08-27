@@ -23,6 +23,7 @@ const MAX_AMMO = 200
 
 var ammo = MAX_AMMO
 
+onready var player = get_tree().current_scene.get_node('Player')
 onready var raycast = get_tree().current_scene.get_node('Player/RotationHelper/TargetRayCast')
 var primary_timeout = null
 
@@ -46,7 +47,7 @@ func primary():
 		return
 	
 	primary_timeout_start()
-	Noise.emit(get_parent().translation, SOUND_PRIMARY, LOUDNESS_PRIMARY)
+	Noise.emit(player.translation, SOUND_PRIMARY, LOUDNESS_PRIMARY)
 	raycast.force_raycast_update()
 	ammo -= 1
 	if raycast.is_colliding():
