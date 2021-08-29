@@ -1,7 +1,7 @@
 extends RigidBody
 
-enum { IDLE, SEARCH, ATTACK, EVADE }
-const STATE_STRS = {IDLE: "IDLE", SEARCH: "SEARCH", ATTACK: "ATTACK", EVADE: "EVADE"}
+enum { IDLE, SEARCH, EVADE }
+const STATE_STRS = {IDLE: "IDLE", SEARCH: "SEARCH", EVADE: "EVADE"}
 
 const MAX_SPEED = 50
 const MAX_HEALTH = 140
@@ -102,7 +102,7 @@ func _process(delta):
 	
 	if see_player() or near_player():
 		target = player.translation
-		if not (state == ATTACK or state == EVADE):
+		if state != EVADE:
 			set_state(SEARCH)
 	
 	if target != null and target.y < 0:
@@ -114,8 +114,6 @@ func _process(delta):
 			idle(delta)
 		SEARCH:
 			search(delta)
-		ATTACK:
-			attack(delta)
 		EVADE:
 			evade(delta)
 	last_state = state
@@ -184,30 +182,6 @@ func chase(delta, backoff, offset=null):
 			player.adjust_health(-5)
 
 func search(delta):
-	chase(delta, 0)
-
-const ATTACK_DURATION = 1
-var attack_duration = 0.0
-const ATTACK_DELAY = 0.5
-var attack_delta = 0.0
-func attack(delta):
-	attack_duration += delta
-	
-	if attack_duration > ATTACK_DURATION:
-		attack_duration = 0.0
-		attack_delta = 0.0
-		set_state(EVADE)
-		return
-	
-	if attack_delta < ATTACK_DELAY:
-		attack_delta += delta
-		return
-	attack_delta = 0.0
-	
-	if not see_player() and not near_player():
-		set_state(IDLE)
-		return
-	
 	chase(delta, 0)
 
 
