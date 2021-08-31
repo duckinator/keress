@@ -22,15 +22,21 @@ var player
 
 onready var RAYCAST_NAMES = {
 	$Front: "front",
+	$FrontUpper: "front-upper",
 	$Rear: "rear",
-	$Left: "left-side",
-	$Right: "right-side",
+	$Left: "left",
+	$Right: "right",
+	$LeftSide: "left-side",
+	$RightSide: "right-side",
 }
 
 var senses = {
 	"left-side": null,
 	"right-side": null,
+	"left": null,
+	"right": null,
 	"front": null,
+	"front-upper": null,
 	"rear": null,
 	"hearing": [],
 }
@@ -47,6 +53,7 @@ func _ready():
 	self.mode = MODE_CHARACTER
 	
 	$Viewport/VBoxContainer/Health.max_value = MAX_HEALTH
+	update_label()
 	
 	map = get_tree().current_scene
 	player = map.get_node('Player')
@@ -71,12 +78,15 @@ func set_target(new_target):
 func get_target():
 	return target
 
-func set_state(new_state):
+onready var label = $Viewport/VBoxContainer/Label
+func update_label():
+	label.text = self.name + "(" + STATE_STRS[state] + ")"
 	$Sprite3D.set_texture($Viewport.get_texture())
-	$Viewport/VBoxContainer/Label.text = self.name + "(" + STATE_STRS[new_state] + ")"
-	
+
+func set_state(new_state):
 	last_state = state
 	state = new_state
+	update_label()
 	
 	if state == EVADE and state != last_state:
 		reset_evade()
@@ -100,7 +110,7 @@ func _process(delta):
 		Console.log(name + " taking " + str(BELOW_WORLD_DAMAGE) + " damage from being below the world. :(")
 		adjust_health(-BELOW_WORLD_DAMAGE)
 	
-	if see_player() or near_player():
+	if see_player() and near_player():
 		target = player.translation
 		if state != EVADE:
 			set_state(SEARCH)
@@ -146,35 +156,62 @@ func see_player():
 
 func investigate(trans):
 	Console.log("MOB " + str(self) + " INSTRUCTED TO CHECK " + str(trans))
-	if not near_player():
+	if not see_player():
+		intermediate_target = null
 		target = trans
 		set_state(SEARCH)
 
 func idle(_delta):
 	pass
 
+var intermediate_target = null
+var look_delta = 0.0
 func chase(delta, backoff, offset=null):
 	if target == null:
 		return
 	
 	if offset == null:
 		offset = Vector3(rand_range(-backoff, backoff), 0, rand_range(-backoff, backoff))
+
+	Console.log("target = " + str(target) + "; intermediate_target = " + str(intermediate_target))
 	var cur_target = target + offset
 	Console.log(STATE_STRS[state] + "; " + str(cur_target))
 	
+	if look_delta > 1:
+		look_delta = 0
+		var look_target = cur_target
+		look_target.y = 0.5
+		look_at(look_target, Vector3(0, 1, 0))
+	else:
+		look_delta += delta
+
 	var velocity = translation.direction_to(cur_target) * 75
 	#Console.log(STATE_STRS[state] + "/chase(" + str(delta) + ", " + str(backoff) + "); velocity=" + str(velocity) + "; offset=" + str(offset))
 	apply_central_impulse(velocity)
 	last_velocity = velocity
 	
-	if distance_to_player() < 4:
+	if senses["front"]:
+		if not senses["left"]:
+			Console.log("something to my front, but not my left")
+			#Console.log("move left (front.collision=" + str($Front.get_collision_point()) + "; left.trans=" + str(to_global($Left.translation)) + ")")
+			var left = to_global(Vector3(-1, 0, 0))
+			intermediate_target = translation + to_global($Left.translation)
+		elif senses["right"]:
+			Console.log("something to my front, but not my right")
+			intermediate_target = translation + to_global($Right.translation)
+		else:
+			Console.log("something to my front, left, AND right?")
+	if intermediate_target:
+		intermediate_target.y = 0
+	
+	if distance_to_player() < 4 and see_player():
 		var new_target = player.translation
 		new_target.x += pow(-1, randi() % 2) * 6
 		new_target.z += pow(-1, randi() % 2) * 6
-		Console.log(new_target)
+		Console.log("new target: " + str(new_target))
 		target = new_target
 	
-	if uncomfortably_close_to_player():
+	if uncomfortably_close_to_player() and see_player():
 		# If they are on top of us, then they shouldn't take damage.
 		var diff = player.translation.y - translation.y
 		if diff < 1:
