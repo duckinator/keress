@@ -219,10 +219,6 @@ func process_fall_damage(old_vel, cur_vel):
 		emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
 
 func _input(event):
-	# "KEY_QUOTELEFT" is apparently for the backtick key.
-	if Input.is_key_pressed(KEY_QUOTELEFT):
-		Console.toggle()
-	
 	if is_dead:
 		if Input.is_key_pressed(KEY_SPACE):
 			waiting_for_respawn = true

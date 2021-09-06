@@ -288,6 +288,10 @@ func _input(event):
 
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F6:
 		next_level()
+	
+	# Open/close the console when hitting the backtick key.
+	if Game.playing and Input.is_key_pressed(KEY_QUOTELEFT):
+		Console.toggle()
 
 func setup_hbox_vbox(hbox, vbox):
 	hbox.add_spacer(true)
