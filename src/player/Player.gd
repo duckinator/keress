@@ -50,14 +50,19 @@ func _ready():
 	camera = $RotationHelper/Camera
 	rotation_helper = $RotationHelper
 
-	#camera.fov = Game.get_field_of_view()
+	reload_player_settings()
+	Game.connect("resume", self, "reload_player_settings")
 
 	adjust_health(MAX_HEALTH)
 
-func _process(_delta):
+# Load settings that need to be set before playing, or may change while the
+# game is paused.
+func reload_player_settings():
+	camera.fov = Game.get_field_of_view()
 	MOUSE_SENSITIVITY = float(Game.get_mouse_sensitivity()) / 100
 	JOYPAD_SENSITIVITY = Game.get_joypad_sensitivity()
-	
+
+func _process(_delta):
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
 	var vert = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
 	horiz *= JOYPAD_SENSITIVITY

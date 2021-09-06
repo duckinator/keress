@@ -71,7 +71,6 @@ func toggle_mob_debug():
 	load_settings()
 
 func update_mouse_sensitivity(value):
-	Console.log("MOUSE SENSITIVITY = " + str(value))
 	Settings.store("mouse_sensitivity", value)
 	load_settings()
 

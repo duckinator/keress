@@ -5,7 +5,7 @@ const SETTINGS_FILE = "user://settings.json"
 func store(key, val):
 	var settings = _read_from_disk()
 	settings[key] = val
-	_write_to_disk(settings)
+	_write_to_disk(settings, key)
 	return val
 
 func fetch(key, default=null):
@@ -22,9 +22,9 @@ func _read_from_disk():
 	var settings = parse_json(file.get_as_text())
 	return settings
 
-func _write_to_disk(settings):
+func _write_to_disk(settings, key):
 	var file = File.new()
 	file.open(SETTINGS_FILE, File.WRITE)
-	print("Saved: " + file.get_path())
+	Console.log("Updated setting '" + str(key) + "' in " + file.get_path_absolute())
 	file.store_string(to_json(settings))
 	file.close()

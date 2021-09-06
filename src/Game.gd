@@ -1,6 +1,7 @@
 extends Node
 
 signal load_level
+signal resume
 
 const DEFAULT_MOUSE_SENSITIVITY = 20
 const DEFAULT_JOYPAD_SENSITIVITY = 20
@@ -92,6 +93,7 @@ func resume():
 	if popup != null:
 		popup.queue_free()
 		popup = null
+	emit_signal("resume")
 
 func show_settings(settings):
 	settings.activate()
