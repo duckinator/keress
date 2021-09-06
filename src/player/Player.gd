@@ -36,14 +36,10 @@ var dir = Vector3(0, 0, 0)
 const MAX_HEALTH = 100
 var health = 0
 
-const INVENTORY_MAX_SIZE = 3
-var inventory = []
-var current_item = 0
-var last_item = 0
-var changing_item = false
-
 var is_dead = false
 var waiting_for_respawn = false
+
+onready var gun = $RotationHelper/Revolver
 
 var camera
 var rotation_helper
@@ -56,18 +52,7 @@ func _ready():
 
 	#camera.fov = Game.get_field_of_view()
 
-	inventory.append($RotationHelper/Revolver)
-	#inventory.append($RotationHelper/Rifle)
-	#inventory.append($RotationHelper/Shotgun)
-
-	select_item(0)
-
 	adjust_health(MAX_HEALTH)
-
-func select_item(item_number):
-	current_item = item_number
-	for idx in range(0, len(inventory)):
-		inventory[idx].visible = idx == current_item
 
 func _process(_delta):
 	MOUSE_SENSITIVITY = float(Game.get_mouse_sensitivity()) / 100
@@ -86,9 +71,7 @@ func _physics_process(delta):
 	
 	if not is_dead:
 		process_input(delta)
-		process_input_inventory(delta)
 		process_movement(delta)
-		process_changing_item(delta)
 	process_ui(delta)
 	process_respawn(delta)
 
@@ -103,15 +86,11 @@ func update_hud():
 	$HUD/Panel_Left/Label_Health.text = str(health)
 	$HUD/Panel_Left/Health_Bar.value = health
 	
-	var total_ammo = 0
-	var max_value = 1
-	if len(inventory) > 0 and inventory[current_item] != null:
-		var item = inventory[current_item]
-		total_ammo = item.ammo
-		max_value = item.MAX_AMMO
+	var total_ammo = gun.ammo
+	
 	$HUD/Panel_Left/Label_Ammo.text = str(total_ammo)
 	$HUD/Panel_Left/Ammo_Bar.value = total_ammo
-	$HUD/Panel_Left/Ammo_Bar.max_value = max_value
+	$HUD/Panel_Left/Ammo_Bar.max_value = gun.MAX_AMMO
 
 func emit_sound(trans, sound, loudness):
 	Noise.emit(trans.round(), sound, loudness)
@@ -166,21 +145,12 @@ func process_input(_delta):
 	# Jumping
 	if (is_on_floor() or is_on_wall()) and Input.is_action_just_pressed("movement_jump"):
 		vel.y = JUMP_SPEED
-
-func process_input_inventory(_delta):
-	if len(inventory) == 0:
-		return
 	
-	current_item = clamp(current_item, 0, len(inventory) - 1)
-	var item = inventory[current_item]
-	if item == null:
-		return
-
-	# Firing weapons
+	# Firing weapon
 	if Input.is_action_pressed("action_primary"):
-		item.primary()
+		gun.primary()
 	if Input.is_action_pressed("action_secondary"):
-		item.secondary()
+		gun.secondary()
 
 func process_movement(delta):
 	dir = dir.normalized()
@@ -231,9 +201,6 @@ func process_movement(delta):
 
 	process_fall_damage(old_vel, vel)
 
-func process_changing_item(_delta):
-	pass
-
 func process_ui(_delta):
 	update_hud()
 
@@ -264,35 +231,6 @@ func _input(event):
 	# Mouse movement.
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		safe_rotate(event.relative)
-	
-	# No point doing all of this with an empty inventory.
-	if len(inventory) == 0:
-		return
-
-	# Changing inventory item.
-	var changing_item_number = current_item
-	if Input.is_action_just_pressed("quick_switch_item"):
-		changing_item_number = last_item
-	if Input.is_key_pressed(KEY_1):
-		changing_item_number = 0
-	if Input.is_key_pressed(KEY_2):
-		changing_item_number = 1
-	if Input.is_key_pressed(KEY_3):
-		changing_item_number = 2
-	if Input.is_key_pressed(KEY_4):
-		changing_item_number = 3
-
-	if Input.is_action_just_pressed("shift_item_positive"):
-		changing_item_number += 1
-	if Input.is_action_just_pressed("shift_item_negative"):
-		changing_item_number -=1
-	
-	changing_item_number = clamp(changing_item_number, 0, len(inventory) - 1)
-	
-	if changing_item == false:
-		if changing_item_number != current_item:
-			Console.log("TODO: Switch to item #" + str(changing_item_number + 1))
-			pass # Change weapons
 
 func raycast_adjacent(ray):
 	ray.force_raycast_update()
