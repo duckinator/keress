@@ -134,26 +134,15 @@ func get_level_scene(level):
 	return "res://levels/Level_" + str(level).pad_zeros(3) + ".tscn"
 
 func load_scene(new_scene_path):
-	# Reset respawn points before loading a level.
-	#respawn_points = null
-
-	# Clear previously-used sounds.
-	#for sound in created_audio:
-	#	if sound:
-	#		sound.queue_free()
-	#created_audio.clear()
-	
 	return get_tree().change_scene(new_scene_path)
 
-func load_level(level, should_spawn_player=false):
+func load_level(level):
 	emit_signal("load_level", level)
 	Game.playing = true
 	var err = load_scene(get_level_scene(level))
 	if err:
 		Console.error("load_level(): Could not load level " + str(level) + ". (Error " + str(err) + ".)")
 	set_current_level(level)
-	if should_spawn_player:
-		call_deferred("spawn_player")
 
 func previous_level():
 	var prev_level = get_current_level() - 1
@@ -169,24 +158,18 @@ func previous_level():
 		Console.error(err)
 		return
 
-func next_level(seamless_transition=false):
+func next_level():
 	var _next_level = get_current_level() + 1
 	
 	if _next_level > MAX_LEVEL:
 		Console.error("Can't go to next level; current_level is " + str(get_current_level()) + ", MAX_LEVEL is " + str(MAX_LEVEL))
 		return
 	
-	if seamless_transition:
-		Game.store_player_rotation()
-	
 	var err = load_level(_next_level)
 	if err:
 		Console.error("Couldn't load next level (" + str(_next_level) + ").")
 		Console.error(err)
 		return
-
-	if seamless_transition:
-		call_deferred("restore_player_rotation")
 
 func spawn_scene(asset, pos=null, rot=null):
 	var scene = load("res://" + asset + ".tscn")
@@ -216,14 +199,6 @@ func get_player(scene=null):
 		return scene.get_node('Player')
 	else:
 		return null
-
-func spawn_player(scene=null):
-	if scene == null:
-		scene = get_tree().current_scene
-	var spawn = find_spawn_point(scene)
-	var player = get_player(scene)
-	player.translation = spawn.translation
-	player.rotation = spawn.rotation
 
 func focus_first_control(node):
 	for child in node.get_children():
@@ -257,29 +232,6 @@ func focus_first_control(node):
 func get_total_gravity_for(body):
 	var state = PhysicsServer.body_get_direct_state(body.get_rid())
 	return state.get_total_gravity()
-
-var stored_player_rotation = null
-func store_player_rotation():
-	var player = get_player()
-	if player == null:
-		Console.error("Game.gd/store_player_rotation(): player is null")
-		return
-	var rot1 = player.rotation_degrees
-	var rot2 = player.rotation_helper.rotation_degrees
-	stored_player_rotation = [rot1, rot2]
-	Console.log("store...(): player=" + str(player) + "; stored_player_rotation = " + str(stored_player_rotation))
-
-func restore_player_rotation():
-	var player = get_player()
-	if player == null:
-		Console.error("Game.gd/restore_player_rotation(): player is null")
-		return
-	Console.log("restore...(): player=" + str(player) + "; stored_player_rotation = " + str(stored_player_rotation))
-	if stored_player_rotation == null:
-		return
-	player.rotation_degrees = stored_player_rotation[0]
-	player.rotation_helper.rotation_degrees = stored_player_rotation[1]
-	stored_player_rotation = null
 
 func _input(event):
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F4:

@@ -25,7 +25,7 @@ func _ready():
 
 func game_continue():
 	hide()
-	Game.load_level(Game.get_current_level(), true)
+	Game.load_level(Game.get_current_level())
 
 func game_new():
 	Settings.store("has_played", true)
