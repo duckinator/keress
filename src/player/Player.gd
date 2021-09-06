@@ -252,8 +252,8 @@ func process_fall_damage(old_vel, cur_vel):
 		emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
 
 func _input(event):
-	# TODO: Determine why there's no KEY_BACKTICK or similar?
-	if Input.is_key_pressed(96):
+	# "KEY_QUOTELEFT" is apparently for the backtick key.
+	if Input.is_key_pressed(KEY_QUOTELEFT):
 		Console.toggle()
 	
 	if is_dead:
