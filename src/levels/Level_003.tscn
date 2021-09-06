@@ -264,5 +264,3 @@ assist = 2.5
 [node name="BouncePad2" parent="Navigation/Platform_Right" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -180 )
 assist = 2.5
-
-[node name="Lights" type="Spatial" parent="."]
