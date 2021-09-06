@@ -1,10 +1,9 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://levels/Level_003.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://textures/generic-panel-01.png" type="Texture" id=5]
 [ext_resource path="res://textures/generic-panel-03.png" type="Texture" id=6]
-[ext_resource path="res://environment/bounce_pad/BouncePad.tscn" type="PackedScene" id=7]
 [ext_resource path="res://textures/metal-panel-01.png" type="Texture" id=8]
 [ext_resource path="res://textures/metal-panel-01-normal.png" type="Texture" id=9]
 
@@ -172,22 +171,6 @@ shape = SubResource( 4 )
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation/Floor"]
 navmesh = SubResource( 7 )
 
-[node name="BouncePad" parent="Navigation/Floor" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.5, 110 )
-assist = 3.0
-
-[node name="BouncePad2" parent="Navigation/Floor" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.5, -110 )
-assist = 3.0
-
-[node name="BouncePad3" parent="Navigation/Floor" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -180, 2.5, 110 )
-assist = 3.5
-
-[node name="BouncePad4" parent="Navigation/Floor" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -180, 2.5, -110 )
-assist = 3.5
-
 [node name="Platform" type="MeshInstance" parent="Navigation"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -1, 0 )
 mesh = SubResource( 9 )
@@ -215,14 +198,6 @@ shape = SubResource( 12 )
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation/Platform_Mid"]
 navmesh = SubResource( 13 )
 
-[node name="BouncePad" parent="Navigation/Platform_Mid" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 110 )
-assist = 2.5
-
-[node name="BouncePad2" parent="Navigation/Platform_Mid" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -110 )
-assist = 2.5
-
 [node name="Platform_Left" type="MeshInstance" parent="Navigation"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -216, -28, 164 )
 mesh = SubResource( 9 )
@@ -236,14 +211,6 @@ shape = SubResource( 14 )
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation/Platform_Left"]
 navmesh = SubResource( 15 )
 
-[node name="BouncePad" parent="Navigation/Platform_Left" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 110 )
-assist = 2.5
-
-[node name="BouncePad2" parent="Navigation/Platform_Left" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -180 )
-assist = 2.5
-
 [node name="Platform_Right" type="MeshInstance" parent="Navigation"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -216, -28, -164 )
 mesh = SubResource( 9 )
@@ -256,11 +223,3 @@ shape = SubResource( 16 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation/Platform_Right"]
 navmesh = SubResource( 17 )
-
-[node name="BouncePad" parent="Navigation/Platform_Right" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 110 )
-assist = 2.5
-
-[node name="BouncePad2" parent="Navigation/Platform_Right" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -180 )
-assist = 2.5

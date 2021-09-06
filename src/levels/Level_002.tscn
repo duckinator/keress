@@ -1,11 +1,10 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://levels/Level_002.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://textures/generic-panel-01.png" type="Texture" id=5]
 [ext_resource path="res://textures/generic-panel-02.png" type="Texture" id=6]
 [ext_resource path="res://textures/generic-panel-03.png" type="Texture" id=7]
-[ext_resource path="res://environment/bounce_pad/BouncePad.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Environment" id=1]
 ambient_light_color = Color( 1, 1, 1, 1 )
@@ -269,10 +268,6 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="BounceFloor/StaticBody"]
 shape = SubResource( 16 )
-
-[node name="BouncePad" parent="BounceFloor" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
-assist = 1.75
 
 [node name="BounceCeil" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 46, -86 )

@@ -15,19 +15,6 @@ func _ready():
 	#Enemies.spawn_horde(Vector3(-220, -55, -182), Vector2(30, 400), 16)
 	pass
 
-func update_door_locks():
-	if len(mobs) == 0:
-		$Level_Exit_Door.locked = false
-
-func opening_door(door):
-	pass
-
-func closing_door(door):
-	pass
-
-func through_door(door):
-	pass
-
 func mob_died(mob):
 	mobs.remove(mobs.find(mob))
 	mob.cleanup()
