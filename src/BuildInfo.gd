@@ -1,30 +1,28 @@
 extends Node
 
 var defaults = {
-	"build_id": null,
+	"version": null,
 	"build_hash": null,
 	"cirrus_task_id": null,
 }
 
 onready var metadata = load_metadata()
-onready var build_id = metadata.result["build_id"]
-onready var build_hash = metadata.result["build_hash"]
-onready var cirrus_task_id = metadata.result["cirrus_task_id"]
+onready var version = normalize(metadata.result["version"])
+onready var build_hash = normalize(metadata.result["build_hash"])
+onready var cirrus_task_id = normalize(metadata.result["cirrus_task_id"])
 
 var source_url = null
 var cirrus_url = null
 
 func _ready():
-	normalize_metadata()
-	
 	if cirrus_task_id != null:
 		cirrus_url = "https://cirrus-ci.com/task/" + cirrus_task_id
 		Console.log("Build logs: " + cirrus_url)
 	
-	#if build_id == null:
-	#	Console.log("Build ID not found. This is expected for unofficial builds.")
-	#else:
-	#	Console.log("Build ID: " + build_id)
+	if version == null:
+		Console.log("Version not found. This is expected for unofficial builds.")
+	else:
+		Console.log("Game version: " + version)
 	
 	if build_hash == null:
 		Console.log("No build information is available. This usually means it's run from the editor.")
@@ -32,15 +30,11 @@ func _ready():
 		source_url = "https://github.com/duckinator/keress/tree/" + build_hash
 		Console.log("Source for this build: " + source_url)
 
-func normalize_metadata():
-	if build_id == "":
-		build_id = null
-		
-	if build_hash == "":
-		build_hash = null
-	
-	if cirrus_task_id == "":
-		cirrus_task_id = null
+func normalize(data):
+	if data == "":
+		return null
+	else:
+		return data
 
 func load_metadata():
 	var path = "res://build_info.json"

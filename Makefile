@@ -6,18 +6,14 @@ EXPORT_FLAG ?= --export
 
 # TODO: Include BUILD_ID and BUILD_HASH in the actual builds, somehow.
 
-ifeq ($(GITHUB_CHECK_SUITE_ID),)
-BUILD_ID ?= "non-release build"
-else
-BUILD_ID ?= ${GITHUB_CHECK_SUITE_ID}
-endif
-
-BUILD_HASH := $(shell git rev-parse --short HEAD)
+BUILD_HASH != git rev-parse --short HEAD
+VERSION != ./bin/get-version.sh
 
 all: debug
 
 build_info:
-	echo "{\"build_id\": \""${BUILD_ID}"\", \"build_hash\": \"${BUILD_HASH}\", \"cirrus_task_id\": \""${CIRRUS_TASK_ID}"\"}" > src/build_info.json
+	printf "${VERSION}" > src/version.txt
+	echo "{\"version\": \"${VERSION}\", \"build_hash\": \"${BUILD_HASH}\", \"cirrus_task_id\": \""${CIRRUS_TASK_ID}"\"}" > src/build_info.json
 
 linux: build_info
 	mkdir -p build/linux
@@ -35,16 +31,16 @@ windows: build_info
 	${GODOT} src/project.godot ${EXPORT_FLAG} windows ../build/windows/keress.exe
 
 release:
-	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export linux windows mac
+	$(MAKE) EXPORT_FLAG=--export linux windows mac
 
 debug-linux:
-	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export-debug linux
+	$(MAKE) EXPORT_FLAG=--export-debug linux
 
 debug-windows:
-	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export-debug windows
+	$(MAKE) EXPORT_FLAG=--export-debug windows
 
 debug-mac:
-	$(MAKE) BUILD_ID=${BUILD_ID} EXPORT_FLAG=--export-debug mac
+	$(MAKE) EXPORT_FLAG=--export-debug mac
 
 debug: debug-linux debug-windows debug-mac
 
