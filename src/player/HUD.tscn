@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://player/HUD.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -13,6 +14,10 @@ font_data = ExtResource( 1 )
 [node name="HUD" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Crosshair" type="Control" parent="."]
 anchor_left = 0.5
@@ -51,6 +56,15 @@ margin_left = 20.0
 margin_top = 16.0
 margin_right = 32.0
 margin_bottom = 18.0
+
+[node name="Dot" type="ColorRect" parent="Crosshair"]
+margin_left = 15.0
+margin_top = 16.0
+margin_right = 17.0
+margin_bottom = 18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel_Left" type="Panel" parent="."]
 anchor_top = 1.0

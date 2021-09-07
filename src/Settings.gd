@@ -2,16 +2,33 @@ extends Node
 
 const SETTINGS_FILE = "user://settings.json"
 
+const DEFAULTS = {
+	"show_target_crosshair": true,
+	"show_target_dot": false,
+	
+	"mouse_sensitivity": 20,
+	"joypad_sensitivity": 20,
+	"field_of_view": 90,
+	
+	"vsync": false,
+	"fullscreen": false,
+	"debug": false,
+	"mob_debug": false,
+	
+	"has_played": false,
+	"current_level": 1,
+}
+
 func store(key, val):
 	var settings = _read_from_disk()
 	settings[key] = val
 	_write_to_disk(settings, key)
 	return val
 
-func fetch(key, default=null):
+func fetch(key):
 	var settings = _read_from_disk()
 	if not key in settings:
-		return default
+		return DEFAULTS[key]
 	return settings[key]
 
 func _read_from_disk():

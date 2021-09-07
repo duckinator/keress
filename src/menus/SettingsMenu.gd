@@ -2,6 +2,8 @@ extends Panel
 
 onready var hbox = $ScrollContainer/HBoxContainer
 onready var vbox = hbox.get_node('VBoxContainer')
+onready var _crosshair = vbox.get_node('CheckButton_Show_Target_Crosshair')
+onready var _dot = vbox.get_node('CheckButton_Show_Target_Dot')
 onready var _vsync = vbox.get_node('CheckButton_VSync')
 onready var _fullscreen = vbox.get_node('CheckButton_Fullscreen')
 onready var _debug = vbox.get_node('CheckButton_Debug')
@@ -17,6 +19,11 @@ func _ready():
 	$InputMapper.visible = false
 	
 	Game.setup_hbox_vbox(hbox, vbox)
+
+	err = _crosshair.connect("pressed", self, "toggle_target_crosshair")
+	assert(err == OK)
+	err = _dot.connect("pressed", self, "toggle_target_dot")
+	assert(err == OK)
 	
 	err = _vsync.connect("pressed", self, "toggle_vsync")
 	assert(err == OK)
@@ -28,11 +35,6 @@ func _ready():
 	assert(err == OK)
 	err = _controls.connect("pressed", $InputMapper, "activate")
 	assert(err == OK)
-	
-	_vsync.pressed = Settings.fetch("vsync", true)
-	_fullscreen.pressed = Settings.fetch("fullscreen", false)
-	_debug.pressed = Settings.fetch("debug", false)
-	_mob_debug.pressed = Settings.fetch("mob_debug", false)
 	
 	err = _mouse_sensitivity.connect("value_changed", self, "update_mouse_sensitivity")
 	assert(err == OK)
@@ -53,6 +55,14 @@ func activate():
 func deactivate():
 	hide()
 	Game.focus_first_control(get_parent())
+
+func toggle_target_crosshair():
+	Settings.store("show_target_crosshair", _crosshair.pressed)
+	load_settings()
+
+func toggle_target_dot():
+	Settings.store("show_target_dot", _dot.pressed)
+	load_settings()
 
 func toggle_vsync():
 	Settings.store("vsync", _vsync.pressed)
@@ -83,10 +93,19 @@ func update_field_of_view(value):
 	load_settings()
 
 func load_settings():
+	_crosshair.pressed = Settings.fetch("show_target_crosshair")
+	_dot.pressed = Settings.fetch("show_target_dot")
+	
+	_mouse_sensitivity.value = Settings.fetch("mouse_sensitivity")
+	_joypad_sensitivity.value = Settings.fetch("joypad_sensitivity")
+	_field_of_view.value = Settings.fetch("field_of_view")
+	
+	_vsync.pressed = Settings.fetch("vsync")
+	_fullscreen.pressed = Settings.fetch("fullscreen")
+	_debug.pressed = Settings.fetch("debug")
+	_mob_debug.pressed = Settings.fetch("mob_debug")
+	
 	Debug.enabled = _debug.pressed
 	Debug.mob_debug_enabled = _mob_debug.pressed
 	OS.window_fullscreen = _fullscreen.pressed
 	OS.vsync_enabled = _vsync.pressed
-	_mouse_sensitivity.value = Game.get_mouse_sensitivity(true)
-	_joypad_sensitivity.value = Game.get_joypad_sensitivity(true)
-	_field_of_view.value = Game.get_field_of_view(true)

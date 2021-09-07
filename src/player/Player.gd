@@ -58,9 +58,9 @@ func _ready():
 # Load settings that need to be set before playing, or may change while the
 # game is paused.
 func reload_player_settings():
-	camera.fov = Game.get_field_of_view()
-	MOUSE_SENSITIVITY = float(Game.get_mouse_sensitivity()) / 100
-	JOYPAD_SENSITIVITY = Game.get_joypad_sensitivity()
+	camera.fov = Settings.fetch("field_of_view")
+	MOUSE_SENSITIVITY = float(Settings.fetch("mouse_sensitivity")) / 100
+	JOYPAD_SENSITIVITY = Settings.fetch("joypad_sensitivity")
 
 func _process(_delta):
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
