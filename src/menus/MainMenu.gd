@@ -7,6 +7,8 @@ func _ready():
 	$Panels/Start.visible = true
 	$Panels/Settings.visible = false
 	
+	$Panels/Start/Label_Version_Info.text = BuildInfo.summary
+	
 	$Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer.add_constant_override("separation", 20)
 
 	err = $Panels/Start/Button_Continue.connect("pressed", self, "game_continue")

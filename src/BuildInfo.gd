@@ -11,6 +11,8 @@ onready var version = normalize(metadata.result["version"])
 onready var build_hash = normalize(metadata.result["build_hash"])
 onready var cirrus_task_id = normalize(metadata.result["cirrus_task_id"])
 
+var summary = null
+
 var source_url = null
 var cirrus_url = null
 
@@ -20,7 +22,7 @@ func _ready():
 		Console.log("Build logs: " + cirrus_url)
 	
 	if version == null:
-		Console.log("Version not found. This is expected for unofficial builds.")
+		Console.log("Version not found. This usually means it's run from the editor.")
 	else:
 		Console.log("Game version: " + version)
 	
@@ -29,6 +31,11 @@ func _ready():
 	else:
 		source_url = "https://github.com/duckinator/keress/tree/" + build_hash
 		Console.log("Source for this build: " + source_url)
+	
+	if version and build_hash:
+		summary = "Version: " + version + " (" + build_hash + ")"
+	else:
+		summary = "Version info unavailable. Likely running from Godot editor."
 
 func normalize(data):
 	if data == "":
