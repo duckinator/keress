@@ -1,6 +1,5 @@
 extends Spatial
 
-var mobs = []
 func _ready():
 	# $Platform
 	#Enemies.spawn_horde(Vector3(-56, 3, 40), Vector2(30, 100), 3)
@@ -14,7 +13,3 @@ func _ready():
 	# $Platform_Mid
 	#Enemies.spawn_horde(Vector3(-220, -55, -182), Vector2(30, 400), 16)
 	pass
-
-func mob_died(mob):
-	mobs.remove(mobs.find(mob))
-	mob.cleanup()
