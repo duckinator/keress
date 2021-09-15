@@ -52,10 +52,11 @@ func _process(delta):
 
 	var area = areas[0]
 	var mob = mobs[0]
-	var distance = 9999999999999999 # kludge
+	var distance = INF
+
 	for current_mob in mobs:
-		var current_distance = mob.translation.distance_to(area)
-		if current_distance <= distance:
+		var current_distance = current_mob.translation.distance_to(area)
+		if current_distance < distance:
 			mob = current_mob
 			distance = current_distance
 
