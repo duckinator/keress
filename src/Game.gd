@@ -1,6 +1,5 @@
 extends Node
 
-signal load_level
 signal resume
 
 const DEFAULT_MOUSE_SENSITIVITY = 20

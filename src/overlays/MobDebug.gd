@@ -10,8 +10,9 @@ func _process(_delta):
 		"AOIs:     " + PoolStringArray(AreasOfInterest.areas).join(", ")
 	]
 	
-	for idx in len(Mobs.all):
-		var mob = Mobs.all[idx]
+	var mobs = Entities.mobs
+	for idx in len(mobs):
+		var mob = mobs[idx]
 		if mob == null:
 			lines.append("! mobs[" + str(idx) + "] is null.")
 		else:

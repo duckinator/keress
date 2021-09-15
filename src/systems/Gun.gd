@@ -28,7 +28,7 @@ var SECONDARY_TIMEOUTS = {}
 
 
 func _ready():
-	var err = Game.connect("load_level", self, "clear_timeouts")
+	var err = LevelManager.connect("load_level", self, "clear_timeouts")
 	if err != OK:
 		Console.log(str(err))
 

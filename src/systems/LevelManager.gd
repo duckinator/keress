@@ -1,5 +1,14 @@
 extends Node
 
+signal load_level
+
+const MAPS = [
+	null,
+	"res://blender/exports/Warehouse.escn",
+]
+
+const BLENDER_LEVEL_SCENE = "res://blender_level/BlenderLevel.tscn"
+
 # TODO: See if these can be automagically determined?
 const FIRST_LEVEL = 1
 const MIN_LEVEL = FIRST_LEVEL
@@ -10,11 +19,16 @@ var level_cleared = false
 func _ready():
 	Game.connect("load_level", self, "reset")
 
+func setup(parent_scene):
+	var map = load(MAPS[get_current_level()]).instance()
+	parent_scene.add_child(map)
+	Entities.spawn_for_level(get_current_level())
+
 func reset(_level):
 	level_cleared = false
 
 func _process(delta):
-	if Game.playing and not level_cleared and len(Mobs.all) == 0:
+	if Game.playing and not level_cleared and len(Entities.mobs) == 0:
 		level_cleared = true
 		Console.log("woo!")
 
@@ -37,7 +51,7 @@ func load_scene(new_scene_path):
 func load_level(level):
 	emit_signal("load_level", level)
 	Game.playing = true
-	var err = load_scene(get_level_scene(level))
+	var err = load_scene(BLENDER_LEVEL_SCENE)
 	if err:
 		Console.error("load_level(): Could not load level " + str(level) + ". (Error " + str(err) + ".)")
 	set_current_level(level)

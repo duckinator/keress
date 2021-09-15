@@ -12,7 +12,7 @@ const MAX_AREAS = 10
 var areas = []
 
 func _ready():
-	var err = Game.connect("load_level", self, "clear")
+	var err = LevelManager.connect("load_level", self, "clear")
 	if err != OK:
 		Console.log(str(err))
 	Noise.add_listener(self, "add_noise_aoi")
