@@ -14,14 +14,14 @@ font_data = ExtResource( 2 )
 [sub_resource type="Theme" id=3]
 default_font = SubResource( 2 )
 
-[sub_resource type="DynamicFontData" id=5]
+[sub_resource type="DynamicFontData" id=4]
 font_path = "res://fonts/hack/Hack-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=5]
 size = 14
-font_data = SubResource( 5 )
+font_data = SubResource( 4 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=6]
 size = 80
 outline_color = Color( 0.462745, 0.462745, 0.462745, 1 )
 use_filter = true
@@ -57,7 +57,7 @@ margin_left = 5.0
 margin_top = 5.0
 margin_right = 40.0
 margin_bottom = 19.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -71,7 +71,7 @@ margin_left = -640.0
 margin_top = -360.0
 margin_right = 640.0
 margin_bottom = -210.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "Keress"
 align = 1
 valign = 1
