@@ -42,8 +42,6 @@ var health = 0
 var is_dead = false
 var waiting_for_respawn = false
 
-onready var gun = $RotationHelper/Revolver
-
 var camera
 var rotation_helper
 
@@ -94,11 +92,9 @@ func update_hud():
 	$HUD/Panel_Left/Label_Health.text = str(health)
 	$HUD/Panel_Left/Health_Bar.value = health
 	
-	var total_ammo = gun.ammo
-	
-	$HUD/Panel_Left/Label_Ammo.text = str(total_ammo)
-	$HUD/Panel_Left/Ammo_Bar.value = total_ammo
-	$HUD/Panel_Left/Ammo_Bar.max_value = gun.MAX_AMMO
+	$HUD/Panel_Left/Label_Ammo.text = str(ammo)
+	$HUD/Panel_Left/Ammo_Bar.value = ammo
+	$HUD/Panel_Left/Ammo_Bar.max_value = Gun.MAX_AMMO
 
 func emit_sound(trans, sound, loudness):
 	Noise.emit(trans.round(), sound, loudness)
@@ -247,7 +243,7 @@ func riding_wall(ray):
 	return node != null and node.name.ends_with("Wall")
 
 func set_camera_rotation_z(new_z):
-	var weapon = $RotationHelper/Revolver
+	var weapon = $RotationHelper/DEagle
 	camera.rotation_degrees.z = new_z
 	weapon.rotation_degrees.z = camera.rotation_degrees.z
 
