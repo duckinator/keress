@@ -48,8 +48,6 @@ func primary(source, raycast):
 	if source.ammo == 0 or (source in PRIMARY_TIMEOUTS and PRIMARY_TIMEOUTS[source] != null):
 		return
 	
-	Console.log(str(source.weapon) + " primary")
-	
 	primary_timeout_start(source)
 	var weapon_data = WEAPONS[source.weapon]["primary"]
 	Noise.emit(source.translation, weapon_data["sound"], weapon_data["loudness"])
