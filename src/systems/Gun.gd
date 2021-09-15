@@ -37,7 +37,7 @@ func _stop_and_remove_all(dict):
 		var timer = dict[key]
 		if timer != null:
 			timer.stop()
-			remove_child(timer)
+			timer.free()
 		dict.erase(key)
 
 func clear_timeouts(_level):
