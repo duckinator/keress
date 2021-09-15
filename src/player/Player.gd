@@ -5,7 +5,7 @@ var ammo = Gun.MAX_AMMO
 
 var fall_damage_enabled = true
 const WALLRUN_FALL_MULTIPLIER = 0.75
-const WALLRUN_SPEED_MULTIPLIER = 2
+const WALLRUN_SPEED_MULTIPLIER = 3
 const WALLRUN_ACCEL_MULTIPLIER = 8
 
 const NEUTRAL_CAMERA_ROTATION = 0
@@ -19,7 +19,7 @@ const MASS = 100
 
 var gravity
 const MAX_SPEED = 30
-const JUMP_SPEED = 30
+const JUMP_SPEED = 25
 const ACCEL = 4
 const DEACCEL = 16
 const MAX_SLOPE_ANGLE = 40
