@@ -1,5 +1,8 @@
 extends KinematicBody
 
+var weapon = Gun.WEAPON_DEAGLE
+var ammo = Gun.MAX_AMMO
+
 var fall_damage_enabled = true
 const WALLRUN_FALL_MULTIPLIER = 0.75
 const WALLRUN_SPEED_MULTIPLIER = 2
@@ -153,9 +156,9 @@ func process_input(_delta):
 	
 	# Firing weapon
 	if Input.is_action_pressed("action_primary"):
-		gun.primary()
+		Gun.primary(self, $RotationHelper/TargetRayCast)
 	if Input.is_action_pressed("action_secondary"):
-		gun.secondary()
+		Gun.secondary(self, $RotationHelper/TargetRayCast)
 
 func process_movement(delta):
 	dir = dir.normalized()

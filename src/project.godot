@@ -29,6 +29,7 @@ BuildInfo="*res://BuildInfo.gd"
 Enemies="*res://Enemies.gd"
 Noise="*res://systems/Noise.gd"
 AreasOfInterest="*res://systems/AreasOfInterest.gd"
+Gun="*res://systems/Gun.gd"
 
 [display]
 
