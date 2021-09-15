@@ -281,13 +281,6 @@ func heard_noise(trans, _sound, _loudness):
 
 
 func die():
-	var scene = get_tree().current_scene
-	if scene.has_method("mob_died"):
-		scene.mob_died(self)
-	cleanup()
-
-func cleanup():
-	# This can be expanded by adding a death animation and such later.
 	queue_free()
 
 func adjust_health(value):

@@ -25,6 +25,11 @@ var mob_debug_display = null
 var reload_level = false
 var playing = false
 
+var mobs setget , get_mobs
+
+func get_mobs():
+	return get_tree().get_nodes_in_group("mobs")
+
 func set_current_level(level):
 	return Settings.store("current_level", level)
 
