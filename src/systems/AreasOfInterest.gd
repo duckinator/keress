@@ -9,7 +9,6 @@ extends Node
 const AOI_GRANULARITY = 5.0
 const MAX_AREAS = 10
 
-var mobs = []
 var areas = []
 
 func _ready():
@@ -19,15 +18,11 @@ func _ready():
 	Noise.add_listener(self, "add_noise_aoi")
 
 func clear(_level):
-	mobs = []
 	areas = []
 
 func add_mob(node):
-	mobs.append(node)
-	Console.log("add_mob(): mobs = " + str(mobs) + "; node = " + str(node))
-
-func remove_mob(node):
-	mobs.remove(mobs.find(node))
+	node.add_to_group("mobs")
+	Console.log("add_mob(): mobs = " + str(get_tree().get_nodes_in_group("enemies")) + "; node = " + str(node))
 
 func add_noise_aoi(trans, _sound, _loudness):
 	add_aoi(trans)
@@ -45,6 +40,7 @@ func add_aoi(trans):
 
 var counter = 0.0
 func _process(delta):
+	var mobs = get_tree().get_nodes_in_group("mobs")
 	if not Game.playing or len(mobs) == 0 or len(areas) == 0:
 		return
 
@@ -56,7 +52,7 @@ func _process(delta):
 
 	var area = areas[0]
 	var mob = mobs[0]
-	var distance = 0
+	var distance = 9999999999999999 # kludge
 	for current_mob in mobs:
 		var current_distance = mob.translation.distance_to(area)
 		if current_distance <= distance:
@@ -66,11 +62,3 @@ func _process(delta):
 	Console.log("Having " + str(mob) + " (" + mob.name + ") investigate " + str(area))
 	mob.investigate(area)
 	areas.remove(areas.find(area))
-
-	# Prune null items.
-	# I think these show up when mobs die? Not sure.
-	for _idx in range(len(mobs)):
-		var null_item = mobs.find(null)
-		if null_item == -1:
-			break
-		mobs.remove(null_item)
