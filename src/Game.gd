@@ -7,11 +7,6 @@ const DEFAULT_MOUSE_SENSITIVITY = 20
 const DEFAULT_JOYPAD_SENSITIVITY = 20
 const DEFAULT_FIELD_OF_VIEW = 90
 
-# TODO: See if these can be automagically determined?
-const FIRST_LEVEL = 1
-const MIN_LEVEL = FIRST_LEVEL
-const MAX_LEVEL = 3
-
 const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
 const DEBUG_SCENE = preload("res://overlays/Debug_Display.tscn")
 const MOB_DEBUG_SCENE = preload("res://overlays/MobDebug.tscn")
@@ -22,19 +17,7 @@ var canvas_layer
 var debug_display = null
 var mob_debug_display = null
 
-var reload_level = false
 var playing = false
-
-var mobs setget , get_mobs
-
-func get_mobs():
-	return get_tree().get_nodes_in_group("mobs")
-
-func set_current_level(level):
-	return Settings.store("current_level", level)
-
-func get_current_level():
-	return Settings.fetch("current_level")
 
 func show_cursor():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -86,13 +69,9 @@ func resume():
 func show_settings(settings):
 	settings.activate()
 
-func restart_level():
-	load_level(get_current_level())
-	resume()
-
 func main_menu():
 	resume()
-	load_scene(MAIN_MENU_PATH)
+	LevelManager.load_scene(MAIN_MENU_PATH)
 
 func quit():
 	get_tree().quit()
@@ -116,48 +95,6 @@ func remove_mob_debug_display():
 	if mob_debug_display:
 		mob_debug_display.queue_free()
 		mob_debug_display = null
-
-
-func get_level_scene(level):
-	return "res://levels/Level_" + str(level).pad_zeros(3) + ".tscn"
-
-func load_scene(new_scene_path):
-	return get_tree().change_scene(new_scene_path)
-
-func load_level(level):
-	emit_signal("load_level", level)
-	Game.playing = true
-	var err = load_scene(get_level_scene(level))
-	if err:
-		Console.error("load_level(): Could not load level " + str(level) + ". (Error " + str(err) + ".)")
-	set_current_level(level)
-
-func previous_level():
-	var prev_level = get_current_level() - 1
-	
-	if prev_level < MIN_LEVEL:
-		Console.error("Can't go to previous level; current_level is " + str(get_current_level()) + ", MIN_LEVEL is " + str(MIN_LEVEL))
-		return
-
-	
-	var err = load_level(prev_level)
-	if err:
-		Console.error("Couldn't load previous level (" + str(prev_level) + ").")
-		Console.error(err)
-		return
-
-func next_level():
-	var _next_level = get_current_level() + 1
-	
-	if _next_level > MAX_LEVEL:
-		Console.error("Can't go to next level; current_level is " + str(get_current_level()) + ", MAX_LEVEL is " + str(MAX_LEVEL))
-		return
-	
-	var err = load_level(_next_level)
-	if err:
-		Console.error("Couldn't load next level (" + str(_next_level) + ").")
-		Console.error(err)
-		return
 
 func spawn_scene(asset, pos=null, rot=null):
 	var scene = load("res://" + asset + ".tscn")
@@ -223,13 +160,13 @@ func get_total_gravity_for(body):
 
 func _input(event):
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F4:
-		previous_level()
+		LevelManager.previous_level()
 
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F5:
-		restart_level()
+		LevelManager.restart_level()
 
 	if event is InputEventKey and event.pressed and event.scancode == KEY_F6:
-		next_level()
+		LevelManager.next_level()
 	
 	# Open/close the console when hitting the backtick key.
 	if Game.playing and Input.is_key_pressed(KEY_QUOTELEFT):

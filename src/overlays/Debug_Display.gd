@@ -19,7 +19,7 @@ func _process(_delta):
 	
 	if Game.playing:
 		var pos = Game.get_player().translation.round()
-		level = str(Game.get_current_level())
+		level = str(LevelManager.get_current_level())
 		position = str(pos)
 	
 	var fps = Performance.get_monitor(Performance.TIME_FPS)

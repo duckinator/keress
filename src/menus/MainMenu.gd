@@ -27,11 +27,11 @@ func _ready():
 
 func game_continue():
 	hide()
-	Game.load_level(Game.get_current_level())
+	LevelManager.load_level(LevelManager.get_current_level())
 
 func game_new():
 	Settings.store("has_played", true)
-	Settings.store("current_level", Game.FIRST_LEVEL)
+	Settings.store("current_level", LevelManager.FIRST_LEVEL)
 	game_continue()
 
 # TODO: Add quit prompt.

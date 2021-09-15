@@ -20,10 +20,6 @@ func _ready():
 func clear(_level):
 	areas = []
 
-func add_mob(node):
-	node.add_to_group("mobs")
-	Console.log("add_mob(): mobs = " + str(get_tree().get_nodes_in_group("enemies")) + "; node = " + str(node))
-
 func add_noise_aoi(trans, _sound, _loudness):
 	add_aoi(trans)
 

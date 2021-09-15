@@ -26,10 +26,11 @@ Game="*res://Game.gd"
 Debug="*res://Debug.gd"
 Console="*res://Console.gd"
 BuildInfo="*res://BuildInfo.gd"
-Enemies="*res://Enemies.gd"
+Mobs="*res://systems/Mobs.gd"
 Noise="*res://systems/Noise.gd"
 AreasOfInterest="*res://systems/AreasOfInterest.gd"
 Gun="*res://systems/Gun.gd"
+LevelManager="*res://systems/LevelManager.gd"
 
 [display]
 
