@@ -2,7 +2,6 @@ extends ColorRect
 
 func _ready():
 	var vbox = $CenterContainer/VBoxContainer
-	var settings = $Settings
 	vbox.get_node("Resume_Button").connect("pressed", self, "resume")
 	vbox.get_node("Settings_Button").connect("pressed", self, "show_settings")
 	vbox.get_node("Menu_Button").connect("pressed", self, "main_menu")
@@ -24,8 +23,8 @@ func resume():
 func main_menu():
 	queue_free()
 	get_tree().paused = false
-	Game.main_menu()
+	MapManager.main_menu()
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		resume()

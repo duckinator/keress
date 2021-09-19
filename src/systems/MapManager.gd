@@ -7,6 +7,7 @@ const MAPS = {
 }
 
 const BLENDER_MAP_SCENE = "res://blender_map/BlenderMap.tscn"
+const MAIN_MENU_SCENE = "res://menus/MainMenu.tscn"
 
 var map = null
 
@@ -28,3 +29,6 @@ func load_map(new_map=null):
 	var err = load_scene(BLENDER_MAP_SCENE)
 	if err:
 		Console.error("load_map(): Could not load map " + map + ". (Error " + str(err) + ".)")
+
+func main_menu():
+	load_scene(MAIN_MENU_SCENE)

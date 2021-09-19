@@ -2,7 +2,6 @@ extends Node
 
 signal resume
 
-const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
 const DEBUG_SCENE = preload("res://overlays/DebugOverlay.tscn")
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
 
@@ -32,9 +31,6 @@ func pause():
 func resume():
 	capture_cursor()
 	emit_signal("resume")
-
-func main_menu():
-	MapManager.load_scene(MAIN_MENU_PATH)
 
 func quit():
 	get_tree().quit()
