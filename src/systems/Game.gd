@@ -6,9 +6,6 @@ signal resume
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
 
 var canvas_layer
-var debug_display = null
-
-var playing = false
 
 func show_cursor():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

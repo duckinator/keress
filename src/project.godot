@@ -22,7 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Settings="*res://systems/Settings.gd"
-Game="*res://Game.gd"
+Game="*res://systems/Game.gd"
 Debug="*res://systems/Debug.gd"
 Console="*res://systems/Console.gd"
 BuildInfo="*res://systems/BuildInfo.gd"
