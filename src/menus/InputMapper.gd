@@ -24,7 +24,7 @@ const CONTROLS = {
 
 	"action_primary": "Primary action/fire weapon",
 	"action_secondary": "Secondary action",
-	#"action_reload": "Reload",
+	"action_reload": "Reload",
 	#"action_quick_switch": "Quick switch",
 }
 
@@ -127,6 +127,7 @@ func prompt_hide():
 
 func reset_config():
 	InputMap.load_from_globals()
+	save_config()
 
 func load_config():
 	if not File.new().file_exists(CONFIG_FILE):
