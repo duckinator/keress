@@ -24,9 +24,3 @@ func quit():
 
 func playing():
 	return (get_tree().current_scene.name == "BlenderLevel")
-
-func setup_hbox_vbox(hbox, vbox):
-	hbox.add_spacer(true)
-	hbox.add_spacer(false)
-	hbox.add_constant_override("separation", 20)
-	vbox.add_constant_override("separation", 20)
