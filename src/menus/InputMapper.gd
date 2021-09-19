@@ -52,7 +52,6 @@ func _ready():
 	controls_reset.set_meta("no_auto_focus", true)
 	controls_save.set_meta("no_auto_focus", true)
 	
-	Game.show_cursor()
 	Game.setup_hbox_vbox(hbox, vbox)
 	
 	controls_reset.connect("pressed", self, "reset_config")

@@ -31,6 +31,7 @@ Noise="*res://systems/Noise.gd"
 AreasOfInterest="*res://systems/AreasOfInterest.gd"
 Gun="*res://systems/Gun.gd"
 MapManager="*res://systems/MapManager.gd"
+Cursor="*res://systems/Cursor.gd"
 
 [display]
 

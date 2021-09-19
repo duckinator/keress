@@ -1,6 +1,7 @@
 extends Node
 
 signal load_map
+signal load_main_menu
 
 const MAPS = [
 	"Cube",
@@ -34,6 +35,7 @@ func load_map(new_map=null):
 
 func main_menu():
 	load_scene(MAIN_MENU_SCENE)
+	emit_signal("load_main_menu")
 
 func _map_to_path(map_name):
 	return "res://blender/maps/%s/%s.escn" % [map_name, map_name]

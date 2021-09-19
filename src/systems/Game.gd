@@ -7,12 +7,6 @@ const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
 
 var canvas_layer
 
-func show_cursor():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
-func capture_cursor():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
 func _ready():
 	randomize()
 	canvas_layer = CanvasLayer.new()
@@ -23,7 +17,6 @@ func pause():
 	emit_signal("pause")
 
 func resume():
-	capture_cursor()
 	emit_signal("resume")
 
 func quit():

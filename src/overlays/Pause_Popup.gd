@@ -7,7 +7,6 @@ func _ready():
 	vbox.get_node("Menu_Button").connect("pressed", self, "main_menu")
 	vbox.get_node("Quit_Button").connect("pressed", Game, "quit")
 	
-	Game.show_cursor()
 	get_tree().paused = true
 	self.pause_mode = PAUSE_MODE_PROCESS
 	activate()
