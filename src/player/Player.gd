@@ -61,6 +61,10 @@ func reload_player_settings():
 	JOYPAD_SENSITIVITY = Settings.fetch("joypad_sensitivity")
 
 func _process(_delta):
+	if Input.is_action_just_pressed("ui_cancel"):
+		Game.pause()
+		return
+
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
 	var vert = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
 	horiz *= JOYPAD_SENSITIVITY

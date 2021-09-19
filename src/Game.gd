@@ -21,10 +21,6 @@ func _ready():
 	canvas_layer = CanvasLayer.new()
 	add_child(canvas_layer)
 
-func _process(_delta):
-	if playing and Input.is_action_just_pressed("ui_cancel"):
-		pause()
-
 func pause():
 	canvas_layer.add_child(PAUSE_SCENE.instance())
 
