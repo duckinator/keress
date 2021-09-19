@@ -1,15 +1,7 @@
 extends Node
 
-var enabled = false
-
-var mob_debug_enabled = false
-
-func _ready():
-	if "--debug" in OS.get_cmdline_args():
-		enabled = true
-	
-	if "--debug-mobs" in OS.get_cmdline_args():
-		mob_debug_enabled = true
+onready var enabled = "--debug" in OS.get_cmdline_args()
+onready var mob_debug_enabled = "--debug-mobs" in OS.get_cmdline_args()
 
 func _process(_delta):
 	if enabled and Game.playing:
