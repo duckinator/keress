@@ -37,7 +37,7 @@ func add_aoi(trans):
 var counter = 0.0
 func _process(delta):
 	var mobs = get_tree().get_nodes_in_group("mobs")
-	if not Game.playing or len(mobs) == 0 or len(areas) == 0:
+	if not Game.playing() or len(mobs) == 0 or len(areas) == 0:
 		return
 
 	counter += delta

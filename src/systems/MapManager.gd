@@ -24,7 +24,6 @@ func load_map(new_map=null):
 		map = MAPS[0]
 	else:
 		map = new_map
-	Game.playing = true
 	var err = load_scene(BLENDER_MAP_SCENE)
 	if err:
 		Console.error("load_map(): Could not load map " + map + ". (Error " + str(err) + ".)")
@@ -35,9 +34,6 @@ func load_map(new_map=null):
 
 func main_menu():
 	load_scene(MAIN_MENU_SCENE)
-
-func in_game():
-	return (get_tree().current_scene.name == "BlenderLevel")
 
 func _map_to_path(map_name):
 	return "res://blender/maps/%s/%s.escn" % [map_name, map_name]

@@ -73,7 +73,7 @@ func secondary(source, raycast):
 	#Noise.emit(source.translation, weapon_data["sound"], weapon_data["loudness"])
 
 #func _process(delta):
-#	if not Game.playing:
+#	if not Game.playing():
 #		return
 
 func primary_timeout_start(source):

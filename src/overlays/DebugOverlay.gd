@@ -21,7 +21,7 @@ func _ready():
 
 func _process(_delta):
 	# If debug mode is disabled, or we're in a menu, remove the debug overlay.
-	if not Debug.enabled or not MapManager.in_game():
+	if not Debug.enabled or not Game.playing():
 		Game.debug_display = null
 		queue_free()
 		return

@@ -16,7 +16,7 @@ func _ready():
 		Console.log(str(err))
 
 func add_overlay_if_enabled():
-	if enabled and MapManager.in_game() and not canvas_layer.has_node("DebugOverlay"):
+	if enabled and Game.playing() and not canvas_layer.has_node("DebugOverlay"):
 		canvas_layer.add_child(DEBUG_SCENE.instance())
 
 func _set_enabled(_value):

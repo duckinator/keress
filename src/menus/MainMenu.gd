@@ -3,7 +3,6 @@ extends Control
 func _ready():
 	var err
 	
-	Game.playing = false
 	$Panels/Start.visible = true
 	$Panels/Settings.visible = false
 	
