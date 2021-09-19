@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Cube.escn-0bb899bd1676c333915bff8c8127ee4d.scn"
+path="res://.import/Cube.escn-d9433caa9858335f38d5ae953b3bfd46.scn"
 
 [deps]
 
-source_file="res://blender/maps/cube/Cube.escn"
-dest_files=[ "res://.import/Cube.escn-0bb899bd1676c333915bff8c8127ee4d.scn" ]
+source_file="res://blender/maps/Cube/Cube.escn"
+dest_files=[ "res://.import/Cube.escn-d9433caa9858335f38d5ae953b3bfd46.scn" ]
 
 [params]
 
