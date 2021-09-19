@@ -29,7 +29,7 @@ func spawn_for_map(map):
 	
 	for enemy_type in ENTITIES_FOR_MAP[map]:
 		for pos in ENTITIES_FOR_MAP[map][enemy_type]:
-			print(enemy_type, pos)
+			Console.log("    %s at %s." % [enemy_type, pos])
 			spawn(enemy_type, pos)
 
 func spawn(name, pos):
