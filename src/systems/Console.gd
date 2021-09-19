@@ -27,5 +27,4 @@ func log(text):
 	info(text)
 
 func _log(type, text):
-	var line = _line_prefix() + text
 	print("[" + type + "] " + _line_prefix() + text)
