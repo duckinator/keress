@@ -14,9 +14,6 @@ const DEFAULTS = {
 	"fullscreen": false,
 	"debug": false,
 	"mob_debug": false,
-	
-	"has_played": false,
-	"current_level": 1,
 }
 
 func store(key, val):
