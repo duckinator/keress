@@ -69,7 +69,7 @@ func _process(_delta):
 
 func _physics_process(delta):
 	if not gravity:
-		gravity = Game.get_total_gravity_for($DummyRigidBody)
+		gravity = _get_total_gravity_for($DummyRigidBody)
 		$DummyRigidBody.visible = false
 	
 	if not is_dead:
@@ -77,6 +77,10 @@ func _physics_process(delta):
 		process_movement(delta)
 	process_ui(delta)
 	process_respawn(delta)
+
+func _get_total_gravity_for(body):
+	var state = PhysicsServer.body_get_direct_state(body.get_rid())
+	return state.get_total_gravity()
 
 func get_last_velocity():
 	return vel

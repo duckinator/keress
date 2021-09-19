@@ -119,10 +119,6 @@ func focus_first_control(node):
 			return true
 	return false
 
-func get_total_gravity_for(body):
-	var state = PhysicsServer.body_get_direct_state(body.get_rid())
-	return state.get_total_gravity()
-
 func setup_hbox_vbox(hbox, vbox):
 	hbox.add_spacer(true)
 	hbox.add_spacer(false)
