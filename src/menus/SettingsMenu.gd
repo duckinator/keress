@@ -1,7 +1,6 @@
 extends Panel
 
-onready var hbox = $ScrollContainer/HBoxContainer
-onready var vbox = hbox.get_node('VBoxContainer')
+onready var vbox = $ScrollContainer/HBoxContainer/VBoxContainer
 onready var _vsync = vbox.get_node('CheckButton_VSync')
 onready var _fullscreen = vbox.get_node('CheckButton_Fullscreen')
 onready var _debug = vbox.get_node('CheckButton_Debug')
@@ -13,10 +12,6 @@ onready var _field_of_view = vbox.get_node('HSlider_Field_of_View')
 func _ready():
 	var err
 	
-	$InputMapper.visible = false
-	
-	Game.setup_hbox_vbox(hbox, vbox)
-
 	err = _vsync.connect("pressed", self, "toggle_vsync")
 	assert(err == OK)
 	err = _fullscreen.connect("pressed", self, "toggle_fullscreen")

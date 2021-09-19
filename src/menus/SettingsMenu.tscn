@@ -64,11 +64,13 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
 margin_right = 324.0
-margin_bottom = 366.0
+margin_bottom = 510.0
+custom_constants/separation = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
 margin_right = 324.0
-margin_bottom = 366.0
+margin_bottom = 510.0
+custom_constants/separation = 20
 
 [node name="Label_Mouse_Sensitivity" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 margin_right = 324.0
@@ -77,41 +79,41 @@ custom_fonts/font = SubResource( 2 )
 text = "Mouse Sensitivity"
 
 [node name="HSlider_Mouse_Sensitivity" type="HSlider" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 40.0
+margin_top = 56.0
 margin_right = 324.0
-margin_bottom = 56.0
+margin_bottom = 72.0
 focus_neighbour_bottom = NodePath("../HSlider_Joypad_Sensitivity")
 focus_next = NodePath("../HSlider_Joypad_Sensitivity")
 focus_previous = NodePath("../../../../Button_Back")
 tick_count = 10
 
 [node name="Label_Joypad_Sensitivity" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 60.0
+margin_top = 92.0
 margin_right = 324.0
-margin_bottom = 96.0
+margin_bottom = 128.0
 custom_fonts/font = SubResource( 3 )
 text = "Joypad Sensitivity"
 
 [node name="HSlider_Joypad_Sensitivity" type="HSlider" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 100.0
+margin_top = 148.0
 margin_right = 324.0
-margin_bottom = 116.0
+margin_bottom = 164.0
 focus_neighbour_top = NodePath("../HSlider_Mouse_Sensitivity")
 focus_neighbour_bottom = NodePath("../HSlider_Field_of_View")
 focus_next = NodePath("../HSlider_Field_of_View")
 focus_previous = NodePath("../HSlider_Mouse_Sensitivity")
 
 [node name="Label_Field_of_View" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 120.0
+margin_top = 184.0
 margin_right = 324.0
-margin_bottom = 156.0
+margin_bottom = 220.0
 custom_fonts/font = SubResource( 3 )
 text = "Field of View"
 
 [node name="HSlider_Field_of_View" type="HSlider" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 160.0
+margin_top = 240.0
 margin_right = 324.0
-margin_bottom = 176.0
+margin_bottom = 256.0
 focus_neighbour_top = NodePath("../HSlider_Joypad_Sensitivity")
 focus_neighbour_bottom = NodePath("../CheckButton_VSync")
 focus_next = NodePath("../CheckButton_VSync")
@@ -123,9 +125,9 @@ value = 100.0
 tick_count = 3
 
 [node name="CheckButton_VSync" type="CheckButton" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 180.0
+margin_top = 276.0
 margin_right = 324.0
-margin_bottom = 224.0
+margin_bottom = 320.0
 focus_neighbour_top = NodePath("../HSlider_Field_of_View")
 focus_neighbour_bottom = NodePath("../CheckButton_Fullscreen")
 focus_next = NodePath("../CheckButton_Fullscreen")
@@ -134,9 +136,9 @@ custom_fonts/font = SubResource( 4 )
 text = "V-Sync"
 
 [node name="CheckButton_Fullscreen" type="CheckButton" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 228.0
+margin_top = 340.0
 margin_right = 324.0
-margin_bottom = 272.0
+margin_bottom = 384.0
 focus_neighbour_top = NodePath("../CheckButton_VSync")
 focus_neighbour_bottom = NodePath("../CheckButton_Debug")
 focus_next = NodePath("../CheckButton_Debug")
@@ -145,9 +147,9 @@ custom_fonts/font = SubResource( 5 )
 text = "Fullscreen"
 
 [node name="CheckButton_Debug" type="CheckButton" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 276.0
+margin_top = 404.0
 margin_right = 324.0
-margin_bottom = 320.0
+margin_bottom = 448.0
 focus_neighbour_top = NodePath("../CheckButton_Fullscreen")
 focus_neighbour_bottom = NodePath("../Button_Controls")
 focus_next = NodePath("../Button_Controls")
@@ -156,9 +158,9 @@ custom_fonts/font = SubResource( 6 )
 text = "Debug Mode"
 
 [node name="Button_Controls" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 324.0
+margin_top = 468.0
 margin_right = 324.0
-margin_bottom = 366.0
+margin_bottom = 510.0
 custom_fonts/font = SubResource( 7 )
 text = "Controls"
 

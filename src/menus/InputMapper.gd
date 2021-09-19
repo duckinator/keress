@@ -49,15 +49,11 @@ onready var hbox3 = vbox.get_node("HBoxContainer3")
 onready var controls_save = hbox3.get_node("Controls_Save")
 
 func _ready():
-	controls_reset.set_meta("no_auto_focus", true)
-	controls_save.set_meta("no_auto_focus", true)
-	
-	Game.setup_hbox_vbox(hbox, vbox)
-	
-	controls_reset.connect("pressed", self, "reset_config")
-	controls_save.connect("pressed", self, "save_config")
-
-	var err = done.connect("pressed", self, "deactivate")
+	var err = controls_reset.connect("pressed", self, "reset_config")
+	assert(err == OK)
+	err = controls_save.connect("pressed", self, "save_config")
+	assert(err == OK)
+	err = done.connect("pressed", self, "deactivate")
 	assert(err == OK)
 	
 	for setting in CONTROLS.keys():
