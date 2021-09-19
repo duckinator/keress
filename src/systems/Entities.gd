@@ -9,7 +9,7 @@ var ENTITIES = {
 
 var ENTITIES_FOR_MAP = {
 	"Cube": {
-		"Player": [Vector3(0, 5, 0)],
+		"Player": [Vector3(0, 2, 0)],
 		#"Enemy1": [
 		#	Vector3(15, 3, -14),
 		#	Vector3(10, 3, -12),
