@@ -1,0 +1,502 @@
+[gd_scene load_steps=1 format=2]
+
+[sub_resource id=1 type="PhysicsMaterial"]
+
+resource_name = "CubePhysicsMaterial"
+friction = 0.5
+bounce = 0.0
+
+[sub_resource id=2 type="ConvexPolygonShape"]
+
+resource_name = "Cube"
+points = PoolVector3Array(7.78852, 7.78852, 7.78852, 7.78852, 7.78852, -7.78852, -7.78852, 7.78852, 7.78852, -7.78852, 7.78852, -7.78852)
+
+[sub_resource id=3 type="Shader"]
+
+resource_name = "Shader Nodetree"
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_always, cull_back, diffuse_burley, specular_schlick_ggx;
+
+
+
+void node_bsdf_principled(vec4 color, float subsurface, vec4 subsurface_color,
+        float metallic, float specular, float roughness, float clearcoat,
+        float clearcoat_roughness, float anisotropy, float transmission,
+        float IOR, out vec3 albedo, out float sss_strength_out,
+        out float metallic_out, out float specular_out,
+        out float roughness_out, out float clearcoat_out,
+        out float clearcoat_gloss_out, out float anisotropy_out,
+        out float transmission_out, out float ior) {
+    metallic = clamp(metallic, 0.0, 1.0);
+    transmission = clamp(transmission, 0.0, 1.0);
+
+    subsurface = subsurface * (1.0 - metallic);
+
+    albedo = mix(color.rgb, subsurface_color.rgb, subsurface);
+    sss_strength_out = subsurface;
+    metallic_out = metallic;
+    specular_out = pow((IOR - 1.0)/(IOR + 1.0), 2)/0.08;
+    roughness_out = roughness;
+    clearcoat_out = clearcoat * (1.0 - transmission);
+    clearcoat_gloss_out = 1.0 - clearcoat_roughness;
+    anisotropy_out = clamp(anisotropy, 0.0, 1.0);
+    transmission_out = (1.0 - transmission) * (1.0 - metallic);
+    ior = IOR;
+}
+
+void vertex () {
+}
+
+void fragment () {
+	
+	// node: 'Principled BSDF'
+	// type: 'ShaderNodeBsdfPrincipled'
+	// input sockets handling
+	vec4 node0_in0_basecolor = vec4(0.800000011920929, 0.800000011920929,
+		0.800000011920929, 1.0);
+	float node0_in1_subsurface = float(0.0);
+	vec3 node0_in2_subsurfaceradius = vec3(1.0, 0.20000000298023224,
+		0.10000000149011612);
+	vec4 node0_in3_subsurfacecolor = vec4(0.800000011920929, 0.800000011920929,
+		0.800000011920929, 1.0);
+	float node0_in4_metallic = float(0.0);
+	float node0_in5_specular = float(0.5);
+	float node0_in6_speculartint = float(0.0);
+	float node0_in7_roughness = float(0.4000000059604645);
+	float node0_in8_anisotropic = float(0.0);
+	float node0_in9_anisotropicrotation = float(0.0);
+	float node0_in10_sheen = float(0.0);
+	float node0_in11_sheentint = float(0.5);
+	float node0_in12_clearcoat = float(0.0);
+	float node0_in13_clearcoatroughness = float(0.029999999329447746);
+	float node0_in14_ior = float(1.4500000476837158);
+	float node0_in15_transmission = float(0.0);
+	float node0_in16_transmissionroughness = float(0.0);
+	vec4 node0_in17_emission = vec4(0.0, 0.0, 0.0, 1.0);
+	float node0_in18_emissionstrength = float(1.0);
+	float node0_in19_alpha = float(1.0);
+	vec3 node0_in20_normal = NORMAL;
+	vec3 node0_in21_clearcoatnormal = vec3(0.0, 0.0, 0.0);
+	vec3 node0_in22_tangent = TANGENT;
+	// output sockets definitions
+	vec3 node0_bsdf_out0_albedo;
+	float node0_bsdf_out1_sss_strength;
+	float node0_bsdf_out3_specular;
+	float node0_bsdf_out2_metallic;
+	float node0_bsdf_out4_roughness;
+	float node0_bsdf_out5_clearcoat;
+	float node0_bsdf_out6_clearcoat_gloss;
+	float node0_bsdf_out7_anisotropy;
+	float node0_bsdf_out8_transmission;
+	float node0_bsdf_out9_ior;
+	
+	node_bsdf_principled(node0_in0_basecolor, node0_in1_subsurface,
+		node0_in3_subsurfacecolor, node0_in4_metallic, node0_in5_specular,
+		node0_in7_roughness, node0_in12_clearcoat, node0_in13_clearcoatroughness,
+		node0_in8_anisotropic, node0_in15_transmission, node0_in14_ior,
+		node0_bsdf_out0_albedo, node0_bsdf_out1_sss_strength, node0_bsdf_out2_metallic,
+		node0_bsdf_out3_specular, node0_bsdf_out4_roughness, node0_bsdf_out5_clearcoat,
+		node0_bsdf_out6_clearcoat_gloss, node0_bsdf_out7_anisotropy,
+		node0_bsdf_out8_transmission, node0_bsdf_out9_ior);
+	
+	
+	ALBEDO = node0_bsdf_out0_albedo;
+	SSS_STRENGTH = node0_bsdf_out1_sss_strength;
+	SPECULAR = node0_bsdf_out3_specular;
+	METALLIC = node0_bsdf_out2_metallic;
+	ROUGHNESS = node0_bsdf_out4_roughness;
+	CLEARCOAT = node0_bsdf_out5_clearcoat;
+	CLEARCOAT_GLOSS = node0_bsdf_out6_clearcoat_gloss;
+	NORMAL = node0_in20_normal;
+	// uncomment it when you need it
+	// TRANSMISSION = vec3(1.0, 1.0, 1.0) * node0_bsdf_out8_transmission;
+	// uncomment it when you are modifing TANGENT
+	// TANGENT = normalize(cross(cross(node0_in22_tangent, NORMAL), NORMAL));
+	// BINORMAL = cross(TANGENT, NORMAL);
+	// uncomment it when you have tangent(UV) set
+	// ANISOTROPY = node0_bsdf_out7_anisotropy;
+}
+"
+
+[sub_resource id=4 type="ShaderMaterial"]
+
+resource_name = ""
+shader = SubResource(3)
+
+[sub_resource id=5 type="ArrayMesh"]
+
+resource_name = "Cube"
+surfaces/0 = {
+	"material":SubResource(4),
+	"primitive":4,
+	"arrays":[
+		Vector3Array(-7.78852, -7.78852, -7.78852, 7.78852, -7.78852, -7.78852, 7.78852, 7.78852, -7.78852, -7.78852, 7.78852, -7.78852),
+		Vector3Array(0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0),
+		FloatArray(0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0),
+		null, ; no Vertex Colors,
+		Vector2Array(0.375, 0.75, 0.375, 0.5, 0.625, 0.5, 0.625, 0.75),
+		null, ; No UV2,
+		null, ; No Bones,
+		null, ; No Weights,
+		IntArray(0, 2, 1, 0, 3, 2)
+	],
+	"morph_arrays":[]
+}
+
+[sub_resource id=6 type="PhysicsMaterial"]
+
+resource_name = "Cube001PhysicsMaterial"
+friction = 0.5
+bounce = 0.0
+
+[sub_resource id=7 type="ConvexPolygonShape"]
+
+resource_name = "Cube001"
+points = PoolVector3Array(-1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0)
+
+[sub_resource id=8 type="ArrayMesh"]
+
+resource_name = "Cube001"
+surfaces/0 = {
+	"primitive":4,
+	"arrays":[
+		Vector3Array(-1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0),
+		Vector3Array(-1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0),
+		FloatArray(0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, -1.0, 0.0, 0.0, 1.0, -1.0, 0.0, 0.0, 1.0, -1.0, 0.0, 0.0, 1.0, -1.0, 0.0, 0.0, 1.0),
+		null, ; no Vertex Colors,
+		Vector2Array(0.375, 1.0, 0.625, 1.0, 0.625, 0.75, 0.375, 0.75, 0.375, 0.75, 0.625, 0.75, 0.625, 0.5, 0.375, 0.5, 0.375, 0.5, 0.625, 0.5, 0.625, 0.25, 0.375, 0.25, 0.375, 0.25, 0.625, 0.25, 0.625, 0.0, 0.375, 0.0, 0.125, 0.5, 0.375, 0.5, 0.375, 0.25, 0.125, 0.25, 0.625, 0.5, 0.875, 0.5, 0.875, 0.25, 0.625, 0.25),
+		null, ; No UV2,
+		null, ; No Bones,
+		null, ; No Weights,
+		IntArray(0, 2, 1, 0, 3, 2, 4, 6, 5, 4, 7, 6, 8, 10, 9, 8, 11, 10, 12, 14, 13, 12, 15, 14, 16, 18, 17, 16, 19, 18, 20, 22, 21, 20, 23, 22)
+	],
+	"morph_arrays":[]
+}
+
+[sub_resource id=9 type="PhysicsMaterial"]
+
+resource_name = "Cube002PhysicsMaterial"
+friction = 0.5
+bounce = 0.0
+
+[sub_resource id=10 type="ConvexPolygonShape"]
+
+resource_name = "Cube002"
+points = PoolVector3Array(7.78852, -7.78852, 7.78852, 7.78852, 7.78852, 7.78852, 7.78852, -7.78852, -7.78852, 7.78852, 7.78852, -7.78852)
+
+[sub_resource id=11 type="ShaderMaterial"]
+
+resource_name = ""
+shader = SubResource(3)
+
+[sub_resource id=12 type="ArrayMesh"]
+
+resource_name = "Cube002"
+surfaces/0 = {
+	"material":SubResource(11),
+	"primitive":4,
+	"arrays":[
+		Vector3Array(7.78852, -7.78852, -7.78852, 7.78852, -7.78852, 7.78852, 7.78852, 7.78852, 7.78852, 7.78852, 7.78852, -7.78852),
+		Vector3Array(-1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0),
+		FloatArray(0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0),
+		null, ; no Vertex Colors,
+		Vector2Array(0.375, 0.5, 0.375, 0.25, 0.625, 0.25, 0.625, 0.5),
+		null, ; No UV2,
+		null, ; No Bones,
+		null, ; No Weights,
+		IntArray(0, 2, 1, 0, 3, 2)
+	],
+	"morph_arrays":[]
+}
+
+[sub_resource id=13 type="PhysicsMaterial"]
+
+resource_name = "Cube003PhysicsMaterial"
+friction = 0.5
+bounce = 0.0
+
+[sub_resource id=14 type="ConvexPolygonShape"]
+
+resource_name = "Cube003"
+points = PoolVector3Array(-7.78852, -7.78852, 7.78852, -7.78852, -7.78852, -7.78852, -7.78852, 7.78852, 7.78852, -7.78852, 7.78852, -7.78852)
+
+[sub_resource id=15 type="ShaderMaterial"]
+
+resource_name = ""
+shader = SubResource(3)
+
+[sub_resource id=16 type="ArrayMesh"]
+
+resource_name = "Cube003"
+surfaces/0 = {
+	"material":SubResource(15),
+	"primitive":4,
+	"arrays":[
+		Vector3Array(-7.78852, -7.78852, 7.78852, -7.78852, -7.78852, -7.78852, -7.78852, 7.78852, -7.78852, -7.78852, 7.78852, 7.78852),
+		Vector3Array(1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0),
+		FloatArray(0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0),
+		null, ; no Vertex Colors,
+		Vector2Array(0.375, 1.0, 0.375, 0.75, 0.625, 0.75, 0.625, 1.0),
+		null, ; No UV2,
+		null, ; No Bones,
+		null, ; No Weights,
+		IntArray(0, 2, 1, 0, 3, 2)
+	],
+	"morph_arrays":[]
+}
+
+[sub_resource id=17 type="PhysicsMaterial"]
+
+resource_name = "Cube004PhysicsMaterial"
+friction = 0.5
+bounce = 0.0
+
+[sub_resource id=18 type="ConvexPolygonShape"]
+
+resource_name = "Cube004"
+points = PoolVector3Array(-7.78852, -7.78852, -7.78852, -7.78852, 7.78852, -7.78852, 7.78852, -7.78852, -7.78852, 7.78852, 7.78852, -7.78852)
+
+[sub_resource id=19 type="ShaderMaterial"]
+
+resource_name = ""
+shader = SubResource(3)
+
+[sub_resource id=20 type="ArrayMesh"]
+
+resource_name = "Cube004"
+surfaces/0 = {
+	"material":SubResource(19),
+	"primitive":4,
+	"arrays":[
+		Vector3Array(-7.78852, -7.78852, -7.78852, -7.78852, -7.78852, 7.78852, 7.78852, -7.78852, 7.78852, 7.78852, -7.78852, -7.78852),
+		Vector3Array(0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0),
+		FloatArray(1.0, 0.0, 0.0, -1.0, 1.0, 0.0, 0.0, -1.0, 1.0, 0.0, 0.0, -1.0, 1.0, 0.0, 0.0, -1.0),
+		null, ; no Vertex Colors,
+		Vector2Array(0.125, 0.5, 0.125, 0.25, 0.375, 0.25, 0.375, 0.5),
+		null, ; No UV2,
+		null, ; No Bones,
+		null, ; No Weights,
+		IntArray(0, 2, 1, 0, 3, 2)
+	],
+	"morph_arrays":[]
+}
+
+[sub_resource id=21 type="PhysicsMaterial"]
+
+resource_name = "Cube005PhysicsMaterial"
+friction = 0.5
+bounce = 0.0
+
+[sub_resource id=22 type="ConvexPolygonShape"]
+
+resource_name = "Cube005"
+points = PoolVector3Array(-7.78852, -7.78852, -7.78852, 7.78852, -7.78852, -7.78852, -7.78852, -7.78852, 7.78852, 7.78852, -7.78852, 7.78852)
+
+[sub_resource id=23 type="ShaderMaterial"]
+
+resource_name = ""
+shader = SubResource(3)
+
+[sub_resource id=24 type="ArrayMesh"]
+
+resource_name = "Cube005"
+surfaces/0 = {
+	"material":SubResource(23),
+	"primitive":4,
+	"arrays":[
+		Vector3Array(7.78852, -7.78852, 7.78852, -7.78852, -7.78852, 7.78852, -7.78852, 7.78852, 7.78852, 7.78852, 7.78852, 7.78852),
+		Vector3Array(0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0),
+		FloatArray(0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0),
+		null, ; no Vertex Colors,
+		Vector2Array(0.375, 0.25, 0.375, 0.0, 0.625, 0.0, 0.625, 0.25),
+		null, ; No UV2,
+		null, ; No Bones,
+		null, ; No Weights,
+		IntArray(0, 2, 1, 0, 3, 2)
+	],
+	"morph_arrays":[]
+}
+
+[sub_resource id=25 type="PhysicsMaterial"]
+
+resource_name = "Cube006PhysicsMaterial"
+friction = 0.5
+bounce = 0.0
+
+[sub_resource id=26 type="ConvexPolygonShape"]
+
+resource_name = "Cube006"
+points = PoolVector3Array(7.78852, 7.78852, 7.78852, -7.78852, 7.78852, 7.78852, 7.78852, -7.78852, 7.78852, -7.78852, -7.78852, 7.78852)
+
+[sub_resource id=27 type="ShaderMaterial"]
+
+resource_name = ""
+shader = SubResource(3)
+
+[sub_resource id=28 type="ArrayMesh"]
+
+resource_name = "Cube006"
+surfaces/0 = {
+	"material":SubResource(27),
+	"primitive":4,
+	"arrays":[
+		Vector3Array(7.78852, 7.78852, -7.78852, 7.78852, 7.78852, 7.78852, -7.78852, 7.78852, 7.78852, -7.78852, 7.78852, -7.78852),
+		Vector3Array(0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0),
+		FloatArray(-1.0, 0.0, 0.0, -1.0, -1.0, 0.0, 0.0, -1.0, -1.0, 0.0, 0.0, -1.0, -1.0, 0.0, 0.0, -1.0),
+		null, ; no Vertex Colors,
+		Vector2Array(0.625, 0.5, 0.625, 0.25, 0.875, 0.25, 0.875, 0.5),
+		null, ; No UV2,
+		null, ; No Bones,
+		null, ; No Weights,
+		IntArray(0, 2, 1, 0, 3, 2)
+	],
+	"morph_arrays":[]
+}
+
+[node type="Spatial" name="Scene"]
+
+[node name="CubePhysics" type="StaticBody" parent="."]
+
+physics_material_override = SubResource(1)
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 7.8, 0.0)
+collision_layer = 1
+collision_mask = 1
+
+[node name="CubeCollision" type="CollisionShape" parent="CubePhysics"]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, 1.0, 0.0, -1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+shape = SubResource(2)
+
+[node name="Cube" type="MeshInstance" parent="CubePhysics/CubeCollision"]
+
+mesh = SubResource(5)
+visible = true
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, -1.0, 0.0, 1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+
+[node name="Light" type="OmniLight" parent="."]
+
+light_specular = 1.0
+light_color = Color(1.0, 1.0, 1.0, 1.0)
+shadow_color = Color(0.0, 0.0, 0.0, 1.0)
+light_energy = 10.0
+omni_range = 40.0
+transform = Transform(-0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.794672, -0.955171, 0.199883, -0.218391, 4.07625, 5.90386, -1.00545)
+light_negative = false
+shadow_enabled = true
+
+[node name="Cube001Physics" type="StaticBody" parent="."]
+
+physics_material_override = SubResource(6)
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Cube001Collision" type="CollisionShape" parent="Cube001Physics"]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, 1.0, 0.0, -1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+shape = SubResource(7)
+
+[node name="Cube001" type="MeshInstance" parent="Cube001Physics/Cube001Collision"]
+
+mesh = SubResource(8)
+visible = true
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, -1.0, 0.0, 1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+
+[node name="Camera" type="Camera" parent="."]
+
+far = 1000.0
+near = 0.1
+size = 6.0
+projection = 0
+fov = 39.5978
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 4.1449, 4.97388)
+
+[node name="Cube002Physics" type="StaticBody" parent="."]
+
+physics_material_override = SubResource(9)
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 7.8, 0.0)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Cube002Collision" type="CollisionShape" parent="Cube002Physics"]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, 1.0, 0.0, -1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+shape = SubResource(10)
+
+[node name="Cube002" type="MeshInstance" parent="Cube002Physics/Cube002Collision"]
+
+mesh = SubResource(12)
+visible = true
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, -1.0, 0.0, 1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+
+[node name="Cube003Physics" type="StaticBody" parent="."]
+
+physics_material_override = SubResource(13)
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 7.8, 0.0)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Cube003Collision" type="CollisionShape" parent="Cube003Physics"]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, 1.0, 0.0, -1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+shape = SubResource(14)
+
+[node name="Cube003" type="MeshInstance" parent="Cube003Physics/Cube003Collision"]
+
+mesh = SubResource(16)
+visible = true
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, -1.0, 0.0, 1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+
+[node name="Cube004Physics" type="StaticBody" parent="."]
+
+physics_material_override = SubResource(17)
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 7.8, 0.0)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Cube004Collision" type="CollisionShape" parent="Cube004Physics"]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, 1.0, 0.0, -1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+shape = SubResource(18)
+
+[node name="Cube004" type="MeshInstance" parent="Cube004Physics/Cube004Collision"]
+
+mesh = SubResource(20)
+visible = true
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, -1.0, 0.0, 1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+
+[node name="Cube005Physics" type="StaticBody" parent="."]
+
+physics_material_override = SubResource(21)
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 7.8, 0.0)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Cube005Collision" type="CollisionShape" parent="Cube005Physics"]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, 1.0, 0.0, -1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+shape = SubResource(22)
+
+[node name="Cube005" type="MeshInstance" parent="Cube005Physics/Cube005Collision"]
+
+mesh = SubResource(24)
+visible = true
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, -1.0, 0.0, 1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+
+[node name="Cube006Physics" type="StaticBody" parent="."]
+
+physics_material_override = SubResource(25)
+transform = Transform(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 7.8, 0.0)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Cube006Collision" type="CollisionShape" parent="Cube006Physics"]
+
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, 1.0, 0.0, -1.0, -4.37114e-08, 0.0, 0.0, 0.0)
+shape = SubResource(26)
+
+[node name="Cube006" type="MeshInstance" parent="Cube006Physics/Cube006Collision"]
+
+mesh = SubResource(28)
+visible = true
+transform = Transform(1.0, 0.0, 0.0, 0.0, -4.37114e-08, -1.0, 0.0, 1.0, -4.37114e-08, 0.0, 0.0, 0.0)
