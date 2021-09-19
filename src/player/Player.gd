@@ -127,9 +127,6 @@ func jump(assist=1):
 # Various _process_* functions:
 
 func process_input(_delta):
-	if Console.visible:
-		return
-	
 	# Walking
 	dir = Vector3()
 	var cam_xform = camera.get_global_transform()
