@@ -6,9 +6,22 @@ const PHYSICS_TIME_WARN = 0.1
 
 onready var label = $Panel/RichTextLabel
 
+func _ready():
+	self.name = "DebugOverlay"
+
+	# When the game is paused, hide the debug overlay.
+	var err = Game.connect("pause", self, "hide")
+	if err != OK:
+		Console.log(str(err))
+
+	# When the game is resumed, show the debug overlay again.
+	err = Game.connect("resume", self, "show")
+	if err != OK:
+		Console.log(str(err))
+
 func _process(_delta):
 	# If debug mode is disabled, or we're in a menu, remove the debug overlay.
-	if not Debug.enabled or not Game.playing:
+	if not Debug.enabled or not MapManager.in_game():
 		Game.debug_display = null
 		queue_free()
 		return

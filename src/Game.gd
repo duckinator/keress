@@ -1,8 +1,8 @@
 extends Node
 
+signal pause
 signal resume
 
-const DEBUG_SCENE = preload("res://overlays/DebugOverlay.tscn")
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
 
 var canvas_layer
@@ -23,6 +23,7 @@ func _ready():
 
 func pause():
 	canvas_layer.add_child(PAUSE_SCENE.instance())
+	emit_signal("pause")
 
 func resume():
 	capture_cursor()
@@ -30,11 +31,6 @@ func resume():
 
 func quit():
 	get_tree().quit()
-
-func add_debug_display():
-	if debug_display == null:
-		debug_display = DEBUG_SCENE.instance()
-		canvas_layer.add_child(debug_display)
 
 func setup_hbox_vbox(hbox, vbox):
 	hbox.add_spacer(true)

@@ -24,11 +24,17 @@ func load_map(new_map=null):
 		map = MAPS.keys()[0]
 	else:
 		map = new_map
-	emit_signal("load_map", map)
 	Game.playing = true
 	var err = load_scene(BLENDER_MAP_SCENE)
 	if err:
 		Console.error("load_map(): Could not load map " + map + ". (Error " + str(err) + ".)")
+	emit_signal("load_map", map)
+	
+	# If Game.resume() isn't deferred, it gets called before the map is loaded.
+	Game.call_deferred("resume")
 
 func main_menu():
 	load_scene(MAIN_MENU_SCENE)
+
+func in_game():
+	return (get_tree().current_scene.name == "BlenderLevel")

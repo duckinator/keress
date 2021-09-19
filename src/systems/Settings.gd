@@ -10,7 +10,6 @@ const DEFAULTS = {
 	"vsync": false,
 	"fullscreen": false,
 	"debug": false,
-	"mob_debug": false,
 }
 
 func store(key, val):

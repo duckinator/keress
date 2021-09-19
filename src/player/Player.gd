@@ -61,10 +61,6 @@ func reload_player_settings():
 	JOYPAD_SENSITIVITY = Settings.fetch("joypad_sensitivity")
 
 func _process(_delta):
-	# If debug mode is enabled and there's no debug display, add one.
-	if Debug.enabled and Game.debug_display == null:
-		Game.add_debug_display()
-
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
 	var vert = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
 	horiz *= JOYPAD_SENSITIVITY
