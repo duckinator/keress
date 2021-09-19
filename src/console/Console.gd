@@ -15,21 +15,9 @@ func _text_changed(new_text):
 		input.text = new_text.replace("`", "")
 		Console.hide()
 
-func date_prefix():
-	var dt = OS.get_datetime()
-	var hour = str(dt["hour"]).pad_zeros(2)
-	var minute = str(dt["minute"]).pad_zeros(2)
-	var second = str(dt["second"]).pad_zeros(2)
-	return "[" + hour + ":" + minute + ":" + second + "] "
-
-func log(text):
-	var lines = text.split("\n")
-	for line in lines:
-		var prefix = date_prefix()
-		var output = prefix + line
-		scrollback.append_bbcode(output)
-		print(output)
-		scrollback.newline()
+func log_line(line):
+	scrollback.append_bbcode(line.strip_edges(false, true))
+	scrollback.newline()
 
 func clear():
 	scrollback.clear()

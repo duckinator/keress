@@ -15,6 +15,13 @@ func _ready():
 func _get_visible():
 	return _console.visible
 
+func _line_prefix():
+	var dt = OS.get_datetime()
+	var hour = str(dt["hour"]).pad_zeros(2)
+	var minute = str(dt["minute"]).pad_zeros(2)
+	var second = str(dt["second"]).pad_zeros(2)
+	return "[" + hour + ":" + minute + ":" + second + "] "
+
 func hide():
 	_console.set_enabled(false)
 
@@ -29,16 +36,18 @@ func toggle():
 
 func debug(text):
 	if Debug.enabled:
-		_console.log("DEBUG: " + text)
+		log("DEBUG: " + text)
 
 func error(text):
-	_console.log("ERROR: " + text)
+	log("ERROR: " + text)
 
 func warn(text):
-	_console.log("WARNING: " + text)
+	log("WARNING: " + text)
 
 func log(text):
-	_console.log(text)
+	var line = _line_prefix() + text
+	_console.log_line(line)
+	print(line)
 
 func clear():
 	_console.clear()
