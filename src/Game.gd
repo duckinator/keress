@@ -81,15 +81,6 @@ func add_debug_display():
 		debug_display = DEBUG_SCENE.instance()
 		canvas_layer.add_child(debug_display)
 
-func get_player(scene=null):
-	if scene == null:
-		scene = get_tree().current_scene
-	
-	if scene.has_node('Player'):
-		return scene.get_node('Player')
-	else:
-		return null
-
 func focus_first_control(node):
 	for child in node.get_children():
 		# Skip hidden nodes.

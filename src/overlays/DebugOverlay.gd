@@ -13,7 +13,7 @@ func _process(_delta):
 		queue_free()
 		return
 	
-	var player_position = Game.get_player().translation.round()
+	var player_position = get_tree().current_scene.get_node('Player').translation.round()
 	var fps = Performance.get_monitor(Performance.TIME_FPS)
 	var frame_time = Performance.get_monitor(Performance.TIME_PROCESS)
 	var physics_time = Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)
