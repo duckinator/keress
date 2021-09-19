@@ -12,14 +12,20 @@ func _line_prefix():
 
 func debug(text):
 	if Debug.enabled:
-		log("DEBUG: " + text)
+		_log("DEBUG", text)
 
 func error(text):
-	log("ERROR: " + text)
+	_log("ERROR", text)
 
 func warn(text):
-	log("WARNING: " + text)
+	_log("WARN ", text)
+
+func info(text):
+	_log("INFO ", text)
 
 func log(text):
+	info(text)
+
+func _log(type, text):
 	var line = _line_prefix() + text
-	print(line)
+	print("[" + type + "] " + _line_prefix() + text)
