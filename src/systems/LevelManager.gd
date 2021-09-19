@@ -4,7 +4,7 @@ signal load_level
 
 const MAPS = [
 	null,
-	"res://blender/exports/Warehouse.escn",
+	"res://blender/maps/cube/Cube.escn",
 ]
 
 const BLENDER_LEVEL_SCENE = "res://blender_level/BlenderLevel.tscn"
@@ -15,9 +15,6 @@ const MIN_LEVEL = FIRST_LEVEL
 const MAX_LEVEL = 3
 
 var level_cleared = false
-
-func _ready():
-	Game.connect("load_level", self, "reset")
 
 func setup(parent_scene):
 	var map = load(MAPS[get_current_level()]).instance()
