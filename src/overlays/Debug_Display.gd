@@ -14,12 +14,10 @@ func _ready():
 	engine = Engine.get_version_info()["string"]
 
 func _process(_delta):
-	var level = "(None)"
 	var position = "(None)"
 	
 	if Game.playing:
 		var pos = Game.get_player().translation.round()
-		level = str(LevelManager.get_current_level())
 		position = str(pos)
 	
 	var fps = Performance.get_monitor(Performance.TIME_FPS)
@@ -38,7 +36,6 @@ func _process(_delta):
 		"Engine:   Godot " + engine,
 		"FPS:      %s" % [fps],
 		"Timing:   frame=%s, physics=%s" % [ftime_str, ptime_str],
-		"Level:    " + level,
 		"Position: " + position,
 	]
 	

@@ -28,7 +28,7 @@ var SECONDARY_TIMEOUTS = {}
 
 
 func _ready():
-	var err = LevelManager.connect("load_level", self, "clear_timeouts")
+	var err = MapManager.connect("load_map", self, "clear_timeouts")
 	if err != OK:
 		Console.log(str(err))
 
@@ -40,7 +40,7 @@ func _stop_and_remove_all(dict):
 			timer.free()
 		dict.erase(key)
 
-func clear_timeouts(_level):
+func clear_timeouts(_map):
 	_stop_and_remove_all(PRIMARY_TIMEOUTS)
 	_stop_and_remove_all(SECONDARY_TIMEOUTS)
 

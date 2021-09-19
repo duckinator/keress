@@ -22,9 +22,8 @@ func _ready():
 	Game.focus_first_control(self)
 
 func game_new():
-	Settings.store("current_level", LevelManager.FIRST_LEVEL)
 	hide()
-	LevelManager.load_level(LevelManager.get_current_level())
+	MapManager.load_map()
 
 # TODO: Add quit prompt.
 func quit():

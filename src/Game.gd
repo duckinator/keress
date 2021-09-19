@@ -47,7 +47,6 @@ func pause():
 	var settings = popup.get_node("Settings")
 	vbox.get_node("Resume_Button").connect("pressed", self, "resume")
 	vbox.get_node("Settings_Button").connect("pressed", self, "show_settings", [settings])
-	vbox.get_node("Reload_Button").connect("pressed", self, "restart_level")
 	vbox.get_node("Menu_Button").connect("pressed", self, "main_menu")
 	vbox.get_node("Quit_Button").connect("pressed", self, "quit")
 	canvas_layer.add_child(popup)
@@ -70,7 +69,7 @@ func show_settings(settings):
 
 func main_menu():
 	resume()
-	LevelManager.load_scene(MAIN_MENU_PATH)
+	MapManager.load_scene(MAIN_MENU_PATH)
 
 func quit():
 	get_tree().quit()
@@ -156,16 +155,6 @@ func focus_first_control(node):
 func get_total_gravity_for(body):
 	var state = PhysicsServer.body_get_direct_state(body.get_rid())
 	return state.get_total_gravity()
-
-func _input(event):
-	if event is InputEventKey and event.pressed and event.scancode == KEY_F4:
-		LevelManager.previous_level()
-
-	if event is InputEventKey and event.pressed and event.scancode == KEY_F5:
-		LevelManager.restart_level()
-
-	if event is InputEventKey and event.pressed and event.scancode == KEY_F6:
-		LevelManager.next_level()
 
 func setup_hbox_vbox(hbox, vbox):
 	hbox.add_spacer(true)

@@ -7,8 +7,8 @@ var ENTITIES = {
 	#"Enemy1": preload("res://enemies/enemy1/Enemy1.tscn"),
 }
 
-var ENTITIES_FOR_LEVEL = {
-	"Level_001": {
+var ENTITIES_FOR_MAP = {
+	"Cube": {
 		"Player": [Vector3(0, 5, 0)],
 		#"Enemy1": [
 		#	Vector3(15, 3, -14),
@@ -19,19 +19,16 @@ var ENTITIES_FOR_LEVEL = {
 		#	Vector3(-15, 3, -14),
 		#]
 	},
-	"Level_002": {},
-	"Level_003": {},
 }
 
 func get_mobs():
 	return get_tree().get_nodes_in_group("mobs")
 
-func spawn_for_level(level):
-	level = "Level_" + str(level).pad_zeros(3)
-	Console.log("Spawning enemies for " + level)
+func spawn_for_map(map):
+	Console.log("Spawning entities for map: " + map)
 	
-	for enemy_type in ENTITIES_FOR_LEVEL[level]:
-		for pos in ENTITIES_FOR_LEVEL[level][enemy_type]:
+	for enemy_type in ENTITIES_FOR_MAP[map]:
+		for pos in ENTITIES_FOR_MAP[map][enemy_type]:
 			print(enemy_type, pos)
 			spawn(enemy_type, pos)
 

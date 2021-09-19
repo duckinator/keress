@@ -4,7 +4,7 @@ extends Node
 # ========================
 # Listens to events from systems that are of interest to enemies, such as Noise.
 # Mobs register as listeners when they are spawned.
-# When the level changes, +mobs+ and +areas+ both get cleared.
+# When the map changes, +mobs+ and +areas+ both get cleared.
 
 const AOI_GRANULARITY = 5.0
 const MAX_AREAS = 10
@@ -12,12 +12,12 @@ const MAX_AREAS = 10
 var areas = []
 
 func _ready():
-	var err = LevelManager.connect("load_level", self, "clear")
+	var err = MapManager.connect("load_map", self, "clear")
 	if err != OK:
 		Console.log(str(err))
 	Noise.add_listener(self, "add_noise_aoi")
 
-func clear(_level):
+func clear(_map):
 	areas = []
 
 func add_noise_aoi(trans, _sound, _loudness):
