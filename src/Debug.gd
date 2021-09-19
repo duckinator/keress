@@ -11,14 +11,6 @@ func _ready():
 	if "--debug-mobs" in OS.get_cmdline_args():
 		_set_mob_debug_enabled(true)
 
-func print(text):
-	if enabled:
-		print(text)
-
-func log(text):
-	if enabled:
-		Console.debug(text)
-
 func _set_enabled(val):
 	if enabled == val:
 		return
