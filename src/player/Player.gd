@@ -61,9 +61,9 @@ func reload_player_settings():
 	JOYPAD_SENSITIVITY = Settings.fetch("joypad_sensitivity")
 
 func _process(_delta):
-	if Input.is_action_just_pressed("ui_cancel"):
-		Game.pause()
-		return
+	# If debug mode is enabled and there's no debug display, add one.
+	if Debug.enabled and Game.debug_display == null:
+		Game.add_debug_display()
 
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
 	var vert = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
@@ -206,6 +206,10 @@ func process_fall_damage(old_vel, cur_vel):
 		emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
 
 func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		Game.pause()
+		return
+
 	if is_dead:
 		if Input.is_key_pressed(KEY_SPACE):
 			waiting_for_respawn = true
