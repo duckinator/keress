@@ -55,6 +55,7 @@ func _ready():
 	Game.connect("resume", self, "reload_player_settings")
 
 	adjust_health(MAX_HEALTH)
+	camera.set_current(true)
 
 # Load settings that need to be set before playing, or may change while the
 # game is paused.
