@@ -3,9 +3,6 @@ extends Node
 const SETTINGS_FILE = "user://settings.json"
 
 const DEFAULTS = {
-	"show_target_crosshair": true,
-	"show_target_dot": false,
-	
 	"mouse_sensitivity": 20,
 	"joypad_sensitivity": 20,
 	"field_of_view": 90,

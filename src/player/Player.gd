@@ -4,12 +4,6 @@ var weapon = Gun.WEAPON_DEAGLE
 var ammo = Gun.MAX_AMMO
 
 var fall_damage_enabled = true
-const WALLRUN_FALL_MULTIPLIER = 0.75
-const WALLRUN_SPEED_MULTIPLIER = 3
-const WALLRUN_ACCEL_MULTIPLIER = 8
-
-const NEUTRAL_CAMERA_ROTATION = 0
-const WALLRUN_CAMERA_ROTATION = -20
 
 const FALL_MULTIPLIER = 1.0
 const LOW_JUMP_MULTIPLIER = 1.5
@@ -52,7 +46,9 @@ func _ready():
 	rotation_helper = $RotationHelper
 
 	reload_player_settings()
-	Game.connect("resume", self, "reload_player_settings")
+	var err = Game.connect("resume", self, "reload_player_settings")
+	if err != OK:
+		Console.error(str(err))
 
 	adjust_health(MAX_HEALTH)
 	camera.set_current(true)
@@ -164,9 +160,6 @@ func process_movement(delta):
 	elif (vel.y > 0) and not Input.is_action_pressed("movement_jump"):
 		vel += Vector3.UP * gravity.y * (LOW_JUMP_MULTIPLIER - 1) * delta
 	
-	if is_on_wall() and vel.y < 0:
-		vel.y *= WALLRUN_FALL_MULTIPLIER
-	
 	var hvel = vel
 	hvel.y = 0
 	
@@ -178,22 +171,6 @@ func process_movement(delta):
 		accel = ACCEL
 	else:
 		accel = DEACCEL
-	
-	if is_on_wall() and not is_on_floor():
-		var speedup = false
-		if riding_wall($LeftShortRaycast):
-			camera_rotation_tween(camera.rotation_degrees.z, -WALLRUN_CAMERA_ROTATION)
-			speedup = true
-		elif riding_wall($RightShortRaycast):
-			camera_rotation_tween(camera.rotation_degrees.z, WALLRUN_CAMERA_ROTATION)
-			speedup = true
-		if speedup:
-			# TODO: Slight weapon translation?
-			target *= WALLRUN_SPEED_MULTIPLIER
-			accel *= WALLRUN_ACCEL_MULTIPLIER
-	else:
-		camera_rotation_tween(camera.rotation_degrees.z, NEUTRAL_CAMERA_ROTATION)
-		camera.rotation_degrees.z = NEUTRAL_CAMERA_ROTATION
 	
 	hvel = hvel.linear_interpolate(target, accel * delta)
 	vel.x = hvel.x
@@ -229,39 +206,3 @@ func _input(event):
 	# Mouse movement.
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		safe_rotate(event.relative)
-
-func raycast_adjacent(ray):
-	ray.force_raycast_update()
-	if not ray.is_colliding():
-		return null
-	return ray.get_collider()
-
-func riding_wall(ray):
-	var node = raycast_adjacent(ray)
-	return node != null and node.name.ends_with("Wall")
-
-func set_camera_rotation_z(new_z):
-	var weapon = $RotationHelper/DEagle
-	camera.rotation_degrees.z = new_z
-	weapon.rotation_degrees.z = camera.rotation_degrees.z
-
-const CAMERA_ROTATION_TWEEN_SPEED = 0.125
-var camera_tween = null
-func camera_rotation_tween(cur_z, new_z):
-	if camera_tween != null:
-		return
-	camera_tween = $CameraRotationTween.duplicate()
-	var speed = CAMERA_ROTATION_TWEEN_SPEED
-	camera_tween.connect("tween_completed", self, "camera_rotation_tween_end")
-	camera_tween.repeat = false
-	camera_tween.interpolate_method(self, "set_camera_rotation_z", cur_z, new_z, speed, Tween.TRANS_LINEAR, Tween.EASE_IN)
-	add_child(camera_tween)
-	camera_tween.start()
-
-func camera_rotation_tween_end(_object, _key):
-	if camera_tween == null:
-		return
-	camera_tween.stop_all()
-	remove_child(camera_tween)
-	camera_tween.queue_free()
-	camera_tween = null
