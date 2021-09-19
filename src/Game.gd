@@ -29,9 +29,9 @@ func _ready():
 	add_child(canvas_layer)
 
 func _process(_delta):
-	# If we're not playing, hide the pause menu.
-	if not playing:
-		resume()
+	# If we're not playing and the pause popup is visible, hide the pause menu.
+	if not playing and popup != null:
+		_hide_pause_menu()
 		return
 
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -49,25 +49,28 @@ func pause():
 	vbox.get_node("Menu_Button").connect("pressed", self, "main_menu")
 	vbox.get_node("Quit_Button").connect("pressed", self, "quit")
 	canvas_layer.add_child(popup)
-	focus_first_control(vbox)
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	vbox.get_node("Resume_Button").grab_focus()
+	show_cursor()
 	get_tree().paused = true
 	self.pause_mode = PAUSE_MODE_PROCESS
 
-func resume():
+func _hide_pause_menu():
 	if playing:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		capture_cursor()
 	get_tree().paused = false
 	if popup != null:
 		popup.queue_free()
 		popup = null
+
+func resume():
+	_hide_pause_menu()
 	emit_signal("resume")
 
 func show_settings(settings):
 	settings.activate()
 
 func main_menu():
-	resume()
+	_hide_pause_menu()
 	MapManager.load_scene(MAIN_MENU_PATH)
 
 func quit():

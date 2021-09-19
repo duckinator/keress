@@ -7,6 +7,12 @@ const PHYSICS_TIME_WARN = 0.1
 onready var label = $Panel/RichTextLabel
 
 func _process(_delta):
+	# If debug mode is disabled, or we're in a menu, remove the debug overlay.
+	if not Debug.enabled or not Game.playing:
+		Game.debug_display = null
+		queue_free()
+		return
+	
 	var player_position = Game.get_player().translation.round()
 	var fps = Performance.get_monitor(Performance.TIME_FPS)
 	var frame_time = Performance.get_monitor(Performance.TIME_PROCESS)

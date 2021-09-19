@@ -23,7 +23,7 @@ config/icon="res://icon.png"
 
 Settings="*res://systems/Settings.gd"
 Game="*res://Game.gd"
-Debug="*res://Debug.gd"
+Debug="*res://systems/Debug.gd"
 Console="*res://systems/Console.gd"
 BuildInfo="*res://systems/BuildInfo.gd"
 Entities="*res://systems/Entities.gd"
