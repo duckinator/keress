@@ -40,11 +40,15 @@ func _ready():
 
 func activate():
 	show()
-	Game.focus_first_control(self)
+	$Button_Back.grab_focus()
 
 func deactivate():
 	hide()
-	Game.focus_first_control(get_parent())
+	# A bit kludgy, but eh.
+	if get_parent().name == "Panels":
+		get_parent().get_parent().activate()
+	else:
+		get_parent().activate()
 
 func toggle_vsync():
 	Settings.store("vsync", _vsync.pressed)

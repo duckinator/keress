@@ -68,16 +68,14 @@ func _ready():
 		add_input_mapper(joypad, setting, JOYPAD_CONTROLS[setting])
 	
 	load_config()
-	
-	Game.focus_first_control(hbox2)
 
 func activate():
 	show()
-	Game.focus_first_control(self)
+	$Panel/Done.grab_focus()
 
 func deactivate():
 	hide()
-	Game.focus_first_control(get_parent())
+	get_parent().activate()
 
 func add_input_mapper(parent, setting, display_name):
 	var scene = load("res://menus/ActionMapper.tscn").instance()

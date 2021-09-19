@@ -40,35 +40,6 @@ func add_debug_display():
 		debug_display = DEBUG_SCENE.instance()
 		canvas_layer.add_child(debug_display)
 
-func focus_first_control(node):
-	for child in node.get_children():
-		# Skip hidden nodes.
-		if not child is Node and not child.visible:
-			continue
-		
-		# If it shouldn't be auto-focused, don't auto-focus it.
-		if child.has_meta("no_auto_focus"):
-			continue
-		
-		# If it's a "Done" button, used for going back up to the previous menu,
-		# don't auto-focus it.
-		if child.name == "Done":
-			continue
-		
-		# These are the only types of things we want to auto-focus.
-		if not (child is Button or child is HSlider or child is VSlider):
-			continue
-		
-		if child.has_method("grab_focus"):
-			child.grab_focus()
-			return true
-	
-	# If we get here, we've not found something - go deeper.
-	for child in node.get_children():
-		if focus_first_control(child):
-			return true
-	return false
-
 func setup_hbox_vbox(hbox, vbox):
 	hbox.add_spacer(true)
 	hbox.add_spacer(false)

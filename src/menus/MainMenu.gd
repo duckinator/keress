@@ -19,7 +19,10 @@ func _ready():
 	assert(err == OK)
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	Game.focus_first_control(self)
+	activate()
+
+func activate():
+	$Panels/Start/Button_New_Game.grab_focus()
 
 func game_new():
 	hide()

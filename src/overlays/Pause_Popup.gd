@@ -7,10 +7,13 @@ func _ready():
 	vbox.get_node("Menu_Button").connect("pressed", self, "main_menu")
 	vbox.get_node("Quit_Button").connect("pressed", Game, "quit")
 	
-	vbox.get_node("Resume_Button").grab_focus()
 	Game.show_cursor()
 	get_tree().paused = true
 	self.pause_mode = PAUSE_MODE_PROCESS
+	activate()
+
+func activate():
+	$CenterContainer/VBoxContainer/Resume_Button.grab_focus()
 
 func show_settings():
 	$Settings.activate()

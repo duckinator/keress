@@ -138,6 +138,9 @@ margin_right = 120.0
 margin_bottom = 60.0
 custom_fonts/font = SubResource( 5 )
 text = "< Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="InputMapDialog" type="ConfirmationDialog" parent="."]
 margin_right = 200.0
