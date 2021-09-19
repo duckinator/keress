@@ -9,11 +9,9 @@ const DEFAULT_FIELD_OF_VIEW = 90
 const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
 const DEBUG_SCENE = preload("res://overlays/DebugOverlay.tscn")
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
-var popup = null
 
 var canvas_layer
 var debug_display = null
-var mob_debug_display = null
 
 var playing = false
 
@@ -33,8 +31,7 @@ func _process(_delta):
 		pause()
 
 func pause():
-	popup = PAUSE_SCENE.instance()
-	canvas_layer.add_child(popup)
+	canvas_layer.add_child(PAUSE_SCENE.instance())
 
 func resume():
 	capture_cursor()
