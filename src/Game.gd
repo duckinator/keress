@@ -2,10 +2,6 @@ extends Node
 
 signal resume
 
-const DEFAULT_MOUSE_SENSITIVITY = 20
-const DEFAULT_JOYPAD_SENSITIVITY = 20
-const DEFAULT_FIELD_OF_VIEW = 90
-
 const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
 const DEBUG_SCENE = preload("res://overlays/DebugOverlay.tscn")
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
