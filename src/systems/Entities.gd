@@ -9,7 +9,7 @@ var ENTITIES = {
 
 var ENTITIES_FOR_LEVEL = {
 	"Level_001": {
-		"Player": [Vector3(0, 1, 12)],
+		"Player": [Vector3(0, 5, 0)],
 		#"Enemy1": [
 		#	Vector3(15, 3, -14),
 		#	Vector3(10, 3, -12),
