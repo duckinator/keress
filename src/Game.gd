@@ -81,26 +81,6 @@ func add_debug_display():
 		debug_display = DEBUG_SCENE.instance()
 		canvas_layer.add_child(debug_display)
 
-func spawn_scene(asset, pos=null, rot=null):
-	var scene = load("res://" + asset + ".tscn")
-	var scene_instance = scene.instance()
-	scene_instance.set_name(asset)
-	get_parent().call_deferred("add_child", scene_instance)
-	if pos != null:
-		scene_instance.translation = pos
-	if rot != null:
-		scene_instance.rotation = rot
-	return scene_instance
-
-func find_spawn_point(scene):
-	var spawns = []
-	if scene.has_node("Spawns"):
-		for node in scene.get_node("Spawns").get_children():
-			spawns.push_back(node)
-	else:
-		Console.error("Couldn't find a spawn point!")
-	return spawns[rand_range(0, len(spawns))]
-
 func get_player(scene=null):
 	if scene == null:
 		scene = get_tree().current_scene
