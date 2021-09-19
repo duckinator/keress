@@ -4,22 +4,10 @@ extends Control
 const FRAME_TIME_WARN = 0.1
 const PHYSICS_TIME_WARN = 0.1
 
-var os
-var engine
-
-var label
-func _ready():
-	label = $Panel/RichTextLabel
-	os = OS.get_name()
-	engine = Engine.get_version_info()["string"]
+onready var label = $Panel/RichTextLabel
 
 func _process(_delta):
-	var position = "(None)"
-	
-	if Game.playing:
-		var pos = Game.get_player().translation.round()
-		position = str(pos)
-	
+	var player_position = Game.get_player().translation.round()
 	var fps = Performance.get_monitor(Performance.TIME_FPS)
 	var frame_time = Performance.get_monitor(Performance.TIME_PROCESS)
 	var physics_time = Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)
@@ -32,12 +20,21 @@ func _process(_delta):
 		ptime_str = "[color=red]" + ptime_str + "[/color]"
 	
 	var lines = [
-		"System:   " + os,
-		"Engine:   Godot " + engine,
-		"FPS:      %s" % [fps],
-		"Timing:   frame=%s, physics=%s" % [ftime_str, ptime_str],
-		"Position: " + position,
+		"FPS:    %s" % [fps],
+		"Timing: frame=%s, physics=%s" % [ftime_str, ptime_str],
+		"",
+		"Player position: " + str(player_position),
+		"",
+		"AOIs:    " + PoolStringArray(AreasOfInterest.areas).join(", ")
 	]
+	
+	var mobs = Entities.mobs
+	for idx in len(mobs):
+		var mob = mobs[idx]
+		if mob == null:
+			lines.append("! mobs[" + str(idx) + "] is null.")
+		else:
+			lines.append(mob.name + " #" + str(idx) + ": " + str(mob.target))
 	
 	label.clear()
 	for idx in range(0, len(lines)):

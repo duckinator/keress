@@ -7,8 +7,7 @@ const DEFAULT_JOYPAD_SENSITIVITY = 20
 const DEFAULT_FIELD_OF_VIEW = 90
 
 const MAIN_MENU_PATH = "res://menus/MainMenu.tscn"
-const DEBUG_SCENE = preload("res://overlays/Debug_Display.tscn")
-const MOB_DEBUG_SCENE = preload("res://overlays/MobDebug.tscn")
+const DEBUG_SCENE = preload("res://overlays/DebugOverlay.tscn")
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
 var popup = null
 
@@ -83,16 +82,6 @@ func remove_debug_display():
 	if debug_display:
 		debug_display.queue_free()
 		debug_display = null
-
-func add_mob_debug_display():
-	if mob_debug_display == null:
-		mob_debug_display = MOB_DEBUG_SCENE.instance()
-		canvas_layer.add_child(mob_debug_display)
-
-func remove_mob_debug_display():
-	if mob_debug_display:
-		mob_debug_display.queue_free()
-		mob_debug_display = null
 
 func spawn_scene(asset, pos=null, rot=null):
 	var scene = load("res://" + asset + ".tscn")

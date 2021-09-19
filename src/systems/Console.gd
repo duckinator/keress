@@ -1,7 +1,9 @@
 extends Node
 
 func _ready():
-	self.log("Config files are located in " + str(OS.get_user_data_dir()))
+	info("Config files are located in " + str(OS.get_user_data_dir()))
+	info("System: " + OS.get_name())
+	info("Engine: Godot " + Engine.get_version_info()["string"])
 
 func _line_prefix():
 	var dt = OS.get_datetime()

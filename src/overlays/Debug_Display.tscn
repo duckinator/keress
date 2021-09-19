@@ -1,6 +1,15 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://overlays/Debug_Display.gd" type="Script" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+
+
+onready var label = $Panel/RichTextLabel
+
+func _process(_delta):
+	pass
+"
 
 [node name="Debug_Display" type="Control"]
 anchor_left = 1.0
@@ -9,7 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -380.0
 margin_top = -120.0
-script = ExtResource( 1 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -23,3 +32,6 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 370.0
 margin_bottom = 110.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

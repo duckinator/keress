@@ -5,7 +5,6 @@ onready var vbox = hbox.get_node('VBoxContainer')
 onready var _vsync = vbox.get_node('CheckButton_VSync')
 onready var _fullscreen = vbox.get_node('CheckButton_Fullscreen')
 onready var _debug = vbox.get_node('CheckButton_Debug')
-onready var _mob_debug = vbox.get_node('CheckButton_MobDebug')
 onready var _controls = vbox.get_node('Button_Controls')
 onready var _mouse_sensitivity = vbox.get_node('HSlider_Mouse_Sensitivity')
 onready var _joypad_sensitivity = vbox.get_node('HSlider_Joypad_Sensitivity')
@@ -23,8 +22,6 @@ func _ready():
 	err = _fullscreen.connect("pressed", self, "toggle_fullscreen")
 	assert(err == OK)
 	err = _debug.connect("pressed", self, "toggle_debug")
-	assert(err == OK)
-	err = _mob_debug.connect("pressed", self, "toggle_mob_debug")
 	assert(err == OK)
 	err = _controls.connect("pressed", $InputMapper, "activate")
 	assert(err == OK)
@@ -61,10 +58,6 @@ func toggle_debug():
 	Settings.store("debug", _debug.pressed)
 	load_settings()
 
-func toggle_mob_debug():
-	Settings.store("mob_debug", _mob_debug.pressed)
-	load_settings()
-
 func update_mouse_sensitivity(value):
 	Settings.store("mouse_sensitivity", value)
 	load_settings()
@@ -85,9 +78,7 @@ func load_settings():
 	_vsync.pressed = Settings.fetch("vsync")
 	_fullscreen.pressed = Settings.fetch("fullscreen")
 	_debug.pressed = Settings.fetch("debug")
-	_mob_debug.pressed = Settings.fetch("mob_debug")
 	
 	Debug.enabled = _debug.pressed
-	Debug.mob_debug_enabled = _mob_debug.pressed
 	OS.window_fullscreen = _fullscreen.pressed
 	OS.vsync_enabled = _vsync.pressed

@@ -64,11 +64,11 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
 margin_right = 324.0
-margin_bottom = 414.0
+margin_bottom = 366.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
 margin_right = 324.0
-margin_bottom = 414.0
+margin_bottom = 366.0
 
 [node name="Label_Mouse_Sensitivity" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 margin_right = 324.0
@@ -155,21 +155,10 @@ focus_previous = NodePath("../CheckButton_Fullscreen")
 custom_fonts/font = SubResource( 6 )
 text = "Debug Mode"
 
-[node name="CheckButton_MobDebug" type="CheckButton" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="Button_Controls" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 margin_top = 324.0
 margin_right = 324.0
-margin_bottom = 368.0
-focus_neighbour_top = NodePath("../CheckButton_Fullscreen")
-focus_neighbour_bottom = NodePath("../Button_Controls")
-focus_next = NodePath("../Button_Controls")
-focus_previous = NodePath("../CheckButton_Fullscreen")
-custom_fonts/font = SubResource( 6 )
-text = "Debug Mobs"
-
-[node name="Button_Controls" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 372.0
-margin_right = 324.0
-margin_bottom = 414.0
+margin_bottom = 366.0
 custom_fonts/font = SubResource( 7 )
 text = "Controls"
 

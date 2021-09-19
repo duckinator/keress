@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://overlays/MobDebug.gd" type="Script" id=1]
+[ext_resource path="res://overlays/DebugOverlay.gd" type="Script" id=1]
 
 [node name="MobDebugOverlay" type="Control"]
 anchor_left = 1.0
@@ -14,7 +14,7 @@ __meta__ = {
 
 [node name="Panel" type="Panel" parent="."]
 margin_right = 380.0
-margin_bottom = 500.0
+margin_bottom = 720.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -23,7 +23,7 @@ __meta__ = {
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 370.0
-margin_bottom = 490.0
+margin_bottom = 700.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
