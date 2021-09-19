@@ -81,11 +81,6 @@ func add_debug_display():
 		debug_display = DEBUG_SCENE.instance()
 		canvas_layer.add_child(debug_display)
 
-func remove_debug_display():
-	if debug_display:
-		debug_display.queue_free()
-		debug_display = null
-
 func spawn_scene(asset, pos=null, rot=null):
 	var scene = load("res://" + asset + ".tscn")
 	var scene_instance = scene.instance()
