@@ -5,11 +5,13 @@ const SETTINGS_FILE = "user://settings.json"
 const DEFAULTS = {
 	"mouse_sensitivity": 20,
 	"joypad_sensitivity": 20,
-	"field_of_view": 90,
+	"field_of_view": 80,
 	
 	"vsync": false,
 	"fullscreen": false,
 	"debug": false,
+	
+	"gun_on_left": false,
 }
 
 func store(key, val):

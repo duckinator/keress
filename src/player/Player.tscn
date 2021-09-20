@@ -37,7 +37,7 @@ fov = 90.0
 far = 550.0
 
 [node name="DEagle" parent="RotationHelper" instance=ExtResource( 4 )]
-transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 0, -0.5, -0.6 )
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 0.4, -0.5, -0.75 )
 
 [node name="TargetRayCast" type="RayCast" parent="RotationHelper"]
 cast_to = Vector3( 0, 0, -500 )

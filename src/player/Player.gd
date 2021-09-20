@@ -51,8 +51,7 @@ func _ready():
 
 	reload_player_settings()
 	var err = Game.connect("resume", self, "reload_player_settings")
-	if err != OK:
-		Console.error("Game.connect('resume') failed", err)
+	Console.error_unless_ok("Game.connect('resume') failed", err)
 
 	adjust_health(MAX_HEALTH)
 	camera.set_current(true)
@@ -63,6 +62,15 @@ func reload_player_settings():
 	camera.fov = Settings.fetch("field_of_view")
 	MOUSE_SENSITIVITY = float(Settings.fetch("mouse_sensitivity")) / 100
 	JOYPAD_SENSITIVITY = Settings.fetch("joypad_sensitivity")
+	_setup_gun_on_left(Settings.fetch("gun_on_left"))
+
+func _setup_gun_on_left(gun_on_left):
+	if gun_on_left:
+		#$HUD/Panel_Left.margin_right = 20
+		$RotationHelper/DEagle.translation.x = -0.4
+	else:
+		#$HUD/Panel_Left.margin_left = 20
+		$RotationHelper/DEagle.translation.x = 0.4
 
 func _process(_delta):
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
