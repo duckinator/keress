@@ -3,6 +3,10 @@ extends KinematicBody
 var weapon = Gun.WEAPON_DEAGLE
 var ammo = Gun.MAX_AMMO
 
+onready var weapon_animation_players = {
+	Gun.WEAPON_DEAGLE: [$RotationHelper/DEagle/DEagle/DEagleSlide/AnimationPlayer],
+}
+
 var fall_damage_enabled = true
 
 const FALL_MULTIPLIER = 1.0

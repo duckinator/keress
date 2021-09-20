@@ -4,6 +4,7 @@ const MAX_AMMO = 200
 
 const WEAPON_DEAGLE = "DEAGLE"
 const DEAGLE = {
+	"fire_animation_nodes": ["DEagle/DEagleSlide/AnimationPlayer"],
 	"primary": {
 		"sound": "pistol_fire",
 		"loudness": 15,
@@ -46,6 +47,10 @@ func clear_timeouts(_map):
 func primary(source, raycast):	
 	if source.ammo == 0 or (source in PRIMARY_TIMEOUTS and PRIMARY_TIMEOUTS[source] != null):
 		return
+	
+	for node in source.weapon_animation_players[source.weapon]:
+		if node.has_animation("Fire"):
+			node.play("Fire")
 	
 	primary_timeout_start(source)
 	var weapon_data = WEAPONS[source.weapon]["primary"]
