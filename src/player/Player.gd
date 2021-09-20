@@ -62,14 +62,15 @@ func reload_player_settings():
 	camera.fov = Settings.fetch("field_of_view")
 	MOUSE_SENSITIVITY = float(Settings.fetch("mouse_sensitivity")) / 100
 	JOYPAD_SENSITIVITY = Settings.fetch("joypad_sensitivity")
-	_setup_gun_on_left(Settings.fetch("gun_on_left"))
+	_update_hud_position()
 
-func _setup_gun_on_left(gun_on_left):
+func _update_hud_position():
+	var gun_on_left = Settings.fetch("gun_on_left")
 	if gun_on_left:
-		#$HUD/Panel_Left.margin_right = 20
+		$HUD/Panel_Left.rect_position.x = get_viewport().size.x - $HUD/Panel_Left.rect_size.x - 20
 		$RotationHelper/DEagle.translation.x = -0.4
 	else:
-		#$HUD/Panel_Left.margin_left = 20
+		$HUD/Panel_Left.rect_position.x = 20
 		$RotationHelper/DEagle.translation.x = 0.4
 
 func _process(_delta):

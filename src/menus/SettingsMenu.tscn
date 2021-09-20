@@ -151,7 +151,6 @@ margin_top = 404.0
 margin_right = 324.0
 margin_bottom = 448.0
 custom_fonts/font = SubResource( 5 )
-disabled = true
 text = "Gun On Left"
 
 [node name="CheckButton_Debug" type="CheckButton" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
