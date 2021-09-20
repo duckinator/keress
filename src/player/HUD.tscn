@@ -71,6 +71,9 @@ margin_left = 20.0
 margin_top = -120.0
 margin_right = 380.0
 margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label_Health" type="Label" parent="Panel_Left"]
 margin_left = 10.0
