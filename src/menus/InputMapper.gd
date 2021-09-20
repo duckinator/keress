@@ -50,11 +50,11 @@ onready var controls_save = hbox3.get_node("Controls_Save")
 
 func _ready():
 	var err = controls_reset.connect("pressed", self, "reset_config")
-	assert(err == OK)
+	Console.error_unless_ok("controls_reset.connect('pressed') failed", err)
 	err = controls_save.connect("pressed", self, "save_config")
-	assert(err == OK)
+	Console.error_unless_ok("controls_save.connect('pressed') failed", err)
 	err = done.connect("pressed", self, "deactivate")
-	assert(err == OK)
+	Console.error_unless_ok("done.connect('pressed') failed", err)
 	
 	for setting in CONTROLS.keys():
 		add_input_mapper(controls, setting, CONTROLS[setting])
@@ -80,6 +80,7 @@ func add_input_mapper(parent, setting, display_name):
 	scene.set_prompt_function(self, "prompt_input_map")
 
 func prompt_input_map(button, setting):
+	var err
 	var dialog = $InputMapDialog
 	var cancel = dialog.get_cancel()
 	
@@ -88,8 +89,10 @@ func prompt_input_map(button, setting):
 	dialog.popup_exclusive = true
 	dialog.release_focus()
 	dialog.disconnect("confirmed", self, "prompt_confirm")
-	dialog.connect("confirmed", self, "prompt_confirm", [button, setting])
-	cancel.connect("pressed", self, "prompt_hide")
+	err = dialog.connect("confirmed", self, "prompt_confirm", [button, setting])
+	Console.error_unless_ok("dialog.connect('confirmed') failed", err)
+	err = cancel.connect("pressed", self, "prompt_hide")
+	Console.error_unless_ok("cancel.connect('pressed') failed", err)
 
 var last_event = null
 func _input(event):
@@ -131,9 +134,7 @@ func load_config():
 	
 	var config = ConfigFile.new()
 	var err = config.load(CONFIG_FILE)
-	if err != OK:
-		Console.error("InputMapper.gd: load_config(): Error loading " + CONFIG_FILE + ". (" + str(err) + ")")
-		return
+	Console.error_unless_ok("InputMapper.gd: load_config(): Error loading " + CONFIG_FILE, err)
 	
 	if not config.has_section(CONFIG_SECTION):
 		Console.error("InputMapper.gd: load_config(): Config file " + CONFIG_FILE + " does not have section " + CONFIG_SECTION)
@@ -155,6 +156,5 @@ func save_config():
 		config.set_value(CONFIG_SECTION, action, InputMap.get_action_list(action))
 	
 	var err = config.save(CONFIG_FILE)
-	if err != OK:
-		Console.error("InputMapper.gd: save_config(): Error saving " + CONFIG_FILE + ". (" + str(err) + ")")
+	Console.error_unless_ok("InputMapper.gd: save_config(): Error saving " + CONFIG_FILE, err)
 	return err

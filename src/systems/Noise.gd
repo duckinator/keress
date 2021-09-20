@@ -7,8 +7,7 @@ func _ready():
 
 func add_listener(node, function):
 	var err = connect("noise", node, function)
-	if err != OK:
-		Console.log(err)
+	Console.error_unless_ok("Noise.connect(%s, %s)" % [var2str(node), var2str(function)], err)
 
 func emit(trans, sound, loudness):
 	emit_signal("noise", trans, sound, loudness)

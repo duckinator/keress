@@ -16,8 +16,17 @@ func debug(text):
 	if Debug.enabled:
 		_log("DEBUG", text)
 
-func error(text):
-	_log("ERROR", text)
+func error_unless_ok(prefix, err=null):
+	if err != OK:
+		error(prefix, err)
+
+func error(prefix, err=null, capture=true):
+	if capture:
+		BugReporter.capture(prefix, err, true)
+	if err == null:
+		_log("ERROR", prefix)
+	else:
+		_log("ERROR", prefix + ": " + var2str(err))
 
 func warn(text):
 	_log("WARN ", text)

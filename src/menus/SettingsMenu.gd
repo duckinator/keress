@@ -13,23 +13,23 @@ func _ready():
 	var err
 	
 	err = _vsync.connect("pressed", self, "toggle_vsync")
-	assert(err == OK)
+	Console.error_unless_ok("_vsync.connect('pressed') failed", err)
 	err = _fullscreen.connect("pressed", self, "toggle_fullscreen")
-	assert(err == OK)
+	Console.error_unless_ok("_fullscreen.connect('pressed') failed", err)
 	err = _debug.connect("pressed", self, "toggle_debug")
-	assert(err == OK)
+	Console.error_unless_ok("_debug.connect('pressed') failed", err)
 	err = _controls.connect("pressed", $InputMapper, "activate")
-	assert(err == OK)
+	Console.error_unless_ok("_controls.connect('pressed') failed", err)
 	
 	err = _mouse_sensitivity.connect("value_changed", self, "update_mouse_sensitivity")
-	assert(err == OK)
+	Console.error_unless_ok("_mouse_sensitivity.connect('value_changed') failed", err)
 	err = _joypad_sensitivity.connect("value_changed", self, "update_joypad_sensitivity")
-	assert(err == OK)
+	Console.error_unless_ok("_joypad_sensitivity.connect('value_changed') failed", err)
 	err = _field_of_view.connect("value_changed", self, "update_field_of_view")
-	assert(err == OK)
+	Console.error_unless_ok("_field_of_view.connect('value_changed') failed", err)
 	
 	err = $Button_Back.connect("pressed", self, "deactivate")
-	assert(err == OK)
+	Console.error_unless_ok("$Button_Back.connect('pressed') failed", err)
 	
 	load_settings()
 

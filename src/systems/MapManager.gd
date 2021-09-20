@@ -13,8 +13,13 @@ const MAIN_MENU_SCENE = "res://menus/MainMenu.tscn"
 var map = null
 
 func setup(parent_scene):
-	var scene = load(_map_to_path(map)).instance()
-	parent_scene.add_child(scene)
+	var map_path = _map_to_path(map)
+	var scene = load(map_path)
+	if scene == null:
+		Console.error("Failed to load map %s: `load(%s)` returned null" % [var2str(map), var2str(map_path)])
+		return
+	var instance = scene.instance()
+	parent_scene.add_child(instance)
 	Entities.spawn_for_map(map)
 
 func load_scene(new_scene_path):
@@ -26,8 +31,7 @@ func load_map(new_map=null):
 	else:
 		map = new_map
 	var err = load_scene(BLENDER_MAP_SCENE)
-	if err:
-		Console.error("load_map(): Could not load map " + map + ". (Error " + str(err) + ".)")
+	Console.error_unless_ok("load_map(): Could not load map " + map, err)
 	emit_signal("load_map", map)
 	
 	# If Game.resume() isn't deferred, it gets called before the map is loaded.

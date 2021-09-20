@@ -13,8 +13,7 @@ var areas = []
 
 func _ready():
 	var err = MapManager.connect("load_map", self, "clear")
-	if err != OK:
-		Console.log(str(err))
+	Console.error_unless_ok("MapManager.connect('load_map)' failed", err)
 	Noise.add_listener(self, "add_noise_aoi")
 
 func clear(_map):

@@ -48,7 +48,7 @@ func _ready():
 	reload_player_settings()
 	var err = Game.connect("resume", self, "reload_player_settings")
 	if err != OK:
-		Console.error(str(err))
+		Console.error("Game.connect('resume') failed", err)
 
 	adjust_health(MAX_HEALTH)
 	camera.set_current(true)

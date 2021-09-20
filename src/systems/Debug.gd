@@ -12,8 +12,7 @@ func _ready():
 	enabled = "--debug" in OS.get_cmdline_args() or Settings.fetch("debug")
 
 	var err = Game.connect("resume", self, "add_overlay_if_enabled")
-	if err != OK:
-		Console.log(str(err))
+	Console.error_unless_ok("Game.connect('resume') failed", err)
 
 func add_overlay_if_enabled():
 	if enabled and Game.playing() and not canvas_layer.has_node("DebugOverlay"):

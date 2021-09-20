@@ -29,8 +29,7 @@ var SECONDARY_TIMEOUTS = {}
 
 func _ready():
 	var err = MapManager.connect("load_map", self, "clear_timeouts")
-	if err != OK:
-		Console.log(str(err))
+	Console.error_unless_ok("MapManager.connect('load_map') failed", err)
 
 func _stop_and_remove_all(dict):
 	for key in dict:
@@ -82,7 +81,8 @@ func primary_timeout_start(source):
 	var primary_timeout = Timer.new()
 	primary_timeout.wait_time = WEAPONS[source.weapon]["primary"]["timeout"]
 	primary_timeout.one_shot = true
-	primary_timeout.connect("timeout", self, "primary_timeout_reset", [source])
+	var err = primary_timeout.connect("timeout", self, "primary_timeout_reset", [source])
+	Console.error_unless_ok("primary_timeout.connect('timeout') failed", err)
 	add_child(primary_timeout)
 	primary_timeout.start()
 	PRIMARY_TIMEOUTS[source] = primary_timeout

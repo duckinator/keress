@@ -11,13 +11,11 @@ func _ready():
 
 	# When the game is paused, hide the debug overlay.
 	var err = Game.connect("pause", self, "hide")
-	if err != OK:
-		Console.log(str(err))
+	Console.error_unless_ok("Game.connect('pause', ...) failed", err)
 
 	# When the game is resumed, show the debug overlay again.
 	err = Game.connect("resume", self, "show")
-	if err != OK:
-		Console.log(str(err))
+	Console.error_unless_ok("Game.connect('resume', ...) failed", err)
 
 func _process(_delta):
 	# If debug mode is disabled, or we're in a menu, remove the debug overlay.
