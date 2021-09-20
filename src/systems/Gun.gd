@@ -4,7 +4,6 @@ const MAX_AMMO = 200
 
 const WEAPON_DEAGLE = "DEAGLE"
 const DEAGLE = {
-	"fire_animation_nodes": ["DEagle/DEagleSlide/AnimationPlayer"],
 	"primary": {
 		"sound": "pistol_fire",
 		"loudness": 15,
@@ -32,27 +31,19 @@ func _ready():
 	var err = MapManager.connect("load_map", self, "clear_timeouts")
 	Console.error_unless_ok("MapManager.connect('load_map') failed", err)
 
-func _stop_and_remove_all(dict):
-	for key in dict:
-		var timer = dict[key]
-		if timer != null:
-			timer.stop()
-			timer.free()
-		dict.erase(key)
-
-func clear_timeouts(_map):
-	_stop_and_remove_all(PRIMARY_TIMEOUTS)
-	_stop_and_remove_all(SECONDARY_TIMEOUTS)
-
 func primary(source, raycast):	
 	if source.ammo == 0 or (source in PRIMARY_TIMEOUTS and PRIMARY_TIMEOUTS[source] != null):
 		return
 	
-	for node in source.weapon_animation_players[source.weapon]:
-		if node.has_animation("Fire"):
-			node.play("Fire")
+	var animation_player = source.weapon_animation_players[source.weapon]["primary_fire"]
 	
-	primary_timeout_start(source)
+	# If it's still playing the fire animation, wait.
+	if animation_player.is_playing():
+		return
+	
+	#animation_player.play("Fire")
+	animation_player.play("DEagle.SlideAction")
+	
 	var weapon_data = WEAPONS[source.weapon]["primary"]
 	Noise.emit(source.translation, weapon_data["sound"], weapon_data["loudness"])
 	raycast.force_raycast_update()
@@ -79,20 +70,3 @@ func secondary(source, raycast):
 #func _process(delta):
 #	if not Game.playing():
 #		return
-
-func primary_timeout_start(source):
-	if source in PRIMARY_TIMEOUTS and PRIMARY_TIMEOUTS[source] != null:
-		return
-	var primary_timeout = Timer.new()
-	primary_timeout.wait_time = WEAPONS[source.weapon]["primary"]["timeout"]
-	primary_timeout.one_shot = true
-	var err = primary_timeout.connect("timeout", self, "primary_timeout_reset", [source])
-	Console.error_unless_ok("primary_timeout.connect('timeout') failed", err)
-	add_child(primary_timeout)
-	primary_timeout.start()
-	PRIMARY_TIMEOUTS[source] = primary_timeout
-
-func primary_timeout_reset(source):
-	PRIMARY_TIMEOUTS[source].stop()
-	remove_child(PRIMARY_TIMEOUTS[source])
-	PRIMARY_TIMEOUTS[source] = null

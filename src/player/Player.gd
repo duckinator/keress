@@ -4,7 +4,9 @@ var weapon = Gun.WEAPON_DEAGLE
 var ammo = Gun.MAX_AMMO
 
 onready var weapon_animation_players = {
-	Gun.WEAPON_DEAGLE: [$RotationHelper/DEagle/DEagle/DEagleSlide/AnimationPlayer],
+	Gun.WEAPON_DEAGLE: {
+		"primary_fire": $RotationHelper/DEagle/DEagle/DEagleSlide/AnimationPlayer,
+	}
 }
 
 var fall_damage_enabled = true
