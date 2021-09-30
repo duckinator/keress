@@ -13,7 +13,7 @@ func _input(event):
 
 func capture():
 	var dt = OS.get_datetime()
-	var path = "user://screenshots/Screenshot-%04d-%02d-%02d-%02d:%02d:%02d.png" % [
+	var path = "user://screenshots/Screenshot-%04d-%02d-%02d-%02d_%02d_%02d.png" % [
 		dt["year"], dt["month"], dt["day"],
 		dt["hour"], dt["minute"], dt["second"]
 	]
