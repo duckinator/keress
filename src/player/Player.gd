@@ -70,10 +70,10 @@ func _update_hud_position():
 	var gun_on_left = Settings.fetch("gun_on_left")
 	if gun_on_left:
 		$HUD/Panel_Left.rect_position.x = get_viewport().size.x - $HUD/Panel_Left.rect_size.x - 20
-		$RotationHelper/DEagle.translation.x = -0.4
+		$RotationHelper/DEagle.translation.x = -0.3
 	else:
 		$HUD/Panel_Left.rect_position.x = 20
-		$RotationHelper/DEagle.translation.x = 0.4
+		$RotationHelper/DEagle.translation.x = 0.3
 
 func _process(_delta):
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")

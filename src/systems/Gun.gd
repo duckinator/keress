@@ -41,8 +41,7 @@ func primary(source, raycast):
 	if animation_player.is_playing():
 		return
 	
-	#animation_player.play("Fire")
-	animation_player.play("DEagle.SlideAction")
+	animation_player.play("Fire")
 	
 	var weapon_data = WEAPONS[source.weapon]["primary"]
 	Noise.emit(source.translation, weapon_data["sound"], weapon_data["loudness"])
