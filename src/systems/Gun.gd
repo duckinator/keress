@@ -27,9 +27,8 @@ var PRIMARY_TIMEOUTS = {}
 var SECONDARY_TIMEOUTS = {}
 
 
-func _ready():
-	var err = MapManager.connect("load_map", self, "clear_timeouts")
-	Console.error_unless_ok("MapManager.connect('load_map') failed", err)
+#func _ready():
+#	pass
 
 func primary(source, raycast):	
 	if source.ammo == 0 or (source in PRIMARY_TIMEOUTS and PRIMARY_TIMEOUTS[source] != null):
