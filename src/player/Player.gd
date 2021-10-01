@@ -1,12 +1,15 @@
 extends KinematicBody
 
-var fall_damage_enabled = false
-const WALLRUN_FALL_MULTIPLIER = 0.75
-const WALLRUN_SPEED_MULTIPLIER = 2
-const WALLRUN_ACCEL_MULTIPLIER = 8
+var weapon = Gun.WEAPON_DEAGLE
+var ammo = Gun.MAX_AMMO
 
-const NEUTRAL_CAMERA_ROTATION = 0
-const WALLRUN_CAMERA_ROTATION = -20
+onready var weapon_animation_players = {
+	Gun.WEAPON_DEAGLE: {
+		"primary_fire": $RotationHelper/DEagle/DEagle/DEagleSlide/AnimationPlayer,
+	}
+}
+
+var fall_damage_enabled = true
 
 const FALL_MULTIPLIER = 1.0
 const LOW_JUMP_MULTIPLIER = 1.5
@@ -15,9 +18,9 @@ const LOW_JUMP_MULTIPLIER = 1.5
 const MASS = 100
 
 var gravity
-const MAX_SPEED = 80
-const JUMP_SPEED = 60
-const ACCEL = 7
+const MAX_SPEED = 30
+const JUMP_SPEED = 25
+const ACCEL = 4
 const DEACCEL = 16
 const MAX_SLOPE_ANGLE = 40
 
@@ -36,12 +39,6 @@ var dir = Vector3(0, 0, 0)
 const MAX_HEALTH = 100
 var health = 0
 
-const INVENTORY_MAX_SIZE = 3
-var inventory = []
-var current_item = 0
-var last_item = 0
-var changing_item = false
-
 var is_dead = false
 var waiting_for_respawn = false
 
@@ -54,25 +51,31 @@ func _ready():
 	camera = $RotationHelper/Camera
 	rotation_helper = $RotationHelper
 
-	#camera.fov = Game.get_field_of_view()
-
-	inventory.append($RotationHelper/Revolver)
-	#inventory.append($RotationHelper/Rifle)
-	#inventory.append($RotationHelper/Shotgun)
-
-	select_item(0)
+	reload_player_settings()
+	var err = Game.connect("resume", self, "reload_player_settings")
+	Console.error_unless_ok("Game.connect('resume') failed", err)
 
 	adjust_health(MAX_HEALTH)
+	camera.set_current(true)
 
-func select_item(item_number):
-	current_item = item_number
-	for idx in range(0, len(inventory)):
-		inventory[idx].visible = idx == current_item
+# Load settings that need to be set before playing, or may change while the
+# game is paused.
+func reload_player_settings():
+	camera.fov = Settings.fetch("field_of_view")
+	MOUSE_SENSITIVITY = float(Settings.fetch("mouse_sensitivity")) / 100
+	JOYPAD_SENSITIVITY = Settings.fetch("joypad_sensitivity")
+	_update_hud_position()
+
+func _update_hud_position():
+	var gun_on_left = Settings.fetch("gun_on_left")
+	if gun_on_left:
+		$HUD/Panel_Left.rect_position.x = get_viewport().size.x - $HUD/Panel_Left.rect_size.x - 20
+		$RotationHelper/DEagle.translation.x = -0.3
+	else:
+		$HUD/Panel_Left.rect_position.x = 20
+		$RotationHelper/DEagle.translation.x = 0.3
 
 func _process(_delta):
-	MOUSE_SENSITIVITY = float(Game.get_mouse_sensitivity()) / 100
-	JOYPAD_SENSITIVITY = Game.get_joypad_sensitivity()
-	
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
 	var vert = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
 	horiz *= JOYPAD_SENSITIVITY
@@ -81,17 +84,18 @@ func _process(_delta):
 
 func _physics_process(delta):
 	if not gravity:
-		gravity = Game.get_total_gravity_for($DummyRigidBody)
+		gravity = _get_total_gravity_for($DummyRigidBody)
 		$DummyRigidBody.visible = false
 	
 	if not is_dead:
 		process_input(delta)
-		process_input_inventory(delta)
 		process_movement(delta)
-		process_changing_item(delta)
-		process_reloading(delta)
 	process_ui(delta)
 	process_respawn(delta)
+
+func _get_total_gravity_for(body):
+	var state = PhysicsServer.body_get_direct_state(body.get_rid())
+	return state.get_total_gravity()
 
 func get_last_velocity():
 	return vel
@@ -100,24 +104,16 @@ func adjust_health(diff):
 	health = clamp(health + diff, 0, MAX_HEALTH)
 	return health
 
-func reload_weapon():
-	pass
-
 func update_hud():
 	$HUD/Panel_Left/Label_Health.text = str(health)
 	$HUD/Panel_Left/Health_Bar.value = health
 	
-	var in_weapon = "?"
-	var total_ammo = 0
-	if len(inventory) > 0 and inventory[current_item] != null:
-		var item = inventory[current_item]
-		in_weapon = str(item.in_weapon) + " +" + str((item.ammo - item.in_weapon) / item.MAX_IN_WEAPON)
-		total_ammo = item.ammo
-	$HUD/Panel_Left/Label_Ammo.text = in_weapon
-	$HUD/Panel_Left/Ammo_Bar.value = total_ammo
+	$HUD/Panel_Left/Label_Ammo.text = str(ammo)
+	$HUD/Panel_Left/Ammo_Bar.value = ammo
+	$HUD/Panel_Left/Ammo_Bar.max_value = Gun.MAX_AMMO
 
 func emit_sound(trans, sound, loudness):
-	get_tree().current_scene.player_noise(trans, sound, loudness)
+	Noise.emit(trans.round(), sound, loudness)
 
 func safe_rotate(vec):
 	rotation_helper.rotate_x(deg2rad(vec.y * MOUSE_SENSITIVITY * -1))
@@ -146,9 +142,6 @@ func jump(assist=1):
 # Various _process_* functions:
 
 func process_input(_delta):
-	if Console.visible:
-		return
-	
 	# Walking
 	dir = Vector3()
 	var cam_xform = camera.get_global_transform()
@@ -169,32 +162,12 @@ func process_input(_delta):
 	# Jumping
 	if (is_on_floor() or is_on_wall()) and Input.is_action_just_pressed("movement_jump"):
 		vel.y = JUMP_SPEED
-
-func process_input_inventory(_delta):
-	if len(inventory) == 0:
-		return
 	
-	current_item = clamp(current_item, 0, len(inventory) - 1)
-	var item = inventory[current_item]
-	if item == null:
-		return
-
-	# Firing weapons
+	# Firing weapon
 	if Input.is_action_pressed("action_primary"):
-		item.primary()
-		jostle(item.JOSTLE_PRIMARY)
-		if item.SOUND_PRIMARY != null:
-			emit_sound(translation, item.SOUND_PRIMARY, item.LOUDNESS_PRIMARY)
+		Gun.primary(self, $RotationHelper/TargetRayCast)
 	if Input.is_action_pressed("action_secondary"):
-		item.secondary()
-		jostle(item.JOSTLE_SECONDARY)
-		if item.SOUND_SECONDARY != null:
-			emit_sound(translation, item.SOUND_SECONDARY, item.LOUDNESS_SECONDARY)
-
-	# Reloading weapons
-	var needs_reload = item.has_method("needs_reload") and item.needs_reload()
-	if Input.is_action_just_pressed("action_reload") or needs_reload:
-		item.reload()
+		Gun.secondary(self, $RotationHelper/TargetRayCast)
 
 func process_movement(delta):
 	dir = dir.normalized()
@@ -205,9 +178,6 @@ func process_movement(delta):
 		vel += Vector3.UP * gravity.y * (FALL_MULTIPLIER - 1) * delta
 	elif (vel.y > 0) and not Input.is_action_pressed("movement_jump"):
 		vel += Vector3.UP * gravity.y * (LOW_JUMP_MULTIPLIER - 1) * delta
-	
-	if is_on_wall() and vel.y < 0:
-		vel.y *= WALLRUN_FALL_MULTIPLIER
 	
 	var hvel = vel
 	hvel.y = 0
@@ -221,22 +191,6 @@ func process_movement(delta):
 	else:
 		accel = DEACCEL
 	
-	if is_on_wall() and not is_on_floor():
-		var speedup = false
-		if riding_wall($LeftShortRaycast):
-			camera_rotation_tween(camera.rotation_degrees.z, -WALLRUN_CAMERA_ROTATION)
-			speedup = true
-		elif riding_wall($RightShortRaycast):
-			camera_rotation_tween(camera.rotation_degrees.z, WALLRUN_CAMERA_ROTATION)
-			speedup = true
-		if speedup:
-			# TODO: Slight weapon translation?
-			target *= WALLRUN_SPEED_MULTIPLIER
-			accel *= WALLRUN_ACCEL_MULTIPLIER
-	else:
-		camera_rotation_tween(camera.rotation_degrees.z, NEUTRAL_CAMERA_ROTATION)
-		camera.rotation_degrees.z = NEUTRAL_CAMERA_ROTATION
-	
 	hvel = hvel.linear_interpolate(target, accel * delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
@@ -245,21 +199,15 @@ func process_movement(delta):
 
 	process_fall_damage(old_vel, vel)
 
-func process_changing_item(_delta):
-	pass
-
-func process_reloading(_delta):
-	pass
-
 func process_ui(_delta):
 	update_hud()
 
 func process_respawn(_delta):
 	pass
 
-func process_fall_damage(old_vel, vel):
+func process_fall_damage(old_vel, cur_vel):
 	# If we're going down faster than we can jump up, take damage.
-	if old_vel.y < -JUMP_SPEED and vel.y >= -1:
+	if old_vel.y < -JUMP_SPEED and cur_vel.y >= -1:
 		if  fall_damage_enabled:
 			var tmp = int(ceil(old_vel.y / 10))
 			tmp -= tmp % 5
@@ -269,10 +217,10 @@ func process_fall_damage(old_vel, vel):
 		emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
 
 func _input(event):
-	# TODO: Determine why there's no KEY_BACKTICK or similar?
-	if Input.is_key_pressed(96):
-		Console.toggle()
-	
+	if event.is_action_pressed("ui_cancel"):
+		Game.pause()
+		return
+
 	if is_dead:
 		if Input.is_key_pressed(KEY_SPACE):
 			waiting_for_respawn = true
@@ -281,68 +229,3 @@ func _input(event):
 	# Mouse movement.
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		safe_rotate(event.relative)
-	
-	# No point doing all of this with an empty inventory.
-	if len(inventory) == 0:
-		return
-
-	# Changing inventory item.
-	var changing_item_number = current_item
-	if Input.is_action_just_pressed("quick_switch_item"):
-		changing_item_number = last_item
-	if Input.is_key_pressed(KEY_1):
-		changing_item_number = 0
-	if Input.is_key_pressed(KEY_2):
-		changing_item_number = 1
-	if Input.is_key_pressed(KEY_3):
-		changing_item_number = 2
-	if Input.is_key_pressed(KEY_4):
-		changing_item_number = 3
-
-	if Input.is_action_just_pressed("shift_item_positive"):
-		changing_item_number += 1
-	if Input.is_action_just_pressed("shift_item_negative"):
-		changing_item_number -=1
-	
-	changing_item_number = clamp(changing_item_number, 0, len(inventory) - 1)
-	
-	if changing_item == false:
-		if changing_item_number != current_item:
-			Console.log("TODO: Switch to item #" + str(changing_item_number + 1))
-			pass # Change weapons
-
-func raycast_adjacent(ray):
-	ray.force_raycast_update()
-	if not ray.is_colliding():
-		return null
-	return ray.get_collider()
-
-func riding_wall(ray):
-	var node = raycast_adjacent(ray)
-	return node != null and node.name.ends_with("Wall")
-
-func set_camera_rotation_z(new_z):
-	var weapon = $RotationHelper/Revolver
-	camera.rotation_degrees.z = new_z
-	weapon.rotation_degrees.z = camera.rotation_degrees.z
-
-const CAMERA_ROTATION_TWEEN_SPEED = 0.125
-var camera_tween = null
-func camera_rotation_tween(cur_z, new_z):
-	if camera_tween != null:
-		return
-	var camera_tween = $CameraRotationTween.duplicate()
-	var speed = CAMERA_ROTATION_TWEEN_SPEED
-	camera_tween.connect("tween_completed", self, "camera_rotation_tween_end")
-	camera_tween.repeat = false
-	camera_tween.interpolate_method(self, "set_camera_rotation_z", cur_z, new_z, speed, Tween.TRANS_LINEAR, Tween.EASE_IN)
-	add_child(camera_tween)
-	camera_tween.start()
-
-func camera_rotation_tween_end(object, key):
-	if camera_tween == null:
-		return
-	camera_tween.stop_all()
-	remove_child(camera_tween)
-	camera_tween.queue_free()
-	camera_tween = null

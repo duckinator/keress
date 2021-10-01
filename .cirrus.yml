@@ -10,7 +10,7 @@ task:
 
 test_task:
   container:
-    image: duckinator/godot-builder:latest
+    dockerfile: ci/Dockerfile
   install_script:
     - make ci-setup
   script:
@@ -22,12 +22,14 @@ release_task:
     - test
   env:
     BUTLER_API_KEY: ENCRYPTED[46a314af5ccb389fce4671b233802ae05d7f554aaa0a13102c6d908b8b824416c4308cfb61c7271a3bb8e25b0463f23d]
+    DISCORD_WEBHOOK: ENCRYPTED[fdae29c84d2f19dfd5419efcd72d5017bb23d8e3b83cc81e2c0723c4d00e5bde787a5b481640f6b422c5e60d2faee3bc]
   container:
-    image: duckinator/godot-builder:latest
+    dockerfile: ci/Dockerfile
   install_script:
     - make ci-setup
   script:
     - make release
-    - butler push build/linux duckinator/keress:linux
-    - butler push build/windows duckinator/keress:windows
-    - butler push build/mac duckinator/keress:mac
+    - butler push build/linux duckinator/keress:linux --userversion-file src/version.txt
+    - butler push build/windows duckinator/keress:windows --userversion-file src/version.txt
+    - butler push build/mac duckinator/keress:mac --userversion-file src/version.txt
+    - python3 bin/ci-announce-release.py

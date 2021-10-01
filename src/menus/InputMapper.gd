@@ -49,17 +49,12 @@ onready var hbox3 = vbox.get_node("HBoxContainer3")
 onready var controls_save = hbox3.get_node("Controls_Save")
 
 func _ready():
-	controls_reset.set_meta("no_auto_focus", true)
-	controls_save.set_meta("no_auto_focus", true)
-	
-	Game.show_cursor()
-	Game.setup_hbox_vbox(hbox, vbox)
-	
-	controls_reset.connect("pressed", self, "reset_config")
-	controls_save.connect("pressed", self, "save_config")
-
-	var err = done.connect("pressed", self, "deactivate")
-	assert(err == OK)
+	var err = controls_reset.connect("pressed", self, "reset_config")
+	Console.error_unless_ok("controls_reset.connect('pressed') failed", err)
+	err = controls_save.connect("pressed", self, "save_config")
+	Console.error_unless_ok("controls_save.connect('pressed') failed", err)
+	err = done.connect("pressed", self, "deactivate")
+	Console.error_unless_ok("done.connect('pressed') failed", err)
 	
 	for setting in CONTROLS.keys():
 		add_input_mapper(controls, setting, CONTROLS[setting])
@@ -68,16 +63,14 @@ func _ready():
 		add_input_mapper(joypad, setting, JOYPAD_CONTROLS[setting])
 	
 	load_config()
-	
-	Game.focus_first_control(hbox2)
 
 func activate():
 	show()
-	Game.focus_first_control(self)
+	$Panel/Done.grab_focus()
 
 func deactivate():
 	hide()
-	Game.focus_first_control(get_parent())
+	get_parent().activate()
 
 func add_input_mapper(parent, setting, display_name):
 	var scene = load("res://menus/ActionMapper.tscn").instance()
@@ -87,6 +80,7 @@ func add_input_mapper(parent, setting, display_name):
 	scene.set_prompt_function(self, "prompt_input_map")
 
 func prompt_input_map(button, setting):
+	var err
 	var dialog = $InputMapDialog
 	var cancel = dialog.get_cancel()
 	
@@ -95,8 +89,10 @@ func prompt_input_map(button, setting):
 	dialog.popup_exclusive = true
 	dialog.release_focus()
 	dialog.disconnect("confirmed", self, "prompt_confirm")
-	dialog.connect("confirmed", self, "prompt_confirm", [button, setting])
-	cancel.connect("pressed", self, "prompt_hide")
+	err = dialog.connect("confirmed", self, "prompt_confirm", [button, setting])
+	Console.error_unless_ok("dialog.connect('confirmed') failed", err)
+	err = cancel.connect("pressed", self, "prompt_hide")
+	Console.error_unless_ok("cancel.connect('pressed') failed", err)
 
 var last_event = null
 func _input(event):
@@ -130,6 +126,7 @@ func prompt_hide():
 
 func reset_config():
 	InputMap.load_from_globals()
+	save_config()
 
 func load_config():
 	if not File.new().file_exists(CONFIG_FILE):
@@ -137,9 +134,7 @@ func load_config():
 	
 	var config = ConfigFile.new()
 	var err = config.load(CONFIG_FILE)
-	if err != OK:
-		Console.error("InputMapper.gd: load_config(): Error loading " + CONFIG_FILE + ". (" + str(err) + ")")
-		return
+	Console.error_unless_ok("InputMapper.gd: load_config(): Error loading " + CONFIG_FILE, err)
 	
 	if not config.has_section(CONFIG_SECTION):
 		Console.error("InputMapper.gd: load_config(): Config file " + CONFIG_FILE + " does not have section " + CONFIG_SECTION)
@@ -161,6 +156,5 @@ func save_config():
 		config.set_value(CONFIG_SECTION, action, InputMap.get_action_list(action))
 	
 	var err = config.save(CONFIG_FILE)
-	if err != OK:
-		Console.error("InputMapper.gd: save_config(): Error saving " + CONFIG_FILE + ". (" + str(err) + ")")
+	Console.error_unless_ok("InputMapper.gd: save_config(): Error saving " + CONFIG_FILE, err)
 	return err

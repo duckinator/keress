@@ -10,7 +10,7 @@ onready var list = $HBoxContainer2/ActionList
 func _ready():
 	pass # Replace with function body.
 
-func _process(delta):
+func _process(_delta):
 	if action == "" or action == null:
 		return
 	
@@ -29,4 +29,5 @@ func get_label():
 	return label.text
 
 func set_prompt_function(obj, method):
-	button.connect("pressed", obj, method, [button, action])
+	var err = button.connect("pressed", obj, method, [button, action])
+	Console.error_unless_ok("button.connect('pressed') failed", err)

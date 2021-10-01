@@ -12,3 +12,4 @@ export_presets.cfg
 /tmp
 
 src/build_info.json
+src/version.txt

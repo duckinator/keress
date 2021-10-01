@@ -21,19 +21,26 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Settings="*res://Settings.gd"
-Game="*res://Game.gd"
-Debug="*res://Debug.gd"
-Console="*res://Console.gd"
-BuildInfo="*res://BuildInfo.gd"
-Keyboard="*res://Keyboard.gd"
-Map="*res://Map.gd"
-Enemies="*res://Enemies.gd"
+Settings="*res://systems/Settings.gd"
+Game="*res://systems/Game.gd"
+Debug="*res://systems/Debug.gd"
+Console="*res://systems/Console.gd"
+BuildInfo="*res://systems/BuildInfo.gd"
+Entities="*res://systems/Entities.gd"
+Noise="*res://systems/Noise.gd"
+AreasOfInterest="*res://systems/AreasOfInterest.gd"
+Gun="*res://systems/Gun.gd"
+MapManager="*res://systems/MapManager.gd"
+Cursor="*res://systems/Cursor.gd"
+BugReporter="*res://systems/BugReporter.gd"
+Screenshot="*res://systems/Screenshot.gd"
 
 [display]
 
-window/size/width=1280
-window/size/height=720
+window/size/width=1920
+window/size/height=1080
+window/size/test_width=1280
+window/size/test_height=720
 
 [input]
 
@@ -121,6 +128,16 @@ look_left={
 look_right={
 "deadzone": 0.1,
 "events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":1.0,"script":null)
+ ]
+}
+ui_screenshot={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777255,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_fullscreen={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777254,"unicode":0,"echo":false,"script":null)
  ]
 }
 
