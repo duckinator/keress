@@ -14,7 +14,6 @@ test_task:
     image: debian:latest
   install_script:
     - apt update && apt install -y make git curl unzip
-    - make ci-setup
   script:
     - make test
 
@@ -29,10 +28,10 @@ release_task:
     image: debian:latest
   install_script:
     - apt update && apt install -y make git python3 curl unzip
-    - make ci-setup get-butler
+    - make godot get-butler
   script:
     - make release
     - ./bin/butler push build/linux duckinator/keress:linux --userversion-file src/version.txt
     - ./bin/butler push build/windows duckinator/keress:windows --userversion-file src/version.txt
-    - ./bin/butler push build/mac duckinator/keress:mac --userversion-file src/version.txt
+    #- ./bin/butler push build/mac duckinator/keress:mac --userversion-file src/version.txt
     - python3 bin/ci-announce-release.py
