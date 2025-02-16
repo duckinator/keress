@@ -54,7 +54,7 @@ windows: build_info godot
 	${GODOT} src/project.godot ${EXPORT_FLAG} windows ../build/windows/keress.exe
 
 release:
-	$(MAKE) EXPORT_FLAG=--export linux windows mac
+	$(MAKE) EXPORT_FLAG=--export linux windows #mac
 
 debug-linux:
 	$(MAKE) EXPORT_FLAG=--export-debug linux
