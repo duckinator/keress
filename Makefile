@@ -70,6 +70,13 @@ debug: debug-linux #debug-windows debug-mac
 ci-setup:
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
 
+get-butler:
+	curl -sSL https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default > butler.zip
+	unzip -p butler.zip butler > bin/butler
+	rm butler.zip
+	chmod +x bin/butler
+	./bin/butler -V
+
 test: debug-linux
 	@echo "No tests to run. :("
 
