@@ -12,7 +12,7 @@ test_task:
   container:
     image: debian:latest
   install_script:
-    - apt update && apt install -y make
+    - apt update && apt install -y make git
     - make ci-setup
   script:
     - make test
@@ -27,7 +27,7 @@ release_task:
   container:
     image: debian:latest
   install_script:
-    - apt update && apt install -y make python3
+    - apt update && apt install -y make git python3
     - make ci-setup get-butler
   script:
     - make release
