@@ -24,7 +24,7 @@ ${GODOT_TEMPLATES}:
 	mv ./templates ${GODOT_TEMPLATES}
 	rm godot-templates.zip
 
-bin/godot: ci-setup
+bin/godot:
 	curl -sSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_x11.64.zip | funzip > bin/godot
 	chmod +x bin/godot
 
