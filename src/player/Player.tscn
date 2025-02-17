@@ -23,7 +23,6 @@ script = ExtResource( 1 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.8, 0 )
 mesh = SubResource( 1 )
-material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.8, 0 )
@@ -33,7 +32,7 @@ shape = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, -0.3 )
 
 [node name="Camera" type="Camera" parent="RotationHelper"]
-fov = 90.0
+fov = 80.0
 far = 550.0
 
 [node name="DEagle" parent="RotationHelper" instance=ExtResource( 4 )]
@@ -50,7 +49,6 @@ mass = 30.0
 
 [node name="MeshInstance" type="MeshInstance" parent="DummyRigidBody"]
 mesh = SubResource( 3 )
-material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="DummyRigidBody"]
 shape = SubResource( 4 )
