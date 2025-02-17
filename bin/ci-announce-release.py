@@ -23,19 +23,16 @@ def fetch(method, url, data=None):
 
 
 def request_body():
+    commit = environ['CIRRUS_CHANGE_IN_REPO'][0:7]
     if environ.get('CIRRUS_PR', None):
         url = f"{BASE_URL}/pull/{environ['CIRRUS_PR']}"
     else:
-        url = f"{BASE_URL}/tree/{environ['CIRRUS_CHANGE_IN_REPO'][0:7]}"
+        url = f"{BASE_URL}/tree/{commit}"
 
     version = Path('src/version.txt').read_text().strip()
     embed = {
-        'title': f'Keress v{version}',
-        'description':
-            f"""{environ['CIRRUS_CHANGE_MESSAGE'].strip()}
-
-            {url}""",
-
+        'title': f'Keress v{version} ([{commit}]({url}))',
+        'description': environ['CIRRUS_CHANGE_MESSAGE'].strip(),
     }
 
     return {'embeds': [embed]}
