@@ -2,7 +2,5 @@
 
 [ext_resource path="res://blender_map/BlenderMap.gd" type="Script" id=1]
 
-
-
 [node name="BlenderLevel" type="Spatial"]
 script = ExtResource( 1 )
