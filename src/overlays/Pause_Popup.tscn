@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="FontFile" id=1]
 [ext_resource path="res://menus/SettingsMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://overlays/Pause_Popup.gd" type="Script" id=3]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 40
 font_data = ExtResource( 1 )
 
@@ -25,52 +25,52 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 508.0
-margin_top = 284.0
-margin_right = 772.0
-margin_bottom = 436.0
+offset_left = 508.0
+offset_top = 284.0
+offset_right = 772.0
+offset_bottom = 436.0
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_right = 264.0
-margin_bottom = 48.0
-custom_fonts/font = SubResource( 1 )
+offset_right = 264.0
+offset_bottom = 48.0
+theme_override_fonts/font = SubResource( 1 )
 text = "Game Paused"
 align = 1
 valign = 1
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer"]
-margin_top = 52.0
-margin_right = 264.0
-margin_bottom = 56.0
+offset_top = 52.0
+offset_right = 264.0
+offset_bottom = 56.0
 
 [node name="Resume_Button" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 60.0
-margin_right = 264.0
-margin_bottom = 80.0
-focus_neighbour_top = NodePath("../Quit_Button")
+offset_top = 60.0
+offset_right = 264.0
+offset_bottom = 80.0
+focus_neighbor_top = NodePath("../Quit_Button")
 text = "Resume"
 flat = true
 
 [node name="Settings_Button" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 84.0
-margin_right = 264.0
-margin_bottom = 104.0
-focus_neighbour_top = NodePath("../Quit_Button")
+offset_top = 84.0
+offset_right = 264.0
+offset_bottom = 104.0
+focus_neighbor_top = NodePath("../Quit_Button")
 text = "Settings"
 flat = true
 
 [node name="Menu_Button" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 108.0
-margin_right = 264.0
-margin_bottom = 128.0
+offset_top = 108.0
+offset_right = 264.0
+offset_bottom = 128.0
 text = "Main Menu"
 flat = true
 
 [node name="Quit_Button" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 132.0
-margin_right = 264.0
-margin_bottom = 152.0
-focus_neighbour_bottom = NodePath("../Resume_Button")
+offset_top = 132.0
+offset_right = 264.0
+offset_bottom = 152.0
+focus_neighbor_bottom = NodePath("../Resume_Button")
 text = "Quit"
 flat = true
 

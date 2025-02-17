@@ -35,25 +35,25 @@ const JOYPAD_CONTROLS = {
 	"look_down:": "Look down",
 }
 
-onready var done = $Panel/Done
-onready var hbox = $Panel/ScrollContainer/HBoxContainer
-onready var vbox = hbox.get_node("VBoxContainer")
+@onready var done = $Panel/Done
+@onready var hbox = $Panel/ScrollContainer/HBoxContainer
+@onready var vbox = hbox.get_node("VBoxContainer")
 #onready var sound = vbox.get_node("Sound")
-onready var controls = vbox.get_node("Controls")
-onready var mouse = vbox.get_node("Mouse")
-onready var joypad = vbox.get_node("Joypad")
+@onready var controls = vbox.get_node("Controls")
+@onready var mouse = vbox.get_node("Mouse")
+@onready var joypad = vbox.get_node("Joypad")
 	
-onready var hbox2 = vbox.get_node("HBoxContainer2")
-onready var controls_reset = hbox2.get_node("Controls_Reset")
-onready var hbox3 = vbox.get_node("HBoxContainer3")
-onready var controls_save = hbox3.get_node("Controls_Save")
+@onready var hbox2 = vbox.get_node("HBoxContainer2")
+@onready var controls_reset = hbox2.get_node("Controls_Reset")
+@onready var hbox3 = vbox.get_node("HBoxContainer3")
+@onready var controls_save = hbox3.get_node("Controls_Save")
 
 func _ready():
-	var err = controls_reset.connect("pressed", self, "reset_config")
+	var err = controls_reset.connect("pressed", Callable(self, "reset_config"))
 	Console.error_unless_ok("controls_reset.connect('pressed') failed", err)
-	err = controls_save.connect("pressed", self, "save_config")
+	err = controls_save.connect("pressed", Callable(self, "save_config"))
 	Console.error_unless_ok("controls_save.connect('pressed') failed", err)
-	err = done.connect("pressed", self, "deactivate")
+	err = done.connect("pressed", Callable(self, "deactivate"))
 	Console.error_unless_ok("done.connect('pressed') failed", err)
 	
 	for setting in CONTROLS.keys():
@@ -73,7 +73,7 @@ func deactivate():
 	get_parent().activate()
 
 func add_input_mapper(parent, setting, display_name):
-	var scene = load("res://menus/ActionMapper.tscn").instance()
+	var scene = load("res://menus/ActionMapper.tscn").instantiate()
 	parent.add_child(scene)
 	scene.label = display_name
 	scene.action = setting
@@ -82,16 +82,16 @@ func add_input_mapper(parent, setting, display_name):
 func prompt_input_map(button, setting):
 	var err
 	var dialog = $InputMapDialog
-	var cancel = dialog.get_cancel()
+	var cancel = dialog.get_cancel_button()
 	
 	_waiting_for_input = true
 	dialog.popup_centered()
-	dialog.popup_exclusive = true
+	dialog.exclusive = true
 	dialog.release_focus()
-	dialog.disconnect("confirmed", self, "prompt_confirm")
-	err = dialog.connect("confirmed", self, "prompt_confirm", [button, setting])
+	dialog.disconnect("confirmed", Callable(self, "prompt_confirm"))
+	err = dialog.connect("confirmed", Callable(self, "prompt_confirm").bind(button, setting))
 	Console.error_unless_ok("dialog.connect('confirmed') failed", err)
-	err = cancel.connect("pressed", self, "prompt_hide")
+	err = cancel.connect("pressed", Callable(self, "prompt_hide"))
 	Console.error_unless_ok("cancel.connect('pressed') failed", err)
 
 var last_event = null
@@ -106,9 +106,9 @@ func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		prompt_hide()
 	elif not event is InputEventMouseButton:
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 		last_event = event
-		$InputMapDialog.get_ok().emit_signal("pressed")
+		$InputMapDialog.get_ok_button().emit_signal("pressed")
 		prompt_hide()
 
 func prompt_confirm(_button, action):
@@ -125,11 +125,11 @@ func prompt_hide():
 	$InputMapDialog.hide()
 
 func reset_config():
-	InputMap.load_from_globals()
+	InputMap.load_from_project_settings()
 	save_config()
 
 func load_config():
-	if not File.new().file_exists(CONFIG_FILE):
+	if not FileAccess.file_exists(CONFIG_FILE):
 		return
 	
 	var config = ConfigFile.new()
@@ -144,7 +144,7 @@ func load_config():
 		var action_events = config.get_value(CONFIG_SECTION, action)
 		
 		for event in action_events:
-			if event in InputMap.get_action_list(action):
+			if event in InputMap.action_get_events(action):
 				continue
 			
 			InputMap.action_add_event(action, event)
@@ -153,7 +153,7 @@ func save_config():
 	var config = ConfigFile.new()
 	
 	for action in CONTROLS.keys():
-		config.set_value(CONFIG_SECTION, action, InputMap.get_action_list(action))
+		config.set_value(CONFIG_SECTION, action, InputMap.action_get_events(action))
 	
 	var err = config.save(CONFIG_FILE)
 	Console.error_unless_ok("InputMapper.gd: save_config(): Error saving " + CONFIG_FILE, err)

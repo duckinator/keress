@@ -27,16 +27,13 @@ func fetch(key):
 	return settings[key]
 
 func _read_from_disk():
-	var file = File.new()
-	if not file.file_exists(SETTINGS_FILE):
+	if not FileAccess.file_exists(SETTINGS_FILE):
 		return {}
-	file.open(SETTINGS_FILE, File.READ)
-	var settings = parse_json(file.get_as_text())
-	return settings
+	var text = FileAccess.get_file_as_string(SETTINGS_FILE)
+	return JSON.parse_string(text)
 
 func _write_to_disk(settings, key):
-	var file = File.new()
-	file.open(SETTINGS_FILE, File.WRITE)
+	var file = FileAccess.open(SETTINGS_FILE, FileAccess.WRITE)
 	Console.log("Updated setting '" + str(key) + "' in " + file.get_path_absolute())
-	file.store_string(to_json(settings))
+	file.store_string(JSON.stringify(settings))
 	file.close()

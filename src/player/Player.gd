@@ -1,9 +1,9 @@
-extends KinematicBody
+extends CharacterBody3D
 
 var weapon = Gun.WEAPON_DEAGLE
 var ammo = Gun.MAX_AMMO
 
-onready var weapon_animation_players = {
+@onready var weapon_animation_players = {
 	Gun.WEAPON_DEAGLE: {
 		"primary_fire": $RotationHelper/DEagle/DEagle/DEagleSlide/AnimationPlayer,
 	}
@@ -48,12 +48,12 @@ var rotation_helper
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
-	camera = $RotationHelper/Camera
+	camera = $RotationHelper/Camera3D
 	rotation_helper = $RotationHelper
 
 	reload_player_settings()
-	var err = Game.connect("resume", self, "reload_player_settings")
-	Console.error_unless_ok("Game.connect('resume') failed", err)
+	var err = Game.resuming.connect(Callable(self, "reload_player_settings"))
+	Console.error_unless_ok("Game.resuming.connect(...) failed", err)
 
 	adjust_health(MAX_HEALTH)
 	camera.set_current(true)
@@ -69,11 +69,11 @@ func reload_player_settings():
 func _update_hud_position():
 	var gun_on_left = Settings.fetch("gun_on_left")
 	if gun_on_left:
-		$HUD/Panel_Left.rect_position.x = get_viewport().size.x - $HUD/Panel_Left.rect_size.x - 20
-		$RotationHelper/DEagle.translation.x = -0.3
+		$HUD/Panel_Left.position.x = get_viewport().size.x - $HUD/Panel_Left.size.x - 20
+		$RotationHelper/DEagle.position.x = -0.3
 	else:
-		$HUD/Panel_Left.rect_position.x = 20
-		$RotationHelper/DEagle.translation.x = 0.3
+		$HUD/Panel_Left.position.x = 20
+		$RotationHelper/DEagle.position.x = 0.3
 
 func _process(_delta):
 	var horiz = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
@@ -94,7 +94,7 @@ func _physics_process(delta):
 	process_respawn(delta)
 
 func _get_total_gravity_for(body):
-	var state = PhysicsServer.body_get_direct_state(body.get_rid())
+	var state = PhysicsServer3D.body_get_direct_state(body.get_rid())
 	return state.get_total_gravity()
 
 func get_last_velocity():
@@ -113,11 +113,11 @@ func update_hud():
 	$HUD/Panel_Left/Ammo_Bar.max_value = Gun.MAX_AMMO
 
 func emit_sound(trans, sound, loudness):
-	Noise.emit(trans.round(), sound, loudness)
+	NoiseEvent.emit(trans.round(), sound, loudness)
 
 func safe_rotate(vec):
-	rotation_helper.rotate_x(deg2rad(vec.y * MOUSE_SENSITIVITY * -1))
-	self.rotate_y(deg2rad(vec.x * MOUSE_SENSITIVITY * -1))
+	rotation_helper.rotate_x(deg_to_rad(vec.y * MOUSE_SENSITIVITY * -1))
+	self.rotate_y(deg_to_rad(vec.x * MOUSE_SENSITIVITY * -1))
 	# Set x/z to zero to avoid very strange camera stuff.
 	self.rotation_degrees.x = 0
 	self.rotation_degrees.z = 0
@@ -133,7 +133,7 @@ func safe_rotate(vec):
 	rotation_helper.rotation_degrees = camera_rot
 
 func jostle(amplitude):
-	var y = rand_range(0, -amplitude)
+	var y = randf_range(0, -amplitude)
 	safe_rotate(Vector3(0, y, 0))
 
 func jump(assist=1):
@@ -191,11 +191,17 @@ func process_movement(delta):
 	else:
 		accel = DEACCEL
 	
-	hvel = hvel.linear_interpolate(target, accel * delta)
+	hvel = hvel.lerp(target, accel * delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
 	var old_vel = vel
-	vel = move_and_slide(vel, Vector3(0, 1, 0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
+	set_velocity(vel)
+	set_up_direction(Vector3(0, 1, 0))
+	set_floor_stop_on_slope_enabled(false)
+	set_max_slides(4)
+	set_floor_max_angle(deg_to_rad(MAX_SLOPE_ANGLE))
+	move_and_slide()
+	vel = velocity
 
 	process_fall_damage(old_vel, vel)
 
@@ -214,7 +220,7 @@ func process_fall_damage(old_vel, cur_vel):
 			if tmp <= -5:
 				Console.log("Player took fall damage: " + str(tmp))
 				adjust_health(tmp)
-		emit_sound(translation, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
+		emit_sound(position, SOUND_FALL_DAMAGE, LOUDNESS_FALL_DAMAGE)
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):

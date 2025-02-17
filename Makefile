@@ -1,9 +1,9 @@
-GODOT ?= bin/godot-headless
+GODOT ?= bin/godot
 EXPORT_FLAG ?= --export
 
-GODOT_VERSION := 3.6-stable
+GODOT_VERSION := 4.3-stable
 GODOT_TEMPLATE_PATH := ${HOME}/.local/share/godot/templates
-GODOT_TEMPLATE_DIR := 3.6.stable
+GODOT_TEMPLATE_DIR := 4.3.stable
 
 GODOT_TEMPLATES := ${GODOT_TEMPLATE_PATH}/${GODOT_TEMPLATE_DIR}
 
@@ -25,7 +25,7 @@ ${GODOT_TEMPLATES}:
 	rm godot-templates.zip
 
 bin/godot:
-	curl -sSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_x11.64.zip | funzip > bin/godot
+	curl -sSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip | funzip > bin/godot
 	chmod +x bin/godot
 
 bin/godot-headless:

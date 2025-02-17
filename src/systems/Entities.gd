@@ -1,6 +1,6 @@
 extends Node
 
-var mobs setget , get_mobs
+var mobs : get = get_mobs
 
 var ENTITIES = {
 	"Player": preload("res://player/Player.tscn"),
@@ -32,7 +32,7 @@ func spawn_for_map(map):
 			Console.log("    %s at %s." % [enemy_type, pos])
 			spawn(enemy_type, pos)
 
-func spawn(name, pos):
-	var scene = ENTITIES[name].instance()
+func spawn(entity_name, pos):
+	var scene = ENTITIES[entity_name].instantiate()
 	scene.translate(pos)
 	get_tree().current_scene.add_child(scene)

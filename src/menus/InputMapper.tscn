@@ -1,29 +1,29 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://menus/InputMapper.gd" type="Script" id=1]
-[ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/hack/Hack-Regular.ttf" type="FontFile" id=2]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 80
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="FontFile" id=2]
 size = 40
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="FontFile" id=3]
 size = 20
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="FontFile" id=4]
 size = 40
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="FontFile" id=5]
 size = 20
 use_filter = true
 font_data = ExtResource( 2 )
@@ -45,109 +45,109 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/ScrollContainer"]
-margin_right = 1225.0
-margin_bottom = 370.0
-custom_constants/separation = 20
+offset_right = 1225.0
+offset_bottom = 370.0
+theme_override_constants/separation = 20
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/HBoxContainer"]
-margin_right = 1225.0
-margin_bottom = 370.0
-custom_constants/separation = 20
+offset_right = 1225.0
+offset_bottom = 370.0
+theme_override_constants/separation = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_right = 1225.0
-margin_bottom = 94.0
-rect_min_size = Vector2( 1225, 0 )
+offset_right = 1225.0
+offset_bottom = 94.0
+custom_minimum_size = Vector2( 1225, 0 )
 alignment = 1
 
 [node name="Label_Main" type="Label" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 420.0
-margin_right = 804.0
-margin_bottom = 94.0
-custom_fonts/font = SubResource( 1 )
+offset_left = 420.0
+offset_right = 804.0
+offset_bottom = 94.0
+theme_override_fonts/font = SubResource( 1 )
 text = "Controls"
 align = 1
 valign = 1
 
 [node name="Label_Controls" type="Label" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 114.0
-margin_right = 1225.0
-margin_bottom = 162.0
-custom_fonts/font = SubResource( 2 )
+offset_top = 114.0
+offset_right = 1225.0
+offset_bottom = 162.0
+theme_override_fonts/font = SubResource( 2 )
 text = "Movement and Combat"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 182.0
-margin_right = 1225.0
-margin_bottom = 212.0
+offset_top = 182.0
+offset_right = 1225.0
+offset_bottom = 212.0
 
 [node name="Controls_Reset" type="Button" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
-margin_right = 216.0
-margin_bottom = 30.0
-focus_neighbour_top = NodePath("../../../../../Done")
-focus_neighbour_bottom = NodePath("../../HBoxContainer3/Controls_Save")
+offset_right = 216.0
+offset_bottom = 30.0
+focus_neighbor_top = NodePath("../../../../../Done")
+focus_neighbor_bottom = NodePath("../../HBoxContainer3/Controls_Save")
 focus_next = NodePath("../../HBoxContainer3/Controls_Save")
 focus_previous = NodePath("../../../../../Done")
-custom_fonts/font = SubResource( 3 )
+theme_override_fonts/font = SubResource( 3 )
 text = "Reset to Defaults"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 232.0
-margin_right = 1225.0
-margin_bottom = 262.0
+offset_top = 232.0
+offset_right = 1225.0
+offset_bottom = 262.0
 
 [node name="Controls_Save" type="Button" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
-margin_right = 60.0
-margin_bottom = 30.0
-focus_neighbour_top = NodePath("../../HBoxContainer2/Controls_Reset")
+offset_right = 60.0
+offset_bottom = 30.0
+focus_neighbor_top = NodePath("../../HBoxContainer2/Controls_Reset")
 focus_previous = NodePath("../../HBoxContainer2/Controls_Reset")
-custom_fonts/font = SubResource( 3 )
+theme_override_fonts/font = SubResource( 3 )
 text = "Save"
 
 [node name="Controls" type="VBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 282.0
-margin_right = 1225.0
-margin_bottom = 282.0
+offset_top = 282.0
+offset_right = 1225.0
+offset_bottom = 282.0
 
 [node name="Label_Mouse" type="Label" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
 visible = false
-margin_top = 154.0
-margin_right = 1225.0
-margin_bottom = 202.0
-custom_fonts/font = SubResource( 4 )
+offset_top = 154.0
+offset_right = 1225.0
+offset_bottom = 202.0
+theme_override_fonts/font = SubResource( 4 )
 text = "Mouse"
 
 [node name="Mouse" type="VBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
 visible = false
-margin_top = 154.0
-margin_right = 1225.0
-margin_bottom = 154.0
+offset_top = 154.0
+offset_right = 1225.0
+offset_bottom = 154.0
 
 [node name="Label_Joypad" type="Label" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 302.0
-margin_right = 1225.0
-margin_bottom = 350.0
-custom_fonts/font = SubResource( 4 )
+offset_top = 302.0
+offset_right = 1225.0
+offset_bottom = 350.0
+theme_override_fonts/font = SubResource( 4 )
 text = "Joypad"
 
 [node name="Joypad" type="VBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 370.0
-margin_right = 1225.0
-margin_bottom = 370.0
+offset_top = 370.0
+offset_right = 1225.0
+offset_bottom = 370.0
 
 [node name="Done" type="Button" parent="Panel"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 120.0
-margin_bottom = 60.0
-custom_fonts/font = SubResource( 5 )
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 60.0
+theme_override_fonts/font = SubResource( 5 )
 text = "< Back"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="InputMapDialog" type="ConfirmationDialog" parent="."]
-margin_right = 200.0
-margin_bottom = 70.0
+offset_right = 200.0
+offset_bottom = 70.0
 window_title = "Set Binding"

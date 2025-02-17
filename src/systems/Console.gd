@@ -6,7 +6,7 @@ func _ready():
 	info("Engine: Godot " + Engine.get_version_info()["string"])
 
 func _line_prefix():
-	var dt = OS.get_datetime()
+	var dt = Time.get_datetime_dict_from_system()
 	var hour = str(dt["hour"]).pad_zeros(2)
 	var minute = str(dt["minute"]).pad_zeros(2)
 	var second = str(dt["second"]).pad_zeros(2)
@@ -26,7 +26,7 @@ func error(prefix, err=null, capture=true):
 	if err == null:
 		_log("ERROR", prefix)
 	else:
-		_log("ERROR", prefix + ": " + var2str(err))
+		_log("ERROR", prefix + ": " + var_to_str(err))
 
 func warn(text):
 	_log("WARN ", text)

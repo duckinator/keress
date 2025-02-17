@@ -5,7 +5,7 @@ script/source = "extends Control
 
 
 
-onready var label = $Panel/RichTextLabel
+@onready var label = $Panel/RichTextLabel
 
 func _process(_delta):
 	pass
@@ -16,22 +16,22 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -380.0
-margin_top = -120.0
+offset_left = -380.0
+offset_top = -120.0
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="."]
-margin_right = 380.0
-margin_bottom = 120.0
+offset_right = 380.0
+offset_bottom = 120.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 370.0
-margin_bottom = 110.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 370.0
+offset_bottom = 110.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
