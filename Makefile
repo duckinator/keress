@@ -1,9 +1,9 @@
-GODOT ?= bin/godot-headless
+GODOT ?= bin/godot
 EXPORT_FLAG ?= --export
 
-GODOT_VERSION := 3.6-stable
-GODOT_TEMPLATE_PATH := ${HOME}/.local/share/godot/templates
-GODOT_TEMPLATE_DIR := 3.6.stable
+GODOT_VERSION := 4.3-stable
+GODOT_TEMPLATE_PATH := ${HOME}/.local/share/godot/export_templates
+GODOT_TEMPLATE_DIR := 4.3.stable
 
 GODOT_TEMPLATES := ${GODOT_TEMPLATE_PATH}/${GODOT_TEMPLATE_DIR}
 
@@ -25,12 +25,8 @@ ${GODOT_TEMPLATES}:
 	rm godot-templates.zip
 
 bin/godot:
-	curl -sSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_x11.64.zip | funzip > bin/godot
+	curl -sSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip | funzip > bin/godot
 	chmod +x bin/godot
-
-bin/godot-headless:
-	curl -sSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux_headless.64.zip | funzip > bin/godot-headless
-	chmod +x bin/godot-headless
 
 godot: ${GODOT} ${GODOT_TEMPLATES}
 
@@ -40,17 +36,17 @@ build_info:
 
 linux: build_info godot
 	mkdir -p build/linux
-	${GODOT} src/project.godot ${EXPORT_FLAG} linux ../build/linux/keress.x86_64
+	${GODOT} --headless src/project.godot ${EXPORT_FLAG} linux ../build/linux/keress.x86_64
 
 mac: build_info godot
 	mkdir -p build/mac
-	${GODOT} src/project.godot ${EXPORT_FLAG} macos ../build/mac/keress_macos.zip
+	${GODOT} --headless src/project.godot ${EXPORT_FLAG} macos ../build/mac/keress_macos.zip
 	cd build/mac && unzip keress_macos.zip
 	rm build/mac/keress_macos.zip
 
 windows: build_info godot
 	mkdir -p build/windows
-	${GODOT} src/project.godot ${EXPORT_FLAG} windows ../build/windows/keress.exe
+	${GODOT} --headless src/project.godot ${EXPORT_FLAG} windows ../build/windows/keress.exe
 
 release:
 	$(MAKE) EXPORT_FLAG=--export linux windows mac

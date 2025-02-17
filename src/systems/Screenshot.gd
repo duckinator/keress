@@ -3,36 +3,32 @@ extends Node
 const SCREENSHOT_DIR = "user://screenshots/"
 
 func _ready():
-	var dir = Directory.new()
-	if not dir.dir_exists(SCREENSHOT_DIR):
-		dir.make_dir(SCREENSHOT_DIR)
+	if not DirAccess.dir_exists_absolute(SCREENSHOT_DIR):
+		DirAccess.make_dir_absolute(SCREENSHOT_DIR)
 
 func _input(event):
 	if event.is_action_pressed("ui_screenshot"):
 		capture()
 
 func capture():
-	var dt = OS.get_datetime()
+	var dt = Time.get_datetime_dict_from_system()
 	var path = "user://screenshots/Screenshot-%04d-%02d-%02d-%02d_%02d_%02d.png" % [
 		dt["year"], dt["month"], dt["day"],
 		dt["hour"], dt["minute"], dt["second"]
 	]
 	
 	# Wait until the frame has finished before getting the texture.
-	yield(VisualServer, "frame_post_draw")
+	await RenderingServer.frame_post_draw
 	
-	var img = get_viewport().get_texture().get_data()
-	img.flip_y()
+	var img = get_viewport().get_texture().get_image()
 	
 	var err = img.save_png(path)
 	
-	var file = File.new()
-	file.open(path, File.READ)
-	var full_path = file.get_path_absolute()
+	var full_path = ProjectSettings.globalize_path(path)
 	
 	if err == OK:
 		Console.log("Saved screenshot to %s" % full_path)
 	else:
-		Console.error("Error saving screenshot (%s)" % var2str(full_path), err)
+		Console.error("Error saving screenshot (%s)" % var_to_str(full_path), err)
 	
 	return full_path

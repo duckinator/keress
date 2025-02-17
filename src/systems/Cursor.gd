@@ -1,14 +1,14 @@
 extends Node
 
 func _ready():
-	var err = Game.connect("resume", self, "_capture_cursor")
-	Console.error_unless_ok("Game.conenct('resume') failed", err)
+	var err = Game.resuming.connect(Callable(self, "_capture_cursor"))
+	Console.error_unless_ok("Game.resuming.connect() failed", err)
 	
-	err = Game.connect("pause", self, "_show_cursor")
-	Console.error_unless_ok("Game.connect('pause') failed", err)
+	err = Game.pausing.connect(Callable(self, "_show_cursor"))
+	Console.error_unless_ok("Game.pausing.connect() failed", err)
 
-	err = MapManager.connect("load_main_menu", self, "_show_cursor")
-	Console.error_unless_ok("MapManager.connect('load_main_menu') failed", err)
+	err = MapManager.load_main_menu.connect(Callable(self, "_show_cursor"))
+	Console.error_unless_ok("MapManager.load_main_menu.connect() failed", err)
 
 func _show_cursor():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

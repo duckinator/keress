@@ -43,14 +43,14 @@ func primary(source, raycast):
 	animation_player.play("Fire")
 	
 	var weapon_data = WEAPONS[source.weapon]["primary"]
-	Noise.emit(source.translation, weapon_data["sound"], weapon_data["loudness"])
+	NoiseEvent.emit(source.position, weapon_data["sound"], weapon_data["loudness"])
 	raycast.force_raycast_update()
 	source.ammo -= 1
 	if raycast.is_colliding():
 		var collider = raycast.get_collider()
 		if collider.has_method("adjust_health"):
 			collider.adjust_health(-weapon_data["damage"])
-			if collider is RigidBody:
+			if collider is RigidBody3D:
 				#var impulse = (to_global($Spatial/SpotLight.translation) - to_global(raycast.translation))
 				#var impulse_y = impulse.y
 				#impulse *= 800
@@ -60,10 +60,10 @@ func primary(source, raycast):
 				#collider.apply_impulse(Vector3(0, 3, 0), impulse)
 				pass
 
-func secondary(source, raycast):
+func secondary(source, _raycast):
 	Console.log("TODO: " + str(source.weapon) + " secondary")
 	#var weapon_data = WEAPONS[source.weapon]["secondary"]
-	#Noise.emit(source.translation, weapon_data["sound"], weapon_data["loudness"])
+	#NoiseEvent.emit(source.translation, weapon_data["sound"], weapon_data["loudness"])
 
 #func _process(delta):
 #	if not Game.playing():

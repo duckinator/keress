@@ -6,15 +6,17 @@ func _ready():
 	$Panels/Start.visible = true
 	$Panels/Settings.visible = false
 	
-	$Panels/Start/Label_Version_Info.text = BuildInfo.summary
+	$Panels/Label_Version_Info.text = BuildInfo.summary
 	
-	$Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer.add_constant_override("separation", 20)
+	$Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer.add_theme_constant_override("separation", 20)
 
-	err = $Panels/Start/Button_New_Game.connect("pressed", self, "game_new")
+	err = $Panels/Start/Button_New_Game.connect("pressed", Callable(self, "game_new"))
 	Console.error_unless_ok("$Button_New_game.connect('pressed') failed", err)
-	err = $Panels/Start/Button_Settings.connect("pressed", $Panels/Settings, "activate")
+	err = $Panels/Start/Button_Settings.connect("pressed", Callable($Panels/Settings, "activate"))
 	Console.error_unless_ok("$Button_Settings.connect('pressed') failed", err)
-	err = $Panels/Start/Button_Quit.connect("pressed", self, "quit")
+	err = $Panels/Start/Button_Controls.pressed.connect(Callable($Panels/InputMapper, "activate"))
+	Console.error_unless_ok("$Button_Controls.pressed.connect() failed", err)
+	err = $Panels/Start/Button_Quit.connect("pressed", Callable(self, "quit"))
 	Console.error_unless_ok("$Button_Quit.connect('pressed') failed", err)
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

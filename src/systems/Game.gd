@@ -1,7 +1,7 @@
 extends Node
 
-signal pause
-signal resume
+signal pausing
+signal resuming
 
 const PAUSE_SCENE = preload("res://overlays/Pause_Popup.tscn")
 
@@ -13,14 +13,15 @@ func _ready():
 	add_child(canvas_layer)
 
 func pause():
-	canvas_layer.add_child(PAUSE_SCENE.instance())
-	emit_signal("pause")
+	canvas_layer.add_child(PAUSE_SCENE.instantiate())
+	pausing.emit()
 
 func resume():
-	emit_signal("resume")
+	resuming.emit()
 
 func quit():
 	get_tree().quit()
 
 func playing():
-	return (get_tree().current_scene.name == "BlenderLevel")
+	var scene = get_tree().current_scene
+	return (scene != null) && (scene.name == "BlenderLevel")

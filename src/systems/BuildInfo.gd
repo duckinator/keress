@@ -6,10 +6,10 @@ var defaults = {
 	"cirrus_task_id": null,
 }
 
-onready var metadata = load_metadata()
-onready var version = normalize(metadata.result["version"])
-onready var build_hash = normalize(metadata.result["build_hash"])
-onready var cirrus_task_id = normalize(metadata.result["cirrus_task_id"])
+@onready var metadata = load_metadata()
+@onready var version = normalize(metadata["version"])
+@onready var build_hash = normalize(metadata["build_hash"])
+@onready var cirrus_task_id = normalize(metadata["cirrus_task_id"])
 
 var summary = null
 
@@ -45,12 +45,9 @@ func normalize(data):
 
 func load_metadata():
 	var path = "res://build_info.json"
-	var file = File.new()
 	
-	if not file.file_exists(path):
+	if not FileAccess.file_exists(path):
 		return {"result": defaults}
 	
-	file.open(path, File.READ)
-	var content = file.get_as_text()
-	file.close()
-	return JSON.parse(content)
+	var content = FileAccess.get_file_as_string(path)
+	return JSON.parse_string(content)

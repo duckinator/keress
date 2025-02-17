@@ -2,7 +2,7 @@ extends Node
 
 # Areas Of Interest system
 # ========================
-# Listens to events from systems that are of interest to enemies, such as Noise.
+# Listens to events from systems that are of interest to enemies, such as NoiseEvent.
 # Mobs register as listeners when they are spawned.
 # When the map changes, +mobs+ and +areas+ both get cleared.
 
@@ -12,9 +12,9 @@ const MAX_AREAS = 10
 var areas = []
 
 func _ready():
-	var err = MapManager.connect("load_map", self, "clear")
-	Console.error_unless_ok("MapManager.connect('load_map)' failed", err)
-	Noise.add_listener(self, "add_noise_aoi")
+	var err = MapManager.connect("loading_map", Callable(self, "clear"))
+	Console.error_unless_ok("MapManager.connect('loading_map)' failed", err)
+	NoiseEvent.add_listener(self, "add_noise_aoi")
 
 func clear(_map):
 	areas = []
@@ -50,7 +50,7 @@ func _process(delta):
 	var distance = INF
 
 	for current_mob in mobs:
-		var current_distance = current_mob.translation.distance_to(area)
+		var current_distance = current_mob.position.distance_to(area)
 		if current_distance < distance:
 			mob = current_mob
 			distance = current_distance
