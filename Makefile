@@ -24,11 +24,13 @@ ${GODOT_TEMPLATES}:
 	mv ./templates ${GODOT_TEMPLATES}
 	rm godot-templates.zip
 
+godot-templates: ${GODOT_TEMPLATES}
+
 tools/godot:
 	curl -sSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip | funzip > tools/godot
 	chmod +x tools/godot
 
-godot: ${GODOT} ${GODOT_TEMPLATES}
+godot: ${GODOT} godot-templates
 
 build_info:
 	printf "${VERSION}" > src/version.txt
@@ -65,7 +67,7 @@ debug: debug-linux debug-windows debug-mac
 ci-setup:
 	test "${CIRRUS_CI}" = "true" && cp src/export_presets.cfg.cirrus-ci src/export_presets.cfg
 
-get-butler:
+tools/butler:
 	curl -sSL https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default > butler.zip
 	unzip -p butler.zip butler > tools/butler
 	rm butler.zip
@@ -78,4 +80,4 @@ test: debug-linux
 clean:
 	rm -rf build/
 
-.PHONY: all _all_platforms test linux macos windows debug release clean ci-setup godot
+.PHONY: all test linux macos windows debug release clean ci-setup godot godot-templates

@@ -32,11 +32,13 @@ release_task:
     fingerprint_script:
       - cat Makefile
     populate_script:
-      - make godot get-butler
+      - make tools/godot tools/butler
   template_cache:
     folder: ${HOME}/.local/share/godot/export_templates
     fingerprint_script:
       - cat Makefile
+    populate_script:
+      make godot-templates
   install_script:
     - make ci-setup
   script:
