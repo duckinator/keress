@@ -1,5 +1,5 @@
 GODOT ?= bin/godot
-EXPORT_FLAG ?= --export
+EXPORT_FLAG ?= --export-release
 
 GODOT_VERSION := 4.3-stable
 GODOT_TEMPLATE_PATH := ${HOME}/.local/share/godot/export_templates
@@ -49,7 +49,7 @@ windows: build_info godot
 	${GODOT} --headless src/project.godot ${EXPORT_FLAG} windows ../build/windows/keress.exe
 
 release:
-	$(MAKE) EXPORT_FLAG=--export linux windows mac
+	$(MAKE) EXPORT_FLAG=--export-release linux windows mac
 
 debug-linux:
 	$(MAKE) EXPORT_FLAG=--export-debug linux
