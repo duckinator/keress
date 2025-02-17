@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=4 uid="uid://bpyjr6a0kgg5b"]
+[gd_scene load_steps=11 format=4 uid="uid://bpyjr6a0kgg5b"]
 
 [ext_resource type="Script" path="res://menus/MainMenu.gd" id="1"]
 [ext_resource type="FontFile" uid="uid://cfd8j7qi86jal" path="res://fonts/hack/Hack-Regular.ttf" id="2"]
 [ext_resource type="PackedScene" uid="uid://bua1ukx5rlnxe" path="res://menus/SettingsMenu.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://ckypv1nxqmrsy" path="res://menus/InputMapper.tscn" id="4_w42fw"]
 
 [sub_resource type="Environment" id="1"]
 background_mode = 1
@@ -143,22 +144,35 @@ flat = true
 [node name="Button_Settings" type="Button" parent="Panels/Start"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Button_New_Game")
-focus_neighbor_bottom = NodePath("../Button_Quit")
-focus_next = NodePath("../Button_Quit")
+focus_neighbor_bottom = NodePath("../Button_Controls")
+focus_next = NodePath("../Button_Controls")
 focus_previous = NodePath("../Button_New_Game")
 theme_override_font_sizes/font_size = 24
 text = "Settings"
 flat = true
 
-[node name="Button_Quit" type="Button" parent="Panels/Start"]
+[node name="Button_Controls" type="Button" parent="Panels/Start"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Button_Settings")
+focus_neighbor_bottom = NodePath("../Button_Quit")
+focus_next = NodePath("../Button_Quit")
+focus_previous = NodePath("../Button_Settings")
+theme_override_font_sizes/font_size = 24
+text = "Controls"
+flat = true
+
+[node name="Button_Quit" type="Button" parent="Panels/Start"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Button_Controls")
 focus_neighbor_bottom = NodePath("../Button_New_Game")
 focus_next = NodePath("../Button_New_Game")
-focus_previous = NodePath("../Button_Settings")
+focus_previous = NodePath("../Button_Controls")
 theme_override_font_sizes/font_size = 24
 text = "Quit"
 flat = true
 
 [node name="Settings" parent="Panels" instance=ExtResource("3")]
+visible = false
+
+[node name="InputMapper" parent="Panels" instance=ExtResource("4_w42fw")]
 visible = false

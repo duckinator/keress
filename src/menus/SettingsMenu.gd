@@ -1,4 +1,4 @@
-extends Panel
+extends ColorRect
 
 @onready var vbox = $ScrollContainer/HBoxContainer/VBoxContainer
 @onready var _vsync = vbox.get_node('CheckButton_VSync')
@@ -21,8 +21,6 @@ func _ready():
 	Console.error_unless_ok("_gun_on_left.pressed.connect() failed", err)
 	err = _debug.pressed.connect(Callable(self, "toggle_debug"))
 	Console.error_unless_ok("_debug.pressed.connect() failed", err)
-	err = _controls.pressed.connect(Callable($InputMapper, "activate"))
-	Console.error_unless_ok("_controls.pressed.connect() failed", err)
 	
 	err = _mouse_sensitivity.connect("value_changed", Callable(self, "update_mouse_sensitivity"))
 	Console.error_unless_ok("_mouse_sensitivity.connect('value_changed') failed", err)
@@ -42,11 +40,7 @@ func activate():
 
 func deactivate():
 	hide()
-	# A bit kludgy, but eh.
-	if get_parent().name == "Panels":
-		get_parent().get_parent().activate()
-	else:
-		get_parent().activate()
+	get_parent().get_parent().activate()
 
 func toggle_vsync():
 	Settings.store("vsync", _vsync.button_pressed)

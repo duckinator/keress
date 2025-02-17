@@ -49,12 +49,12 @@ const JOYPAD_CONTROLS = {
 @onready var controls_save = hbox3.get_node("Controls_Save")
 
 func _ready():
-	var err = controls_reset.connect("pressed", Callable(self, "reset_config"))
-	Console.error_unless_ok("controls_reset.connect('pressed') failed", err)
-	err = controls_save.connect("pressed", Callable(self, "save_config"))
-	Console.error_unless_ok("controls_save.connect('pressed') failed", err)
-	err = done.connect("pressed", Callable(self, "deactivate"))
-	Console.error_unless_ok("done.connect('pressed') failed", err)
+	var err = controls_reset.pressed.connect(Callable(self, "reset_config"))
+	Console.error_unless_ok("controls_reset.pressed.connect() failed", err)
+	err = controls_save.pressed.connect(Callable(self, "save_config"))
+	Console.error_unless_ok("controls_save.pressed.connect() failed", err)
+	err = done.pressed.connect( Callable(self, "deactivate"))
+	Console.error_unless_ok("done.pressed.connect() failed", err)
 	
 	for setting in CONTROLS.keys():
 		add_input_mapper(controls, setting, CONTROLS[setting])
@@ -65,12 +65,13 @@ func _ready():
 	load_config()
 
 func activate():
+	Console.log("InputMapper opened")
 	show()
 	$Panel/Done.grab_focus()
 
 func deactivate():
 	hide()
-	get_parent().activate()
+	get_parent().get_parent().activate()
 
 func add_input_mapper(parent, setting, display_name):
 	var scene = load("res://menus/ActionMapper.tscn").instantiate()

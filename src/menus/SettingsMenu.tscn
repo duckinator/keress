@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bua1ukx5rlnxe"]
+[gd_scene load_steps=10 format=3 uid="uid://bua1ukx5rlnxe"]
 
 [ext_resource type="Script" path="res://menus/SettingsMenu.gd" id="1"]
 [ext_resource type="FontFile" uid="uid://cfd8j7qi86jal" path="res://fonts/hack/Hack-Regular.ttf" id="2"]
-[ext_resource type="PackedScene" path="res://menus/InputMapper.tscn" id="3"]
 
 [sub_resource type="FontFile" id="1"]
 fallbacks = Array[Font]([ExtResource("2"), ExtResource("2")])
@@ -70,17 +69,6 @@ cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
 
-[sub_resource type="FontFile" id="7"]
-fallbacks = Array[Font]([ExtResource("2"), ExtResource("2")])
-subpixel_positioning = 0
-msdf_pixel_range = 14
-msdf_size = 128
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-
 [sub_resource type="FontFile" id="8"]
 fallbacks = Array[Font]([ExtResource("2"), ExtResource("2")])
 subpixel_positioning = 0
@@ -92,10 +80,11 @@ cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
 
-[node name="Settings" type="Panel"]
+[node name="Settings" type="ColorRect"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+color = Color(0.194349, 0.194349, 0.194349, 1)
 script = ExtResource("1")
 
 [node name="Label_Title" type="Label" parent="."]
@@ -188,16 +177,9 @@ text = "Gun On Left"
 [node name="CheckButton_Debug" type="CheckButton" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../CheckButton_Fullscreen")
-focus_neighbor_bottom = NodePath("../Button_Controls")
-focus_next = NodePath("../Button_Controls")
 focus_previous = NodePath("../CheckButton_Fullscreen")
 theme_override_fonts/font = SubResource("6")
 text = "Debug Mode"
-
-[node name="Button_Controls" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = SubResource("7")
-text = "Controls"
 
 [node name="Button_Back" type="Button" parent="."]
 layout_mode = 0
@@ -207,10 +189,5 @@ offset_right = 120.0
 offset_bottom = 60.0
 focus_neighbor_bottom = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/HSlider_Mouse_Sensitivity")
 focus_next = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/HSlider_Mouse_Sensitivity")
-focus_previous = NodePath("../ScrollContainer/HBoxContainer/VBoxContainer/Button_Controls")
 theme_override_fonts/font = SubResource("8")
 text = "< Back"
-
-[node name="InputMapper" parent="." instance=ExtResource("3")]
-visible = false
-anchors_preset = 0

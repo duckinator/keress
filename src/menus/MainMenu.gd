@@ -14,6 +14,8 @@ func _ready():
 	Console.error_unless_ok("$Button_New_game.connect('pressed') failed", err)
 	err = $Panels/Start/Button_Settings.connect("pressed", Callable($Panels/Settings, "activate"))
 	Console.error_unless_ok("$Button_Settings.connect('pressed') failed", err)
+	err = $Panels/Start/Button_Controls.pressed.connect(Callable($Panels/InputMapper, "activate"))
+	Console.error_unless_ok("$Button_Controls.pressed.connect() failed", err)
 	err = $Panels/Start/Button_Quit.connect("pressed", Callable(self, "quit"))
 	Console.error_unless_ok("$Button_Quit.connect('pressed') failed", err)
 	
