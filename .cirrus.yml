@@ -3,6 +3,7 @@
 #use_compute_credits: $CIRRUS_USER_COLLABORATOR == 'true' || $CIRRUS_BRANCH == 'main' || $CIRRUS_BRANCH == 'staging' || $CIRRUS_BRANCH == 'trying'
 
 task:
+  only_if: $BRANCH != 'main'
   name: CI success
   container: {image: "busybox"}
   depends_on:
@@ -20,8 +21,6 @@ test_task:
 
 release_task:
   only_if: $BRANCH == 'main'
-  #depends_on:
-  #  - test
   env:
     BUTLER_API_KEY: ENCRYPTED[46a314af5ccb389fce4671b233802ae05d7f554aaa0a13102c6d908b8b824416c4308cfb61c7271a3bb8e25b0463f23d]
     DISCORD_WEBHOOK: ENCRYPTED[9b192e26cda882699806de29d5453a5f2b97011a65a3cfd52ab0906e24a7c19b65bfd6dfe7309acf0e499a58e85df162]
