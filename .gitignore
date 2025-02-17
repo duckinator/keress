@@ -9,9 +9,7 @@ export_presets.cfg
 .mono/
 
 /build/
-/bin/butler
-/bin/godot
-/bin/godot-headless
+/tools/
 /tmp
 
 src/build_info.json

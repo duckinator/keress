@@ -1,4 +1,4 @@
-GODOT ?= bin/godot
+GODOT ?= tools/godot
 EXPORT_FLAG ?= --export-release
 
 GODOT_VERSION := 4.3-stable
@@ -24,9 +24,9 @@ ${GODOT_TEMPLATES}:
 	mv ./templates ${GODOT_TEMPLATES}
 	rm godot-templates.zip
 
-bin/godot:
-	curl -sSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip | funzip > bin/godot
-	chmod +x bin/godot
+tools/godot:
+	curl -sSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip | funzip > tools/godot
+	chmod +x tools/godot
 
 godot: ${GODOT} ${GODOT_TEMPLATES}
 
@@ -67,10 +67,10 @@ ci-setup:
 
 get-butler:
 	curl -sSL https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default > butler.zip
-	unzip -p butler.zip butler > bin/butler
+	unzip -p butler.zip butler > tools/butler
 	rm butler.zip
-	chmod +x bin/butler
-	./bin/butler -V
+	chmod +x tools/butler
+	./tools/butler -V
 
 test: debug-linux
 	@echo "No tests to run. :("

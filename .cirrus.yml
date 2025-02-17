@@ -26,13 +26,22 @@ release_task:
     BUTLER_API_KEY: ENCRYPTED[46a314af5ccb389fce4671b233802ae05d7f554aaa0a13102c6d908b8b824416c4308cfb61c7271a3bb8e25b0463f23d]
     DISCORD_WEBHOOK: ENCRYPTED[9b192e26cda882699806de29d5453a5f2b97011a65a3cfd52ab0906e24a7c19b65bfd6dfe7309acf0e499a58e85df162]
   container:
-    image: debian:latest
+    dockerfile: ci/Dockerfile
+  tools_cache:
+    folder: tools
+    fingerprint_script:
+      - cat Makefile
+    populate_script:
+      - make godot get-butler
+  template_cache:
+    folder: ${HOME}/.local/share/godot/export_templates
+    fingerprint_script:
+      - cat Makefile
   install_script:
-    - apt update && apt install -y make git python3 curl unzip
-    - make ci-setup get-butler
+    - make ci-setup
   script:
     - make release
-    - ./bin/butler push build/linux duckinator/keress:linux --userversion-file src/version.txt
-    - ./bin/butler push build/windows duckinator/keress:windows --userversion-file src/version.txt
-    - ./bin/butler push build/mac duckinator/keress:mac --userversion-file src/version.txt
+    - ./tools/butler push build/linux duckinator/keress:linux --userversion-file src/version.txt
+    - ./tools/butler push build/windows duckinator/keress:windows --userversion-file src/version.txt
+    - ./tools/butler push build/mac duckinator/keress:mac --userversion-file src/version.txt
     - python3 bin/ci-announce-release.py
