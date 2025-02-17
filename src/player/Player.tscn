@@ -44,6 +44,8 @@ target_position = Vector3(0, 0, -500)
 [node name="HUD" parent="." instance=ExtResource("3")]
 layout_mode = 3
 anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="DummyRigidBody" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
