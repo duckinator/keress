@@ -5,7 +5,6 @@ extends ColorRect
 @onready var _fullscreen = vbox.get_node('CheckButton_Fullscreen')
 @onready var _gun_on_left = vbox.get_node("CheckButton_GunOnLeft")
 @onready var _debug = vbox.get_node('CheckButton_Debug')
-@onready var _controls = vbox.get_node('Button_Controls')
 @onready var _mouse_sensitivity = vbox.get_node('HSlider_Mouse_Sensitivity')
 @onready var _joypad_sensitivity = vbox.get_node('HSlider_Joypad_Sensitivity')
 @onready var _field_of_view = vbox.get_node('HSlider_Field_of_View')
