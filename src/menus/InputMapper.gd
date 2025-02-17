@@ -65,7 +65,6 @@ func _ready():
 	load_config()
 
 func activate():
-	Console.log("InputMapper opened")
 	show()
 	done.grab_focus()
 
