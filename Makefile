@@ -2,7 +2,7 @@ GODOT ?= bin/godot
 EXPORT_FLAG ?= --export
 
 GODOT_VERSION := 4.3-stable
-GODOT_TEMPLATE_PATH := ${HOME}/.local/share/godot/templates
+GODOT_TEMPLATE_PATH := ${HOME}/.local/share/godot/export_templates
 GODOT_TEMPLATE_DIR := 4.3.stable
 
 GODOT_TEMPLATES := ${GODOT_TEMPLATE_PATH}/${GODOT_TEMPLATE_DIR}
