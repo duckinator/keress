@@ -9,6 +9,7 @@ export_presets.cfg
 
 /build/
 /bin/butler
+/bin/godot
 /bin/godot-headless
 /tmp
 
