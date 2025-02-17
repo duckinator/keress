@@ -6,7 +6,7 @@ func _ready():
 	$Panels/Start.visible = true
 	$Panels/Settings.visible = false
 	
-	$Panels/Start/Label_Version_Info.text = BuildInfo.summary
+	$Panels/Label_Version_Info.text = BuildInfo.summary
 	
 	$Panels/Settings/ScrollContainer/HBoxContainer/VBoxContainer.add_theme_constant_override("separation", 20)
 
