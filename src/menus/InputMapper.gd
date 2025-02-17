@@ -35,7 +35,7 @@ const JOYPAD_CONTROLS = {
 	"look_down:": "Look down",
 }
 
-@onready var done = $Panel/Done
+@onready var done = $Panel/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer4/Done
 @onready var hbox = $Panel/ScrollContainer/HBoxContainer
 @onready var vbox = hbox.get_node("VBoxContainer")
 #onready var sound = vbox.get_node("Sound")
@@ -53,7 +53,7 @@ func _ready():
 	Console.error_unless_ok("controls_reset.pressed.connect() failed", err)
 	err = controls_save.pressed.connect(Callable(self, "save_config"))
 	Console.error_unless_ok("controls_save.pressed.connect() failed", err)
-	err = done.pressed.connect( Callable(self, "deactivate"))
+	err = done.pressed.connect(Callable(self, "deactivate"))
 	Console.error_unless_ok("done.pressed.connect() failed", err)
 	
 	for setting in CONTROLS.keys():
@@ -67,7 +67,7 @@ func _ready():
 func activate():
 	Console.log("InputMapper opened")
 	show()
-	$Panel/Done.grab_focus()
+	done.grab_focus()
 
 func deactivate():
 	hide()

@@ -3,6 +3,17 @@
 [ext_resource type="Script" path="res://menus/InputMapper.gd" id="1"]
 [ext_resource type="FontFile" uid="uid://cfd8j7qi86jal" path="res://fonts/hack/Hack-Regular.ttf" id="2"]
 
+[sub_resource type="FontFile" id="5"]
+fallbacks = Array[Font]([ExtResource("2"), ExtResource("2")])
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
 [sub_resource type="FontFile" id="1"]
 fallbacks = Array[Font]([ExtResource("2"), ExtResource("2")])
 subpixel_positioning = 0
@@ -47,17 +58,6 @@ cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
 
-[sub_resource type="FontFile" id="5"]
-fallbacks = Array[Font]([ExtResource("2"), ExtResource("2")])
-subpixel_positioning = 0
-msdf_pixel_range = 14
-msdf_size = 128
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-
 [node name="InputMapper" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -87,6 +87,14 @@ alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 20
 
+[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Done" type="Button" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("5")
+text = "< Back"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(1225, 0)
 layout_mode = 2
@@ -109,10 +117,10 @@ layout_mode = 2
 
 [node name="Controls_Reset" type="Button" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../../../../../Done")
+focus_neighbor_top = NodePath("../../HBoxContainer4/Done")
 focus_neighbor_bottom = NodePath("../../HBoxContainer3/Controls_Save")
 focus_next = NodePath("../../HBoxContainer3/Controls_Save")
-focus_previous = NodePath("../../../../../Done")
+focus_previous = NodePath("../../HBoxContainer4/Done")
 theme_override_fonts/font = SubResource("3")
 text = "Reset to Defaults"
 
@@ -146,14 +154,5 @@ text = "Joypad"
 
 [node name="Joypad" type="VBoxContainer" parent="Panel/ScrollContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="Done" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 120.0
-offset_bottom = 60.0
-theme_override_fonts/font = SubResource("5")
-text = "< Back"
 
 [node name="InputMapDialog" type="ConfirmationDialog" parent="."]
