@@ -19,7 +19,7 @@ test_task:
   script:
     - make test
 
-release_task:
+release_common_template: &RELEASE_COMMON
   only_if: $BRANCH == 'main'
   env:
     BUTLER_API_KEY: ENCRYPTED[46a314af5ccb389fce4671b233802ae05d7f554aaa0a13102c6d908b8b824416c4308cfb61c7271a3bb8e25b0463f23d]
@@ -40,9 +40,27 @@ release_task:
       make godot-templates
   install_script:
     - make ci-setup
+
+release_linux_task:
+  << : *RELEASE_COMMON
+  - make linux
+  - ./tools/butler push build/linux duckinator/keress:linux --userversion-file src/version.txt
+
+release_windows_task:
+  << : *RELEASE_COMMON
+  - make windows
+  - ./tools/butler push build/windows duckinator/keress:windows --userversion-file src/version.txt
+
+release_macos_task:
+  << : *RELEASE_COMMON
+  - make macos
+  - ./tools/butler push build/mac duckinator/keress:mac --userversion-file src/version.txt
+
+release_announce_task:
+  << : *RELEASE_COMMON
+  depends_on:
+    - release_linux
+    - release_windows
+    - release_macos
   script:
-    - make release
-    - ./tools/butler push build/linux duckinator/keress:linux --userversion-file src/version.txt
-    - ./tools/butler push build/windows duckinator/keress:windows --userversion-file src/version.txt
-    - ./tools/butler push build/mac duckinator/keress:mac --userversion-file src/version.txt
     - python3 bin/ci-announce-release.py
