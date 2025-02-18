@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cccul118s3fcy"
+uid="uid://b68fs7q8wkcqc"
 path="res://.godot/imported/DEagle.blend-b7fd8b36061df470a7b43e5006a54031.scn"
 
 [deps]
@@ -33,22 +33,7 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Camera": {
-"import/skip_import": true
-},
 "PATH:DEagle/DEagle_Slide/Slide Cuts": {
-"import/skip_import": true
-},
-"PATH:desert_eagle_back": {
-"import/skip_import": true
-},
-"PATH:desert_eagle_front": {
-"import/skip_import": true
-},
-"PATH:desert_eagle_right": {
-"import/skip_import": true
-},
-"PATH:desert_eagle_top": {
 "import/skip_import": true
 }
 }

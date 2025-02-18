@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bd1susvxcb8d0"]
 
 [ext_resource type="Script" path="res://player/Player.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://cccul118s3fcy" path="res://blender/items/DEagle.blend" id="2_3ismx"]
+[ext_resource type="PackedScene" uid="uid://b68fs7q8wkcqc" path="res://blender/items/DEagle.blend" id="2_3ismx"]
 [ext_resource type="PackedScene" path="res://player/HUD.tscn" id="3"]
 
 [sub_resource type="CapsuleMesh" id="1"]
