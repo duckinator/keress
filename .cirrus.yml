@@ -40,15 +40,9 @@ release_task:
       make godot-templates
   install_script:
     - make ci-setup
-  build_script:
-    matrix:
-      - make linux
-      - make windows
-      - make macos
-  release_script:
-    matrix:
-      - ./tools/butler push build/linux duckinator/keress:linux --userversion-file src/version.txt
-      - ./tools/butler push build/windows duckinator/keress:windows --userversion-file src/version.txt
-      - ./tools/butler push build/mac duckinator/keress:mac --userversion-file src/version.txt
   script:
+    - make release
+    - ./tools/butler push build/linux duckinator/keress:linux --userversion-file src/version.txt
+    - ./tools/butler push build/windows duckinator/keress:windows --userversion-file src/version.txt
+    - ./tools/butler push build/mac duckinator/keress:mac --userversion-file src/version.txt
     - python3 bin/ci-announce-release.py
